@@ -49,6 +49,7 @@
     <Compile Include="BasicTypesParsers\FloatParsers.cs" />
     <Compile Include="BasicTypesParsers\IntParsers.cs" />
     <Compile Include="BasicTypesParsers\ReflectionBasedParser.cs" />
+    <Compile Include="FunctionalComposition\Functional.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuccessTypes\ISuccess.cs" />
     <Compile Include="SuccessTypes\Success.cs" />
