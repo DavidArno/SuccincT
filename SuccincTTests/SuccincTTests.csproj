@@ -51,6 +51,7 @@
     <Compile Include="BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="BasicTypesParsers\IntParsersTests.cs" />
     <Compile Include="EnumParsers\EnumParserTests.cs" />
+    <Compile Include="FunctionalComposition\ExtendedTests.cs" />
     <Compile Include="FunctionalComposition\FunctionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SuccessTypes\SuccessTests.cs" />
