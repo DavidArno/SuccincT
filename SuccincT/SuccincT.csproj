@@ -64,7 +64,6 @@
     <Compile Include="Unions\MatchAndReturnExtensions.cs" />
     <Compile Include="Unions\MatcherFunctions.cs" />
     <Compile Include="Unions\MatcherFunctions{T1,T2}.cs" />
-    <Compile Include="Unions\T3.cs" />
     <Compile Include="Unions\Union{T1,T2,T3}.cs" />
     <Compile Include="Unions\Union{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\MatchAndActionExtensions.cs" />
