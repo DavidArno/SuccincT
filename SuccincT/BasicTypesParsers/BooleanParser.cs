@@ -1,4 +1,4 @@
-﻿using SuccincT.SuccessTypes;
+﻿using SuccincT.Options;
 
 namespace SuccincT.BasicTypesParsers
 {
@@ -12,7 +12,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a true/false value.
         /// </summary>
         /// <returns>If successful, the boolean value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<bool> ParseBoolean(this string source)
+        public static Option<bool> ParseBoolean(this string source)
         {
             return ReflectionBasedParser.Parse<bool>(source);
         }

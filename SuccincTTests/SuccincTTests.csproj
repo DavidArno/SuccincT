@@ -54,10 +54,11 @@
     <Compile Include="FunctionalComposition\ExtendedTests.cs" />
     <Compile Include="FunctionalComposition\FunctionalTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SuccessTypes\SuccessTests.cs" />
+    <Compile Include="Options\OptionTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="Unions\FluentMatcherT1T2Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SuccincT\SuccincT.csproj">

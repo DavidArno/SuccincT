@@ -1,4 +1,4 @@
-﻿using SuccincT.SuccessTypes;
+﻿using SuccincT.Options;
 
 namespace SuccincT.BasicTypesParsers
 {
@@ -12,7 +12,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 32 bit float value.
         /// </summary>
         /// <returns>If successful, the float value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<float> ParseFloat(this string source)
+        public static Option<float> ParseFloat(this string source)
         {
             return ReflectionBasedParser.Parse<float>(source);
         }
@@ -21,7 +21,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 64 bit float value.
         /// </summary>
         /// <returns>If successful, the double value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<double> ParseDouble(this string source)
+        public static Option<double> ParseDouble(this string source)
         {
             return ReflectionBasedParser.Parse<double>(source);
         }
@@ -30,7 +30,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 128 bit float value.
         /// </summary>
         /// <returns>If successful, the double value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<decimal> ParseDecimal(this string source)
+        public static Option<decimal> ParseDecimal(this string source)
         {
             return ReflectionBasedParser.Parse<decimal>(source);
         }

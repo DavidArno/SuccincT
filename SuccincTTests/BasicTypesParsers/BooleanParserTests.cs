@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.BasicTypesParsers;
+using SuccincT.Unions;
 
 namespace SuccincTTests.BasicTypesParsers
 {
@@ -13,16 +14,14 @@ namespace SuccincTTests.BasicTypesParsers
         public void ValidBooleanString_ResultsInSuccess()
         {
             var result = "true".ParseBoolean();
-            var expected = new[] { true, true };
-            var actual = new[] { result.Successful, result.Value };
-            Assert.AreEqual(expected, actual);
+            Assert.IsTrue(result.Case1);
         }
 
         [Test]
         public void InvalidBooleanString_ResultsInError()
         {
             var result = "maybe".ParseBoolean();
-            Assert.IsFalse(result.Successful);
+            Assert.AreEqual(Variant.Case2, result.Case);
         }
     }
 }

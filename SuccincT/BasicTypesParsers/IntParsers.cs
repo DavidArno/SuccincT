@@ -1,4 +1,4 @@
-﻿using SuccincT.SuccessTypes;
+﻿using SuccincT.Options;
 
 namespace SuccincT.BasicTypesParsers
 {
@@ -12,7 +12,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for an 8 bit signed integer. 
         /// </summary>
         /// <returns>If successful, the byte value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<sbyte> ParseSignedByte(this string source)
+        public static Option<sbyte> ParseSignedByte(this string source)
         {
             return ReflectionBasedParser.Parse<sbyte>(source);
         }
@@ -21,7 +21,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for an 8 bit unsigned integer. 
         /// </summary>
         /// <returns>If successful, the byte value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<byte> ParseUnsignedByte(this string source)
+        public static Option<byte> ParseUnsignedByte(this string source)
         {
             return ReflectionBasedParser.Parse<byte>(source);
         }
@@ -30,7 +30,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 16 bit signed integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<short> ParseShort(this string source)
+        public static Option<short> ParseShort(this string source)
         {
             return ReflectionBasedParser.Parse<short>(source);
         }
@@ -39,7 +39,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 16 bit unsigned integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<ushort> ParseUnsignedShort(this string source)
+        public static Option<ushort> ParseUnsignedShort(this string source)
         {
             return ReflectionBasedParser.Parse<ushort>(source);
         }
@@ -48,7 +48,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 32 bit signed integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<int> ParseInt(this string source)
+        public static Option<int> ParseInt(this string source)
         {
             return ReflectionBasedParser.Parse<int>(source);
         }
@@ -57,7 +57,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 32 bit unsigned integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<uint> ParseUnsignedInt(this string source)
+        public static Option<uint> ParseUnsignedInt(this string source)
         {
             return ReflectionBasedParser.Parse<uint>(source);
         }
@@ -66,7 +66,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 64 bit signed integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<long> ParseLong(this string source)
+        public static Option<long> ParseLong(this string source)
         {
             return ReflectionBasedParser.Parse<long>(source);
         }
@@ -75,7 +75,7 @@ namespace SuccincT.BasicTypesParsers
         /// Parses the current string for a 64 bit unsigned integer. 
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
-        public static ISuccess<ulong> ParseUnsignedLong(this string source)
+        public static Option<ulong> ParseUnsignedLong(this string source)
         {
             return ReflectionBasedParser.Parse<ulong>(source);
         }
