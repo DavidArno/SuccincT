@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-
 using SuccincT.Options;
 using SuccincT.Unions;
 
-namespace SuccincTTests.Options
+namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
     public class OptionTests

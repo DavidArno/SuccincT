@@ -2,9 +2,10 @@
 
 namespace SuccincT.Unions
 {
-    internal static class FluentMatchResolver
+    internal class FluentMatchResolver
     {
-        public static Union<T3, None> Resolve<T1, T2, T3>(Union<T1, T2> union, IEnumerable<MatcherFunctions<T1, T2, T3>> matchCases)
+        public static Union<T3, None> Resolve<T1, T2, T3>(Union<T1, T2> union,
+                                                          IEnumerable<MatcherFunctions<T1, T2, T3>> matchCases)
         {
             foreach (var matchCase in matchCases)
             {

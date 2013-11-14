@@ -24,6 +24,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,6 +36,8 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\SuccincT.XML</DocumentationFile>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -49,9 +54,8 @@
     <Compile Include="BasicTypesParsers\FloatParsers.cs" />
     <Compile Include="BasicTypesParsers\IntParsers.cs" />
     <Compile Include="BasicTypesParsers\ReflectionBasedParser.cs" />
-    <Compile Include="FunctionalComposition\Extended.cs" />
     <Compile Include="Exceptions\NoMatchFoundException.cs" />
-    <Compile Include="FunctionalComposition\Functional.cs" />
+    <Compile Include="FunctionalComposition\Function.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Option{T}.cs" />

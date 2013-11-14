@@ -2,8 +2,16 @@
 
 namespace SuccincT.Unions
 {
+    /// <summary>
+    /// Provides the MatchAndAction extension method for the <see cref="Union{T1,T2}"/>, <see cref="Union{T1,T2,T3}"/>
+    /// and <see cref="Union{T1,T2,T3,T4}"/> classes. The MatchAndAction method provides a simple "run appropriate method 
+    /// according to union case" mechanism.
+    /// </summary>
     public static class MatchAndActionExtensions
     {
+        /// <summary>
+        /// Invokes <code>case1Action</code> if the union represents Case1; else invokes <code>case2Action</code>.
+        /// </summary>
         public static void MatchAndAction<T1, T2>(this Union<T1, T2> union, 
                                                   Action<T1> case1Action, 
                                                   Action<T2> case2Action)

@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
-
 using SuccincT.Exceptions;
 using SuccincT.Unions;
 
-namespace SuccincTTests.Unions
+namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
     public class FluentMatcherT1T2Tests
