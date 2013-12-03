@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="SuccincT\Options\ValueOrErrorTests.cs" />
     <Compile Include="SuccincT\Unions\FluentMatcherT1T2Tests.cs" />
   </ItemGroup>
   <ItemGroup>

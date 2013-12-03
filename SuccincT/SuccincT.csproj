@@ -56,6 +56,7 @@
     <Compile Include="BasicTypesParsers\ReflectionBasedParser.cs" />
     <Compile Include="Exceptions\NoMatchFoundException.cs" />
     <Compile Include="FunctionalComposition\Function.cs" />
+    <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option.cs" />
     <Compile Include="Options\Option{T}.cs" />
