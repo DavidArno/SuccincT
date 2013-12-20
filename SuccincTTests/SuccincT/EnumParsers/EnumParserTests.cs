@@ -1,7 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.EnumParsers;
-using SuccincT.Unions;
 
 namespace SuccincTTests.SuccincT.EnumParsers
 {
@@ -12,28 +11,35 @@ namespace SuccincTTests.SuccincT.EnumParsers
         public void ValidEnumValue_CorrectlyParsed()
         {
             var actual = "Value1".ParseEnum<TestEnum>();
-            Assert.AreEqual(TestEnum.Value1, actual.Case1);
+            Assert.AreEqual(TestEnum.Value1, actual.Value);
+        }
+
+        [Test]
+        public void ValidEnumValue_HasValue()
+        {
+            var actual = "Value1".ParseEnum<TestEnum>();
+            Assert.IsTrue(actual.HasValue);
         }
 
         [Test]
         public void WrongCaseEnumValue_CorrectlyParsedIfCaseIgnored()
         {
             var actual = "value2".ParseEnumIgnoringCase<TestEnum>();
-            Assert.AreEqual(TestEnum.Value2, actual.Case1);
+            Assert.AreEqual(TestEnum.Value2, actual.Value);
         }
 
         [Test]
-        public void InvalidEnumValue_ResultsInError()
+        public void InvalidEnumValue_ResultsInNoValue()
         {
             var actual = "nonsense".ParseEnum<TestEnum>();
-            Assert.AreEqual(Variant.Case2, actual.Case);
+            Assert.IsFalse(actual.HasValue);
         }
 
         [Test]
-        public void InvalidEnumValue_ResultsInErrorWhenCaseIgnored()
+        public void InvalidEnumValue_ResultsInNoValueWhenCaseIgnored()
         {
             var actual = "nonsense".ParseEnumIgnoringCase<TestEnum>();
-            Assert.AreEqual(Variant.Case2, actual.Case);
+            Assert.IsFalse(actual.HasValue);
         }
 
         [Test, ExpectedException(exceptionType: typeof(ArgumentException))]

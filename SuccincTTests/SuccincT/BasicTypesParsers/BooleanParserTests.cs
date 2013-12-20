@@ -1,6 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using SuccincT.BasicTypesParsers;
-using SuccincT.Unions;
 
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
@@ -11,17 +11,38 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
     public class BooleanParserTests
     {
         [Test]
-        public void ValidBooleanString_ResultsInSuccess()
+        public void ValidTrueBooleanString_ResultsInValue()
         {
             var result = "true".ParseBoolean();
-            Assert.IsTrue(result.Case1);
+            Assert.IsTrue(result.Value);
         }
 
         [Test]
-        public void InvalidBooleanString_ResultsInError()
+        public void ValidFalseBooleanString_ResultsInValue()
+        {
+            var result = "false".ParseBoolean();
+            Assert.IsFalse(result.Value);
+        }
+
+        [Test]
+        public void ValidBooleanString_ResultsInHavingValue()
+        {
+            var result = "true".ParseBoolean();
+            Assert.IsTrue(result.HasValue);
+        }
+
+        [Test]
+        public void InvalidBooleanString_ResultsInNone()
         {
             var result = "maybe".ParseBoolean();
-            Assert.AreEqual(Variant.Case2, result.Case);
+            Assert.IsFalse(result.HasValue);
+        }
+
+        [Test, ExpectedException(typeof(InvalidOperationException))]
+        public void InvalidBooleanString_ResultsInExceptionIfValueRead()
+        {
+            var result = "maybe".ParseBoolean();
+            Assert.IsFalse(result.Value);
         }
     }
 }

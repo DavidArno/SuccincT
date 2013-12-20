@@ -1,13 +1,48 @@
-﻿using SuccincT.Unions;
+﻿using System;
 
 namespace SuccincT.Options
 {
-    public class Option<T> : Union<T, None>
+    /// <summary>
+    /// Provides an optional value of type T. Modelled on F# options. Either contains a T value, or None.
+    /// </summary>
+    public class Option<T>
     {
-        public Option(T value) : base(value) { }
-        internal Option(None value) : base(value) { }
+        private readonly T _value;
+        private readonly bool _containsValue;
 
-        public bool HasValue { get { return Case == Variant.Case1; } }
-        public T Value { get { return Case1; } }
+        internal Option(T value)
+        {
+            _value = value;
+            _containsValue = true;
+        }
+
+        internal Option() { _containsValue = false; }
+
+        public bool HasValue { get { return _containsValue; } }
+        public T Value 
+        { 
+            get
+            {
+                if (!_containsValue) { throw new InvalidOperationException("Option contains no value."); }
+                return _value;
+            }
+        }
+
+        public void MatchAndAction(Action<T> valueAction, Action noneAction)
+        {
+            if (_containsValue)
+            {
+                valueAction(_value);
+            }
+            else
+            {
+                noneAction();
+            }
+        }
+
+        public TResult MatchAndResult<TResult>(Func<T, TResult> valueFunction, Func<TResult> noneFunction) 
+        {
+            return _containsValue ? valueFunction(_value) : noneFunction();
+        }
     }
 }
