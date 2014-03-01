@@ -59,5 +59,33 @@ namespace SuccincTTests.SuccincT.Options
             var result = valueOrError.MatchAndResult(s => "v" + s, s => "e" + s);
             Assert.AreEqual("e2", result);
         }
+
+        [Test]
+        public void WhenValueIsSet_HasValueIsTrue()
+        {
+            var valueOrError = ValueOrError.CreateWithValue("1");
+            Assert.IsTrue(valueOrError.HasValue);
+        }
+
+        [Test]
+        public void WhenErrorIsSet_HasValueIsFalse()
+        {
+            var valueOrError = ValueOrError.CreateWithError("2");
+            Assert.IsFalse(valueOrError.HasValue);
+        }
+
+        [Test]
+        public void WhenValueIsSet_ValueCanBeAccessed()
+        {
+            var valueOrError = ValueOrError.CreateWithValue("1");
+            Assert.AreEqual("1", valueOrError.ValueOrErrorString);
+        }
+
+        [Test]
+        public void WhenErrorIsSet_ErrorCanBeAccessed()
+        {
+            var valueOrError = ValueOrError.CreateWithError("2");
+            Assert.AreEqual("2", valueOrError.ValueOrErrorString);
+        }
     }
 }

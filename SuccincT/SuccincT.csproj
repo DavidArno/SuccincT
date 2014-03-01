@@ -77,6 +77,7 @@
     <Compile Include="Unions\Variant.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Documentation\Options\ValueOrError.md" />
     <None Include="Documentation\Options\Option.md" />
     <None Include="Documentation\Options\Option_T_.md" />
     <None Include="Documentation\Unions\None.md" />
