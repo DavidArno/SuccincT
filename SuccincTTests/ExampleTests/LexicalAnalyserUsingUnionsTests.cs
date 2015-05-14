@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SuccinctExamples;
 
-namespace SuccincTTests.Examples
+namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
     public class LexicalAnalyserUsingUnionsTests

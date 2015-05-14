@@ -1,7 +1,7 @@
 ﻿namespace SuccincT.Unions
 {
     /// <summary>
-    /// Singleton value class that encapsulates the None literal used by various SuccincT classes.
+    /// Singleton value class that encapsulates the None literal used by various Succinct classes.
     /// </summary>
     public sealed class None
     {

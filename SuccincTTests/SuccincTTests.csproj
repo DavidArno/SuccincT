@@ -47,7 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Examples\LexicalAnalyserUsingUnionsTests.cs" />
+    <Compile Include="Examples\ColorMatcher.cs" />
+    <Compile Include="Examples\PatternWithOrAndElseMatcher.cs" />
+    <Compile Include="Examples\OptionMatcherExamples.cs" />
+    <Compile Include="ExampleTests\ColorMatcherTester.cs" />
+    <Compile Include="ExampleTests\LexicalAnalyserUsingUnionsTests.cs" />
+    <Compile Include="ExampleTests\PatternWithOrAndElseMatcherTester.cs" />
+    <Compile Include="ExampleTests\PrintOptionMatcherTester.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\BooleanParserTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
@@ -59,7 +65,6 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Compile Include="SuccincT\Options\ValueOrErrorTests.cs" />
-    <Compile Include="SuccincT\Unions\FluentMatcherT1T2Tests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Examples\SuccincTExamples.csproj">
@@ -70,6 +75,9 @@
       <Project>{23a68981-a42d-471d-ae34-3481d8551c1e}</Project>
       <Name>SuccincT</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SuccincT\Unions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,4 +1,5 @@
 ﻿using System;
+using SuccincT.Unions;
 
 namespace SuccincT.Options
 {
@@ -7,42 +8,40 @@ namespace SuccincT.Options
     /// </summary>
     public class Option<T>
     {
-        private readonly T _value;
-        private readonly bool _containsValue;
-
-        internal Option(T value)
+        private readonly Union<T, None> _union;
+ 
+        private Option()
         {
-            _value = value;
-            _containsValue = true;
+            _union = new Union<T, None>(Unions.None.Value);
         }
 
-        internal Option() { _containsValue = false; }
+        private Option(T value)
+        {
+            _union = new Union<T, None>(value);
+        }
 
-        public bool HasValue { get { return _containsValue; } }
-        public T Value 
-        { 
+        public static Option<T> None() { return new Option<T>(); }
+        public static Option<T> Some(T value) { return new Option<T>(value); }
+
+        public OptionMatcher<T, TResult> Match<TResult>()
+        {
+            return new OptionMatcher<T, TResult>(this);
+        }
+
+        public OptionMatcherUnit<T> MatchAndExec()
+        {
+            return new OptionMatcherUnit<T>(this);
+        }
+
+        public bool HasValue { get { return _union.Case == Variant.Case1; } }
+
+        public T Value
+        {
             get
             {
-                if (!_containsValue) { throw new InvalidOperationException("Option contains no value."); }
-                return _value;
+                if (!HasValue) { throw new InvalidOperationException("Option contains no value."); }
+                return _union.Case1;
             }
-        }
-
-        public void MatchAndAction(Action<T> valueAction, Action noneAction)
-        {
-            if (_containsValue)
-            {
-                valueAction(_value);
-            }
-            else
-            {
-                noneAction();
-            }
-        }
-
-        public TResult MatchAndResult<TResult>(Func<T, TResult> valueFunction, Func<TResult> noneFunction) 
-        {
-            return _containsValue ? valueFunction(_value) : noneFunction();
         }
     }
 }

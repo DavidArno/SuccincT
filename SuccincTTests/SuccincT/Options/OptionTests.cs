@@ -10,28 +10,28 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenOptionIsValue_ResultIsValue()
         {
-            var result = Option.Some(1);
+            var result = Option<int>.Some(1);
             Assert.AreEqual(1, result.Value);
         }
 
         [Test]
         public void WhenOptionIsValue_ResultHasValue()
         {
-            var result = Option.Some(1);
+            var result = Option<int>.Some(1);
             Assert.IsTrue(result.HasValue);
         }
 
         [Test]
         public void WhenOptionNotValue_ResultIsNone()
         {
-            var result = Option.None<int>();
+            var result = Option<int>.None();
             Assert.IsFalse(result.HasValue);
         }
 
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
-            var result = Option.None<bool>();
+            var result = Option<bool>.None();
             Assert.IsFalse(result.Value);
         }
 
@@ -39,8 +39,8 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsValue_ValueActionInvoked()
         {
             var intValue = 0;
-            var option = Option.Some(1);
-            option.MatchAndAction(x => { intValue = x; }, () => { });
+            var option = Option<int>.Some(1);
+            option.MatchAndExec().Some(x => intValue = x).None(() => { }).Exec();
             Assert.AreEqual(1, intValue);
         }
 
@@ -48,24 +48,24 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsNone_NoneActionInvoked()
         {
             var noneInvoked = false;
-            var option = Option.None<int>();
-            option.MatchAndAction(x => { }, () => { noneInvoked = true; });
+            var option = Option<int>.None();
+            option.MatchAndExec().Some(x => { }).None(() => noneInvoked = true).Exec();
             Assert.IsTrue(noneInvoked);
         }
 
         [Test]
         public void WhenOptionIsValue_ValueResultIsReturned()
         {
-            var option = Option.Some(1);
-            var result = option.MatchAndResult(x => x, () => 0);
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().Some(x => x).None(() => 0).Result();
             Assert.AreEqual(1, result);
         }
 
         [Test]
         public void WhenOptionIsNone_NoneResultIsReturned()
         {
-            var option = Option.None<int>();
-            var result = option.MatchAndResult(x => 1, () => 0);
+            var option = Option<int>.None();
+            var result = option.Match<int>().Some(x => 1).None(() => 0).Result();
             Assert.AreEqual(0, result);
         }
     }

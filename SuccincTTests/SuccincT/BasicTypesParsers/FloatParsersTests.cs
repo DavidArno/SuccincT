@@ -80,6 +80,13 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         }
 
         [Test]
+        public void NonNumberDoubleString_ResultsInNone()
+        {
+            var result = "hello".ParseDouble();
+            Assert.IsFalse(result.HasValue);
+        }
+
+        [Test]
         public void ValidDecimalString_ResultsInValue()
         {
             var result = "12345678901234567890124567".ParseDecimal();

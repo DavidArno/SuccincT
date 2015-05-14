@@ -16,7 +16,7 @@ namespace SuccincT.BasicTypesParsers
             var argumentTypes = new[] { typeof(string), typeof(TParseType).MakeByRefType() };
             var success = (bool)typeof(TParseType).GetMethod("TryParse", argumentTypes).Invoke(null, arguments);
 
-            return success ? new Option<TParseType>((TParseType)arguments[1]) : Option.None<TParseType>();
+            return success ? Option<TParseType>.Some((TParseType)arguments[1]) : Option<TParseType>.None();
         }
     }
 }

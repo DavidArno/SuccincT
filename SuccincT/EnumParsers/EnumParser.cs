@@ -45,11 +45,11 @@ namespace SuccincT.EnumParsers
             try
             {
                 var value = (T)Enum.Parse(typeof(T), source, ignoreCase);
-                return Option.Some(value);
+                return Option<T>.Some(value);
             }
             catch (ArgumentException)
             {
-                return Option.None<T>();
+                return Option<T>.None();
             }
         }
     }
