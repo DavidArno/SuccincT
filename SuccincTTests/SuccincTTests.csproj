@@ -53,7 +53,8 @@
     <Compile Include="ExampleTests\ColorMatcherTester.cs" />
     <Compile Include="ExampleTests\LexicalAnalyserUsingUnionsTests.cs" />
     <Compile Include="ExampleTests\PatternWithOrAndElseMatcherTester.cs" />
-    <Compile Include="ExampleTests\PrintOptionMatcherTester.cs" />
+    <Compile Include="ExampleTests\OptionMatcherExamplesTester.cs" />
+    <Compile Include="ExampleTests\SinglePositiveOddDigitTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\BooleanParserTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />

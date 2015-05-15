@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SuccincT.Options;
 
 namespace SuccincTTests.Examples
@@ -26,12 +27,36 @@ namespace SuccincTTests.Examples
         {
             return data.Match<string>()
                        .Some(1).Do(x => "One")
-                       .Some(2).Do(x => "Two")
+                       .Some(2, x => "Two")
                        .Some(3).Do(x => "Three")
                        .Some(4).Do(x => "Four")
                        .Some(x => x.ToString())
                        .None(() => "None")
                        .Result();
+        }
+
+        public static void SinglePositiveOddDigitPrinter(Option<int> data)
+        {
+            data.MatchAndExec()
+                .Some(0, x => Console.WriteLine("0 isn't positive or negative"))
+                .When(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(Console.WriteLine)
+                .When(x => x > 9).Do(i => Console.WriteLine("{0} isn't 1 digit", i))
+                .When(x => x < 0, i => Console.WriteLine("{0} isn't positive", i))
+                .Some(x => Console.WriteLine("{0} isn't odd", x))
+                .None(() => Console.WriteLine("There was no value"))
+                .Exec();
+        }
+
+        public static string SinglePositiveOddDigitReporter(Option<int> data)
+        {
+            return data.Match<string>()
+                .Some(0, x => "0 isn't positive or negative")
+                .When(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(x  => x.ToString())
+                .When(x => x > 9).Do(x => string.Format("{0} isn't 1 digit", x))
+                .When(x => x < 0, i => string.Format("{0} isn't positive", i))
+                .Some(x => string.Format("{0} isn't odd", x))
+                .None(() => string.Format("There was no value"))
+                .Result();
         }
     }
 }

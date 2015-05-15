@@ -8,8 +8,8 @@ namespace SuccincT.Options
     {
         private readonly Option<T> _option;
 
-        private readonly List<Tuple<List<T>, Func<T, TReturn>>> _specificValueActions =
-            new List<Tuple<List<T>, Func<T, TReturn>>>();
+        private readonly List<Tuple<List<Func<T, bool>>, Func<T, TReturn>>> _specificValueActions =
+            new List<Tuple<List<Func<T, bool>>, Func<T, TReturn>>>();
 
         private Func<T, TReturn> _someAction =
             x => { throw new InvalidOperationException("No match action defined for Option with arbitary value"); };
@@ -33,6 +33,23 @@ namespace SuccincT.Options
             return new OptionMatcherExpressionBuilder<T, TReturn>(this, value);
         }
 
+        public OptionMatcherExpressionBuilder<T, TReturn> When(Func<T, bool> testExpression)
+        {
+            return new OptionMatcherExpressionBuilder<T, TReturn>(this, testExpression);
+        }
+
+        public OptionMatcher<T, TReturn> Some(T value, Func<T, TReturn> func)
+        {
+            AddMatchExpressions(new List<Func<T, bool>> { x => EqualityComparer<T>.Default.Equals(x, value) }, func);
+            return this;
+        }
+
+        public OptionMatcher<T, TReturn> When(Func<T, bool> testExpression, Func<T, TReturn> action)
+        {
+            AddMatchExpressions(new List<Func<T, bool>> { testExpression }, action);
+            return this;
+        }
+
         public OptionMatcher<T, TReturn> None(Func<TReturn> action)
         {
             _noneAction = action;
@@ -48,15 +65,15 @@ namespace SuccincT.Options
             return _someAction(_option.Value);
         }
 
-        internal void Some(List<T> values, Func<T, TReturn> action)
+        internal void AddMatchExpressions(List<Func<T, bool>> values, Func<T, TReturn> action)
         {
-            _specificValueActions.Add(new Tuple<List<T>, Func<T, TReturn>>(values, action));
+            _specificValueActions.Add(new Tuple<List<Func<T, bool>>, Func<T, TReturn>>(values, action));
         }
 
         private Func<T, TReturn> FindSpecificValueAction()
         {
             return (from valueAction in _specificValueActions
-                    where valueAction.Item1.Any(value => EqualityComparer<T>.Default.Equals(_option.Value, value))
+                    where valueAction.Item1.Any(func => func(_option.Value))
                     select valueAction.Item2).FirstOrDefault();
         }
     }
