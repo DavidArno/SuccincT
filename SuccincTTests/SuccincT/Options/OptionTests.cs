@@ -40,7 +40,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var intValue = 0;
             var option = Option<int>.Some(1);
-            option.MatchAndExec().Some(x => intValue = x).None(() => { }).Exec();
+            option.Match().Some(x => intValue = x).None(() => { }).Exec();
             Assert.AreEqual(1, intValue);
         }
 
@@ -49,7 +49,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var noneInvoked = false;
             var option = Option<int>.None();
-            option.MatchAndExec().Some(x => { }).None(() => noneInvoked = true).Exec();
+            option.Match().Some(x => { }).None(() => noneInvoked = true).Exec();
             Assert.IsTrue(noneInvoked);
         }
 

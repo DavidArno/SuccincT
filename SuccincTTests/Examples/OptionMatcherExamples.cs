@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SuccincT.Options;
 
 namespace SuccincTTests.Examples
@@ -8,16 +7,16 @@ namespace SuccincTTests.Examples
     {
         public static void PrintOption(Option<int> data)
         {
-            data.MatchAndExec()
-                .Some(Console.WriteLine)
+            data.Match()
+                .Some(x => Console.WriteLine(x))
                 .None(() => { })
                 .Exec();
         }
 
         public static void OptionMatcher(Option<int> data)
         {
-            data.MatchAndExec()
-                .Some(1).Or(2).Or(3).Do(Console.WriteLine)
+            data.Match()
+                .Some(1).Or(2).Or(3).Do(x => Console.WriteLine(x))
                 .Some(i => Console.WriteLine("{0} isn't 1, 2 or 3!", i))
                 .None(() => { })
                 .Exec();
@@ -37,9 +36,9 @@ namespace SuccincTTests.Examples
 
         public static void SinglePositiveOddDigitPrinter(Option<int> data)
         {
-            data.MatchAndExec()
+            data.Match()
                 .Some(0, x => Console.WriteLine("0 isn't positive or negative"))
-                .When(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(Console.WriteLine)
+                .When(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(x => Console.WriteLine(x))
                 .When(x => x > 9).Do(i => Console.WriteLine("{0} isn't 1 digit", i))
                 .When(x => x < 0, i => Console.WriteLine("{0} isn't positive", i))
                 .Some(x => Console.WriteLine("{0} isn't odd", x))

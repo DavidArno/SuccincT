@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SuccincT.Options
 {
-    public class OptionMatcherExpressionBuilder<T, TReturn> 
+    public class OptionMatcherExpressionBuilder<T, TReturn>
     {
         private readonly OptionMatcher<T, TReturn> _matcher;
         private readonly List<Func<T, bool>> _expressions = new List<Func<T, bool>>();
@@ -14,7 +14,8 @@ namespace SuccincT.Options
             _expressions.Add(x => EqualityComparer<T>.Default.Equals(x, value));
         }
 
-        public OptionMatcherExpressionBuilder(OptionMatcher<T, TReturn> matcher, Func<T, bool> testExpression)
+        public OptionMatcherExpressionBuilder(OptionMatcher<T, TReturn> matcher,
+                                              Func<T, bool> testExpression)
         {
             _matcher = matcher;
             _expressions.Add(testExpression);
@@ -29,6 +30,12 @@ namespace SuccincT.Options
         public OptionMatcher<T, TReturn> Do(Func<T, TReturn> action)
         {
             _matcher.AddMatchExpressions(_expressions, action);
+            return _matcher;
+        }
+
+        public OptionMatcher<T, TReturn> Do(Action<T> action)
+        {
+            _matcher.AddMatchExpressions(_expressions, x => { action(x); return default(TReturn); });
             return _matcher;
         }
     }

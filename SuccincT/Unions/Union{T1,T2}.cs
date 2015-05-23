@@ -1,11 +1,10 @@
 ﻿using SuccincT.Exceptions;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions
 {
     public class Union<T1, T2>
     {
-        private sealed class MatcherPaddingType { }
-    
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly Variant _case;
@@ -40,6 +39,11 @@ namespace SuccincT.Unions
                 if (_case == Variant.Case2) { return _value2; }
                 throw new InvalidCaseException(Variant.Case2, _case);
             }
+        }
+
+        public UnionPatternMatcher<Union<T1, T2>, T1, T2, TReturn> Match<TReturn>()
+        {
+            return new UnionPatternMatcher<Union<T1, T2>, T1, T2, TReturn>(this);
         }
     }
 }

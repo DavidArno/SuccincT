@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SuccincT.Options
 {
-    public class OptionMatcher<T, TReturn>
+    public sealed class OptionMatcher<T, TReturn>
     {
         private readonly Option<T> _option;
 
@@ -17,7 +17,7 @@ namespace SuccincT.Options
         private Func<TReturn> _noneAction =
             () => { throw new InvalidOperationException("No match action defined for Option with no value"); };
 
-        public OptionMatcher(Option<T> option)
+        internal OptionMatcher(Option<T> option)
         {
             _option = option;
         }
@@ -25,6 +25,12 @@ namespace SuccincT.Options
         public OptionMatcher<T, TReturn> Some(Func<T, TReturn> action)
         {
             _someAction = action;
+            return this;
+        }
+
+        public OptionMatcher<T, TReturn> Some(Action<T> action)
+        {
+            _someAction = x => { action(x); return default(TReturn); };
             return this;
         }
 
@@ -44,9 +50,23 @@ namespace SuccincT.Options
             return this;
         }
 
+        public OptionMatcher<T, TReturn> Some(T value, Action<T> action)
+        {
+            AddMatchExpressions(new List<Func<T, bool>> { x => EqualityComparer<T>.Default.Equals(x, value) }, 
+                                x => { action(x); return default(TReturn); });
+            return this;
+        }
+
         public OptionMatcher<T, TReturn> When(Func<T, bool> testExpression, Func<T, TReturn> action)
         {
             AddMatchExpressions(new List<Func<T, bool>> { testExpression }, action);
+            return this;
+        }
+
+        public OptionMatcher<T, TReturn> When(Func<T, bool> testExpression, Action<T> action)
+        {
+            AddMatchExpressions(new List<Func<T, bool>> { testExpression }, 
+                                x => { action(x); return default(TReturn); });
             return this;
         }
 
@@ -56,13 +76,23 @@ namespace SuccincT.Options
             return this;
         }
 
+        public OptionMatcher<T, TReturn> None(Action action)
+        {
+            _noneAction = () => { action(); return default(TReturn); };
+            return this;
+        }
+
         public TReturn Result()
         {
             if (!_option.HasValue) { return _noneAction(); }
 
             var action = FindSpecificValueAction();
-            if (action != null) { return action(_option.Value); }
-            return _someAction(_option.Value);
+            return action != null ? action(_option.Value) : _someAction(_option.Value);
+        }
+
+        public void Exec()
+        {
+            Result();
         }
 
         internal void AddMatchExpressions(List<Func<T, bool>> values, Func<T, TReturn> action)

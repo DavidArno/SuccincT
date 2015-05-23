@@ -28,9 +28,9 @@ namespace SuccincT.Options
             return new OptionMatcher<T, TResult>(this);
         }
 
-        public OptionMatcherUnit<T> MatchAndExec()
+        public OptionMatcher<T, T> Match()
         {
-            return new OptionMatcherUnit<T>(this);
+            return new OptionMatcher<T, T>(this);
         }
 
         public bool HasValue { get { return _union.Case == Variant.Case1; } }
