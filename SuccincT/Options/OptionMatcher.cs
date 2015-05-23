@@ -1,110 +1,61 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using SuccincT.PatternMatchers;
+using SuccincT.Unions;
 
 namespace SuccincT.Options
 {
     public sealed class OptionMatcher<T, TReturn>
     {
+        private readonly Union<T, None> _union;
         private readonly Option<T> _option;
 
-        private readonly List<Tuple<List<Func<T, bool>>, Func<T, TReturn>>> _specificValueActions =
-            new List<Tuple<List<Func<T, bool>>, Func<T, TReturn>>>();
+        private readonly UnionCaseActionSelector<T, TReturn> _case1ActionSelector =
+            new UnionCaseActionSelector<T, TReturn>(
+                x => { throw new InvalidOperationException("No match action defined for Option with value"); });
 
-        private Func<T, TReturn> _someAction =
-            x => { throw new InvalidOperationException("No match action defined for Option with arbitary value"); };
+        private readonly UnionCaseActionSelector<None, TReturn> _case2ActionSelector =
+            new UnionCaseActionSelector<None, TReturn>(
+                x => { throw new InvalidOperationException("No match action defined for Option with no value"); });
 
-        private Func<TReturn> _noneAction =
-            () => { throw new InvalidOperationException("No match action defined for Option with no value"); };
-
-        internal OptionMatcher(Option<T> option)
+        internal OptionMatcher(Union<T, None> union, Option<T> option)
         {
+            _union = union;
             _option = option;
         }
 
-        public OptionMatcher<T, TReturn> Some(Func<T, TReturn> action)
+        public UnionPatternCaseHandler<OptionMatcher<T, TReturn>, T, TReturn> Some()
         {
-            _someAction = action;
-            return this;
+            return new UnionPatternCaseHandler<OptionMatcher<T, TReturn>, T, TReturn>(RecordAction, this);
         }
 
-        public OptionMatcher<T, TReturn> Some(Action<T> action)
+        public NoneMatchHandler<T, TReturn> None()
         {
-            _someAction = x => { action(x); return default(TReturn); };
-            return this;
+            return new NoneMatchHandler<T, TReturn>(RecordAction, this);
         }
 
-        public OptionMatcherExpressionBuilder<T, TReturn> Some(T value)
+        public UnionPatternMatcherAfterElse<Union<T, None>, T, None, TReturn> Else(Func<Option<T>, TReturn> elseAction)
         {
-            return new OptionMatcherExpressionBuilder<T, TReturn>(this, value);
-        }
-
-        public OptionMatcherExpressionBuilder<T, TReturn> When(Func<T, bool> testExpression)
-        {
-            return new OptionMatcherExpressionBuilder<T, TReturn>(this, testExpression);
-        }
-
-        public OptionMatcher<T, TReturn> Some(T value, Func<T, TReturn> func)
-        {
-            AddMatchExpressions(new List<Func<T, bool>> { x => EqualityComparer<T>.Default.Equals(x, value) }, func);
-            return this;
-        }
-
-        public OptionMatcher<T, TReturn> Some(T value, Action<T> action)
-        {
-            AddMatchExpressions(new List<Func<T, bool>> { x => EqualityComparer<T>.Default.Equals(x, value) }, 
-                                x => { action(x); return default(TReturn); });
-            return this;
-        }
-
-        public OptionMatcher<T, TReturn> When(Func<T, bool> testExpression, Func<T, TReturn> action)
-        {
-            AddMatchExpressions(new List<Func<T, bool>> { testExpression }, action);
-            return this;
-        }
-
-        public OptionMatcher<T, TReturn> When(Func<T, bool> testExpression, Action<T> action)
-        {
-            AddMatchExpressions(new List<Func<T, bool>> { testExpression }, 
-                                x => { action(x); return default(TReturn); });
-            return this;
-        }
-
-        public OptionMatcher<T, TReturn> None(Func<TReturn> action)
-        {
-            _noneAction = action;
-            return this;
-        }
-
-        public OptionMatcher<T, TReturn> None(Action action)
-        {
-            _noneAction = () => { action(); return default(TReturn); };
-            return this;
+            return new UnionPatternMatcherAfterElse<Union<T, None>, T, None, TReturn>(_union,
+                                                                                      _case1ActionSelector,
+                                                                                      _case2ActionSelector,
+                                                                                      x => elseAction(_option));
         }
 
         public TReturn Result()
         {
-            if (!_option.HasValue) { return _noneAction(); }
-
-            var action = FindSpecificValueAction();
-            return action != null ? action(_option.Value) : _someAction(_option.Value);
+            return _union.Case == Variant.Case1 
+                ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1) 
+                : _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
         }
 
-        public void Exec()
+        private void RecordAction(Func<T, bool> test, Func<T, TReturn> action)
         {
-            Result();
+            _case1ActionSelector.AddTestAndAction(test, action);
         }
 
-        internal void AddMatchExpressions(List<Func<T, bool>> values, Func<T, TReturn> action)
+        private void RecordAction(Func<TReturn> action)
         {
-            _specificValueActions.Add(new Tuple<List<Func<T, bool>>, Func<T, TReturn>>(values, action));
-        }
-
-        private Func<T, TReturn> FindSpecificValueAction()
-        {
-            return (from valueAction in _specificValueActions
-                    where valueAction.Item1.Any(func => func(_option.Value))
-                    select valueAction.Item2).FirstOrDefault();
+            _case2ActionSelector.AddTestAndAction(x => true, x => action());
         }
     }
 }

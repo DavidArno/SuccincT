@@ -25,12 +25,12 @@ namespace SuccincT.Options
 
         public OptionMatcher<T, TResult> Match<TResult>()
         {
-            return new OptionMatcher<T, TResult>(this);
+            return new OptionMatcher<T, TResult>(_union, this);
         }
 
-        public OptionMatcher<T, T> Match()
+        public OptionMatcher2<T, T> Match()
         {
-            return new OptionMatcher<T, T>(this);
+            return new OptionMatcher2<T, T>(this);
         }
 
         public bool HasValue { get { return _union.Case == Variant.Case1; } }

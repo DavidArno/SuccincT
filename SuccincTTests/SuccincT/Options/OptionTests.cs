@@ -57,7 +57,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsValue_ValueResultIsReturned()
         {
             var option = Option<int>.Some(1);
-            var result = option.Match<int>().Some(x => x).None(() => 0).Result();
+            var result = option.Match<int>().Some().Do(x => x).None().Do(() => 0).Result();
             Assert.AreEqual(1, result);
         }
 
@@ -65,7 +65,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsNone_NoneResultIsReturned()
         {
             var option = Option<int>.None();
-            var result = option.Match<int>().Some(x => 1).None(() => 0).Result();
+            var result = option.Match<int>().Some().Do(x => 1).None().Do(() => 0).Result();
             Assert.AreEqual(0, result);
         }
     }

@@ -27,7 +27,10 @@ namespace SuccincT.PatternMatchers
                 ? _case1ActionSelector.DetermineResult(_union.Case1) 
                 : _case2ActionSelector.DetermineResult(_union.Case2);
 
-            return matchedResult.Match<TReturn>().Some(x => x).None(() => _elseAction(_union)).Result();
+            return matchedResult.Match<TReturn>()
+                                .Some().Do(x => x)
+                                .None().Do(() => _elseAction(_union))
+                                .Result();
         }
     }
 }
