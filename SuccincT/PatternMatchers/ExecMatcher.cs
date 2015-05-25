@@ -53,7 +53,7 @@ namespace SuccincT.PatternMatchers
 
         internal ExecMatcher<T> Case(List<T> values, Action action)
         {
-            _cases.Add(new CaseDetails { Values = values, Action = (x) => action() });
+            _cases.Add(new CaseDetails { Values = values, Action = x => action() });
             return this;
         }
 

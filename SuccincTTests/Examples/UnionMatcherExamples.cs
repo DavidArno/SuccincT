@@ -1,4 +1,5 @@
-﻿using SuccincT.Unions;
+﻿using System;
+using SuccincT.Unions;
 
 namespace SuccincTTests.Examples
 {
@@ -31,7 +32,7 @@ namespace SuccincTTests.Examples
                         .Result();
         }
 
-        public static string SingleDigitOffNumberOrTrueDetectorExample(Union<int, bool> value)
+        public static string SinglePositiveOddDigitAndTrueReporter(Union<int, bool> value)
         {
             return value.Match<string>()
                         .Case1().Of(0).Do(x => "0 isn't positive or negative")
@@ -40,8 +41,21 @@ namespace SuccincTTests.Examples
                         .Case1().Where(x => x < 0).Do(i => string.Format("{0} isn't positive", i))
                         .Case1().Do(x => string.Format("{0} isn't odd", x))
                         .Case2().Of(true).Do(b => "Found true")
-                        .Case2().Do(b => "{0} isn't true or single odd digit.")
+                        .Case2().Do(b => string.Format("{0} isn't true or single odd digit.", b))
                         .Result();
+        }
+
+        public static void SinglePositiveOddDigitAndTruePrinter(Union<int, bool> value)
+        {
+            value.Match()
+                 .Case1().Of(0).Do(x => Console.WriteLine("0 isn't positive or negative"))
+                 .Case1().Where(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(Console.WriteLine)
+                 .Case1().Where(x => x > 9).Do(x => Console.WriteLine("{0} isn't 1 digit", x))
+                 .Case1().Where(x => x < 0).Do(i => Console.WriteLine("{0} isn't positive", i))
+                 .Case1().Do(x => Console.WriteLine("{0} isn't odd", x))
+                 .Case2().Of(true).Do(b => Console.WriteLine("Found true"))
+                 .Else(o => Console.WriteLine("{0} isn't true or single odd digit.", o.Case2))
+                 .Exec();
         }
 
         public static string ElseExample(Union<int, bool> value)

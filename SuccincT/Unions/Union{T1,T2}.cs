@@ -59,5 +59,10 @@ namespace SuccincT.Unions
         {
             return new UnionPatternMatcher<Union<T1, T2>, T1, T2, TReturn>(this);
         }
+
+        public UnionPatternMatcher<Union<T1, T2>, T1, T2> Match()
+        {
+            return new UnionPatternMatcher<Union<T1, T2>, T1, T2>(this);
+        }
     }
 }

@@ -50,11 +50,9 @@
   <ItemGroup>
     <Compile Include="BasicTypesParsers\BooleanParser.cs" />
     <Compile Include="EnumParsers\EnumParser.cs" />
-    <Compile Include="Exceptions\InvalidSuccessOperationException.cs" />
     <Compile Include="BasicTypesParsers\FloatParsers.cs" />
     <Compile Include="BasicTypesParsers\IntParsers.cs" />
     <Compile Include="BasicTypesParsers\ReflectionBasedParser.cs" />
-    <Compile Include="Exceptions\NoMatchFoundException.cs" />
     <Compile Include="FunctionalComposition\Function.cs" />
     <Compile Include="Options\NoneMatchHandler{T}.cs" />
     <Compile Include="Options\OptionMatcher{T}.cs" />
@@ -78,11 +76,11 @@
     <Compile Include="PatternMatchers\UnionPatternCaseHandler{TM,TV,TR}.cs" />
     <Compile Include="PatternMatchers\UnionPatternMatcherAfterElse{TU,T1,T2}.cs" />
     <Compile Include="PatternMatchers\UnionPatternMatcherAfterElse{TU,T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternMatcher{T1,T2}.cs" />
+    <Compile Include="PatternMatchers\UnionPatternMatcher{TU,T1,T2}.cs" />
+    <Compile Include="PatternMatchers\UnionPatternMatcher{TU,T1,T2,TR}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option{T}.cs" />
     <Compile Include="Exceptions\InvalidCaseException.cs" />
-    <Compile Include="Unions\UnionMatcher.cs" />
     <Compile Include="Unions\Union{T1,T2,T3}.cs" />
     <Compile Include="Unions\Union{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\None.cs" />

@@ -42,7 +42,7 @@ namespace SuccincTTests.Examples
                 .Some().Where(x => x > 9).Do(i => Console.WriteLine("{0} isn't 1 digit", i))
                 .Some().Where(x => x < 0).Do(i => Console.WriteLine("{0} isn't positive", i))
                 .Some().Do(x => Console.WriteLine("{0} isn't odd", x))
-                .None().Do(() => Console.WriteLine("There was no value"))
+                .Else(o => Console.WriteLine("There was no value"))
                 .Exec();
         }
 

@@ -68,5 +68,45 @@ namespace SuccincTTests.SuccincT.Options
             var result = option.Match<int>().Some().Do(x => 1).None().Do(() => 0).Result();
             Assert.AreEqual(0, result);
         }
+
+        [Test]
+        public void WhenOptionIsNoneElseIsDefinedAndNoNoneMatch_ElseResultIsReturned()
+        {
+            var option = Option<int>.None();
+            var result = option.Match<int>().Some().Do(x => 1).Else(o => 0).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void WhenOptionIsSomeElseIsDefinedAndNoSomeMatch_ElseResultIsReturned()
+        {
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().None().Do(() => 0).Else(o => o.Value).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void WhenOptionIsSomeElseIsDefinedAndSomeDoesntMatch_ElseResultIsReturned()
+        {
+            var option = Option<int>.Some(2);
+            var result = option.Match<int>().Some().Of(1).Do(x => 1).None().Do(() => 0).Else(o => o.Value).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
+        {
+            var option = Option<int>.None();
+            var result = option.Match<int>().Some().Do(x => 1).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
+        {
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().None().Do(() => 0).Result();
+            Assert.AreEqual(0, result);
+        }
     }
 }
