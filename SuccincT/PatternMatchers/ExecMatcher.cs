@@ -22,7 +22,7 @@ namespace SuccincT.PatternMatchers
 
         public ExecMatcher<T> Case(T value, Action action)
         {
-            _cases.Add(new CaseDetails { Values = new List<T> { value }, Action = (x) => action() });
+            _cases.Add(new CaseDetails { Values = new List<T> { value }, Action = x => action() });
             return this;
         }
 

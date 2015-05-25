@@ -16,34 +16,46 @@ namespace SuccincT.Options
             _error = error;
         }
 
-        public static ValueOrError CreateWithValue(string value)
+        public static ValueOrError WithValue(string value)
         {
             return new ValueOrError(value, null);
         }
 
-        public static ValueOrError CreateWithError(string error)
+        public static ValueOrError WithError(string error)
         {
             return new ValueOrError(null, error);
         }
 
         public bool HasValue { get { return _value != null; } }
-        public string ValueOrErrorString { get { return HasValue ? _value : _error; } }
 
-        public void MatchAndAction(Action<string> valueAction, Action<string> errorAction)
+        public string Value
         {
-            if (_value != null)
+            get
             {
-                valueAction(_value);
-            }
-            else
-            {
-                errorAction(_error);
+                if (!HasValue) { throw new InvalidOperationException("ValueOrError doesn't contain a value"); }
+                return _value;
             }
         }
 
-        public T MatchAndResult<T>(Func<string, T> valueFunction, Func<string, T> errorFunction) 
+        public string Error
         {
-            return _value != null ? valueFunction(_value) : errorFunction(_error);
+            get
+            {
+                if (HasValue) { throw new InvalidOperationException("ValueOrError doesn't contain an error"); }
+                return _error;
+            }
+        }
+
+        public override string ToString() { return HasValue ? _value : _error; }
+
+        public ValueOrErrorMatcher<TResult> Match<TResult>()
+        {
+            return new ValueOrErrorMatcher<TResult>(this);
+        }
+
+        public ValueOrErrorMatcher Match()
+        {
+            return new ValueOrErrorMatcher(this);
         }
     }
 }

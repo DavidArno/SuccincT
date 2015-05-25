@@ -23,6 +23,20 @@ namespace SuccincT.Unions
             _case = Variant.Case2;
         }
 
+        internal Union(T1 case1Value, T2 case2Value, Variant caseToUse)
+        {
+            if (caseToUse == Variant.Case1)
+            {
+                _value1 = case1Value;
+                _case = Variant.Case1;
+            }
+            else
+            {
+                _value2 = case2Value;
+                _case = Variant.Case2;
+            }
+        }
+
         public T1 Case1
         {
             get
