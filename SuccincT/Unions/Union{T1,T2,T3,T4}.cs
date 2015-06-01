@@ -1,6 +1,4 @@
-﻿using SuccincT.Exceptions;
-
-namespace SuccincT.Unions
+﻿namespace SuccincT.Unions
 {
     public class Union<T1, T2, T3, T4>
     {

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuccincT.PatternMatchers
+namespace SuccincT.Unions.PatternMatchers
 {
     public class UnionPatternCaseExpressionHandler<TMatcher, TValue>
     {

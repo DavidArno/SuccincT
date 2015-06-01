@@ -1,6 +1,7 @@
 using System;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
+using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
@@ -10,11 +11,11 @@ namespace SuccincT.Options
 
         private readonly UnionCaseActionSelector<string> _valueActionSelector =
             new UnionCaseActionSelector<string>(
-                x => { throw new InvalidOperationException("No match action defined for ValueOrError with value"); });
+                x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
         private readonly UnionCaseActionSelector<string> _errorActionSelector =
             new UnionCaseActionSelector<string>(
-                x => { throw new InvalidOperationException("No match action defined for ValueOrError with value"); });
+                x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
         internal ValueOrErrorMatcher(ValueOrError valueOrError)
         {
@@ -31,11 +32,11 @@ namespace SuccincT.Options
             return new UnionPatternCaseHandler<ValueOrErrorMatcher, string>(RecordErrorAction, this);
         }
 
-        public UnionPatternMatcherAfterElse<Union<string, string>, string, string> Else(
+        public UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string> Else(
             Action<ValueOrError> elseAction)
         {
             var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionPatternMatcherAfterElse<Union<string, string>, string, string>(
+            return new UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string>(
                 union,
                 _valueActionSelector,
                 _errorActionSelector,
@@ -64,7 +65,7 @@ namespace SuccincT.Options
             _errorActionSelector.AddTestAndAction(test, action);
         }
 
-        private Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)
+        private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)
         {
             return valueOrError.HasValue 
                 ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)

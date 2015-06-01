@@ -2,11 +2,9 @@
 
 namespace SuccincT.PatternMatchers
 {
-    public class NoMatchException<T> : Exception
+    [Serializable]
+    public class NoMatchException : Exception
     {
-        public NoMatchException(object item)
-        {
-            throw new NotImplementedException();
-        }
+        public NoMatchException(string message) : base(message) { }
     }
 }

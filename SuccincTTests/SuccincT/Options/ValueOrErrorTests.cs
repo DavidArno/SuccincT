@@ -1,5 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using SuccincT.Options;
+using SuccincT.PatternMatchers;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -86,6 +88,98 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = ValueOrError.WithError("2");
             Assert.AreEqual("2", valueOrError.Error);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void WhenValueIsSet_AccessingErrorCausesException()
+        {
+            var valueOrError = ValueOrError.WithValue("2");
+            Assert.AreEqual("2", valueOrError.Error);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        public void WhenErrorIsSet_AccessingValueCausesAnException()
+        {
+            var valueOrError = ValueOrError.WithError("2");
+            Assert.AreEqual("2", valueOrError.Value);
+        }
+
+        [Test]
+        public void WhenValueIsSet_PrintStringYieldsValue()
+        {
+            var valueOrError = ValueOrError.WithValue("42");
+            Assert.AreEqual("Value of 42", valueOrError.ToString());
+        }
+
+        [Test]
+        public void WhenErrorIsSet_PrintStringYieldsError()
+        {
+            var valueOrError = ValueOrError.WithError("42");
+            Assert.AreEqual("Error of 42", valueOrError.ToString());
+        }
+
+        [Test]
+        public void WhenErrorIsSetAndNoErrorMatch_ElseResultIsReturned()
+        {
+            var valueOrError = ValueOrError.WithError("2");
+            var result = valueOrError.Match<int>().Value().Do(x => 0).Else(x => 3).Result();
+            Assert.AreEqual(3, result);
+        }
+
+        [Test]
+        public void WhenErrorIsSetAndNoErrorMatchForExec_ElseResultIsReturned()
+        {
+            var valueOrError = ValueOrError.WithError("2");
+            var result = "0";
+            valueOrError.Match().Value().Do(x => result = x).Else(x => result = "1").Exec();
+            Assert.AreEqual("1", result);
+        }
+
+        [Test]
+        public void WhenValueIsSetAndNoValueMatchForExec_ElseResultIsReturned()
+        {
+            var valueOrError = ValueOrError.WithValue("2");
+            var result = "0";
+            valueOrError.Match().Error().Do(x => result = x).Else(x => result = "1").Exec();
+            Assert.AreEqual("1", result);
+        }
+
+        [Test]
+        public void WhenValueIsSetAndNoErrorMatch_ElseResultIsReturned()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            var result = valueOrError.Match<int>().Error().Do(x => 2).Else(x => 3).Result();
+            Assert.AreEqual(3, result);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenValueIsSetAndNoValueMatchDefined_ExceptionThrown()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            var result = valueOrError.Match<int>().Error().Do(x => 2).Result();
+            Assert.AreEqual(result, -1);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
+        {
+            var valueOrError = ValueOrError.WithError("1");
+            var result = valueOrError.Match<int>().Value().Do(x => 2).Result();
+            Assert.AreEqual(result, -1);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenValueIsSetAndNoValueMatchDefinedForExec_ExceptionThrown()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            valueOrError.Match().Error().Do(x => { }).Exec();
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenErrorIsSetAndNoErrorMatchDefinedForExec_ExceptionThrown()
+        {
+            var valueOrError = ValueOrError.WithError("1");
+            valueOrError.Match().Value().Do(x => { }).Exec();
         }
     }
 }

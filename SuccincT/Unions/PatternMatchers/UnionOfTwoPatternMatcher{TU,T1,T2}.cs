@@ -1,9 +1,8 @@
 ﻿using System;
-using SuccincT.Unions;
 
-namespace SuccincT.PatternMatchers
+namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionPatternMatcher<TUnion, T1, T2> where TUnion : Union<T1, T2>
+    public class UnionOfTwoPatternMatcher<TUnion, T1, T2> where TUnion : Union<T1, T2>
     {
         private readonly TUnion _union;
 
@@ -15,26 +14,26 @@ namespace SuccincT.PatternMatchers
             new UnionCaseActionSelector<T2>(
                 x => { throw new InvalidOperationException("No match action defined for union with Case2 value"); });
 
-        internal UnionPatternMatcher(TUnion union)
+        internal UnionOfTwoPatternMatcher(TUnion union)
         {
             _union = union;
         }
 
-        public UnionPatternCaseHandler<UnionPatternMatcher<TUnion, T1, T2>, T1> Case1()
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T1> Case1()
         {
-            return new UnionPatternCaseHandler<UnionPatternMatcher<TUnion, T1, T2>, T1>(RecordAction,
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T1>(RecordAction,
                                                                                                           this);
         }
 
-        public UnionPatternCaseHandler<UnionPatternMatcher<TUnion, T1, T2>, T2> Case2()
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T2> Case2()
         {
-            return new UnionPatternCaseHandler<UnionPatternMatcher<TUnion, T1, T2>, T2>(RecordAction,
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T2>(RecordAction,
                                                                                                           this);
         }
 
-        public UnionPatternMatcherAfterElse<TUnion, T1, T2> Else(Action<TUnion> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<TUnion, T1, T2> Else(Action<TUnion> elseAction)
         {
-            return new UnionPatternMatcherAfterElse<TUnion, T1, T2>(_union,
+            return new UnionOfTwoPatternMatcherAfterElse<TUnion, T1, T2>(_union,
                                                                              _case1ActionSelector,
                                                                              _case2ActionSelector,
                                                                              elseAction);

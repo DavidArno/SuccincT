@@ -46,7 +46,12 @@ namespace SuccincT.Options
             }
         }
 
-        public override string ToString() { return HasValue ? _value : _error; }
+        public override string ToString() 
+        { 
+            return HasValue 
+                ? string.Format("Value of {0}", _value)
+                : string.Format("Error of {0}", _error);
+        }
 
         public ValueOrErrorMatcher<TResult> Match<TResult>()
         {

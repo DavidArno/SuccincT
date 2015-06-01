@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.Options;
+using SuccincT.PatternMatchers;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -93,7 +94,7 @@ namespace SuccincTTests.SuccincT.Options
             Assert.AreEqual(2, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
         public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.None();
@@ -101,12 +102,26 @@ namespace SuccincTTests.SuccincT.Options
             Assert.AreEqual(0, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(InvalidOperationException))]
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
         public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().None().Do(() => 0).Result();
             Assert.AreEqual(0, result);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
+        {
+            var option = Option<int>.None();
+            option.Match().Some().Do(x => { }).Exec();
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        public void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
+        {
+            var option = Option<int>.Some(1);
+            option.Match().None().Do(() => { }).Exec();
         }
     }
 }

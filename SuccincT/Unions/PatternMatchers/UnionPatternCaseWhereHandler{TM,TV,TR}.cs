@@ -1,15 +1,15 @@
 using System;
 
-namespace SuccincT.PatternMatchers
+namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionPatternCaseWhereHandler<TMatcher, TValue>
+    public class UnionPatternCaseWhereHandler<TMatcher, TValue, TReturn>
     {
         private readonly Func<TValue, bool> _expression;
-        private readonly Action<Func<TValue, bool>, Action<TValue>> _recorder;
+        private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;
         private readonly TMatcher _matcher;
 
         internal UnionPatternCaseWhereHandler(Func<TValue, bool> expression,
-                                              Action<Func<TValue, bool>, Action<TValue>> recorder,
+                                              Action<Func<TValue, bool>, Func<TValue, TReturn>> recorder,
                                               TMatcher matcher)
         {
             _expression = expression;
@@ -17,7 +17,7 @@ namespace SuccincT.PatternMatchers
             _matcher = matcher;
         }
 
-        public TMatcher Do(Action<TValue> action)
+        public TMatcher Do(Func<TValue, TReturn> action)
         {
             _recorder(_expression, action);
             return _matcher;

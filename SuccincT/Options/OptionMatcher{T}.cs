@@ -1,6 +1,7 @@
 using System;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
+using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
@@ -11,11 +12,11 @@ namespace SuccincT.Options
 
         private readonly UnionCaseActionSelector<T> _case1ActionSelector =
             new UnionCaseActionSelector<T>(
-                x => { throw new InvalidOperationException("No match action defined for Option with value"); });
+                x => { throw new NoMatchException("No match action defined for Option with value"); });
 
         private readonly UnionCaseActionSelector<None> _case2ActionSelector =
             new UnionCaseActionSelector<None>(
-                x => { throw new InvalidOperationException("No match action defined for Option with no value"); });
+                x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
         internal OptionMatcher(Union<T, None> union, Option<T> option)
         {
@@ -33,9 +34,9 @@ namespace SuccincT.Options
             return new NoneMatchHandler<T>(RecordAction, this);
         }
 
-        public UnionPatternMatcherAfterElse<Union<T, None>, T, None> Else(Action<Option<T>> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None> Else(Action<Option<T>> elseAction)
         {
-            return new UnionPatternMatcherAfterElse<Union<T, None>, T, None>(_union,
+            return new UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None>(_union,
                                                                                       _case1ActionSelector,
                                                                                       _case2ActionSelector,
                                                                                       x => elseAction(_option));

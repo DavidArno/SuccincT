@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using SuccincT.BasicTypesParsers;
+using SuccincT.Parsers;
 using SuccincT.Unions;
 
 namespace SuccinctExamples

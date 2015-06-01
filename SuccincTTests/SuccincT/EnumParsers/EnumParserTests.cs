@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using SuccincT.EnumParsers;
+using SuccincT.Parsers;
 
 namespace SuccincTTests.SuccincT.EnumParsers
 {

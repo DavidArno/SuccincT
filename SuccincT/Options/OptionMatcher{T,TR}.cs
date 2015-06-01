@@ -1,6 +1,7 @@
 using System;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
+using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
@@ -11,11 +12,11 @@ namespace SuccincT.Options
 
         private readonly UnionCaseActionSelector<T, TReturn> _case1ActionSelector =
             new UnionCaseActionSelector<T, TReturn>(
-                x => { throw new InvalidOperationException("No match action defined for Option with value"); });
+                x => { throw new NoMatchException("No match action defined for Option with value"); });
 
         private readonly UnionCaseActionSelector<None, TReturn> _case2ActionSelector =
             new UnionCaseActionSelector<None, TReturn>(
-                x => { throw new InvalidOperationException("No match action defined for Option with no value"); });
+                x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
         internal OptionMatcher(Union<T, None> union, Option<T> option)
         {
@@ -33,12 +34,13 @@ namespace SuccincT.Options
             return new NoneMatchHandler<T, TReturn>(RecordAction, this);
         }
 
-        public UnionPatternMatcherAfterElse<Union<T, None>, T, None, TReturn> Else(Func<Option<T>, TReturn> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None, TReturn> Else(
+            Func<Option<T>, TReturn> elseAction)
         {
-            return new UnionPatternMatcherAfterElse<Union<T, None>, T, None, TReturn>(_union,
-                                                                                      _case1ActionSelector,
-                                                                                      _case2ActionSelector,
-                                                                                      x => elseAction(_option));
+            return new UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None, TReturn>(_union,
+                                                                                           _case1ActionSelector,
+                                                                                           _case2ActionSelector,
+                                                                                           x => elseAction(_option));
         }
 
         public TReturn Result()

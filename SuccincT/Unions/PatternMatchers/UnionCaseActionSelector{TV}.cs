@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SuccincT.Options;
 
-namespace SuccincT.PatternMatchers
+namespace SuccincT.Unions.PatternMatchers
 {
     internal class UnionCaseActionSelector<TValue>
     {

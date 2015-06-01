@@ -45,7 +45,7 @@ namespace SuccincT.PatternMatchers
         {
             if (!MatchExpressionAndActionIfFound())
             {
-                throw new NoMatchException<T>(_item);
+                throw new NoMatchException(string.Format("Match rules did not include a match for {0}", _item));
             }
         }
 

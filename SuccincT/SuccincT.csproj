@@ -27,6 +27,8 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>
     </DocumentationFile>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>Code analysis rules as errors.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -48,11 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicTypesParsers\BooleanParser.cs" />
-    <Compile Include="EnumParsers\EnumParser.cs" />
-    <Compile Include="BasicTypesParsers\FloatParsers.cs" />
-    <Compile Include="BasicTypesParsers\IntParsers.cs" />
-    <Compile Include="BasicTypesParsers\ReflectionBasedParser.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Parsers\BooleanParser.cs" />
+    <Compile Include="Parsers\EnumParser.cs" />
+    <Compile Include="Parsers\FloatParsers.cs" />
+    <Compile Include="Parsers\IntParsers.cs" />
+    <Compile Include="Parsers\ReflectionBasedParser.cs" />
     <Compile Include="FunctionalComposition\Function.cs" />
     <Compile Include="Options\NoneMatchHandler{T}.cs" />
     <Compile Include="Options\OptionMatcher{T}.cs" />
@@ -66,21 +69,25 @@
     <Compile Include="PatternMatchers\MatcherExtensions.cs" />
     <Compile Include="PatternMatchers\MatchExpressionBuilder.cs" />
     <Compile Include="PatternMatchers\NoMatchException.cs" />
-    <Compile Include="PatternMatchers\UnionCaseActionSelector{TV}.cs" />
-    <Compile Include="PatternMatchers\UnionCaseActionSelector{TV,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseExpressionHandler{TM,TV}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseHandler{TM,TV}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseWhereHandler{TM,TV}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseWhereHandler{TM,TV,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseExpressionHandler{TM,TV,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternCaseHandler{TM,TV,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternMatcherAfterElse{TU,T1,T2}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternMatcherAfterElse{TU,T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternMatcher{TU,T1,T2}.cs" />
-    <Compile Include="PatternMatchers\UnionPatternMatcher{TU,T1,T2,TR}.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option{T}.cs" />
-    <Compile Include="Exceptions\InvalidCaseException.cs" />
+    <Compile Include="Unions\InvalidCaseException.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionCaseActionSelector{TV,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionCaseActionSelector{TV}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcherAfterElse{TU,T1,T2,T3}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcher{TU,T1,T2,T3}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseExpressionHandler{TM,TV,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseExpressionHandler{TM,TV}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseHandler{TM,TV,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseHandler{TM,TV}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseWhereHandler{TM,TV,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionPatternCaseWhereHandler{TM,TV}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcherAfterElse{TU,T1,T2,T3,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcherAfterElse{TU,T1,T2,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcherAfterElse{TU,T1,T2}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcher{TU,T1,T2,T3,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcher{TU,T1,T2,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcher{TU,T1,T2}.cs" />
     <Compile Include="Unions\Union{T1,T2,T3}.cs" />
     <Compile Include="Unions\Union{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\None.cs" />
@@ -88,13 +95,19 @@
     <Compile Include="Unions\Variant.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Code analysis rules as errors.ruleset" />
     <None Include="Documentation\Options\ValueOrError.md" />
     <None Include="Documentation\Options\Option.md" />
     <None Include="Documentation\Options\Option_T_.md" />
     <None Include="Documentation\Unions\None.md" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EnumParsers\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

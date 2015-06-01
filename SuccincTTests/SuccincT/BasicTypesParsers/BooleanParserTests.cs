@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using SuccincT.BasicTypesParsers;
+using SuccincT.Parsers;
 
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {

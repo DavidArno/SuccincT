@@ -1,5 +1,4 @@
-﻿using SuccincT.Exceptions;
-using SuccincT.PatternMatchers;
+﻿using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
@@ -55,14 +54,14 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionPatternMatcher<Union<T1, T2>, T1, T2, TReturn> Match<TReturn>()
+        public UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2, TReturn> Match<TReturn>()
         {
-            return new UnionPatternMatcher<Union<T1, T2>, T1, T2, TReturn>(this);
+            return new UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2, TReturn>(this);
         }
 
-        public UnionPatternMatcher<Union<T1, T2>, T1, T2> Match()
+        public UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2> Match()
         {
-            return new UnionPatternMatcher<Union<T1, T2>, T1, T2>(this);
+            return new UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2>(this);
         }
     }
 }

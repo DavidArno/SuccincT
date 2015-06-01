@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace SuccincT.PatternMatchers
+namespace SuccincT.Unions.PatternMatchers
 {
     public class UnionPatternCaseHandler<TMatcher, TValue, TReturn>
     {

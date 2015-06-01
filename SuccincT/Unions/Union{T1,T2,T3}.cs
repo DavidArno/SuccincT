@@ -1,4 +1,4 @@
-﻿using SuccincT.Exceptions;
+﻿using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
@@ -54,6 +54,16 @@ namespace SuccincT.Unions
                 if (_case == Variant.Case3) { return _value3; }
                 throw new InvalidCaseException(Variant.Case3, _case);
             }
+        }
+
+        public UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3, TReturn> Match<TReturn>()
+        {
+            return new UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3, TReturn>(this);
+        }
+
+        public UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3> Match()
+        {
+            return new UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3>(this);
         }
     }
 }
