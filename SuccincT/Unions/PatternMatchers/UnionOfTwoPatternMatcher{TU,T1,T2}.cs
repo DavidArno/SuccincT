@@ -1,4 +1,5 @@
 ﻿using System;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -8,11 +9,11 @@ namespace SuccincT.Unions.PatternMatchers
 
         private readonly UnionCaseActionSelector<T1> _case1ActionSelector =
             new UnionCaseActionSelector<T1>(
-                x => { throw new InvalidOperationException("No match action defined for union with Case1 value"); });
+                x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
         private readonly UnionCaseActionSelector<T2> _case2ActionSelector =
             new UnionCaseActionSelector<T2>(
-                x => { throw new InvalidOperationException("No match action defined for union with Case2 value"); });
+                x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
         internal UnionOfTwoPatternMatcher(TUnion union)
         {
