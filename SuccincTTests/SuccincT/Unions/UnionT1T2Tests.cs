@@ -5,10 +5,8 @@ using SuccincT.Unions;
 namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
-    public class UnionTestsT1T2
+    public class UnionT1T2Tests
     {
-        private readonly UnionT1T2ComplexMatchersTests _unionT1T2ComplexMatchersTests = new UnionT1T2ComplexMatchersTests();
-
         [Test]
         public void UnionWithT1_HasVariantCase1()
         {

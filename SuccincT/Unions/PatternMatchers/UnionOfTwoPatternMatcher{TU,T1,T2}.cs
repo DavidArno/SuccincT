@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
@@ -15,9 +16,16 @@ namespace SuccincT.Unions.PatternMatchers
             new UnionCaseActionSelector<T2>(
                 x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
+        private readonly Dictionary<Variant, Action> _resultActions;
+
         internal UnionOfTwoPatternMatcher(TUnion union)
         {
             _union = union;
+            _resultActions = new Dictionary<Variant, Action>
+            {
+                { Variant.Case1, () => _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1) },
+                { Variant.Case2, () => _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2) }
+            };
         }
 
         public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T1> Case1()
@@ -42,14 +50,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         public void Exec()
         {
-            if (_union.Case == Variant.Case1)
-            {
-                _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1);
-            }
-            else
-            {
-                _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2);
-            }
+            _resultActions[_union.Case]();
         }
 
         private void RecordAction(Func<T1, bool> test, Action<T1> action)

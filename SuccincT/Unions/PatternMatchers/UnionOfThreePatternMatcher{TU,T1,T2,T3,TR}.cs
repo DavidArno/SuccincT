@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -9,15 +10,15 @@ namespace SuccincT.Unions.PatternMatchers
 
         private readonly UnionCaseActionSelector<T1, TReturn> _case1ActionSelector =
             new UnionCaseActionSelector<T1, TReturn>(
-                x => { throw new InvalidOperationException("No match action defined for union with Case1 value"); });
+                x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
         private readonly UnionCaseActionSelector<T2, TReturn> _case2ActionSelector =
             new UnionCaseActionSelector<T2, TReturn>(
-                x => { throw new InvalidOperationException("No match action defined for union with Case2 value"); });
+                x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
         private readonly UnionCaseActionSelector<T3, TReturn> _case3ActionSelector =
             new UnionCaseActionSelector<T3, TReturn>(
-                x => { throw new InvalidOperationException("No match action defined for union with Case3 value"); });
+                x => { throw new NoMatchException("No match action defined for union with Case3 value"); });
 
         private readonly Dictionary<Variant, Func<TReturn>> _resultActions;
 
