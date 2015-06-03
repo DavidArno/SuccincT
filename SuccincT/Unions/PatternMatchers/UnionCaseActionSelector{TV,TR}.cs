@@ -8,8 +8,9 @@ namespace SuccincT.Unions.PatternMatchers
     internal class UnionCaseActionSelector<TValue, TResult>
     {
         private readonly Func<TValue, TResult> _defaultAction;
-        private readonly List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>> _testsAndActions = 
-            new List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>>();  
+
+        private readonly List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>> _testsAndActions =
+            new List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>>();
 
         public UnionCaseActionSelector(Func<TValue, TResult> defaultAction)
         {

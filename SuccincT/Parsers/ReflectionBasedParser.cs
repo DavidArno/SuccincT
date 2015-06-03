@@ -5,7 +5,7 @@ namespace SuccincT.Parsers
     /// <summary>
     /// Class wrapper around the reflection-based internal Parse method used by the float and int parsers.
     /// </summary>
-    internal static class ReflectionBasedParser 
+    internal static class ReflectionBasedParser
     {
         // Assumes TParseType has a TryParse(string, out TParseType) method and invokes it via
         // reflection. Then constructs a Success<TParseType> result from the results of that invoke.

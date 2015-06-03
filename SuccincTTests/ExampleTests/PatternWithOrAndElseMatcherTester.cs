@@ -1,9 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using SuccincTTests.Examples;
+using static System.Console;
+using static System.Environment;
+using static NUnit.Framework.Assert;
+using static SuccincTTests.Examples.PatternWithOrAndElseMatcher;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -15,14 +17,12 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-
-                PatternWithOrAndElseMatcher.Filter123(1);
-                PatternWithOrAndElseMatcher.Filter123(2);
-                PatternWithOrAndElseMatcher.Filter123(3);
-
-                Assert.AreEqual(ExpectedBuilder(new[] { "Found 1, 2, or 3!", "Found 1, 2, or 3!", "Found 1, 2, or 3!" }),
-                                sw.ToString());
+                SetOut(sw);
+                Filter123(1);
+                Filter123(2);
+                Filter123(3);
+                AreEqual(ExpectedBuilder(new[] { "Found 1, 2, or 3!", "Found 1, 2, or 3!", "Found 1, 2, or 3!" }),
+                         sw.ToString());
             }
         }
 
@@ -31,19 +31,14 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-
-                PatternWithOrAndElseMatcher.Filter123(0);
-                PatternWithOrAndElseMatcher.Filter123(4);
-
-                Assert.AreEqual(ExpectedBuilder(new[] { "0", "4" }),
-                                sw.ToString());
+                SetOut(sw);
+                Filter123(0);
+                Filter123(4);
+                AreEqual(ExpectedBuilder(new[] { "0", "4" }), sw.ToString());
             }
         }
 
-        private string ExpectedBuilder(IEnumerable<string> parts)
-        {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
-        }
+        private string ExpectedBuilder(IEnumerable<string> parts) =>
+            parts.Aggregate("", (current, part) => $"{current}{part}{NewLine}");
     }
 }

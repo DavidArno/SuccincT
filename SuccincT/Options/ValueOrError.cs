@@ -26,7 +26,7 @@ namespace SuccincT.Options
             return new ValueOrError(null, error);
         }
 
-        public bool HasValue { get { return _value != null; } }
+        public bool HasValue => _value != null;
 
         public string Value
         {
@@ -46,11 +46,9 @@ namespace SuccincT.Options
             }
         }
 
-        public override string ToString() 
-        { 
-            return HasValue 
-                ? string.Format("Value of {0}", _value)
-                : string.Format("Error of {0}", _error);
+        public override string ToString()
+        {
+            return HasValue ? $"Value of {_value}" : $"Error of {_error}";
         }
 
         public ValueOrErrorMatcher<TResult> Match<TResult>()

@@ -9,7 +9,7 @@ namespace SuccincT.Options
     public class Option<T>
     {
         private readonly Union<T, None> _union;
- 
+
         private Option()
         {
             _union = new Union<T, None>(Unions.None.Value);
@@ -21,6 +21,7 @@ namespace SuccincT.Options
         }
 
         public static Option<T> None() { return new Option<T>(); }
+
         public static Option<T> Some(T value) { return new Option<T>(value); }
 
         public OptionMatcher<T, TResult> Match<TResult>()
@@ -33,7 +34,7 @@ namespace SuccincT.Options
             return new OptionMatcher<T>(_union, this);
         }
 
-        public bool HasValue { get { return _union.Case == Variant.Case1; } }
+        public bool HasValue => _union.Case == Variant.Case1;
 
         public T Value
         {

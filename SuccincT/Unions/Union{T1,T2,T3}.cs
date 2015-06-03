@@ -7,34 +7,33 @@ namespace SuccincT.Unions
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
-        private readonly Variant _case;
-
-        public Variant Case { get { return _case; } }
 
         public Union(T1 value)
         {
             _value1 = value;
-            _case = Variant.Case1;
+            Case = Variant.Case1;
         }
 
         public Union(T2 value)
         {
             _value2 = value;
-            _case = Variant.Case2;
+            Case = Variant.Case2;
         }
 
         public Union(T3 value)
         {
             _value3 = value;
-            _case = Variant.Case3;
+            Case = Variant.Case3;
         }
+
+        public Variant Case { get; }
 
         public T1 Case1
         {
             get
             {
-                if (_case == Variant.Case1) { return _value1; }
-                throw new InvalidCaseException(Variant.Case1, _case);
+                if (Case == Variant.Case1) { return _value1; }
+                throw new InvalidCaseException(Variant.Case1, Case);
             }
         }
 
@@ -42,8 +41,8 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case2) { return _value2; }
-                throw new InvalidCaseException(Variant.Case2, _case);
+                if (Case == Variant.Case2) { return _value2; }
+                throw new InvalidCaseException(Variant.Case2, Case);
             }
         }
 
@@ -51,8 +50,8 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case3) { return _value3; }
-                throw new InvalidCaseException(Variant.Case3, _case);
+                if (Case == Variant.Case3) { return _value3; }
+                throw new InvalidCaseException(Variant.Case3, Case);
             }
         }
 

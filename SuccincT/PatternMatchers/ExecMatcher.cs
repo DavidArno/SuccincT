@@ -9,15 +9,15 @@ namespace SuccincT.PatternMatchers
         private class CaseDetails
         {
             public List<T> Values { get; set; }
+
             public Action<T> Action { get; set; }
         }
 
         private readonly List<CaseDetails> _cases = new List<CaseDetails>();
-        private readonly T _item;
 
         internal ExecMatcher(T item)
         {
-            _item = item;
+            Item = item;
         }
 
         public ExecMatcher<T> Case(T value, Action action)
@@ -45,11 +45,11 @@ namespace SuccincT.PatternMatchers
         {
             if (!MatchExpressionAndActionIfFound())
             {
-                throw new NoMatchException(string.Format("Match rules did not include a match for {0}", _item));
+                throw new NoMatchException($"Match rules did not include a match for {Item}");
             }
         }
 
-        internal T Item { get { return _item; } }
+        internal T Item { get; }
 
         internal ExecMatcher<T> Case(List<T> values, Action action)
         {
@@ -60,12 +60,12 @@ namespace SuccincT.PatternMatchers
         internal bool MatchExpressionAndActionIfFound()
         {
             var action = (from actionCase in _cases
-                          where actionCase.Values.Any(value => EqualityComparer<T>.Default.Equals(_item, value))
+                          where actionCase.Values.Any(value => EqualityComparer<T>.Default.Equals(Item, value))
                           select actionCase.Action).FirstOrDefault();
 
             if (action != null)
             {
-                action(_item);
+                action(Item);
                 return true;
             }
             return false;

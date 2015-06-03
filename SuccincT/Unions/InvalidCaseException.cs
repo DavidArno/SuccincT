@@ -6,7 +6,7 @@ namespace SuccincT.Unions
     public class InvalidCaseException : InvalidOperationException
     {
         public InvalidCaseException(Variant invalidCase, Variant validCase) :
-            base(string.Format("Cannot access union case {0} when case {1} is selected case.", invalidCase, validCase))
+            base($"Cannot access union case {invalidCase} when case {validCase} is selected case.")
         { }
     }
 }

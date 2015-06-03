@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SuccincT.Unions;
-using SuccincTTests.Examples;
+using static System.Console;
+using static System.Environment;
+using static NUnit.Framework.Assert;
+using static SuccincTTests.Examples.UnionMatcherExamples;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -16,16 +18,13 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(1));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(3));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(5));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(7));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(9));
-
-                Assert.AreEqual(ExpectedBuilder(new[] { "1", "3", "5", "7", "9" }),
-                                sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(1));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(3));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(5));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(7));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(9));
+                AreEqual(ExpectedBuilder(new[] { "1", "3", "5", "7", "9" }), sw.ToString());
             }
         }
 
@@ -34,14 +33,11 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(2));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(4));
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(6));
-
-                Assert.AreEqual(ExpectedBuilder(new[] { "2 isn't odd", "4 isn't odd", "6 isn't odd" }),
-                                sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(2));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(4));
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(6));
+                AreEqual(ExpectedBuilder(new[] { "2 isn't odd", "4 isn't odd", "6 isn't odd" }), sw.ToString());
             }
         }
 
@@ -50,10 +46,9 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(0));
-                Assert.AreEqual(ExpectedBuilder(new[] { "0 isn't positive or negative" }),
-                                sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(0));
+                AreEqual(ExpectedBuilder(new[] { "0 isn't positive or negative" }), sw.ToString());
             }
         }
 
@@ -62,9 +57,9 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(10));
-                Assert.AreEqual(ExpectedBuilder(new[] { "10 isn't 1 digit" }), sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(10));
+                AreEqual(ExpectedBuilder(new[] { "10 isn't 1 digit" }), sw.ToString());
             }
         }
 
@@ -73,9 +68,9 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(-20));
-                Assert.AreEqual(ExpectedBuilder(new[] { "-20 isn't positive" }), sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(-20));
+                AreEqual(ExpectedBuilder(new[] { "-20 isn't positive" }), sw.ToString());
             }
         }
 
@@ -84,9 +79,9 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(true));
-                Assert.AreEqual(ExpectedBuilder(new[] { "Found true" }), sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(true));
+                AreEqual(ExpectedBuilder(new[] { "Found true" }), sw.ToString());
             }
         }
 
@@ -95,72 +90,72 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                UnionMatcherExamples.SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(false));
-                Assert.AreEqual(ExpectedBuilder(new[] { "False isn't true or single odd digit." }), sw.ToString());
+                SetOut(sw);
+                SinglePositiveOddDigitAndTruePrinter(new Union<int, bool>(false));
+                AreEqual(ExpectedBuilder(new[] { "False isn't true or single odd digit." }), sw.ToString());
             }
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterPrints1357And9Correctly()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(1)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(3)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(5)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(7)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(9));
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(1)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(3)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(5)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(7)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(9));
 
-            Assert.AreEqual("13579", result);
+            AreEqual("13579", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandlesEvenNumbers()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(2)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(4)) +
-                         UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(6));
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(2)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(4)) +
+                         SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(6));
 
-            Assert.AreEqual("2 isn't odd4 isn't odd6 isn't odd", result);
+            AreEqual("2 isn't odd4 isn't odd6 isn't odd", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandles0()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(0));
-            Assert.AreEqual("0 isn't positive or negative", result);
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(0));
+            AreEqual("0 isn't positive or negative", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandles10()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(10));
-            Assert.AreEqual("10 isn't 1 digit", result);
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(10));
+            AreEqual("10 isn't 1 digit", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandlesNegative()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(-20));
-            Assert.AreEqual("-20 isn't positive", result);
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(-20));
+            AreEqual("-20 isn't positive", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandlesTrue()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(true));
-            Assert.AreEqual("Found true", result);
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(true));
+            AreEqual("Found true", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitAndTrueReporterHandlesFalse()
         {
-            var result = UnionMatcherExamples.SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(false));
-            Assert.AreEqual("False isn't true or single odd digit.", result);
+            var result = SinglePositiveOddDigitAndTrueReporter(new Union<int, bool>(false));
+            AreEqual("False isn't true or single odd digit.", result);
         }
 
         private static string ExpectedBuilder(IEnumerable<string> parts)
         {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
+            return parts.Aggregate("", (current, part) => $"{current}{part}{NewLine}");
         }
     }
 }

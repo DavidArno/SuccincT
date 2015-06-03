@@ -8,15 +8,15 @@ namespace SuccincTTests.Examples
         public static string BoolOrIntMatcherExample(Union<int, bool> value)
         {
             return value.Match<string>()
-                        .Case1().Do(i => string.Format("int={0}", i))
-                        .Case2().Do(b => string.Format("bool={0}", b))
+                        .Case1().Do(i => $"int={i}")
+                        .Case2().Do(b => $"bool={b}")
                         .Result();
         }
 
         public static string YesNoOrIntMatcherExample(Union<int, bool> value)
         {
             return value.Match<string>()
-                        .Case1().Do(i => string.Format("int={0}", i))
+                        .Case1().Do(i => $"int={i}")
                         .Case2().Of(true).Do(b => "Yes")
                         .Case2().Of(false).Do(b => "No")
                         .Result();
@@ -25,8 +25,8 @@ namespace SuccincTTests.Examples
         public static string YesNo123OrOtherIntMatcherExample(Union<int, bool> value)
         {
             return value.Match<string>()
-                        .Case1().Of(1).Or(2).Or(3).Do(i => string.Format("{0} in range 1-3", i))
-                        .Case1().Do(i => string.Format("int={0}", i))
+                        .Case1().Of(1).Or(2).Or(3).Do(i => $"{i} in range 1-3")
+                        .Case1().Do(i => $"int={i}")
                         .Case2().Of(true).Do(b => "Yes")
                         .Case2().Of(false).Do(b => "No")
                         .Result();
@@ -37,11 +37,11 @@ namespace SuccincTTests.Examples
             return value.Match<string>()
                         .Case1().Of(0).Do(x => "0 isn't positive or negative")
                         .Case1().Where(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(x => x.ToString())
-                        .Case1().Where(x => x > 9).Do(x => string.Format("{0} isn't 1 digit", x))
-                        .Case1().Where(x => x < 0).Do(i => string.Format("{0} isn't positive", i))
-                        .Case1().Do(x => string.Format("{0} isn't odd", x))
+                        .Case1().Where(x => x > 9).Do(x => $"{x} isn't 1 digit")
+                        .Case1().Where(x => x < 0).Do(i => $"{i} isn't positive")
+                        .Case1().Do(x => $"{x} isn't odd")
                         .Case2().Of(true).Do(b => "Found true")
-                        .Case2().Do(b => string.Format("{0} isn't true or single odd digit.", b))
+                        .Case2().Do(b => $"{b} isn't true or single odd digit.")
                         .Result();
         }
 

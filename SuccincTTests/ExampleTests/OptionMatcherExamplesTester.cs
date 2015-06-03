@@ -113,7 +113,7 @@ namespace SuccincTTests.ExampleTests
 
         private static string ExpectedBuilder(IEnumerable<string> parts)
         {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
+            return parts.Aggregate("", (current, part) => current + $"{part}{Environment.NewLine}");
         }
     }
 }

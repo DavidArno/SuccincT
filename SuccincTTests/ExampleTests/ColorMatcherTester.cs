@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SuccincTTests.Examples;
+using static System.Environment;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -42,7 +43,7 @@ namespace SuccincTTests.ExampleTests
 
         private string ExpectedBuilder(IEnumerable<string> parts)
         {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
+            return parts.Aggregate("", (current, part) => current + $"{part}{NewLine}");
         }
     }
 }
