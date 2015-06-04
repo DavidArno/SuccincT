@@ -4,7 +4,7 @@ using SuccincT.Options;
 namespace SuccincT.Parsers
 {
     /// <summary>
-    /// Defines a string extension function for parsing enum values in an elegant fashion 
+    /// Defines a string extension function for parsing enum values in an elegant fashion
     /// (avoiding exception throwing).
     /// </summary>
     [CLSCompliant(false)]

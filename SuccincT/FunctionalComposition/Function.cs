@@ -4,7 +4,7 @@ namespace SuccincT.FunctionalComposition
 {
     public static class Function
     {
-        public static Func<T2, TResult> 
+        public static Func<T2, TResult>
             Compose<T1, T2, TResult>(this Func<T1, T2, TResult> functionToCompose, T1 p1)
         {
             return p2 => functionToCompose(p1, p2);

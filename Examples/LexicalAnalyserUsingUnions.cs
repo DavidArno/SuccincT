@@ -7,7 +7,7 @@ namespace SuccinctExamples
 {
     /// <summary>
     /// An example that uses the Union class to provide tokens from a lexical analyser (lexer). By using the union, the tokens
-    /// can be "precompiled" to their native types, without using a messy value object with redundant fields. 
+    /// can be "precompiled" to their native types, without using a messy value object with redundant fields.
     /// </summary>
     /// <remarks>
     /// To avoid distracting from the use of the Union class, the lexer is kept simple: it splits the input on whitespace
@@ -25,8 +25,8 @@ namespace SuccinctExamples
         private static Union<string, long, bool, double> DetermineTokenType(string rawToken)
         {
             var possibleLong = rawToken.ParseLong();
-            return possibleLong.HasValue ? 
-                new Union<string, long, bool, double>(possibleLong.Value) : 
+            return possibleLong.HasValue ?
+                new Union<string, long, bool, double>(possibleLong.Value) :
                 DetermineIfBoolDoubleOrString(rawToken);
         }
 

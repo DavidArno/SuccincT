@@ -11,7 +11,7 @@ namespace SuccincT.Parsers
     public static class IntParsers
     {
         /// <summary>
-        /// Parses the current string for an 8 bit signed integer. 
+        /// Parses the current string for an 8 bit signed integer.
         /// </summary>
         /// <returns>If successful, the byte value. Otherwise result.Successful is false.</returns>
         public static Option<sbyte> ParseSignedByte(this string source)
@@ -20,7 +20,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for an 8 bit unsigned integer. 
+        /// Parses the current string for an 8 bit unsigned integer.
         /// </summary>
         /// <returns>If successful, the byte value. Otherwise result.Successful is false.</returns>
         public static Option<byte> ParseUnsignedByte(this string source)
@@ -29,7 +29,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 16 bit signed integer. 
+        /// Parses the current string for a 16 bit signed integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<short> ParseShort(this string source)
@@ -38,7 +38,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 16 bit unsigned integer. 
+        /// Parses the current string for a 16 bit unsigned integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<ushort> ParseUnsignedShort(this string source)
@@ -47,7 +47,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 32 bit signed integer. 
+        /// Parses the current string for a 32 bit signed integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<int> ParseInt(this string source)
@@ -56,7 +56,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 32 bit unsigned integer. 
+        /// Parses the current string for a 32 bit unsigned integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<uint> ParseUnsignedInt(this string source)
@@ -65,7 +65,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 64 bit signed integer. 
+        /// Parses the current string for a 64 bit signed integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<long> ParseLong(this string source)
@@ -74,7 +74,7 @@ namespace SuccincT.Parsers
         }
 
         /// <summary>
-        /// Parses the current string for a 64 bit unsigned integer. 
+        /// Parses the current string for a 64 bit unsigned integer.
         /// </summary>
         /// <returns>If successful, the int value. Otherwise result.Successful is false.</returns>
         public static Option<ulong> ParseUnsignedLong(this string source)

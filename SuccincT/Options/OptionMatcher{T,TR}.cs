@@ -45,8 +45,8 @@ namespace SuccincT.Options
 
         public TReturn Result()
         {
-            return _union.Case == Variant.Case1 
-                ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1) 
+            return _union.Case == Variant.Case1
+                ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
                 : _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
         }
 

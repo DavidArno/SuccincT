@@ -8,7 +8,7 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
     /// </summary>
     /// <remarks>
     /// The first first few tests test Int32 parsing in details to cover the common parsing/success
-    /// reporting mechanism, as well as parsing Int32 numbers. The other tests consist of just 
+    /// reporting mechanism, as well as parsing Int32 numbers. The other tests consist of just
     /// one test of valid numbers and one for invalid numbers for all the other int types.
     /// </remarks>
     [TestFixture]

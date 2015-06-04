@@ -35,7 +35,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         public UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T1, TReturn> Case1()
         {
-            return 
+            return
                 new UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T1, TReturn>(RecordAction,
                                                                                                            this);
         }

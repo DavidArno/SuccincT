@@ -5,9 +5,9 @@ namespace SuccincT.PatternMatchers
 {
     public class MatchExpressionBuilder<T>
     {
-        private readonly ExecMatcher<T> _matcher; 
+        private readonly ExecMatcher<T> _matcher;
         private readonly List<T> _values;
- 
+
         public MatchExpressionBuilder(ExecMatcher<T> matcher, T value)
         {
             _matcher = matcher;

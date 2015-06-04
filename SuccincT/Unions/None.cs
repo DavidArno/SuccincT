@@ -6,6 +6,7 @@
     public sealed class None
     {
         private static readonly None TheNone = new None();
+
         private None() { }
 
         /// <summary>

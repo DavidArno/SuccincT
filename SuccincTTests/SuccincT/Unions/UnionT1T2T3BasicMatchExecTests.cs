@@ -4,7 +4,7 @@ using SuccincT.Unions;
 
 namespace SuccincTTests.SuccincT.Unions
 {
-    public class UnionT1T2T3BasicMatchExecTests 
+    public class UnionT1T2T3BasicMatchExecTests
     {
         private enum Colors { Red, Green, Blue }
 

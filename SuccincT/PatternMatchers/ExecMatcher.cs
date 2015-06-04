@@ -9,6 +9,7 @@ namespace SuccincT.PatternMatchers
         private class CaseDetails
         {
             public List<T> Values { get; set; }
+
             public Action<T> Action { get; set; }
         }
 

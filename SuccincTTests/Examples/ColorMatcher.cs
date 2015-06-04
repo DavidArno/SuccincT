@@ -6,6 +6,7 @@ namespace SuccincTTests.Examples
     /*
      * This is an implementaion of the F# color matcher pattern matching example at https://msdn.microsoft.com/en-us/library/dd547125.aspx.
      */
+
     public static class ColorMatcher
     {
         public enum Color { Red, Green, Blue }
