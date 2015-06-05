@@ -48,7 +48,13 @@ namespace SuccincT.Options
 
         public override string ToString()
         {
+<<<<<<< HEAD
             return HasValue ? $"Value of {_value}" : $"Error of {_error}";
+=======
+            return HasValue
+                ? string.Format("Value of {0}", _value)
+                : string.Format("Error of {0}", _error);
+>>>>>>> master
         }
 
         public ValueOrErrorMatcher<TResult> Match<TResult>()
