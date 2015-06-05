@@ -5,7 +5,7 @@ using SuccincT.Unions;
 namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
-    public class UnionT1T2Tests
+    public sealed class UnionT1T2Tests
     {
         [Test]
         public void UnionWithT1_HasVariantCase1()

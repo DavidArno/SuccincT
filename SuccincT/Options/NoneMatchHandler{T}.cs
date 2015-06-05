@@ -2,7 +2,7 @@
 
 namespace SuccincT.Options
 {
-    public class NoneMatchHandler<T>
+    public sealed class NoneMatchHandler<T>
     {
         private readonly Action<Action> _recorder;
         private readonly OptionMatcher<T> _matcher;

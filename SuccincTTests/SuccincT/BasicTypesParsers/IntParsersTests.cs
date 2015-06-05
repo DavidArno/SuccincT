@@ -4,7 +4,7 @@ using SuccincT.Parsers;
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
     /// <summary>
-    /// Defines a set of tests for the extension methods in the IntParsers class.
+    /// Defines a set of tests for the extension methods in the IntParsers sealed class.
     /// </summary>
     /// <remarks>
     /// The first first few tests test Int32 parsing in details to cover the common parsing/success
@@ -12,7 +12,7 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
     /// one test of valid numbers and one for invalid numbers for all the other int types.
     /// </remarks>
     [TestFixture]
-    public class IntParsersTests
+    public sealed class IntParsersTests
     {
         [Test]
         public void ValidIntString_ResultsInValue()

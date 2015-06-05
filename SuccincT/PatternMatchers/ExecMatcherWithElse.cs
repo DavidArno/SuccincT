@@ -2,7 +2,7 @@ using System;
 
 namespace SuccincT.PatternMatchers
 {
-    public class ExecMatcherWithElse<T>
+    public sealed class ExecMatcherWithElse<T>
     {
         private readonly ExecMatcher<T> _execMatcher;
         private readonly Action<T> _action;

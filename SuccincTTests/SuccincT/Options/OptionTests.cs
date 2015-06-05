@@ -6,7 +6,7 @@ using SuccincT.PatternMatchers;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public class OptionTests
+    public sealed class OptionTests
     {
         [Test]
         public void WhenOptionIsValue_ResultIsValue()

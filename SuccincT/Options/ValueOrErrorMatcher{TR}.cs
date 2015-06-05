@@ -5,7 +5,7 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public class ValueOrErrorMatcher<TReturn>
+    public sealed class ValueOrErrorMatcher<TReturn>
     {
         private readonly ValueOrError _valueOrError;
 
@@ -32,11 +32,11 @@ namespace SuccincT.Options
             return new UnionPatternCaseHandler<ValueOrErrorMatcher<TReturn>, string, TReturn>(RecordErrorAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string, TReturn> Else(
+        public UnionOfTwoPatternMatcherAfterElse<string, string, TReturn> Else(
             Func<ValueOrError, TReturn> elseAction)
         {
             var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string, TReturn>(
+            return new UnionOfTwoPatternMatcherAfterElse<string, string, TReturn>(
                 union,
                 _valueActionSelector,
                 _errorActionSelector,
@@ -46,8 +46,8 @@ namespace SuccincT.Options
         public TReturn Result()
         {
             return _valueOrError.HasValue
-                ? _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                : _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+                       ? _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
+                       : _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
         }
 
         private void RecordValueAction(Func<string, bool> test, Func<string, TReturn> action)
@@ -63,8 +63,8 @@ namespace SuccincT.Options
         private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)
         {
             return valueOrError.HasValue
-                ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
-                : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
+                       ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
+                       : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
         }
     }
 }

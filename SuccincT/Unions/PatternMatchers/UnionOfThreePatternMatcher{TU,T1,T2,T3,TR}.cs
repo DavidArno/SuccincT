@@ -4,9 +4,9 @@ using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn> where TUnion : Union<T1, T2, T3>
+    public sealed class UnionOfThreePatternMatcher<T1, T2, T3, TReturn>
     {
-        private readonly TUnion _union;
+        private readonly Union<T1, T2, T3> _union;
 
         private readonly UnionCaseActionSelector<T1, TReturn> _case1ActionSelector =
             new UnionCaseActionSelector<T1, TReturn>(
@@ -22,45 +22,45 @@ namespace SuccincT.Unions.PatternMatchers
 
         private readonly Dictionary<Variant, Func<TReturn>> _resultActions;
 
-        internal UnionOfThreePatternMatcher(TUnion union)
+        internal UnionOfThreePatternMatcher(Union<T1, T2, T3> union)
         {
             _union = union;
             _resultActions = new Dictionary<Variant, Func<TReturn>>
             {
-                { Variant.Case1, () => _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1) },
-                { Variant.Case2, () => _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2) },
-                { Variant.Case3, () => _case3ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case3) }
+                {Variant.Case1, () => _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
+                {Variant.Case2, () => _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)},
+                {Variant.Case3, () => _case3ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case3)}
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T1, TReturn> Case1()
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T1, TReturn> Case1()
         {
             return
-                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T1, TReturn>(RecordAction,
-                                                                                                           this);
+                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T1, TReturn>(RecordAction,
+                                                                                                          this);
         }
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T2, TReturn> Case2()
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T2, TReturn> Case2()
         {
             return
-                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T2, TReturn>(RecordAction,
-                                                                                                           this);
+                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T2, TReturn>(RecordAction,
+                                                                                                          this);
         }
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T3, TReturn> Case3()
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T3, TReturn> Case3()
         {
             return
-                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<TUnion, T1, T2, T3, TReturn>, T3, TReturn>(RecordAction,
-                                                                                                           this);
+                new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TReturn>, T3, TReturn>(RecordAction,
+                                                                                                          this);
         }
 
-        public UnionOfThreePatternMatcherAfterElse<TUnion, T1, T2, T3, TReturn> Else(Func<TUnion, TReturn> elseAction)
+        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn> Else(Func<Union<T1, T2, T3>, TReturn> elseAction)
         {
-            return new UnionOfThreePatternMatcherAfterElse<TUnion, T1, T2, T3, TReturn>(_union,
-                                                                                 _case1ActionSelector,
-                                                                                 _case2ActionSelector,
-                                                                                 _case3ActionSelector,
-                                                                                 elseAction);
+            return new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn>(_union,
+                                                                                _case1ActionSelector,
+                                                                                _case2ActionSelector,
+                                                                                _case3ActionSelector,
+                                                                                elseAction);
         }
 
         public TReturn Result()

@@ -5,7 +5,7 @@ using SuccinctExamples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class LexicalAnalyserUsingUnionsTests
+    public sealed class LexicalAnalyserUsingUnionsTests
     {
         [Test]
         public void WhenSuppliedWithEmptyString_ParserJustReturnsNoResults()

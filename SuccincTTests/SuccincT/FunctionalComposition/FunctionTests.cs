@@ -5,7 +5,7 @@ using SuccincT.FunctionalComposition;
 namespace SuccincTTests.SuccincT.FunctionalComposition
 {
     [TestFixture]
-    public class FunctionTests
+    public sealed class FunctionTests
     {
         [Test]
         public void TwoParamFunctionIsComposable()

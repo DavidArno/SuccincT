@@ -34,12 +34,12 @@ namespace SuccincT.Options
             return new NoneMatchHandler<T>(RecordAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None> Else(Action<Option<T>> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<T, None> Else(Action<Option<T>> elseAction)
         {
-            return new UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None>(_union,
-                                                                                      _case1ActionSelector,
-                                                                                      _case2ActionSelector,
-                                                                                      x => elseAction(_option));
+            return new UnionOfTwoPatternMatcherAfterElse<T, None>(_union,
+                                                                  _case1ActionSelector,
+                                                                  _case2ActionSelector,
+                                                                  x => elseAction(_option));
         }
 
         public void Exec()

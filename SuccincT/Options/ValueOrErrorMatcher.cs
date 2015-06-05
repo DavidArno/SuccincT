@@ -5,7 +5,7 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public class ValueOrErrorMatcher
+    public sealed class ValueOrErrorMatcher
     {
         private readonly ValueOrError _valueOrError;
 
@@ -32,11 +32,11 @@ namespace SuccincT.Options
             return new UnionPatternCaseHandler<ValueOrErrorMatcher, string>(RecordErrorAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string> Else(
+        public UnionOfTwoPatternMatcherAfterElse<string, string> Else(
             Action<ValueOrError> elseAction)
         {
             var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionOfTwoPatternMatcherAfterElse<Union<string, string>, string, string>(
+            return new UnionOfTwoPatternMatcherAfterElse<string, string>(
                 union,
                 _valueActionSelector,
                 _errorActionSelector,
@@ -68,8 +68,8 @@ namespace SuccincT.Options
         private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)
         {
             return valueOrError.HasValue
-                ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
-                : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
+                       ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
+                       : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
         }
     }
 }

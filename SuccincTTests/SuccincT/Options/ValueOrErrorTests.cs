@@ -6,7 +6,7 @@ using SuccincT.PatternMatchers;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public class ValueOrErrorTests
+    public sealed class ValueOrErrorTests
     {
         [Test]
         public void WhenValueIsSet_OnlyValueActionOccurs()

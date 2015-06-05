@@ -8,7 +8,7 @@ using SuccincTTests.Examples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class PatternWithOrAndElseMatcherTester
+    public sealed class PatternWithOrAndElseMatcherTester
     {
         [Test]
         public void Filter123CorrectlyMatches12And3()

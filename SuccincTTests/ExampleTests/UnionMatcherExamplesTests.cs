@@ -5,7 +5,7 @@ using SuccincTTests.Examples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class UnionMatcherExamplesTests
+    public sealed class UnionMatcherExamplesTests
     {
         [Test]
         public void PassingInAnIntToBoolOrIntMatcherExampleReturnsAnInt()

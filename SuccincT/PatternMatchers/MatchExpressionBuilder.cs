@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SuccincT.PatternMatchers
 {
-    public class MatchExpressionBuilder<T>
+    public sealed class MatchExpressionBuilder<T>
     {
         private readonly ExecMatcher<T> _matcher;
         private readonly List<T> _values;

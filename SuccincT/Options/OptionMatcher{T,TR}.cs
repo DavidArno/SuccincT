@@ -34,20 +34,20 @@ namespace SuccincT.Options
             return new NoneMatchHandler<T, TReturn>(RecordAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None, TReturn> Else(
+        public UnionOfTwoPatternMatcherAfterElse<T, None, TReturn> Else(
             Func<Option<T>, TReturn> elseAction)
         {
-            return new UnionOfTwoPatternMatcherAfterElse<Union<T, None>, T, None, TReturn>(_union,
-                                                                                           _case1ActionSelector,
-                                                                                           _case2ActionSelector,
-                                                                                           x => elseAction(_option));
+            return new UnionOfTwoPatternMatcherAfterElse<T, None, TReturn>(_union,
+                                                                           _case1ActionSelector,
+                                                                           _case2ActionSelector,
+                                                                           x => elseAction(_option));
         }
 
         public TReturn Result()
         {
             return _union.Case == Variant.Case1
-                ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
-                : _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
+                       ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
+                       : _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
         }
 
         private void RecordAction(Func<T, bool> test, Func<T, TReturn> action)

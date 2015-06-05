@@ -9,7 +9,7 @@ using SuccincTTests.Examples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class OptionMatcherExamplesTester
+    public sealed class OptionMatcherExamplesTester
     {
         [Test]
         public void PrintOptionPrintsValues()

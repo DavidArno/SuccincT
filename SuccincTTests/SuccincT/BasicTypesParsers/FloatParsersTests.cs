@@ -4,10 +4,10 @@ using SuccincT.Parsers;
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
     /// <summary>
-    /// Defines a set of tests for the extension methods in the FloatParsers class.
+    /// Defines a set of tests for the extension methods in the FloatParsers sealed class.
     /// </summary>
     [TestFixture]
-    public class FloatParsersTests
+    public sealed class FloatParsersTests
     {
         [Test]
         public void ValidFloatString_ResultsInValue()

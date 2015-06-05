@@ -4,7 +4,7 @@ using SuccincT.Unions;
 namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
-    public class UnionT1T2T3Tests
+    public sealed class UnionT1T2T3Tests
     {
         private enum Colors { Red, Green, Blue }
 

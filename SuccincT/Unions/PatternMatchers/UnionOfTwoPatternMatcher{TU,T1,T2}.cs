@@ -4,9 +4,9 @@ using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionOfTwoPatternMatcher<TUnion, T1, T2> where TUnion : Union<T1, T2>
+    public sealed class UnionOfTwoPatternMatcher<T1, T2>
     {
-        private readonly TUnion _union;
+        private readonly Union<T1, T2> _union;
 
         private readonly UnionCaseActionSelector<T1> _case1ActionSelector =
             new UnionCaseActionSelector<T1>(
@@ -18,34 +18,34 @@ namespace SuccincT.Unions.PatternMatchers
 
         private readonly Dictionary<Variant, Action> _resultActions;
 
-        internal UnionOfTwoPatternMatcher(TUnion union)
+        internal UnionOfTwoPatternMatcher(Union<T1, T2> union)
         {
             _union = union;
             _resultActions = new Dictionary<Variant, Action>
             {
-                { Variant.Case1, () => _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1) },
-                { Variant.Case2, () => _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2) }
+                {Variant.Case1, () => _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1)},
+                {Variant.Case2, () => _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2)}
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T1> Case1()
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1> Case1()
         {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T1>(RecordAction,
-                                                                                                          this);
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1>(RecordAction,
+                                                                                     this);
         }
 
-        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T2> Case2()
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2> Case2()
         {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<TUnion, T1, T2>, T2>(RecordAction,
-                                                                                                          this);
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2>(RecordAction,
+                                                                                     this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<TUnion, T1, T2> Else(Action<TUnion> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<T1, T2> Else(Action<Union<T1, T2>> elseAction)
         {
-            return new UnionOfTwoPatternMatcherAfterElse<TUnion, T1, T2>(_union,
-                                                                             _case1ActionSelector,
-                                                                             _case2ActionSelector,
-                                                                             elseAction);
+            return new UnionOfTwoPatternMatcherAfterElse<T1, T2>(_union,
+                                                                 _case1ActionSelector,
+                                                                 _case2ActionSelector,
+                                                                 elseAction);
         }
 
         public void Exec()

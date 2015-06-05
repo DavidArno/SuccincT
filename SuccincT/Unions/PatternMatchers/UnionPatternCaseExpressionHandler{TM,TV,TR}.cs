@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionPatternCaseExpressionHandler<TMatcher, TValue, TReturn>
+    public sealed class UnionPatternCaseExpressionHandler<TMatcher, TValue, TReturn>
     {
         private readonly List<TValue> _values;
         private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;

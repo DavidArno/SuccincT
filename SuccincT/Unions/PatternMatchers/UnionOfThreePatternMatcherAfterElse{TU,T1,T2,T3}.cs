@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionOfThreePatternMatcherAfterElse<TUnion, T1, T2, T3> where TUnion : Union<T1, T2, T3>
+    public sealed class UnionOfThreePatternMatcherAfterElse<T1, T2, T3>
     {
-        private readonly TUnion _union;
+        private readonly Union<T1, T2, T3> _union;
         private readonly Dictionary<Variant, Action> _execActions;
-        private readonly Action<TUnion> _elseAction;
+        private readonly Action<Union<T1, T2, T3>> _elseAction;
 
-        internal UnionOfThreePatternMatcherAfterElse(TUnion union,
+        internal UnionOfThreePatternMatcherAfterElse(Union<T1, T2, T3> union,
                                               UnionCaseActionSelector<T1> case1ActionSelector,
                                               UnionCaseActionSelector<T2> case2ActionSelector,
                                               UnionCaseActionSelector<T3> case3ActionSelector,
-                                              Action<TUnion> elseAction)
+                                              Action<Union<T1, T2, T3>> elseAction)
         {
             _union = union;
             _elseAction = elseAction;

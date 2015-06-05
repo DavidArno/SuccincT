@@ -6,7 +6,7 @@ namespace SuccincT.Options
     /// <summary>
     /// Provides an optional value of type T. Modelled on F# options. Either contains a T value, or None.
     /// </summary>
-    public class Option<T>
+    public sealed class Option<T>
     {
         private readonly Union<T, None> _union;
 

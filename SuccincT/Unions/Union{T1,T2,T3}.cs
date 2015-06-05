@@ -2,14 +2,17 @@
 
 namespace SuccincT.Unions
 {
-    public class Union<T1, T2, T3>
+    public sealed class Union<T1, T2, T3>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
         private readonly Variant _case;
 
-        public Variant Case { get { return _case; } }
+        public Variant Case
+        {
+            get { return _case; }
+        }
 
         public Union(T1 value)
         {
@@ -33,7 +36,10 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case1) { return _value1; }
+                if (_case == Variant.Case1)
+                {
+                    return _value1;
+                }
                 throw new InvalidCaseException(Variant.Case1, _case);
             }
         }
@@ -42,7 +48,10 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case2) { return _value2; }
+                if (_case == Variant.Case2)
+                {
+                    return _value2;
+                }
                 throw new InvalidCaseException(Variant.Case2, _case);
             }
         }
@@ -51,19 +60,22 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case3) { return _value3; }
+                if (_case == Variant.Case3)
+                {
+                    return _value3;
+                }
                 throw new InvalidCaseException(Variant.Case3, _case);
             }
         }
 
-        public UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3, TReturn> Match<TReturn>()
+        public UnionOfThreePatternMatcher<T1, T2, T3, TReturn> Match<TReturn>()
         {
-            return new UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3, TReturn>(this);
+            return new UnionOfThreePatternMatcher<T1, T2, T3, TReturn>(this);
         }
 
-        public UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3> Match()
+        public UnionOfThreePatternMatcher<T1, T2, T3> Match()
         {
-            return new UnionOfThreePatternMatcher<Union<T1, T2, T3>, T1, T2, T3>(this);
+            return new UnionOfThreePatternMatcher<T1, T2, T3>(this);
         }
     }
 }

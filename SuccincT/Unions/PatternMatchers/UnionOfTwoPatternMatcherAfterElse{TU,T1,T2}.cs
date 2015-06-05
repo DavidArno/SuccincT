@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionOfTwoPatternMatcherAfterElse<TUnion, T1, T2> where TUnion : Union<T1, T2>
+    public sealed class UnionOfTwoPatternMatcherAfterElse<T1, T2>
     {
-        private readonly TUnion _union;
+        private readonly Union<T1, T2> _union;
         private readonly Dictionary<Variant, Action> _execActions;
-        private readonly Action<TUnion> _elseAction;
+        private readonly Action<Union<T1, T2>> _elseAction;
 
-        internal UnionOfTwoPatternMatcherAfterElse(TUnion union,
+        internal UnionOfTwoPatternMatcherAfterElse(Union<T1, T2> union,
                                               UnionCaseActionSelector<T1> case1ActionSelector,
                                               UnionCaseActionSelector<T2> case2ActionSelector,
-                                              Action<TUnion> elseAction)
+                                              Action<Union<T1, T2>> elseAction)
         {
             _union = union;
             _elseAction = elseAction;

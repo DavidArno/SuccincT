@@ -2,7 +2,7 @@
 
 namespace SuccincT.Unions
 {
-    public class Union<T1, T2>
+    public sealed class Union<T1, T2>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -54,14 +54,14 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2, TReturn> Match<TReturn>()
+        public UnionOfTwoPatternMatcher<T1, T2, TReturn> Match<TReturn>()
         {
-            return new UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2, TReturn>(this);
+            return new UnionOfTwoPatternMatcher<T1, T2, TReturn>(this);
         }
 
-        public UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2> Match()
+        public UnionOfTwoPatternMatcher<T1, T2> Match()
         {
-            return new UnionOfTwoPatternMatcher<Union<T1, T2>, T1, T2>(this);
+            return new UnionOfTwoPatternMatcher<T1, T2>(this);
         }
     }
 }

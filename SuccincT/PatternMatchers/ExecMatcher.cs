@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace SuccincT.PatternMatchers
 {
-    public class ExecMatcher<T>
+    public sealed class ExecMatcher<T>
     {
-        private class CaseDetails
+        private sealed class CaseDetails
         {
             public List<T> Values { get; set; }
 

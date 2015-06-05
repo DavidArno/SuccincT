@@ -3,7 +3,7 @@ using SuccincT.Unions;
 
 namespace SuccincTTests.SuccincT.Unions
 {
-    public class UnionT1T2ComplexMatchersTests
+    public sealed class UnionT1T2ComplexMatchersTests
     {
         [Test]
         public void UnionWithT1_MatchesComplexCase1Correctly()

@@ -4,17 +4,17 @@ using SuccincT.Options;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionOfThreePatternMatcherAfterElse<TUnion, T1, T2, T3, TReturn> where TUnion : Union<T1, T2, T3>
+    public sealed class UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn>
     {
-        private readonly TUnion _union;
+        private readonly Union<T1, T2, T3> _union;
         private readonly Dictionary<Variant, Func<Option<TReturn>>> _resultActions;
-        private readonly Func<TUnion, TReturn> _elseAction;
+        private readonly Func<Union<T1, T2, T3>, TReturn> _elseAction;
 
-        internal UnionOfThreePatternMatcherAfterElse(TUnion union,
+        internal UnionOfThreePatternMatcherAfterElse(Union<T1, T2, T3> union,
                                               UnionCaseActionSelector<T1, TReturn> case1ActionSelector,
                                               UnionCaseActionSelector<T2, TReturn> case2ActionSelector,
                                               UnionCaseActionSelector<T3, TReturn> case3ActionSelector,
-                                              Func<TUnion, TReturn> elseAction)
+                                              Func<Union<T1, T2, T3>, TReturn> elseAction)
         {
             _union = union;
             _elseAction = elseAction;

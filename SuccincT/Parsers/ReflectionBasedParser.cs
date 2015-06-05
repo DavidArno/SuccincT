@@ -3,7 +3,7 @@
 namespace SuccincT.Parsers
 {
     /// <summary>
-    /// Class wrapper around the reflection-based internal Parse method used by the float and int parsers.
+    /// sealed class wrapper around the reflection-based internal Parse method used by the float and int parsers.
     /// </summary>
     internal static class ReflectionBasedParser
     {

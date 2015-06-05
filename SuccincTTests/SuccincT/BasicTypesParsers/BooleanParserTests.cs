@@ -5,10 +5,10 @@ using SuccincT.Parsers;
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
     /// <summary>
-    /// Defines a set of tests for the extension methods in the BooleanParser class.
+    /// Defines a set of tests for the extension methods in the BooleanParser sealed class.
     /// </summary>
     [TestFixture]
-    public class BooleanParserTests
+    public sealed class BooleanParserTests
     {
         [Test]
         public void ValidTrueBooleanString_ResultsInValue()

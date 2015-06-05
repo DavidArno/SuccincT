@@ -1,6 +1,6 @@
 ﻿namespace SuccincT.Unions
 {
-    public class Union<T1, T2, T3, T4>
+    public sealed class Union<T1, T2, T3, T4>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;

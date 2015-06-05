@@ -5,7 +5,7 @@ using SuccincT.Options;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    internal class UnionCaseActionSelector<TValue, TResult>
+    internal sealed class UnionCaseActionSelector<TValue, TResult>
     {
         private readonly Func<TValue, TResult> _defaultAction;
 

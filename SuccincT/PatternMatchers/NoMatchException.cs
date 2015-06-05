@@ -3,7 +3,7 @@
 namespace SuccincT.PatternMatchers
 {
     [Serializable]
-    public class NoMatchException : Exception
+    public sealed class NoMatchException : Exception
     {
         public NoMatchException(string message) : base(message) { }
     }

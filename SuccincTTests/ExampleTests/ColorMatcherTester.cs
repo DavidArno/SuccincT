@@ -8,7 +8,7 @@ using SuccincTTests.Examples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class ColorMatcherTester
+    public sealed class ColorMatcherTester
     {
         [Test]
         public void ColorMatcherGeneratesRedGreenBlueCorrectly()

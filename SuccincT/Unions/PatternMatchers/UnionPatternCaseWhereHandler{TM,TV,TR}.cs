@@ -2,7 +2,7 @@ using System;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public class UnionPatternCaseWhereHandler<TMatcher, TValue, TReturn>
+    public sealed class UnionPatternCaseWhereHandler<TMatcher, TValue, TReturn>
     {
         private readonly Func<TValue, bool> _expression;
         private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;

@@ -5,7 +5,7 @@ using SuccincT.Parsers;
 namespace SuccincTTests.SuccincT.EnumParsers
 {
     [TestFixture]
-    public class EnumParserTests
+    public sealed class EnumParserTests
     {
         [Test]
         public void ValidEnumValue_CorrectlyParsed()

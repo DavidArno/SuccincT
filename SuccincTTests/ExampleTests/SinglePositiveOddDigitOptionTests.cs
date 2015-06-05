@@ -9,7 +9,7 @@ using SuccincTTests.Examples;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class SinglePositiveOddDigitOptionTests
+    public sealed class SinglePositiveOddDigitOptionTests
     {
         [Test]
         public void SinglePositiveOddDigitPrinterPrints1357And9Correctly()
