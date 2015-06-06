@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace SuccincT.Unions.PatternMatchers
+namespace SuccincT.PatternMatchers
 {
-    public sealed class UnionPatternCaseExpressionHandler<TMatcher, TValue, TReturn>
+    public sealed class MatchExpressionHandler<TMatcher, TValue, TReturn>
     {
         private readonly List<TValue> _values;
         private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;
         private readonly TMatcher _matcher;
 
-        internal UnionPatternCaseExpressionHandler(TValue value,
+        internal MatchExpressionHandler(TValue value,
                                                    Action<Func<TValue, bool>, Func<TValue, TReturn>> recorder,
                                                    TMatcher matcher)
         {
@@ -19,7 +19,7 @@ namespace SuccincT.Unions.PatternMatchers
             _matcher = matcher;
         }
 
-        public UnionPatternCaseExpressionHandler<TMatcher, TValue, TReturn> Or(TValue value)
+        public MatchExpressionHandler<TMatcher, TValue, TReturn> Or(TValue value)
         {
             _values.Add(value);
             return this;

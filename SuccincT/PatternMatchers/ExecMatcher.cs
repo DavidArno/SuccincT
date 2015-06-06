@@ -1,75 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace SuccincT.PatternMatchers
 {
     public sealed class ExecMatcher<T>
     {
-        private sealed class CaseDetails
-        {
-            public List<T> Values { get; set; }
-
-            public Action<T> Action { get; set; }
-        }
-
-        private readonly List<CaseDetails> _cases = new List<CaseDetails>();
+        private readonly MatchActionSelector<T> _actionSelector;
         private readonly T _item;
 
         internal ExecMatcher(T item)
         {
             _item = item;
+            _actionSelector = new MatchActionSelector<T>(
+                x => { throw new NoMatchException(string.Format("No match action exists for value of {0}", _item)); });
         }
 
-        public ExecMatcher<T> Case(T value, Action action)
+        public MatchExpressionHandler<ExecMatcher<T>, T> With(T value)
         {
-            _cases.Add(new CaseDetails { Values = new List<T> { value }, Action = x => action() });
-            return this;
+            return new MatchExpressionHandler<ExecMatcher<T>, T>(value, RecordAction, this);
         }
 
-        public ExecMatcherWithElse<T> Else(Action action)
+        private void RecordAction(Func<T, bool> test, Action<T> action)
         {
-            return new ExecMatcherWithElse<T>(this, action);
+            _actionSelector.AddTestAndAction(test, action);
         }
 
         public ExecMatcherWithElse<T> Else(Action<T> action)
         {
-            return new ExecMatcherWithElse<T>(this, action);
-        }
-
-        public MatchExpressionBuilder<T> With(T value)
-        {
-            return new MatchExpressionBuilder<T>(this, value);
+            return new ExecMatcherWithElse<T>(_actionSelector, action, _item);
         }
 
         public void Exec()
         {
-            if (!MatchExpressionAndActionIfFound())
-            {
-                throw new NoMatchException(string.Format("Match rules did not include a match for {0}", _item));
-            }
-        }
-
-        internal T Item { get { return _item; } }
-
-        internal ExecMatcher<T> Case(List<T> values, Action action)
-        {
-            _cases.Add(new CaseDetails { Values = values, Action = x => action() });
-            return this;
-        }
-
-        internal bool MatchExpressionAndActionIfFound()
-        {
-            var action = (from actionCase in _cases
-                          where actionCase.Values.Any(value => EqualityComparer<T>.Default.Equals(_item, value))
-                          select actionCase.Action).FirstOrDefault();
-
-            if (action != null)
-            {
-                action(_item);
-                return true;
-            }
-            return false;
+            _actionSelector.InvokeMatchedActionUsingDefaultIfRequired(_item);
         }
     }
 }

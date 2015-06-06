@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using SuccincT.Options;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -11,8 +12,8 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly Func<Union<T1, T2>, TReturn> _elseAction;
 
         internal UnionOfTwoPatternMatcherAfterElse(Union<T1, T2> union,
-                                                   UnionCaseActionSelector<T1, TReturn> case1ActionSelector,
-                                                   UnionCaseActionSelector<T2, TReturn> case2ActionSelector,
+                                                   MatchActionSelector<T1, TReturn> case1ActionSelector,
+                                                   MatchActionSelector<T2, TReturn> case2ActionSelector,
                                                    Func<Union<T1, T2>, TReturn> elseAction)
         {
             _union = union;

@@ -4,27 +4,25 @@ namespace SuccincT.PatternMatchers
 {
     public sealed class ExecMatcherWithElse<T>
     {
-        private readonly ExecMatcher<T> _execMatcher;
-        private readonly Action<T> _action;
+        private readonly MatchActionSelector<T> _selector;
+        private readonly Action<T> _elseAction;
+        private readonly T _value;
 
-        public ExecMatcherWithElse(ExecMatcher<T> execMatcher, Action<T> action)
+        internal ExecMatcherWithElse(MatchActionSelector<T> selector, Action<T> elseAction, T value)
         {
-            _execMatcher = execMatcher;
-            _action = action;
-        }
-
-        public ExecMatcherWithElse(ExecMatcher<T> execMatcher, Action action)
-        {
-            _execMatcher = execMatcher;
-            _action = x => action();
+            _selector = selector;
+            _elseAction = elseAction;
+            _value = value;
         }
 
         public void Exec()
         {
-            if (!_execMatcher.MatchExpressionAndActionIfFound())
-            {
-                _action(_execMatcher.Item);
-            }
+            var matchedResult = _selector.FindMatchedActionOrNone(_value);
+
+            matchedResult.Match()
+                         .Some().Do(x => x(_value))
+                         .None().Do(() => _elseAction(_value))
+                         .Exec();
         }
     }
 }

@@ -9,12 +9,12 @@ namespace SuccincT.Options
     {
         private readonly ValueOrError _valueOrError;
 
-        private readonly UnionCaseActionSelector<string, TReturn> _valueActionSelector =
-            new UnionCaseActionSelector<string, TReturn>(
+        private readonly MatchActionSelector<string, TReturn> _valueActionSelector =
+            new MatchActionSelector<string, TReturn>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
-        private readonly UnionCaseActionSelector<string, TReturn> _errorActionSelector =
-            new UnionCaseActionSelector<string, TReturn>(
+        private readonly MatchActionSelector<string, TReturn> _errorActionSelector =
+            new MatchActionSelector<string, TReturn>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
         internal ValueOrErrorMatcher(ValueOrError valueOrError)

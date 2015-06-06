@@ -8,16 +8,16 @@ namespace SuccincT.Unions.PatternMatchers
     {
         private readonly Union<T1, T2, T3> _union;
 
-        private readonly UnionCaseActionSelector<T1, TReturn> _case1ActionSelector =
-            new UnionCaseActionSelector<T1, TReturn>(
+        private readonly MatchActionSelector<T1, TReturn> _case1ActionSelector =
+            new MatchActionSelector<T1, TReturn>(
                 x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
-        private readonly UnionCaseActionSelector<T2, TReturn> _case2ActionSelector =
-            new UnionCaseActionSelector<T2, TReturn>(
+        private readonly MatchActionSelector<T2, TReturn> _case2ActionSelector =
+            new MatchActionSelector<T2, TReturn>(
                 x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
-        private readonly UnionCaseActionSelector<T3, TReturn> _case3ActionSelector =
-            new UnionCaseActionSelector<T3, TReturn>(
+        private readonly MatchActionSelector<T3, TReturn> _case3ActionSelector =
+            new MatchActionSelector<T3, TReturn>(
                 x => { throw new NoMatchException("No match action defined for union with Case3 value"); });
 
         private readonly Dictionary<Variant, Func<TReturn>> _resultActions;

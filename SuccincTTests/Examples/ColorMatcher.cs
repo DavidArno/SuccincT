@@ -14,9 +14,9 @@ namespace SuccincTTests.Examples
         public static void PrintColorName(Color color)
         {
             color.Match()
-                 .Case(Color.Red, () => Console.WriteLine("Red"))
-                 .Case(Color.Green, () => Console.WriteLine("Green"))
-                 .Case(Color.Blue, () => Console.WriteLine("Blue"))
+                 .With(Color.Red).Do(x => Console.WriteLine("Red"))
+                 .With(Color.Green).Do(x => Console.WriteLine("Green"))
+                 .With(Color.Blue).Do(x => Console.WriteLine("Blue"))
                  .Exec();
         }
     }

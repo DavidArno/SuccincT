@@ -10,12 +10,12 @@ namespace SuccincT.Options
         private readonly Union<T, None> _union;
         private readonly Option<T> _option;
 
-        private readonly UnionCaseActionSelector<T, TReturn> _case1ActionSelector =
-            new UnionCaseActionSelector<T, TReturn>(
+        private readonly MatchActionSelector<T, TReturn> _case1ActionSelector =
+            new MatchActionSelector<T, TReturn>(
                 x => { throw new NoMatchException("No match action defined for Option with value"); });
 
-        private readonly UnionCaseActionSelector<None, TReturn> _case2ActionSelector =
-            new UnionCaseActionSelector<None, TReturn>(
+        private readonly MatchActionSelector<None, TReturn> _case2ActionSelector =
+            new MatchActionSelector<None, TReturn>(
                 x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
         internal OptionMatcher(Union<T, None> union, Option<T> option)

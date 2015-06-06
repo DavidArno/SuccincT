@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -10,9 +11,9 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly Action<Union<T1, T2, T3>> _elseAction;
 
         internal UnionOfThreePatternMatcherAfterElse(Union<T1, T2, T3> union,
-                                              UnionCaseActionSelector<T1> case1ActionSelector,
-                                              UnionCaseActionSelector<T2> case2ActionSelector,
-                                              UnionCaseActionSelector<T3> case3ActionSelector,
+                                              MatchActionSelector<T1> case1ActionSelector,
+                                              MatchActionSelector<T2> case2ActionSelector,
+                                              MatchActionSelector<T3> case3ActionSelector,
                                               Action<Union<T1, T2, T3>> elseAction)
         {
             _union = union;
@@ -30,7 +31,7 @@ namespace SuccincT.Unions.PatternMatchers
             _execActions[_union.Case]();
         }
 
-        private void Exec<T>(UnionCaseActionSelector<T> selector, T value)
+        private void Exec<T>(MatchActionSelector<T> selector, T value)
         {
             var matchedResult = selector.FindMatchedActionOrNone(value);
 

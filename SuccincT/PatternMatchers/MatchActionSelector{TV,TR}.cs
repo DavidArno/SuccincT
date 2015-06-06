@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using SuccincT.Options;
 
-namespace SuccincT.Unions.PatternMatchers
+namespace SuccincT.PatternMatchers
 {
-    internal sealed class UnionCaseActionSelector<TValue, TResult>
+    internal sealed class MatchActionSelector<TValue, TResult>
     {
         private readonly Func<TValue, TResult> _defaultAction;
 
         private readonly List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>> _testsAndActions =
             new List<Tuple<Func<TValue, bool>, Func<TValue, TResult>>>();
 
-        public UnionCaseActionSelector(Func<TValue, TResult> defaultAction)
+        public MatchActionSelector(Func<TValue, TResult> defaultAction)
         {
             _defaultAction = defaultAction;
         }

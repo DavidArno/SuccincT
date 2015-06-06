@@ -1,4 +1,5 @@
 ﻿using System;
+using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -13,14 +14,14 @@ namespace SuccincT.Unions.PatternMatchers
             _matcher = matcher;
         }
 
-        public UnionPatternCaseExpressionHandler<TMatcher, TValue> Of(TValue value)
+        public MatchExpressionHandler<TMatcher, TValue> Of(TValue value)
         {
-            return new UnionPatternCaseExpressionHandler<TMatcher, TValue>(value, _recorder, _matcher);
+            return new MatchExpressionHandler<TMatcher, TValue>(value, _recorder, _matcher);
         }
 
-        public UnionPatternCaseWhereHandler<TMatcher, TValue> Where(Func<TValue, bool> expression)
+        public MatchWhereHandler<TMatcher, TValue> Where(Func<TValue, bool> expression)
         {
-            return new UnionPatternCaseWhereHandler<TMatcher, TValue>(expression, _recorder, _matcher);
+            return new MatchWhereHandler<TMatcher, TValue>(expression, _recorder, _matcher);
         }
 
         public TMatcher Do(Action<TValue> action)

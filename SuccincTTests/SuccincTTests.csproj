@@ -58,6 +58,7 @@
     <Compile Include="ExampleTests\SinglePositiveOddDigitUnionTests.cs" />
     <Compile Include="ExampleTests\SinglePositiveOddDigitOptionTests.cs" />
     <Compile Include="ExampleTests\UnionMatcherExamplesTests.cs" />
+    <Compile Include="PatternMatchers\ValueMatchTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\BooleanParserTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
