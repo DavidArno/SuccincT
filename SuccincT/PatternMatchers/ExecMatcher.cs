@@ -19,6 +19,11 @@ namespace SuccincT.PatternMatchers
             return new MatchExpressionHandler<ExecMatcher<T>, T>(value, RecordAction, this);
         }
 
+        public MatchWhereHandler<ExecMatcher<T>, T> Where(Func<T, bool> expression)
+        {
+            return new MatchWhereHandler<ExecMatcher<T>, T>(expression, RecordAction, this);
+        }
+
         private void RecordAction(Func<T, bool> test, Action<T> action)
         {
             _actionSelector.AddTestAndAction(test, action);
