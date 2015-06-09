@@ -1,11 +1,15 @@
-## SuccincT ##
+## Succinc<T\> ##
 
-**SuccincT** is a small .NET framework that provides an elegant solution to the problem of functions that need return a success state and value, or a failure state.
+**Succinc<T\>** is a small .NET framework that started out as a means of providing an elegant solution to the problem of functions that need return a success state and value, or a failure state. Initially, this was `ISuccess<T>`. Then I started learning F#...
 
-### What's it for? ###
-All too often the .NET framework has methods that throw exceptions for non-exceptional reasons. Quite often no accompanying test method is provided to allow the exception to be avoided. In other cases, a single test & do method is provided, which needs an out parameter to return part of the result.
+Now Succinc<T\> has grown into a library that provides discriminated unions, pattern matching and functional composition for C#.
 
-SuccincT provides the `ISuccess<T>` interface, which is a simple, elegant replacement to cumbersome exceptions and out parameters. It neatly encapsulates a success state, a value that is only valid when successful and an error message that's only valid when not. In addition it provides replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`, all of which use `ISuccess<T>` to report their results. As an added bonus, this methods are all implemented as extension methods to `string`. 
+### Discriminated Unions ###
+Succinc<T\> provides a set of union types (`Union<T1,T2>` through to `Union<T1,T2,T3,T4>`) where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of `Option<T>` that can have the value `Some<T>` or `None`.
 
-### State of the project ##
-At this early stage, I have simply uploaded the VS2012 solution and support files to GitHub. Usage notes and a NuGet package will be added soon.
+Succinc<T\> uses `Option<T>` to provide replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`. In all cases, these are extension methods to `string` and they return `Some<T>` on a successful parse and `None` when the string is not a valid value for that type. No more `out` parameters!
+
+### Pattern Matching ###
+
+### Functional Composition ###
+
