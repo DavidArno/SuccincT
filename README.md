@@ -1,4 +1,4 @@
-## Succinc<T\> ##
+## Succinc<T\> \<T\> &lt;T&gt; \074T\076 ##
 
 **Succinc<T\>** is a small .NET framework that started out as a means of providing an elegant solution to the problem of functions that need return a success state and value, or a failure state. Initially, this was `ISuccess<T>`. Then I started learning F#...
 
