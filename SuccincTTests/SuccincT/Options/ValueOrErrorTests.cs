@@ -8,6 +8,8 @@ namespace SuccincTTests.SuccincT.Options
     [TestFixture]
     public sealed class ValueOrErrorTests
     {
+        private readonly int x;
+
         [Test]
         public void WhenValueIsSet_OnlyValueActionOccurs()
         {
@@ -180,6 +182,20 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = ValueOrError.WithError("1");
             valueOrError.Match().Value().Do(x => { }).Exec();
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(ArgumentNullException))]
+        public void CreatingWithNullValue_CausesNullException()
+        {
+            var a = ValueOrError.WithValue(null);
+            Assert.IsInstanceOf(typeof(ValueOrError), a);
+        }
+
+        [Test, ExpectedException(ExpectedException = typeof(ArgumentNullException))]
+        public void CreatingWithNullError_CausesNullException()
+        {
+            var a = ValueOrError.WithError(null);
+            Assert.IsInstanceOf(typeof(ValueOrError), a);
         }
     }
 }

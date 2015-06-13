@@ -3,7 +3,8 @@
 namespace SuccincT.Options
 {
     /// <summary>
-    /// A sealed class that encapsulates two possible string results: either a string value, or a string describing an error.
+    /// Provides a special-case union of two string values: one representing a value; the other an error. For
+    /// use in situations where a string return type is needed, by throwing exceptions isn't desirable.
     /// </summary>
     public sealed class ValueOrError
     {
@@ -16,18 +17,51 @@ namespace SuccincT.Options
             _error = error;
         }
 
+        /// <summary>
+        /// Creates a new instance with a value (and no error)
+        /// </summary>
         public static ValueOrError WithValue(string value)
         {
+            if (value == null) { throw new ArgumentNullException("value"); }
             return new ValueOrError(value, null);
         }
 
+        /// <summary>
+        /// Creates a new instance with an error (and no value)
+        /// </summary>
         public static ValueOrError WithError(string error)
         {
+            if (error == null) { throw new ArgumentNullException("error"); }
             return new ValueOrError(null, error);
         }
 
+        /// <summary>
+        /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
+        /// by invoking the function associated with the match.
+        /// </summary>
+        public ValueOrErrorMatcher<TResult> Match<TResult>()
+        {
+            return new ValueOrErrorMatcher<TResult>(this);
+        }
+
+        /// <summary>
+        /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
+        /// associated with the match.
+        /// </summary>
+        public ValueOrErrorMatcher Match()
+        {
+            return new ValueOrErrorMatcher(this);
+        }
+
+        /// <summary>
+        /// True if created via WithValue(), else false.
+        /// </summary>
         public bool HasValue { get { return _value != null; } }
 
+        /// <summary>
+        /// The value held (if created by WithValue()). Will throw an InvalidOperationException if created via
+        /// WithError().
+        /// </summary>
         public string Value
         {
             get
@@ -37,6 +71,10 @@ namespace SuccincT.Options
             }
         }
 
+        /// <summary>
+        /// The error held (if created by WithError()). Will throw an InvalidOperationException if created via
+        /// WithValue().
+        /// </summary>
         public string Error
         {
             get
@@ -53,14 +91,27 @@ namespace SuccincT.Options
                 : string.Format("Error of {0}", _error);
         }
 
-        public ValueOrErrorMatcher<TResult> Match<TResult>()
+        public override bool Equals(Object obj)
         {
-            return new ValueOrErrorMatcher<TResult>(this);
+            var testObject = obj as ValueOrError;
+            return obj is ValueOrError && testObject._error == _error && testObject._value == _value;
         }
 
-        public ValueOrErrorMatcher Match()
+        public override int GetHashCode()
         {
-            return new ValueOrErrorMatcher(this);
+            return HasValue ? _value.GetHashCode() : _error.GetHashCode();
+        }
+
+        public static bool operator ==(ValueOrError a, ValueOrError b)
+        {
+            var aObj = (object)a;
+            var bObj = (object)b;
+            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+        }
+
+        public static bool operator !=(ValueOrError a, ValueOrError b)
+        {
+            return !(a == b);
         }
     }
 }
