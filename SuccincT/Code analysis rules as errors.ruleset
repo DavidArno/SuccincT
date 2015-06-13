@@ -70,7 +70,6 @@
     <Rule Id="CA1701" Action="Error" />
     <Rule Id="CA1702" Action="Error" />
     <Rule Id="CA1703" Action="Error" />
-    <Rule Id="CA1704" Action="Error" />
     <Rule Id="CA1707" Action="Error" />
     <Rule Id="CA1708" Action="Error" />
     <Rule Id="CA1709" Action="Error" />

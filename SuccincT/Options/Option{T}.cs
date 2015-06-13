@@ -64,5 +64,28 @@ namespace SuccincT.Options
                 return _union.Case1;
             }
         }
+
+        public override bool Equals(Object obj)
+        {
+            var testObject = obj as Option<T>;
+            return obj is Option<T> && testObject._union.Equals(_union);
+        }
+
+        public override int GetHashCode()
+        {
+            return _union.GetHashCode();
+        }
+
+        public static bool operator ==(Option<T> a, Option<T> b)
+        {
+            var aObj = (object)a;
+            var bObj = (object)b;
+            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+        }
+
+        public static bool operator !=(Option<T> a, Option<T> b)
+        {
+            return !(a == b);
+        }
     }
 }

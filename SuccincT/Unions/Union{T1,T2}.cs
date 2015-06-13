@@ -1,4 +1,6 @@
-﻿using SuccincT.Unions.PatternMatchers;
+﻿using System;
+using System.Collections.Generic;
+using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
@@ -7,16 +9,34 @@ namespace SuccincT.Unions
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly Variant _case;
+        private readonly Dictionary<Variant, Func<int>> _hashCodes;
+        private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
 
         public Variant Case { get { return _case; } }
 
+        private Union()
+        {
+            _hashCodes = new Dictionary<Variant, Func<int>>
+            {
+                { Variant.Case1, () => _value1.GetHashCode() },
+                { Variant.Case2, () => _value2.GetHashCode() }
+            };
+            _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2>, bool>>
+            {
+                { Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1) },
+                { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) }
+            };
+        }
+
         public Union(T1 value)
+            : this()
         {
             _value1 = value;
             _case = Variant.Case1;
         }
 
         public Union(T2 value)
+            : this()
         {
             _value2 = value;
             _case = Variant.Case2;
@@ -62,6 +82,34 @@ namespace SuccincT.Unions
         public UnionOfTwoPatternMatcher<T1, T2> Match()
         {
             return new UnionOfTwoPatternMatcher<T1, T2>(this);
+        }
+
+        public override bool Equals(Object obj)
+        {
+            var testObject = obj as Union<T1, T2>;
+            return obj is Union<T1, T2> && UnionsEqual(testObject);
+        }
+
+        public override int GetHashCode()
+        {
+            return _hashCodes[Case]();
+        }
+
+        public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
+        {
+            var aObj = (object)a;
+            var bObj = (object)b;
+            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+        }
+
+        public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b)
+        {
+            return !(a == b);
+        }
+
+        private bool UnionsEqual(Union<T1, T2> testObject)
+        {
+            return _unionsMatch[Case](testObject);
         }
     }
 }

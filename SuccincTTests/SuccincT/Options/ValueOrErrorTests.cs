@@ -8,8 +8,6 @@ namespace SuccincTTests.SuccincT.Options
     [TestFixture]
     public sealed class ValueOrErrorTests
     {
-        private readonly int x;
-
         [Test]
         public void WhenValueIsSet_OnlyValueActionOccurs()
         {
