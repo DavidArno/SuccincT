@@ -53,6 +53,8 @@ Succinc\<T\> can pattern match values, unions etc in a way similar to F#'s patte
     }
 ```
 
+See the [Succinc\<T\> pattern matching guide](https://github.com/DavidArno/SuccincT/wiki/PatternMatching) for more details.
+
 ### Functional Composition ###
 Succinc\<T\> supports functional composition. A parameter can be supplied to a mnulti-parameter method and a new function will be returned that takes the remaining parameters. For example:
 

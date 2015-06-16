@@ -14,6 +14,11 @@ namespace SuccincT.PatternMatchers
                 x => { throw new NoMatchException(string.Format("No match action exists for value of {0}", _item)); });
         }
 
+        public ResultMatcher<T, TResult> To<TResult>()
+        {
+            return new ResultMatcher<T, TResult>(_item);
+        }
+
         public MatchExpressionHandler<ExecMatcher<T>, T> With(T value)
         {
             return new MatchExpressionHandler<ExecMatcher<T>, T>(value, RecordAction, this);

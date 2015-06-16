@@ -66,6 +66,8 @@
     <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Options\ValueOrErrorMatcher.cs" />
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
+    <Compile Include="PatternMatchers\ResultMatcherWithElse.cs" />
+    <Compile Include="PatternMatchers\ResultMatcher.cs" />
     <Compile Include="PatternMatchers\ExecMatcher.cs" />
     <Compile Include="PatternMatchers\ExecMatcherWithElse.cs" />
     <Compile Include="PatternMatchers\MatchActionSelector{TV,TR}.cs" />
@@ -94,6 +96,7 @@
     <Compile Include="Unions\None.cs" />
     <Compile Include="Unions\Union{T1,T2}.cs" />
     <Compile Include="Unions\Variant.cs" />
+    <Compile Include="Version.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Code analysis rules as errors.ruleset" />
