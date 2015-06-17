@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/DavidArno/SuccincT</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>First release.</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>Functional Composition Discriminated Unions Options Pattern Matching</tags>
+  </metadata>
+</package>

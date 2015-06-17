@@ -2,3 +2,4 @@
 /obj/
 /*.Cache
 /*.csproj.user
+*.nupkg

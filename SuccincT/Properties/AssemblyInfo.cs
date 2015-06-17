@@ -7,12 +7,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SuccessOfT")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SuccincT")]
+[assembly: AssemblyDescription("Discriminated unions, pattern matching and funvtional composition for C#")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("SuccessOfT")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2013")]
+[assembly: AssemblyCompany("David Arno")]
+[assembly: AssemblyProduct("SuccincT")]
+[assembly: AssemblyCopyright("Copyright © David Arno, 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
