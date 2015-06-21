@@ -1,5 +1,7 @@
 language: csharp
 solution: SuccincT.sln
+env:
+  - EnableNuGetPackageRestore=true
 install:
   - nuget restore SuccincT.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
