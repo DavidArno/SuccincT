@@ -1,6 +1,7 @@
 language: csharp
 solution: SuccincT.sln
 install:
+  - nuget restore SuccincT.sln
   - nuget install NUnit.Runners -Version 2.6.4 -OutputDirectory testrunner
 script:
   - xbuild /p:Configuration=Release SuccincT.sln
