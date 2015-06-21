@@ -1,67 +1,72 @@
 ﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
 
-namespace SuccincTTests.PatternMatchers
+namespace SuccincTTests.SuccincT.PatternMatchers
 {
     [TestFixture]
-    public class ValueMatchTests
+    public class ValueMatchExecTests
     {
         [Test]
-        public void IntValue_CanBeMatched()
+        public void IntValue_CanBeMatchedWithExec()
         {
-            var result = 1.Match().To<bool>().With(1).Do(x => true).Result();
+            var result = false;
+            1.Match().With(1).Do(x => result = true).Exec();
             Assert.IsTrue(result);
         }
 
         [Test]
         public void IntValue_CanBeMatchedViaOrWithExec()
         {
-            var result = 1.Match().To<bool>().With(2).Or(1).Do(x => true).Result();
+            var result = false;
+            1.Match().With(2).Or(1).Do(x => result = true).Exec();
             Assert.IsTrue(result);
         }
 
         [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
         public void IntValue_ExceptionIfNoMatchWithExec()
         {
-            3.Match().To<int>().With(2).Or(1).Do(x => x).Result();
+            3.Match().With(2).Or(1).Do(x => { }).Exec();
         }
 
         [Test]
         public void IntValue_WhenNoMatchElseUsedWithExec()
         {
-            var result = 1.Match().To<bool>().With(2).Do(x => true).Else(x => false).Result();
+            var result = false;
+            1.Match().With(2).Do(x => result = true).Else(x => result = false).Exec();
             Assert.IsFalse(result);
         }
 
         [Test]
         public void IntValue_CanBeMatchedViaWhereWithExec()
         {
-            var result = 1.Match().To<bool>().Where(x => x == 1).Do(x => true)
-                                             .Else(x => false).Result();
+            var result = false;
+            1.Match().Where(x => x == 1).Do(x => result = true).Else(x => result = false).Exec();
             Assert.IsTrue(result);
         }
 
         [Test]
         public void IntValue_WhenNoMatchViaWhereElseUsedWithExec()
         {
-            var result = 1.Match().To<bool>().Where(x => x == 2).Do(x => true)
-                                             .Else(x => false).Result();
+            var result = false;
+            1.Match().Where(x => x == 2).Do(x => result = true).Else(x => result = false).Exec();
             Assert.IsFalse(result);
         }
 
         [Test]
         public void IntValue_WithAndWhereDefinedWhereCorrectlyUsedWithExec()
         {
-            var result = 5.Match().To<bool>().With(1).Or(2).Do(x => false)
-                                            .Where(x => x == 5).Do(x => true).Result();
+            var result = false;
+            5.Match().With(1).Or(2).Do(x => result = false)
+                     .Where(x => x == 5).Do(x => result = true).Exec();
             Assert.IsTrue(result);
         }
 
         [Test]
         public void IntValue_WithAndWhereDefinedWithCorrectlyUsedWithExec()
         {
-            var result = 2.Match().To<bool>().With(1).Or(2).Do(x => false)
-                                             .Where(x => x == 5).Do(x => true).Result();
+            var result = false;
+            2.Match().With(1).Or(2).Do(x => result = false)
+                     .Where(x => x == 5).Do(x => result = true).Exec();
             Assert.IsFalse(result);
         }
     }

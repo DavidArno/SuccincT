@@ -63,6 +63,15 @@ namespace SuccincT.Unions.PatternMatchers
                                                                                 elseAction);
         }
 
+        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn> Else(TReturn elseValue)
+        {
+            return new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn>(_union,
+                                                                                _case1ActionSelector,
+                                                                                _case2ActionSelector,
+                                                                                _case3ActionSelector,
+                                                                                x => elseValue);
+        }
+
         public TReturn Result()
         {
             return _resultActions[_union.Case]();

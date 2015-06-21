@@ -30,16 +30,14 @@ namespace SuccincT.Unions.PatternMatchers
 
         public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T1, TReturn> Case1()
         {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T1, TReturn>(
-                RecordAction,
-                this);
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T1, TReturn>(RecordAction,
+                                                                                                       this);
         }
 
         public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T2, TReturn> Case2()
         {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T2, TReturn>(
-                RecordAction,
-                this);
+            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2, TReturn>, T2, TReturn>(RecordAction,
+                                                                                                       this);
         }
 
         public UnionOfTwoPatternMatcherAfterElse<T1, T2, TReturn> Else(Func<Union<T1, T2>, TReturn> elseAction)
@@ -48,6 +46,14 @@ namespace SuccincT.Unions.PatternMatchers
                                                                           _case1ActionSelector,
                                                                           _case2ActionSelector,
                                                                           elseAction);
+        }
+
+        public UnionOfTwoPatternMatcherAfterElse<T1, T2, TReturn> Else(TReturn elseValue)
+        {
+            return new UnionOfTwoPatternMatcherAfterElse<T1, T2, TReturn>(_union,
+                                                                          _case1ActionSelector,
+                                                                          _case2ActionSelector,
+                                                                          x => elseValue);
         }
 
         public TReturn Result()

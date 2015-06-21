@@ -22,5 +22,11 @@ namespace SuccincT.PatternMatchers
             _recorder(_expression, action);
             return _matcher;
         }
+
+        public TMatcher Do(TReturn value)
+        {
+            _recorder(_expression, x => value);
+            return _matcher;
+        }
     }
 }

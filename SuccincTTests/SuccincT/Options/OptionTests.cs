@@ -123,5 +123,37 @@ namespace SuccincTTests.SuccincT.Options
             var option = Option<int>.Some(1);
             option.Match().None().Do(() => { }).Exec();
         }
+
+        [Test]
+        public void WhenSome_SimpleSomeDoWithExpressionSupported()
+        {
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void WhenSome_SomeOfDoWithExpressionSupported()
+        {
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().Some().Of(1).Do(1).Some().Do(2).None().Do(3).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void WhenSome_SomeWhereDoWithExpressionSupported()
+        {
+            var option = Option<int>.Some(1);
+            var result = option.Match<int>().Some().Where(x => x < 2).Do(0).Some().Do(2).None().Do(3).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void WhenNone_NoneDoWithExpressionSupported()
+        {
+            var option = Option<int>.None();
+            var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
+            Assert.AreEqual(2, result);
+        }
     }
 }

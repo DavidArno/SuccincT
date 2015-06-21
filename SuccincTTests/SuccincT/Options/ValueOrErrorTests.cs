@@ -9,44 +9,6 @@ namespace SuccincTTests.SuccincT.Options
     public sealed class ValueOrErrorTests
     {
         [Test]
-        public void WhenValueIsSet_OnlyValueActionOccurs()
-        {
-            var valueOrError = ValueOrError.WithValue("x");
-            var valueSet = false;
-            var errorSet = false;
-            valueOrError.Match().Value().Do(s => { valueSet = true; }).Error().Do(s => { errorSet = true; }).Exec();
-            Assert.AreEqual(new[] { true, false }, new[] { valueSet, errorSet });
-        }
-
-        [Test]
-        public void WhenErrorIsSet_OnlyErrorActionOccurs()
-        {
-            var valueOrError = ValueOrError.WithError("x");
-            var valueSet = false;
-            var errorSet = false;
-            valueOrError.Match().Value().Do(s => valueSet = true).Error().Do(s => errorSet = true).Exec();
-            Assert.AreEqual(new[] { false, true }, new[] { valueSet, errorSet });
-        }
-
-        [Test]
-        public void WhenValueIsSet_ValueSuppliedToAction()
-        {
-            var valueOrError = ValueOrError.WithValue("x");
-            var value = string.Empty;
-            valueOrError.Match().Value().Do(s => value = s).Error().Do(s => { }).Exec();
-            Assert.AreEqual("x", value);
-        }
-
-        [Test]
-        public void WhenErrorIsSet_ErrorSuppliedToAction()
-        {
-            var valueOrError = ValueOrError.WithError("x");
-            var errorValue = string.Empty;
-            valueOrError.Match().Value().Do(s => { }).Error().Do(s => errorValue = s).Exec();
-            Assert.AreEqual("x", errorValue);
-        }
-
-        [Test]
         public void WhenValueIsSet_ValueSuppliedToFunction()
         {
             var valueOrError = ValueOrError.WithValue("1");
@@ -127,24 +89,6 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenErrorIsSetAndNoErrorMatchForExec_ElseResultIsReturned()
-        {
-            var valueOrError = ValueOrError.WithError("2");
-            var result = "0";
-            valueOrError.Match().Value().Do(x => result = x).Else(x => result = "1").Exec();
-            Assert.AreEqual("1", result);
-        }
-
-        [Test]
-        public void WhenValueIsSetAndNoValueMatchForExec_ElseResultIsReturned()
-        {
-            var valueOrError = ValueOrError.WithValue("2");
-            var result = "0";
-            valueOrError.Match().Error().Do(x => result = x).Else(x => result = "1").Exec();
-            Assert.AreEqual("1", result);
-        }
-
-        [Test]
         public void WhenValueIsSetAndNoErrorMatch_ElseResultIsReturned()
         {
             var valueOrError = ValueOrError.WithValue("1");
@@ -168,20 +112,6 @@ namespace SuccincTTests.SuccincT.Options
             Assert.AreEqual(result, -1);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
-        public void WhenValueIsSetAndNoValueMatchDefinedForExec_ExceptionThrown()
-        {
-            var valueOrError = ValueOrError.WithValue("1");
-            valueOrError.Match().Error().Do(x => { }).Exec();
-        }
-
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
-        public void WhenErrorIsSetAndNoErrorMatchDefinedForExec_ExceptionThrown()
-        {
-            var valueOrError = ValueOrError.WithError("1");
-            valueOrError.Match().Value().Do(x => { }).Exec();
-        }
-
         [Test, ExpectedException(ExpectedException = typeof(ArgumentNullException))]
         public void CreatingWithNullValue_CausesNullException()
         {
@@ -194,6 +124,60 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithError(null);
             Assert.IsInstanceOf(typeof(ValueOrError), a);
+        }
+
+        [Test]
+        public void WhenValue_SimpleValueDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            var result = valueOrError.Match<int>().Value().Do(1).Error().Do(2).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void WhenSome_SomeOfDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            var result = valueOrError.Match<int>().Value().Of("1").Do(1).Value().Do(2).Error().Do(3).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void WhenSome_SomeWhereDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithValue("1");
+            var result = valueOrError.Match<int>()
+                                     .Value().Where(x => x == "1").Do(0).Value().Do(2).Error().Do(3).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void WhenError_SimpleErrorDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithError("1");
+            var result = valueOrError.Match<int>().Value().Do(1).Error().Do(2).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void WhenError_ErrorOfDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithError("1");
+            var result = valueOrError.Match<int>().Value().Of("1").Do(1)
+                                     .Value().Do(2)
+                                     .Error().Of("1").Do(3).Result();
+            Assert.AreEqual(3, result);
+        }
+
+        [Test]
+        public void WhenError_ErrorWhereDoWithExpressionSupported()
+        {
+            var valueOrError = ValueOrError.WithError("1");
+            var result = valueOrError.Match<int>()
+                                     .Value().Where(x => x == "1").Do(0)
+                                     .Value().Do(2)
+                                     .Error().Where(x => x == "1").Do(3).Result();
+            Assert.AreEqual(3, result);
         }
     }
 }

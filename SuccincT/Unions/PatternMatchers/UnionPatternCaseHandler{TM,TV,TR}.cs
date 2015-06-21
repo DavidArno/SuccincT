@@ -29,5 +29,11 @@ namespace SuccincT.Unions.PatternMatchers
             _recorder(x => true, action);
             return _matcher;
         }
+
+        public TMatcher Do(TReturn value)
+        {
+            _recorder(x => true, x => value);
+            return _matcher;
+        }
     }
 }

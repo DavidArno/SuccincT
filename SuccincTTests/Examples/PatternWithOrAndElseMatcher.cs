@@ -9,7 +9,7 @@ namespace SuccincTTests.Examples
         {
             x.Match()
              .With(1).Or(2).Or(3).Do(i => Console.WriteLine("Found 1, 2, or 3!"))
-             .Else(var1 => Console.WriteLine("{0}", var1))
+             .Else(Console.WriteLine)
              .Exec();
         }
     }

@@ -72,16 +72,49 @@ namespace SuccincTTests.SuccincT.FunctionalComposition
         }
 
         [Test]
-        public void FourParamMethodIsDirectlyComposable()
+        public void FiveParamFunctionIsComposableWithOneParam()
         {
-            var expected = TestFunction(1, 2, 3, 4);
-            var partiallyComposedFunction1 = Function.Compose<int, int, int, int, int>(TestFunction, 1);
+            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var expected = testFunction(1, 2, 3, 4, 5);
+            var partiallyComposedFunction1 = testFunction.Compose(1);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Compose(2);
-            var completelyComposedFunction = partiallyComposedFunction2.Compose(3);
-            var actual = completelyComposedFunction(4);
+            var partiallyComposedFunction3 = partiallyComposedFunction2.Compose(3);
+            var completelyComposedFunction = partiallyComposedFunction3.Compose(4);
+            var actual = completelyComposedFunction(5);
             Assert.AreEqual(expected, actual);
         }
 
-        private static int TestFunction(int p1, int p2, int p3, int p4) { return (p1 + p2) * (p3 + p4); }
+        [Test]
+        public void FiveParamFunctionIsComposableWithTwoParams()
+        {
+            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var expected = testFunction(1, 2, 3, 4, 5);
+            var partiallyComposedFunction1 = testFunction.Compose(1, 2);
+            var partiallyComposedFunction2 = partiallyComposedFunction1.Compose(3);
+            var completelyComposedFunction = partiallyComposedFunction2.Compose(4);
+            var actual = completelyComposedFunction(5);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FiveParamFunctionIsComposableWithThreeParams()
+        {
+            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var expected = testFunction(1, 2, 3, 4, 5);
+            var partiallyComposedFunction = testFunction.Compose(1, 2, 3);
+            var completelyComposedFunction = partiallyComposedFunction.Compose(4);
+            var actual = completelyComposedFunction(5);
+            Assert.AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void FiveParamFunctionIsComposableWithFourParams()
+        {
+            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var expected = testFunction(1, 2, 3, 4, 5);
+            var completelyComposedFunction = testFunction.Compose(1, 2, 3, 4);
+            var actual = completelyComposedFunction(5);
+            Assert.AreEqual(expected, actual);
+        }
     }
 }

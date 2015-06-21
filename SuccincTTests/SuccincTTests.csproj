@@ -60,8 +60,6 @@
     <Compile Include="ExampleTests\SinglePositiveOddDigitUnionTests.cs" />
     <Compile Include="ExampleTests\SinglePositiveOddDigitOptionTests.cs" />
     <Compile Include="ExampleTests\UnionMatcherExamplesTests.cs" />
-    <Compile Include="PatternMatchers\ValueMatchTests.cs" />
-    <Compile Include="PatternMatchers\ValueMatchExecTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\BooleanParserTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
@@ -71,6 +69,9 @@
     <Compile Include="SuccincT\Options\OptionTests.cs" />
     <Compile Include="SuccincT\Options\OptionEqualityTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorEqualityTests.cs" />
+    <Compile Include="SuccincT\Options\ValueOrErrorExecTests.cs" />
+    <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />
+    <Compile Include="SuccincT\PatternMatchers\ValueMatchTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3BasicMatchExecTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3ComplexMatchersExecTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3ComplexMatchersTests.cs" />

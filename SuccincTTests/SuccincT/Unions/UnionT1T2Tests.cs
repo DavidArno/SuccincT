@@ -129,5 +129,54 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string>("la la");
             union.Match().Case1().Do(x => { }).Exec();
         }
+
+        [Test]
+        public void UnionWithT1_SimpleCaseExpressionSupported()
+        {
+            var union = new Union<int, string>(2);
+            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CaseOfExpressionSupported()
+        {
+            var union = new Union<int, string>(2);
+            var result = union.Match<int>().Case1().Of(2).Do(0).Case1().Do(1).Case2().Do(2).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CaseWhereExpressionSupported()
+        {
+            var union = new Union<int, string>(3);
+            var result = union.Match<int>().Case1().Of(2).Do(0).Case1().Where(x => x == 3).Do(1).Case2().Do(2).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT2_SimpleCaseExpressionSupported()
+        {
+            var union = new Union<int, string>("2");
+            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CaseOfExpressionSupported()
+        {
+            var union = new Union<int, string>("1");
+            var result = union.Match<int>().Case1().Do(0).Case2().Of("1").Do(2).Case2().Do(1).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CaseWhereExpressionSupported()
+        {
+            var union = new Union<int, string>("2");
+            var result = union.Match<int>()
+                              .Case1().Do(0).Case2().Where(x => x == "2").Do(2).Case2().Of("1").Do(1).Result();
+            Assert.AreEqual(2, result);
+        }
     }
 }

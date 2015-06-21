@@ -17,8 +17,8 @@ namespace SuccincTTests.Examples
         {
             return value.Match<string>()
                         .Case1().Do(i => string.Format("int={0}", i))
-                        .Case2().Of(true).Do(b => "Yes")
-                        .Case2().Of(false).Do(b => "No")
+                        .Case2().Of(true).Do("Yes")
+                        .Case2().Of(false).Do("No")
                         .Result();
         }
 
@@ -27,8 +27,8 @@ namespace SuccincTTests.Examples
             return value.Match<string>()
                         .Case1().Of(1).Or(2).Or(3).Do(i => string.Format("{0} in range 1-3", i))
                         .Case1().Do(i => string.Format("int={0}", i))
-                        .Case2().Of(true).Do(b => "Yes")
-                        .Case2().Of(false).Do(b => "No")
+                        .Case2().Of(true).Do("Yes")
+                        .Case2().Of(false).Do("No")
                         .Result();
         }
 
@@ -40,7 +40,7 @@ namespace SuccincTTests.Examples
                         .Case1().Where(x => x > 9).Do(x => string.Format("{0} isn't 1 digit", x))
                         .Case1().Where(x => x < 0).Do(i => string.Format("{0} isn't positive", i))
                         .Case1().Do(x => string.Format("{0} isn't odd", x))
-                        .Case2().Of(true).Do(b => "Found true")
+                        .Case2().Of(true).Do("Found true")
                         .Case2().Do(b => string.Format("{0} isn't true or single odd digit.", b))
                         .Result();
         }
@@ -61,9 +61,9 @@ namespace SuccincTTests.Examples
         public static string ElseExample(Union<int, bool> value)
         {
             return value.Match<string>()
-                        .Case1().Of(0).Do(x => "0")
-                        .Case2().Of(false).Do(x => "false")
-                        .Else(x => "??")
+                        .Case1().Of(0).Do("0")
+                        .Case2().Of(false).Do("false")
+                        .Else("??")
                         .Result();
         }
     }

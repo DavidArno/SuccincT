@@ -34,6 +34,11 @@ namespace SuccincT.PatternMatchers
             return new ResultMatcherWithElse<T, TValue>(_actionSelector, action, _item);
         }
 
+        public ResultMatcherWithElse<T, TValue> Else(TValue value)
+        {
+            return new ResultMatcherWithElse<T, TValue>(_actionSelector, x => value, _item);
+        }
+
         public TValue Result()
         {
             return _actionSelector.DetermineResultUsingDefaultIfRequired(_item);

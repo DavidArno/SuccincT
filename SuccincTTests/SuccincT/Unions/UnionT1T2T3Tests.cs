@@ -91,5 +91,85 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(Colors.Blue);
             Assert.AreEqual("", union.Case2);
         }
+
+        [Test]
+        public void UnionWithT1_SimpleCaseExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(2);
+            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CaseOfExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(2);
+            var result = union.Match<int>().Case1().Of(2).Do(0).Case1().Do(1).Case2().Do(2).Case3().Do(3).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CaseWhereExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(3);
+            var result = union.Match<int>()
+                              .Case1().Of(2).Do(0).Case1().Where(x => x == 3).Do(1).Case2().Do(2).Case3().Do(3).Result();
+            Assert.AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT2_SimpleCaseExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>("2");
+            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CaseOfExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>("1");
+            var result = union.Match<int>()
+                              .Case1().Do(0).Case2().Of("1").Do(2).Case2().Do(1).Case3().Do(3).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CaseWhereExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>("2");
+            var result = union.Match<int>()
+                              .Case1().Do(0).Case3().Do(3).Case2().Where(x => x == "2").Do(2)
+                              .Case2().Of("1").Do(1).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT3_SimpleCaseExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(Colors.Blue);
+            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Result();
+            Assert.AreEqual(3, result);
+        }
+
+        [Test]
+        public void UnionWithT3_CaseOfExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(Colors.Green);
+            var result = union.Match<int>()
+                              .Case1().Do(0).Case3().Of(Colors.Green).Do(2).Case3().Do(1).Case2().Do(3).Result();
+            Assert.AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT3_CaseWhereExpressionSupported()
+        {
+            var union = new Union<int, string, Colors>(Colors.Red);
+            var result = union.Match<int>()
+                              .Case1().Do(0).Case2().Do(3)
+                              .Case3().Where(x => x == Colors.Red).Do(2)
+                              .Case3().Of(Colors.Green).Do(1).Result();
+            Assert.AreEqual(2, result);
+        }
     }
 }

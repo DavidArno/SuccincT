@@ -25,12 +25,12 @@ namespace SuccincTTests.Examples
         public static string NumberNamer(Option<int> data)
         {
             return data.Match<string>()
-                       .Some().Of(1).Do(x => "One")
-                       .Some().Of(2).Do(x => "Two")
-                       .Some().Of(3).Do(x => "Three")
-                       .Some().Of(4).Do(x => "Four")
+                       .Some().Of(1).Do("One")
+                       .Some().Of(2).Do("Two")
+                       .Some().Of(3).Do("Three")
+                       .Some().Of(4).Do("Four")
                        .Some().Do(x => x.ToString())
-                       .None().Do(() => "None")
+                       .None().Do("None")
                        .Result();
         }
 
@@ -54,7 +54,7 @@ namespace SuccincTTests.Examples
                 .Some().Where(x => x > 9).Do(x => string.Format("{0} isn't 1 digit", x))
                 .Some().Where(x => x < 0).Do(i => string.Format("{0} isn't positive", i))
                 .Some().Do(x => string.Format("{0} isn't odd", x))
-                .None().Do(() => string.Format("There was no value"))
+                .None().Do("There was no value")
                 .Result();
         }
     }

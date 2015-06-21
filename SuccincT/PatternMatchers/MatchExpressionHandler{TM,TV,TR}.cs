@@ -30,5 +30,11 @@ namespace SuccincT.PatternMatchers
             _recorder(x => _values.Any(y => EqualityComparer<TValue>.Default.Equals(x, y)), action);
             return _matcher;
         }
+
+        public TMatcher Do(TReturn value)
+        {
+            _recorder(x => _values.Any(y => EqualityComparer<TValue>.Default.Equals(x, y)), v => value);
+            return _matcher;
+        }
     }
 }
