@@ -8,13 +8,16 @@ Succinc\<T\> is a small .NET framework that started out as a means of providing 
 Now Succinc\<T\> has grown into a library that provides discriminated unions, pattern matching and functional composition for C#, in addition to providing a set of value parsers that do away with the need for `out` parameters and exceptions, and instead return return an `Option<T>`.
 
 ### Current Release ###
-The current, and initial, release of Succinc\<T\> is 1.0.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is 1.1.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
+
+This release offers:
+
+1. Improved functional composition behaviour. Docs to follow soon explaining this.
+2. Improved `Do()` and `Else()` behaviour. Docs to follow soon explaining this too!
 
 ### Coming next ####
-1. The description of the nuget package contains a typo. This will be fixed in the next release.
-2. The documentation is slowly improving, but needs more work. The wiki needs completing and some more useful comments need adding to the code.
-3. Currently `.Do()` and `Else()` require an `Action` or `Func<TResult>` for match and exec and match and result respectively. Often though, a fixed value will be returned for both. Therefore, overloaded versions that take a parameter of `T` will be introduced soon.
-4. Longer term, I plan on experimenting with tuples, to see if Succinc\<T\> can offer an improvement on the current clunky `Tuple` classes, maybe through some sort of `ITuple` interface that can allow any value object to be treated as a tuple. Watch this space for that one. 
+1. The documentation is slowly improving, but needs more work. The wiki needs completing and some more useful comments need adding to the code.
+2. Longer term, I plan on experimenting with tuples, to see if Succinc\<T\> can offer an improvement on the current clunky `Tuple` classes, maybe through some sort of `ITuple` interface that can allow any value object to be treated as a tuple. Watch this space for that one. 
 
 ### Features ###
 #### Discriminated Unions ####

@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>First release.</releaseNotes>
+    <releaseNotes>V1.1.0 provides improved Do() and Else() functionality in patterns as well as enhanced functional composition features.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Functional Composition Discriminated Unions Options Pattern Matching</tags>
   </metadata>
