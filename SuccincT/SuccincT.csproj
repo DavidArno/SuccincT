@@ -102,10 +102,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Code analysis rules as errors.ruleset" />
-    <None Include="Documentation\Options\ValueOrError.md" />
-    <None Include="Documentation\Options\Option.md" />
-    <None Include="Documentation\Options\Option_T_.md" />
-    <None Include="Documentation\Unions\None.md" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
