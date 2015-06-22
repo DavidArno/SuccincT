@@ -6,7 +6,7 @@ using SuccincT.PatternMatchers;
 
 namespace SuccinctExamples
 {
-    public static class UserInputExample
+    public static class UserInputExamples
     {
         public static Option<int> GetNumberFromUser(Action askMethod,
                                                     Action reAskMethod,

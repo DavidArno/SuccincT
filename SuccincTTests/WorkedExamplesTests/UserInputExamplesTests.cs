@@ -7,10 +7,10 @@ using SuccinctExamples;
 namespace SuccincTTests.WorkedExamplesTests
 {
     [TestFixture]
-    internal class UserInputExampleTests
+    internal class UserInputExamplesTests
     {
         private static readonly Func<Action, Action, Func<string>, int, int, int, Option<int>> GetNumber =
-            UserInputExample.GetNumberFromUser;
+            UserInputExamples.GetNumberFromUser;
 
         private static readonly Func<Action, Action, Func<string>, Option<int>> GetNumberBetween0And10 =
             GetNumber.TailCompose(2).TailCompose(10).TailCompose(0);
