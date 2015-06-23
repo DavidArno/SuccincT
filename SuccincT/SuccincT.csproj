@@ -53,14 +53,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FunctionalComposition\TailComposingFunctions.cs" />
+    <Compile Include="PartialApplications\TailActionApplications.cs" />
+    <Compile Include="PartialApplications\TailFunctionApplications.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Parsers\BooleanParser.cs" />
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Parsers\FloatParsers.cs" />
     <Compile Include="Parsers\IntParsers.cs" />
     <Compile Include="Parsers\ReflectionBasedParser.cs" />
-    <Compile Include="FunctionalComposition\ComposingFunctions.cs" />
+    <Compile Include="PartialApplications\PartialFunctionApplications.cs" />
     <Compile Include="Options\NoneMatchHandler{T}.cs" />
     <Compile Include="Options\OptionMatcher{T}.cs" />
     <Compile Include="Options\OptionMatcher{T,TR}.cs" />

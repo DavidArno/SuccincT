@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
-using SuccincT.FunctionalComposition;
 using SuccincT.Options;
+using SuccincT.PartialApplications;
 using SuccinctExamples;
 
 namespace SuccincTTests.WorkedExamplesTests
@@ -13,7 +13,7 @@ namespace SuccincTTests.WorkedExamplesTests
             UserInputExamples.GetNumberFromUser;
 
         private static readonly Func<Action, Action, Func<string>, Option<int>> GetNumberBetween0And10 =
-            GetNumber.TailCompose(2).TailCompose(10).TailCompose(0);
+            GetNumber.TailApply(2).TailApply(10).TailApply(0);
 
         [Test]
         public void ProvidingValidValue1stTime_CallsAskAndGetValueAndReturnsValue()

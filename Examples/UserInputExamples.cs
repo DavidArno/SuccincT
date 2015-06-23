@@ -1,7 +1,7 @@
 ﻿using System;
-using SuccincT.FunctionalComposition;
 using SuccincT.Options;
 using SuccincT.Parsers;
+using SuccincT.PartialApplications;
 using SuccincT.PatternMatchers;
 
 namespace SuccinctExamples
@@ -16,7 +16,7 @@ namespace SuccinctExamples
                                                     int numberOfAttempts)
         {
             Func<Action, Action, Func<string>, int, int, int, Option<int>> getNumber = GetNumberFromUser;
-            var askAgain = getNumber.Compose(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
+            var askAgain = getNumber.Apply(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
 
             askMethod();
             return getValueMethod()
