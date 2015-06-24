@@ -6,7 +6,7 @@ using SuccincT.Unions;
 namespace SuccinctExamples
 {
     /// <summary>
-    /// An example that uses the Union sealed class to provide tokens from a lexical analyser (lexer). By using the union, the tokens
+    /// An example that uses the Union class to provide tokens from a lexical analyser (lexer). By using the union, the tokens
     /// can be "precompiled" to their native types, without using a messy value object with redundant fields.
     /// </summary>
     /// <remarks>

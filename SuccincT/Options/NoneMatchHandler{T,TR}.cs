@@ -4,7 +4,8 @@ namespace SuccincT.Options
 {
     /// <summary>
     /// Fluent class created by <code>Option{T}.Match{TResult}.None()</code>. Whilst this is a public
-    /// class (as the usser needs access to <code>Do()</code>) but has an intrnal constructor.
+    /// class (as the user needs access to Do()), it has an internal constructor as it's intended for internal
+    /// pattern matching usage only.
     /// </summary>
     public sealed class NoneMatchHandler<T, TResult>
     {

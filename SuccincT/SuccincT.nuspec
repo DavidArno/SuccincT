@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.2.0 provides breaking change in rename of functional composition to partial applications, plus extra tial-apply fucntionality.</releaseNotes>
+    <releaseNotes>V1.2.0 provides breaking change in rename of functional composition to partial applications, plus extra tail-apply functionality.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Partial application Discriminated unions Options Pattern matching</tags>
   </metadata>

@@ -4,8 +4,8 @@ using SuccincT.Options;
 namespace SuccincT.Parsers
 {
     /// <summary>
-    /// Defines a string extension function for parsing enum values in an elegant fashion
-    /// (avoiding exception throwing).
+    /// Defines a string extension method for parsing enum values in an elegant fashion
+    /// (avoiding exception throwing and out parameters).
     /// </summary>
     [CLSCompliant(false)]
     public static class EnumParser
@@ -38,19 +38,14 @@ namespace SuccincT.Parsers
             return Parse<T>(source, true);
         }
 
-        private static Option<T> Parse<T>(string source, bool ignoreCase)
+        private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct, IConvertible
         {
             if (!typeof(T).IsEnum) { throw new ArgumentException("T must be an enumerated type"); }
 
-            try
-            {
-                var value = (T)Enum.Parse(typeof(T), source, ignoreCase);
-                return Option<T>.Some(value);
-            }
-            catch (ArgumentException)
-            {
-                return Option<T>.None();
-            }
+            // ReSharper disable once RedundantAssignment - R# can't spot the use of it in Some() below
+            var value = default(T);
+            var success = Enum.TryParse(source, ignoreCase, out value);
+            return success ? Option<T>.Some(value) : Option<T>.None();
         }
     }
 }

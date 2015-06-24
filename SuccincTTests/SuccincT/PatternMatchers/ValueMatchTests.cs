@@ -42,10 +42,18 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void IntValue_WhenNoMatchViaWhereElseUsed()
+        public void IntValue_WhenNoMatchViaWhereElseLambdaUsed()
         {
             var result = 1.Match().To<bool>().Where(x => x == 2).Do(x => true)
                                              .Else(x => false).Result();
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IntValue_WhenNoMatchViaWhereElseExpressionUsed()
+        {
+            var result = 1.Match().To<bool>().Where(x => x == 2).Do(x => true)
+                                             .Else(false).Result();
             Assert.IsFalse(result);
         }
 

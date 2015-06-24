@@ -5,17 +5,22 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public sealed class OptionMatcher<T, TReturn>
+    /// <summary>
+    /// Fluent class created by Option{T}.Match{TResult}(). Whilst this is a public class (as the user needs access
+    /// to Some(), None() and Else()), it has an internal constructor as it's intended for internal
+    /// pattern matching usage only.
+    /// </summary>
+    public sealed class OptionMatcher<T, TResult>
     {
         private readonly Union<T, None> _union;
         private readonly Option<T> _option;
 
-        private readonly MatchActionSelector<T, TReturn> _case1ActionSelector =
-            new MatchActionSelector<T, TReturn>(
+        private readonly MatchActionSelector<T, TResult> _case1ActionSelector =
+            new MatchActionSelector<T, TResult>(
                 x => { throw new NoMatchException("No match action defined for Option with value"); });
 
-        private readonly MatchActionSelector<None, TReturn> _case2ActionSelector =
-            new MatchActionSelector<None, TReturn>(
+        private readonly MatchActionSelector<None, TResult> _case2ActionSelector =
+            new MatchActionSelector<None, TResult>(
                 x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
         internal OptionMatcher(Union<T, None> union, Option<T> option)
@@ -24,45 +29,45 @@ namespace SuccincT.Options
             _option = option;
         }
 
-        public UnionPatternCaseHandler<OptionMatcher<T, TReturn>, T, TReturn> Some()
+        public UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult> Some()
         {
-            return new UnionPatternCaseHandler<OptionMatcher<T, TReturn>, T, TReturn>(RecordAction, this);
+            return new UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult>(RecordAction, this);
         }
 
-        public NoneMatchHandler<T, TReturn> None()
+        public NoneMatchHandler<T, TResult> None()
         {
-            return new NoneMatchHandler<T, TReturn>(RecordAction, this);
+            return new NoneMatchHandler<T, TResult>(RecordAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<T, None, TReturn> Else(Func<Option<T>, TReturn> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(Func<Option<T>, TResult> elseAction)
         {
-            return new UnionOfTwoPatternMatcherAfterElse<T, None, TReturn>(_union,
+            return new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
                                                                            _case1ActionSelector,
                                                                            _case2ActionSelector,
                                                                            x => elseAction(_option));
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<T, None, TReturn> Else(TReturn elseValue)
+        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(TResult elseValue)
         {
-            return new UnionOfTwoPatternMatcherAfterElse<T, None, TReturn>(_union,
+            return new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
                                                                            _case1ActionSelector,
                                                                            _case2ActionSelector,
                                                                            x => elseValue);
         }
 
-        public TReturn Result()
+        public TResult Result()
         {
             return _union.Case == Variant.Case1
                        ? _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
                        : _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
         }
 
-        private void RecordAction(Func<T, bool> test, Func<T, TReturn> action)
+        private void RecordAction(Func<T, bool> test, Func<T, TResult> action)
         {
             _case1ActionSelector.AddTestAndAction(test, action);
         }
 
-        private void RecordAction(Func<TReturn> action)
+        private void RecordAction(Func<TResult> action)
         {
             _case2ActionSelector.AddTestAndAction(x => true, x => action());
         }

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using SuccincT.PartialApplications;
 
-namespace SuccincTTests.SuccincT.FunctionalComposition
+namespace SuccincTTests.SuccincT.PartialFunctionApplications
 {
     [TestFixture]
     public sealed class TailApplicationTests

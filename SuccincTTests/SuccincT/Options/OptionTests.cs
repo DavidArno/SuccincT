@@ -79,6 +79,14 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
+        public void WhenOptionIsNoneElseIsDefinedAndNoNoneMatch_ElseExpressionIsReturned()
+        {
+            var option = Option<int>.None();
+            var result = option.Match<int>().Some().Do(x => 1).Else(0).Result();
+            Assert.AreEqual(0, result);
+        }
+
+        [Test]
         public void WhenOptionIsSomeElseIsDefinedAndNoSomeMatch_ElseResultIsReturned()
         {
             var option = Option<int>.Some(1);

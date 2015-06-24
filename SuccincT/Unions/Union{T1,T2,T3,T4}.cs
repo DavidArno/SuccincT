@@ -1,4 +1,6 @@
-﻿namespace SuccincT.Unions
+﻿using SuccincT.Unions.PatternMatchers;
+
+namespace SuccincT.Unions
 {
     public sealed class Union<T1, T2, T3, T4>
     {
@@ -68,6 +70,11 @@
                 if (_case == Variant.Case4) { return _value4; }
                 throw new InvalidCaseException(Variant.Case4, _case);
             }
+        }
+
+        public UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn> Match<TReturn>()
+        {
+            return new UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>(this);
         }
     }
 }

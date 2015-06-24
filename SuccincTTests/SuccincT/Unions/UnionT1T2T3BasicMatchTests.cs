@@ -90,6 +90,30 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
+        public void UnionWithT1_UsesElseExpressionIfNoCase1Match()
+        {
+            var union = new Union<int, string, Colors>(5);
+            var result = union.Match<bool>().Case2().Do(x => false).Case3().Do(x => false).Else(true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void UnionWithT2_UsesElseExpressionIfNoCase2Match()
+        {
+            var union = new Union<int, string, Colors>("fred");
+            var result = union.Match<bool>().Case1().Do(x => false).Case3().Do(x => false).Else(true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void UnionWithT3_UsesElseExpressionIfNoCase3Match()
+        {
+            var union = new Union<int, string, Colors>(Colors.Green);
+            var result = union.Match<bool>().Case1().Do(x => false).Case2().Do(x => false).Else(true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
         public void UnionWithT1_UsesCase1MatchOverElse()
         {
             var union = new Union<int, string, Colors>(2);
