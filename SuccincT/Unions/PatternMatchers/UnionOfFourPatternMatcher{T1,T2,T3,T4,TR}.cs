@@ -4,32 +4,37 @@ using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    public sealed class UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>
+    /// <summary>
+    /// Fluent class created by Union{T1,T2,T3,T4}.Match{TResult}(). Whilst this is a public
+    /// class (as the user needs access to Case1-4(), Else() and Result()), it has an internal constructor as it's
+    /// intended for pattern matching internal usage only.
+    /// </summary>
+    public sealed class UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>
     {
         private readonly Union<T1, T2, T3, T4> _union;
 
-        private readonly MatchActionSelector<T1, TReturn> _case1ActionSelector =
-            new MatchActionSelector<T1, TReturn>(
+        private readonly MatchActionSelector<T1, TResult> _case1ActionSelector =
+            new MatchActionSelector<T1, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
-        private readonly MatchActionSelector<T2, TReturn> _case2ActionSelector =
-            new MatchActionSelector<T2, TReturn>(
+        private readonly MatchActionSelector<T2, TResult> _case2ActionSelector =
+            new MatchActionSelector<T2, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
-        private readonly MatchActionSelector<T3, TReturn> _case3ActionSelector =
-            new MatchActionSelector<T3, TReturn>(
+        private readonly MatchActionSelector<T3, TResult> _case3ActionSelector =
+            new MatchActionSelector<T3, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case3 value"); });
 
-        private readonly MatchActionSelector<T4, TReturn> _case4ActionSelector =
-            new MatchActionSelector<T4, TReturn>(
+        private readonly MatchActionSelector<T4, TResult> _case4ActionSelector =
+            new MatchActionSelector<T4, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case4 value"); });
 
-        private readonly Dictionary<Variant, Func<TReturn>> _resultActions;
+        private readonly Dictionary<Variant, Func<TResult>> _resultActions;
 
         internal UnionOfFourPatternMatcher(Union<T1, T2, T3, T4> union)
         {
             _union = union;
-            _resultActions = new Dictionary<Variant, Func<TReturn>>
+            _resultActions = new Dictionary<Variant, Func<TResult>>
             {
                 {Variant.Case1, () => _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
                 {Variant.Case2, () => _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)},
@@ -38,69 +43,72 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T1, TReturn> Case1()
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult> Case1()
         {
-            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T1, TReturn>
+            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult>
                 (RecordAction, this);
         }
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T2, TReturn> Case2()
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T2, TResult> Case2()
         {
-            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T2, TReturn>
+            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T2, TResult>
                 (RecordAction, this);
         }
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T3, TReturn> Case3()
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T3, TResult> Case3()
         {
-            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T3, TReturn>
+            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T3, TResult>
                 (RecordAction, this);
         }
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T4, TReturn> Case4()
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T4, TResult> Case4()
         {
-            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>, T4, TReturn>
+            return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>, T4, TResult>
                 (RecordAction, this);
         }
 
-        //public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn> Else(Func<Union<T1, T2, T3>, TReturn> elseAction)
-        //{
-        //    return new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn>(_union,
-        //                                                                        _case1ActionSelector,
-        //                                                                        _case2ActionSelector,
-        //                                                                        _case3ActionSelector,
-        //                                                                        elseAction);
-        //}
+        public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult> Else(
+            Func<Union<T1, T2, T3, T4>, TResult> elseAction)
+        {
+            return new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult>(_union,
+                                                                                   _case1ActionSelector,
+                                                                                   _case2ActionSelector,
+                                                                                   _case3ActionSelector,
+                                                                                   _case4ActionSelector,
+                                                                                   elseAction);
+        }
 
-        //public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn> Else(TReturn elseValue)
-        //{
-        //    return new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TReturn>(_union,
-        //                                                                        _case1ActionSelector,
-        //                                                                        _case2ActionSelector,
-        //                                                                        _case3ActionSelector,
-        //                                                                        x => elseValue);
-        //}
+        public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult> Else(TResult elseValue)
+        {
+            return new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult>(_union,
+                                                                                   _case1ActionSelector,
+                                                                                   _case2ActionSelector,
+                                                                                   _case3ActionSelector,
+                                                                                   _case4ActionSelector,
+                                                                                   x => elseValue);
+        }
 
-        public TReturn Result()
+        public TResult Result()
         {
             return _resultActions[_union.Case]();
         }
 
-        private void RecordAction(Func<T1, bool> test, Func<T1, TReturn> action)
+        private void RecordAction(Func<T1, bool> test, Func<T1, TResult> action)
         {
             _case1ActionSelector.AddTestAndAction(test, action);
         }
 
-        private void RecordAction(Func<T2, bool> test, Func<T2, TReturn> action)
+        private void RecordAction(Func<T2, bool> test, Func<T2, TResult> action)
         {
             _case2ActionSelector.AddTestAndAction(test, action);
         }
 
-        private void RecordAction(Func<T3, bool> test, Func<T3, TReturn> action)
+        private void RecordAction(Func<T3, bool> test, Func<T3, TResult> action)
         {
             _case3ActionSelector.AddTestAndAction(test, action);
         }
 
-        private void RecordAction(Func<T4, bool> test, Func<T4, TReturn> action)
+        private void RecordAction(Func<T4, bool> test, Func<T4, TResult> action)
         {
             _case4ActionSelector.AddTestAndAction(test, action);
         }

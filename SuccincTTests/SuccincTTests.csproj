@@ -75,6 +75,12 @@
     <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3BasicMatchExecTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4BasicMatchElseExecTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4ComplexMatchersExecTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4ComplexMatchersTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4BasicMatchElseTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4BasicMatchExecTests.cs" />
+    <Compile Include="SuccincT\Unions\UnionT1T2T3T4BasicMatchTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3ComplexMatchersExecTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3ComplexMatchersTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2ComplexMatchersTests.cs" />

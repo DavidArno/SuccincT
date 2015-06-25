@@ -4,6 +4,11 @@ using SuccincT.PatternMatchers;
 
 namespace SuccincT.Unions.PatternMatchers
 {
+    /// <summary>
+    /// Fluent class created by Union{T1,T2}.Match(). Whilst this is a public
+    /// class (as the user needs access to Case1-2(), Else() and Result()), it has an internal constructor as it's
+    /// intended for pattern matching internal usage only.
+    /// </summary>
     public sealed class UnionOfTwoPatternMatcher<T1, T2>
     {
         private readonly Union<T1, T2> _union;

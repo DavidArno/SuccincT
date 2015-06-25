@@ -84,8 +84,11 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option{T}.cs" />
     <Compile Include="Unions\InvalidCaseException.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcherAfterElse{T1,T2,T3}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcher{T1,T2,T3,T4,TR}.cs" />
+    <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcher{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcher{T1,T2,T3}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionPatternCaseHandler{TM,TV,TR}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionPatternCaseHandler{TM,TV}.cs" />

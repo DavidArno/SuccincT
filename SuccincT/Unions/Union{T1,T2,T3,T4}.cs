@@ -76,5 +76,10 @@ namespace SuccincT.Unions
         {
             return new UnionOfFourPatternMatcher<T1, T2, T3, T4, TReturn>(this);
         }
+
+        public UnionOfFourPatternMatcher<T1, T2, T3, T4> Match()
+        {
+            return new UnionOfFourPatternMatcher<T1, T2, T3, T4>(this);
+        }
     }
 }

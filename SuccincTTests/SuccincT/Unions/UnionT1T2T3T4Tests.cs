@@ -34,7 +34,7 @@ namespace SuccincTTests.SuccincT.Unions
         [Test]
         public void UnionWithT4_HasVariantCase4()
         {
-            var union = new Union<int, string, Colors, Animals>(Animals.Cow);
+            var union = new Union<int, string, Colors, Animals>(Animals.Sheep);
             Assert.AreEqual(Variant.Case4, union.Case);
         }
 
@@ -105,7 +105,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase4ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            Assert.AreEqual(Animals.Dog, union.Case4);
+            Assert.AreEqual(Animals.Cow, union.Case4);
         }
 
         [Test, ExpectedException(ExpectedException = typeof(InvalidCaseException))]
@@ -148,119 +148,6 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
             Assert.AreEqual(Colors.Green, union.Case3);
-        }
-
-        [Test]
-        public void UnionWithT1_SimpleCaseExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(2);
-            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(1, result);
-        }
-
-        [Test]
-        public void UnionWithT1_CaseOfExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(2);
-            var result = union.Match<int>()
-                              .Case1().Of(2).Do(0).Case1().Do(1).Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(0, result);
-        }
-
-        [Test]
-        public void UnionWithT1_CaseWhereExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(3);
-            var result = union.Match<int>()
-                              .Case1().Of(2).Do(0).Case1().Where(x => x == 3).Do(1)
-                              .Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(1, result);
-        }
-
-        [Test]
-        public void UnionWithT2_SimpleCaseExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>("2");
-            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT2_CaseOfExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>("1");
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case2().Of("1").Do(2).Case2().Do(1).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT2_CaseWhereExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>("2");
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case3().Do(3).Case4().Do(4)
-                              .Case2().Where(x => x == "2").Do(2)
-                              .Case2().Of("1").Do(1).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT3_SimpleCaseExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Colors.Blue);
-            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(3, result);
-        }
-
-        [Test]
-        public void UnionWithT3_CaseOfExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Colors.Green);
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case3().Of(Colors.Green).Do(2)
-                              .Case3().Do(1).Case2().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT3_CaseWhereExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Colors.Red);
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case2().Do(3).Case4().Do(4)
-                              .Case3().Where(x => x == Colors.Red).Do(2)
-                              .Case3().Of(Colors.Green).Do(1).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT4_SimpleCaseExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Animals.Sheep);
-            var result = union.Match<int>().Case1().Do(1).Case2().Do(2).Case3().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(4, result);
-        }
-
-        [Test]
-        public void UnionWithT4_CaseOfExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Animals.Sheep);
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case4().Of(Animals.Sheep).Do(2)
-                              .Case3().Do(1).Case2().Do(3).Case4().Do(4).Result();
-            Assert.AreEqual(2, result);
-        }
-
-        [Test]
-        public void UnionWithT4_CaseWhereExpressionSupported()
-        {
-            var union = new Union<int, string, Colors, Animals>(Animals.Sheep);
-            var result = union.Match<int>()
-                              .Case1().Do(0).Case2().Do(1).Case3().Do(2)
-                              .Case4().Where(x => x == Animals.Sheep).Do(3)
-                              .Case4().Of(Animals.Dog).Do(4).Result();
-            Assert.AreEqual(3, result);
         }
     }
 }
