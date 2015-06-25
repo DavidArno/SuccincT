@@ -62,10 +62,5 @@ namespace SuccincTTests.SuccincT.Options
             Assert.IsTrue(a != null);
             Assert.IsTrue(null != a);
         }
-
-        private class MyString
-        {
-            public string Str { get; set; }
-        }
     }
 }

@@ -12,7 +12,10 @@ namespace SuccincT.Unions
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
 
-        public Variant Case { get { return _case; } }
+        public static UnionCreator<T1, T2> Creator()
+        {
+            return new UnionCreator<T1, T2>();
+        }
 
         private Union()
         {
@@ -27,6 +30,8 @@ namespace SuccincT.Unions
                 { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) }
             };
         }
+
+        public Variant Case { get { return _case; } }
 
         public Union(T1 value)
             : this()

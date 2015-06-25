@@ -10,6 +10,11 @@ namespace SuccincT.Unions
         private readonly T4 _value4;
         private readonly Variant _case;
 
+        public static UnionCreator<T1, T2, T3, T4> Creator()
+        {
+            return new UnionCreator<T1, T2, T3, T4>();
+        }
+
         public Variant Case { get { return _case; } }
 
         public Union(T1 value)
