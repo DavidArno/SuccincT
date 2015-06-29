@@ -24,11 +24,9 @@ namespace SuccincTTests.Examples
 
         public static string NumberNamer(Option<int> data)
         {
+            var names = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
             return data.Match<string>()
-                       .Some().Of(1).Do("One")
-                       .Some().Of(2).Do("Two")
-                       .Some().Of(3).Do("Three")
-                       .Some().Of(4).Do("Four")
+                       .Some().Where(i => i >= 1 && i <= 9).Do(i => names[i - 1])
                        .Some().Do(x => x.ToString())
                        .None().Do("None")
                        .Result();

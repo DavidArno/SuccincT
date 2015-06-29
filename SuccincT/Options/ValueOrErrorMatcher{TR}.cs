@@ -5,16 +5,16 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public sealed class ValueOrErrorMatcher<TReturn>
+    public sealed class ValueOrErrorMatcher<TResult>
     {
         private readonly ValueOrError _valueOrError;
 
-        private readonly MatchActionSelector<string, TReturn> _valueActionSelector =
-            new MatchActionSelector<string, TReturn>(
+        private readonly MatchActionSelector<string, TResult> _valueActionSelector =
+            new MatchActionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
-        private readonly MatchActionSelector<string, TReturn> _errorActionSelector =
-            new MatchActionSelector<string, TReturn>(
+        private readonly MatchActionSelector<string, TResult> _errorActionSelector =
+            new MatchActionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
         internal ValueOrErrorMatcher(ValueOrError valueOrError)
@@ -22,40 +22,49 @@ namespace SuccincT.Options
             _valueOrError = valueOrError;
         }
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TReturn>, string, TReturn> Value()
+        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Value()
         {
-            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TReturn>, string, TReturn>(RecordValueAction, this);
+            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordValueAction, this);
         }
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TReturn>, string, TReturn> Error()
+        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Error()
         {
-            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TReturn>, string, TReturn>(RecordErrorAction, this);
+            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordErrorAction, this);
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<string, string, TReturn> Else(
-            Func<ValueOrError, TReturn> elseAction)
+        public UnionOfTwoPatternMatcherAfterElse<string, string, TResult> Else(TResult value)
         {
             var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionOfTwoPatternMatcherAfterElse<string, string, TReturn>(
+            return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(union,
+                                                                                  _valueActionSelector,
+                                                                                  _errorActionSelector,
+                                                                                  _ => value);
+        }
+
+        public UnionOfTwoPatternMatcherAfterElse<string, string, TResult> Else(
+            Func<ValueOrError, TResult> elseAction)
+        {
+            var union = CreateUnionFromValueOrError(_valueOrError);
+            return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(
                 union,
                 _valueActionSelector,
                 _errorActionSelector,
                 x => elseAction(_valueOrError));
         }
 
-        public TReturn Result()
+        public TResult Result()
         {
             return _valueOrError.HasValue
                        ? _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
                        : _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
         }
 
-        private void RecordValueAction(Func<string, bool> test, Func<string, TReturn> action)
+        private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action)
         {
             _valueActionSelector.AddTestAndAction(test, action);
         }
 
-        private void RecordErrorAction(Func<string, bool> test, Func<string, TReturn> action)
+        private void RecordErrorAction(Func<string, bool> test, Func<string, TResult> action)
         {
             _errorActionSelector.AddTestAndAction(test, action);
         }

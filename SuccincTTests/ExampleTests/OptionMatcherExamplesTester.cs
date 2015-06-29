@@ -88,9 +88,14 @@ namespace SuccincTTests.ExampleTests
             var result = OptionMatcherExamples.NumberNamer(Option<int>.Some(1)) +
                          OptionMatcherExamples.NumberNamer(Option<int>.Some(2)) +
                          OptionMatcherExamples.NumberNamer(Option<int>.Some(3)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(4));
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(4)) +
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(5)) +
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(6)) +
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(7)) +
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(8)) +
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(9));
 
-            Assert.AreEqual("OneTwoThreeFour", result);
+            Assert.AreEqual("OneTwoThreeFourFiveSixSevenEightNine", result);
         }
 
         [Test]
@@ -98,10 +103,9 @@ namespace SuccincTTests.ExampleTests
         {
             var result = OptionMatcherExamples.NumberNamer(Option<int>.Some(-1)) +
                          OptionMatcherExamples.NumberNamer(Option<int>.Some(0)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(5)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(6));
+                         OptionMatcherExamples.NumberNamer(Option<int>.Some(10));
 
-            Assert.AreEqual("-1056", result);
+            Assert.AreEqual("-1010", result);
         }
 
         [Test]

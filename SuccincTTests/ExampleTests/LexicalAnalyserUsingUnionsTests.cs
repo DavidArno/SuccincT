@@ -18,9 +18,10 @@ namespace SuccincTTests.ExampleTests
         public void WhenSuppliedWithTokens_CorrectTypesAreReturned()
         {
             var result = LexicalAnalyserUsingUnions.GenerateTokens("false 1.2 42 hello").ToList();
-            var expected = new object[] { false, 1.2, 42, "hello" };
-            var actual = new object[] { result[0].Case3, result[1].Case4, result[2].Case2, result[3].Case1 };
-            Assert.AreEqual(expected, actual);
+            Assert.AreEqual(false, result[0].Case3);
+            Assert.AreEqual(1.2, result[1].Case4);
+            Assert.AreEqual(42, result[2].Case2);
+            Assert.AreEqual("hello", result[3].Case1);
         }
     }
 }
