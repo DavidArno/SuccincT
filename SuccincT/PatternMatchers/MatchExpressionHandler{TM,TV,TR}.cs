@@ -4,14 +4,14 @@ using System.Linq;
 
 namespace SuccincT.PatternMatchers
 {
-    public sealed class MatchExpressionHandler<TMatcher, TValue, TReturn>
+    public sealed class MatchExpressionHandler<TMatcher, TValue, TResult>
     {
         private readonly List<TValue> _values;
-        private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;
+        private readonly Action<Func<TValue, bool>, Func<TValue, TResult>> _recorder;
         private readonly TMatcher _matcher;
 
         internal MatchExpressionHandler(TValue value,
-                                                   Action<Func<TValue, bool>, Func<TValue, TReturn>> recorder,
+                                                   Action<Func<TValue, bool>, Func<TValue, TResult>> recorder,
                                                    TMatcher matcher)
         {
             _values = new List<TValue> { value };
@@ -19,19 +19,19 @@ namespace SuccincT.PatternMatchers
             _matcher = matcher;
         }
 
-        public MatchExpressionHandler<TMatcher, TValue, TReturn> Or(TValue value)
+        public MatchExpressionHandler<TMatcher, TValue, TResult> Or(TValue value)
         {
             _values.Add(value);
             return this;
         }
 
-        public TMatcher Do(Func<TValue, TReturn> action)
+        public TMatcher Do(Func<TValue, TResult> action)
         {
             _recorder(x => _values.Any(y => EqualityComparer<TValue>.Default.Equals(x, y)), action);
             return _matcher;
         }
 
-        public TMatcher Do(TReturn value)
+        public TMatcher Do(TResult value)
         {
             _recorder(x => _values.Any(y => EqualityComparer<TValue>.Default.Equals(x, y)), v => value);
             return _matcher;

@@ -2,14 +2,14 @@ using System;
 
 namespace SuccincT.PatternMatchers
 {
-    public sealed class MatchWhereHandler<TMatcher, TValue, TReturn>
+    public sealed class MatchWhereHandler<TMatcher, TValue, TResult>
     {
         private readonly Func<TValue, bool> _expression;
-        private readonly Action<Func<TValue, bool>, Func<TValue, TReturn>> _recorder;
+        private readonly Action<Func<TValue, bool>, Func<TValue, TResult>> _recorder;
         private readonly TMatcher _matcher;
 
         internal MatchWhereHandler(Func<TValue, bool> expression,
-                                              Action<Func<TValue, bool>, Func<TValue, TReturn>> recorder,
+                                              Action<Func<TValue, bool>, Func<TValue, TResult>> recorder,
                                               TMatcher matcher)
         {
             _expression = expression;
@@ -17,13 +17,13 @@ namespace SuccincT.PatternMatchers
             _matcher = matcher;
         }
 
-        public TMatcher Do(Func<TValue, TReturn> action)
+        public TMatcher Do(Func<TValue, TResult> action)
         {
             _recorder(_expression, action);
             return _matcher;
         }
 
-        public TMatcher Do(TReturn value)
+        public TMatcher Do(TResult value)
         {
             _recorder(_expression, x => value);
             return _matcher;

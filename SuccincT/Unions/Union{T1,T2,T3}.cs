@@ -73,9 +73,9 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionOfThreePatternMatcher<T1, T2, T3, TReturn> Match<TReturn>()
+        public UnionOfThreePatternMatcher<T1, T2, T3, TResult> Match<TResult>()
         {
-            return new UnionOfThreePatternMatcher<T1, T2, T3, TReturn>(this);
+            return new UnionOfThreePatternMatcher<T1, T2, T3, TResult>(this);
         }
 
         public UnionOfThreePatternMatcher<T1, T2, T3> Match()

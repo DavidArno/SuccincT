@@ -79,9 +79,9 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionOfTwoPatternMatcher<T1, T2, TReturn> Match<TReturn>()
+        public UnionOfTwoPatternMatcher<T1, T2, TResult> Match<TResult>()
         {
-            return new UnionOfTwoPatternMatcher<T1, T2, TReturn>(this);
+            return new UnionOfTwoPatternMatcher<T1, T2, TResult>(this);
         }
 
         public UnionOfTwoPatternMatcher<T1, T2> Match()
