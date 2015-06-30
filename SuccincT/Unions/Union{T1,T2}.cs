@@ -17,22 +17,6 @@ namespace SuccincT.Unions
             return new UnionCreator<T1, T2>();
         }
 
-        private Union()
-        {
-            _hashCodes = new Dictionary<Variant, Func<int>>
-            {
-                { Variant.Case1, () => _value1.GetHashCode() },
-                { Variant.Case2, () => _value2.GetHashCode() }
-            };
-            _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2>, bool>>
-            {
-                { Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1) },
-                { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) }
-            };
-        }
-
-        public Variant Case { get { return _case; } }
-
         public Union(T1 value)
             : this()
         {
@@ -45,6 +29,20 @@ namespace SuccincT.Unions
         {
             _value2 = value;
             _case = Variant.Case2;
+        }
+
+        private Union()
+        {
+            _hashCodes = new Dictionary<Variant, Func<int>>
+            {
+                { Variant.Case1, () => _value1.GetHashCode() },
+                { Variant.Case2, () => _value2.GetHashCode() }
+            };
+            _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2>, bool>>
+            {
+                { Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1) },
+                { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) }
+            };
         }
 
         internal Union(T1 case1Value, T2 case2Value, Variant caseToUse)
@@ -60,6 +58,8 @@ namespace SuccincT.Unions
                 _case = Variant.Case2;
             }
         }
+
+        public Variant Case { get { return _case; } }
 
         public T1 Case1
         {

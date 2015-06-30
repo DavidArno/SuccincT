@@ -8,27 +8,26 @@ Succinc\<T\> is a small .NET framework that started out as a means of providing 
 Now Succinc\<T\> has grown into a library that provides discriminated unions, pattern matching and partial applications for C#, in addition to providing a set of value parsers that do away with the need for `out` parameters and exceptions, and instead return return an `Option<T>`.
 
 ### Current Release ###
-The current release of Succinc\<T\> is 1.2.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is 1.3.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
 
 This release offers:
 
-1. **Breaking change:** Previously, the partial application functionality was incorrectly referred to as *functional composition*. The code and docs have been updated to use the correct term. This has involved a change of namespace and method name for partial applications. Whilst Succinc\<T\> aims to adopt semantic versioning, those rules have been broken here. The user base is still small as is assumed to be composed of early adopters who are prepared to fix code broken by this change. To fix affected code:
-
-	a. Change `SuccincT.FunctionalComposition` namespace imports to `SuccincT.PartialApplications`.
-	b. Change all `xx.Compose(...)` occurances to `xx.Apply(...)`
-    c. Change all `xx.TailCompose(...)` occurances to `xx.TailApply(...)`
-
-2.  Tail-application functionality has been expanded to support methods with optional tail parameters (which do not match the `Action` delegates).
+1. `Union<T1,T2,T3,T4>` now supports pattern matching.
+2. For patterns that return a value (and thus invoke a `Func<>` on match) now support both lambdas/methods and simple expressions for both `Do` and `Else`. See the new [Pattern Matching Section of the wiki](PatternMatching) for more details.
+3. Simple union creator factories have been implemented that require the type parameters for multiple unions of the same type to be specified just once. Please see the [Union Creator wiki page](UnionCreators) for more info (don't worry, no singletons or service locators were used in creating this feature!).
+4. Various code improvements, including trying to consistently using `TResult` instead of `TReturn` and better comments.
+5. The wiki has been significantly expanded. This isn't strictly part of the release, but is published at the same time.
+6. Finally, I have remembered to tag the git repos for both the code and the wiki with 1.3.0, so in future I'll know what changed after the release.
 
 ### Coming next ####
-1. The documentation is slowly improving, but needs more work. The wiki needs completing and some more useful comments need adding to the code.
-2. Longer term, I plan on experimenting with tuples, to see if Succinc\<T\> can offer an improvement on the current clunky `Tuple` classes, maybe through some sort of `ITuple` interface that can allow any value object to be treated as a tuple. Watch this space for that one. 
+1. The documentation is improving, but needs some more work. The wiki is well under way, but needs completing.
+2. Next up, I plan on experimenting with tuples, to see if Succinc\<T\> can offer an improvement on the current clunky `Tuple` classes, maybe through some sort of `ITuple` interface that can allow any value object to be treated as a tuple. Watch this space for that one. 
 
 ### Features ###
 #### Discriminated Unions ####
-Succinc\<T\> provides a set of union types (`Union<T1,T2>` through to `Union<T1,T2,T3,T4>`) where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of `Option<T>` that can have the value `Some<T>` or `None`.
+Succinc\<T\> provides a set of union types ([`Union<T1, T2>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2), [`Union<T1, T2, T3>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3) and [`Union<T1, T2, T3, T4>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3T4)) where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) that can have the value `Some<T>` or `None`.
 
-Succinc\<T\> uses `Option<T>` to provide replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`. In all cases, these are extension methods to `string` and they return `Some<T>` on a successful parse and `None` when the string is not a valid value for that type. No more `out` parameters!
+Succinc\<T\> uses [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) to provide replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`. In all cases, these are extension methods to `string` and they return `Some<T>` on a successful parse and `None` when the string is not a valid value for that type. No more `out` parameters!
 
 #### Pattern Matching ####
 Succinc\<T\> can pattern match values, unions etc in a way similar to F#'s pattern matching features. It uses a fluent syntax to achieve this as shown by the following example:
