@@ -8,7 +8,7 @@ Succinc\<T\> is a small .NET framework that started out as a means of providing 
 Now Succinc\<T\> has grown into a library that provides discriminated unions, pattern matching and partial applications for C#, in addition to providing a set of value parsers that do away with the need for `out` parameters and exceptions, and instead return return an `Option<T>`.
 
 ### Current Release ###
-The current release of Succinc\<T\> is 1.3.1, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is 1.3.2, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
 
 This is a bug fix release that addresses two bugs ([Union<T1, T2> comparisons are broken](https://github.com/DavidArno/SuccincT/issues/1) and [value equality for Union\<T1, T2, T3\> and Union\<T1, T2, T3\> hasn't been implemented](https://github.com/DavidArno/SuccincT/issues/2)) as well as offering 1.3.0 enhancements:
 
