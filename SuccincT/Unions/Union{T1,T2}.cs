@@ -17,15 +17,13 @@ namespace SuccincT.Unions
             return new UnionCreator<T1, T2>();
         }
 
-        public Union(T1 value)
-            : this()
+        public Union(T1 value) : this()
         {
             _value1 = value;
             _case = Variant.Case1;
         }
 
-        public Union(T2 value)
-            : this()
+        public Union(T2 value) : this()
         {
             _value2 = value;
             _case = Variant.Case2;
@@ -45,18 +43,13 @@ namespace SuccincT.Unions
             };
         }
 
+        // Used purely for ValueOrError, as that is a Union<string, string>, which isn't normally
+        // allowed.
         internal Union(T1 case1Value, T2 case2Value, Variant caseToUse)
         {
-            if (caseToUse == Variant.Case1)
-            {
-                _value1 = case1Value;
-                _case = Variant.Case1;
-            }
-            else
-            {
-                _value2 = case2Value;
-                _case = Variant.Case2;
-            }
+            _value1 = case1Value;
+            _value2 = case2Value;
+            _case = caseToUse;
         }
 
         public Variant Case { get { return _case; } }
@@ -114,7 +107,7 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2> testObject)
         {
-            return _unionsMatch[Case](testObject);
+            return Case == testObject.Case && _unionsMatch[Case](testObject);
         }
     }
 }

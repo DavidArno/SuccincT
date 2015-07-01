@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
 using SuccincT.Unions.PatternMatchers;
@@ -18,10 +19,17 @@ namespace SuccincT.Options
             new MatchActionSelector<None>(
                 x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
+        private readonly Dictionary<Variant, Action> _resultActions;
+
         internal OptionMatcher(Union<T, None> union, Option<T> option)
         {
             _union = union;
             _option = option;
+            _resultActions = new Dictionary<Variant, Action>
+            {
+                {Variant.Case1, () => _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1)},
+                {Variant.Case2, () => _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2)}
+            };
         }
 
         public UnionPatternCaseHandler<OptionMatcher<T>, T> Some()
@@ -44,14 +52,7 @@ namespace SuccincT.Options
 
         public void Exec()
         {
-            if (_union.Case == Variant.Case1)
-            {
-                _case1ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case1);
-            }
-            else
-            {
-                _case2ActionSelector.InvokeMatchedActionUsingDefaultIfRequired(_union.Case2);
-            }
+            _resultActions[_union.Case]();
         }
 
         private void RecordAction(Func<T, bool> test, Action<T> action)

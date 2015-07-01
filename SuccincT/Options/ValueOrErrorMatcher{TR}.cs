@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
 using SuccincT.Unions.PatternMatchers;
@@ -17,9 +18,16 @@ namespace SuccincT.Options
             new MatchActionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
+        private readonly Dictionary<bool, Func<TResult>> _resultActions;
+
         internal ValueOrErrorMatcher(ValueOrError valueOrError)
         {
             _valueOrError = valueOrError;
+            _resultActions = new Dictionary<bool, Func<TResult>>
+            {
+                {false, () => _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error)},
+                {true, () => _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)}
+            };
         }
 
         public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Value()
@@ -54,9 +62,7 @@ namespace SuccincT.Options
 
         public TResult Result()
         {
-            return _valueOrError.HasValue
-                       ? _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                       : _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+            return _resultActions[_valueOrError.HasValue]();
         }
 
         private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action)
