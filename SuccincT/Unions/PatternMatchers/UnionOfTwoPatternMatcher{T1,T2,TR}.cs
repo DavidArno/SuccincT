@@ -13,12 +13,12 @@ namespace SuccincT.Unions.PatternMatchers
         /// </summary>
         private readonly Union<T1, T2> _union;
 
-        private readonly MatchActionSelector<T1, TResult> _case1ActionSelector =
-            new MatchActionSelector<T1, TResult>(
+        private readonly MatchFunctionSelector<T1, TResult> _case1FunctionSelector =
+            new MatchFunctionSelector<T1, TResult>(
                 x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
-        private readonly MatchActionSelector<T2, TResult> _case2ActionSelector =
-            new MatchActionSelector<T2, TResult>(
+        private readonly MatchFunctionSelector<T2, TResult> _case2FunctionSelector =
+            new MatchFunctionSelector<T2, TResult>(
                 x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
         private readonly Dictionary<Variant, Func<TResult>> _resultActions;
@@ -28,8 +28,8 @@ namespace SuccincT.Unions.PatternMatchers
             _union = union;
             _resultActions = new Dictionary<Variant, Func<TResult>>
             {
-                {Variant.Case1, () => _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
-                {Variant.Case2, () => _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)}
+                {Variant.Case1, () => _case1FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
+                {Variant.Case2, () => _case2FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)}
             };
         }
 
@@ -48,16 +48,16 @@ namespace SuccincT.Unions.PatternMatchers
         public UnionOfTwoPatternMatcherAfterElse<T1, T2, TResult> Else(Func<Union<T1, T2>, TResult> elseAction)
         {
             return new UnionOfTwoPatternMatcherAfterElse<T1, T2, TResult>(_union,
-                                                                          _case1ActionSelector,
-                                                                          _case2ActionSelector,
+                                                                          _case1FunctionSelector,
+                                                                          _case2FunctionSelector,
                                                                           elseAction);
         }
 
         public UnionOfTwoPatternMatcherAfterElse<T1, T2, TResult> Else(TResult elseValue)
         {
             return new UnionOfTwoPatternMatcherAfterElse<T1, T2, TResult>(_union,
-                                                                          _case1ActionSelector,
-                                                                          _case2ActionSelector,
+                                                                          _case1FunctionSelector,
+                                                                          _case2FunctionSelector,
                                                                           x => elseValue);
         }
 
@@ -68,12 +68,12 @@ namespace SuccincT.Unions.PatternMatchers
 
         private void RecordAction(Func<T1, bool> test, Func<T1, TResult> action)
         {
-            _case1ActionSelector.AddTestAndAction(test, action);
+            _case1FunctionSelector.AddTestAndAction(test, action);
         }
 
         private void RecordAction(Func<T2, bool> test, Func<T2, TResult> action)
         {
-            _case2ActionSelector.AddTestAndAction(test, action);
+            _case2FunctionSelector.AddTestAndAction(test, action);
         }
     }
 }

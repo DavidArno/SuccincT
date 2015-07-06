@@ -13,20 +13,20 @@ namespace SuccincT.Unions.PatternMatchers
     {
         private readonly Union<T1, T2, T3, T4> _union;
 
-        private readonly MatchActionSelector<T1, TResult> _case1ActionSelector =
-            new MatchActionSelector<T1, TResult>(
+        private readonly MatchFunctionSelector<T1, TResult> _case1FunctionSelector =
+            new MatchFunctionSelector<T1, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case1 value"); });
 
-        private readonly MatchActionSelector<T2, TResult> _case2ActionSelector =
-            new MatchActionSelector<T2, TResult>(
+        private readonly MatchFunctionSelector<T2, TResult> _case2FunctionSelector =
+            new MatchFunctionSelector<T2, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case2 value"); });
 
-        private readonly MatchActionSelector<T3, TResult> _case3ActionSelector =
-            new MatchActionSelector<T3, TResult>(
+        private readonly MatchFunctionSelector<T3, TResult> _case3FunctionSelector =
+            new MatchFunctionSelector<T3, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case3 value"); });
 
-        private readonly MatchActionSelector<T4, TResult> _case4ActionSelector =
-            new MatchActionSelector<T4, TResult>(
+        private readonly MatchFunctionSelector<T4, TResult> _case4FunctionSelector =
+            new MatchFunctionSelector<T4, TResult>(
                 _ => { throw new NoMatchException("No match action defined for union with Case4 value"); });
 
         private readonly Dictionary<Variant, Func<TResult>> _resultActions;
@@ -36,10 +36,10 @@ namespace SuccincT.Unions.PatternMatchers
             _union = union;
             _resultActions = new Dictionary<Variant, Func<TResult>>
             {
-                {Variant.Case1, () => _case1ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
-                {Variant.Case2, () => _case2ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)},
-                {Variant.Case3, () => _case3ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case3)},
-                {Variant.Case4, () => _case4ActionSelector.DetermineResultUsingDefaultIfRequired(_union.Case4)}
+                {Variant.Case1, () => _case1FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)},
+                {Variant.Case2, () => _case2FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2)},
+                {Variant.Case3, () => _case3FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case3)},
+                {Variant.Case4, () => _case4FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case4)}
             };
         }
 
@@ -71,20 +71,20 @@ namespace SuccincT.Unions.PatternMatchers
             Func<Union<T1, T2, T3, T4>, TResult> elseAction)
         {
             return new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult>(_union,
-                                                                                   _case1ActionSelector,
-                                                                                   _case2ActionSelector,
-                                                                                   _case3ActionSelector,
-                                                                                   _case4ActionSelector,
+                                                                                   _case1FunctionSelector,
+                                                                                   _case2FunctionSelector,
+                                                                                   _case3FunctionSelector,
+                                                                                   _case4FunctionSelector,
                                                                                    elseAction);
         }
 
         public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult> Else(TResult elseValue)
         {
             return new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4, TResult>(_union,
-                                                                                   _case1ActionSelector,
-                                                                                   _case2ActionSelector,
-                                                                                   _case3ActionSelector,
-                                                                                   _case4ActionSelector,
+                                                                                   _case1FunctionSelector,
+                                                                                   _case2FunctionSelector,
+                                                                                   _case3FunctionSelector,
+                                                                                   _case4FunctionSelector,
                                                                                    x => elseValue);
         }
 
@@ -95,22 +95,22 @@ namespace SuccincT.Unions.PatternMatchers
 
         private void RecordAction(Func<T1, bool> test, Func<T1, TResult> action)
         {
-            _case1ActionSelector.AddTestAndAction(test, action);
+            _case1FunctionSelector.AddTestAndAction(test, action);
         }
 
         private void RecordAction(Func<T2, bool> test, Func<T2, TResult> action)
         {
-            _case2ActionSelector.AddTestAndAction(test, action);
+            _case2FunctionSelector.AddTestAndAction(test, action);
         }
 
         private void RecordAction(Func<T3, bool> test, Func<T3, TResult> action)
         {
-            _case3ActionSelector.AddTestAndAction(test, action);
+            _case3FunctionSelector.AddTestAndAction(test, action);
         }
 
         private void RecordAction(Func<T4, bool> test, Func<T4, TResult> action)
         {
-            _case4ActionSelector.AddTestAndAction(test, action);
+            _case4FunctionSelector.AddTestAndAction(test, action);
         }
     }
 }

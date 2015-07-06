@@ -2,6 +2,10 @@
 
 namespace SuccincT.PatternMatchers
 {
+    /// <summary>
+    /// An instance of this class will start a fluent function chain for defining and evaluating a pattern match against
+    /// a value of T. It either ends in Exec(), or if At{TResult}() is used, switches to a ResultMatcher{T}.
+    /// </summary>
     public sealed class ExecMatcher<T>
     {
         private readonly MatchActionSelector<T> _actionSelector;
@@ -19,14 +23,14 @@ namespace SuccincT.PatternMatchers
             return new ResultMatcher<T, TResult>(_item);
         }
 
-        public MatchExpressionHandler<ExecMatcher<T>, T> With(T value)
+        public WithForActionHandler<ExecMatcher<T>, T> With(T value)
         {
-            return new MatchExpressionHandler<ExecMatcher<T>, T>(value, RecordAction, this);
+            return new WithForActionHandler<ExecMatcher<T>, T>(value, RecordAction, this);
         }
 
-        public MatchWhereHandler<ExecMatcher<T>, T> Where(Func<T, bool> expression)
+        public WhereForActionHandler<ExecMatcher<T>, T> Where(Func<T, bool> expression)
         {
-            return new MatchWhereHandler<ExecMatcher<T>, T>(expression, RecordAction, this);
+            return new WhereForActionHandler<ExecMatcher<T>, T>(expression, RecordAction, this);
         }
 
         private void RecordAction(Func<T, bool> test, Action<T> action)
@@ -34,9 +38,9 @@ namespace SuccincT.PatternMatchers
             _actionSelector.AddTestAndAction(test, action);
         }
 
-        public ExecMatcherWithElse<T> Else(Action<T> action)
+        public ExecMatcherAfterElse<T> Else(Action<T> action)
         {
-            return new ExecMatcherWithElse<T>(_actionSelector, action, _item);
+            return new ExecMatcherAfterElse<T>(_actionSelector, action, _item);
         }
 
         public void Exec()

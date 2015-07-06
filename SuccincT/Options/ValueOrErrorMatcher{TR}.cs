@@ -10,12 +10,12 @@ namespace SuccincT.Options
     {
         private readonly ValueOrError _valueOrError;
 
-        private readonly MatchActionSelector<string, TResult> _valueActionSelector =
-            new MatchActionSelector<string, TResult>(
+        private readonly MatchFunctionSelector<string, TResult> _valueFunctionSelector =
+            new MatchFunctionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
-        private readonly MatchActionSelector<string, TResult> _errorActionSelector =
-            new MatchActionSelector<string, TResult>(
+        private readonly MatchFunctionSelector<string, TResult> _errorFunctionSelector =
+            new MatchFunctionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
         private readonly Dictionary<bool, Func<TResult>> _resultActions;
@@ -25,8 +25,8 @@ namespace SuccincT.Options
             _valueOrError = valueOrError;
             _resultActions = new Dictionary<bool, Func<TResult>>
             {
-                {false, () => _errorActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error)},
-                {true, () => _valueActionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)}
+                {false, () => _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error)},
+                {true, () => _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)}
             };
         }
 
@@ -44,8 +44,8 @@ namespace SuccincT.Options
         {
             var union = CreateUnionFromValueOrError(_valueOrError);
             return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(union,
-                                                                                  _valueActionSelector,
-                                                                                  _errorActionSelector,
+                                                                                  _valueFunctionSelector,
+                                                                                  _errorFunctionSelector,
                                                                                   _ => value);
         }
 
@@ -55,8 +55,8 @@ namespace SuccincT.Options
             var union = CreateUnionFromValueOrError(_valueOrError);
             return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(
                 union,
-                _valueActionSelector,
-                _errorActionSelector,
+                _valueFunctionSelector,
+                _errorFunctionSelector,
                 x => elseAction(_valueOrError));
         }
 
@@ -67,12 +67,12 @@ namespace SuccincT.Options
 
         private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action)
         {
-            _valueActionSelector.AddTestAndAction(test, action);
+            _valueFunctionSelector.AddTestAndAction(test, action);
         }
 
         private void RecordErrorAction(Func<string, bool> test, Func<string, TResult> action)
         {
-            _errorActionSelector.AddTestAndAction(test, action);
+            _errorFunctionSelector.AddTestAndAction(test, action);
         }
 
         private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)

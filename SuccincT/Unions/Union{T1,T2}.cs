@@ -6,24 +6,21 @@ namespace SuccincT.Unions
 {
     public sealed class Union<T1, T2>
     {
-        private readonly T1 _value1;
-        private readonly T2 _value2;
         private readonly Variant _case;
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
+        private readonly T1 _value1;
+        private readonly T2 _value2;
 
-        public static UnionCreator<T1, T2> Creator()
-        {
-            return new UnionCreator<T1, T2>();
-        }
-
-        public Union(T1 value) : this()
+        public Union(T1 value)
+            : this()
         {
             _value1 = value;
             _case = Variant.Case1;
         }
 
-        public Union(T2 value) : this()
+        public Union(T2 value)
+            : this()
         {
             _value2 = value;
             _case = Variant.Case2;
@@ -33,13 +30,13 @@ namespace SuccincT.Unions
         {
             _hashCodes = new Dictionary<Variant, Func<int>>
             {
-                { Variant.Case1, () => _value1.GetHashCode() },
-                { Variant.Case2, () => _value2.GetHashCode() }
+                {Variant.Case1, () => _value1.GetHashCode()},
+                {Variant.Case2, () => _value2.GetHashCode()}
             };
             _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2>, bool>>
             {
-                { Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1) },
-                { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) }
+                {Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1)},
+                {Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2)}
             };
         }
 
@@ -52,13 +49,19 @@ namespace SuccincT.Unions
             _case = caseToUse;
         }
 
-        public Variant Case { get { return _case; } }
+        public Variant Case
+        {
+            get { return _case; }
+        }
 
         public T1 Case1
         {
             get
             {
-                if (_case == Variant.Case1) { return _value1; }
+                if (_case == Variant.Case1)
+                {
+                    return _value1;
+                }
                 throw new InvalidCaseException(Variant.Case1, _case);
             }
         }
@@ -67,20 +70,22 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case == Variant.Case2) { return _value2; }
+                if (_case == Variant.Case2)
+                {
+                    return _value2;
+                }
                 throw new InvalidCaseException(Variant.Case2, _case);
             }
         }
+
+        public static UnionCreator<T1, T2> Creator() { return new UnionCreator<T1, T2>(); }
 
         public UnionOfTwoPatternMatcher<T1, T2, TResult> Match<TResult>()
         {
             return new UnionOfTwoPatternMatcher<T1, T2, TResult>(this);
         }
 
-        public UnionOfTwoPatternMatcher<T1, T2> Match()
-        {
-            return new UnionOfTwoPatternMatcher<T1, T2>(this);
-        }
+        public UnionOfTwoPatternMatcher<T1, T2> Match() { return new UnionOfTwoPatternMatcher<T1, T2>(this); }
 
         public override bool Equals(Object obj)
         {
@@ -88,10 +93,7 @@ namespace SuccincT.Unions
             return obj is Union<T1, T2> && UnionsEqual(testObject);
         }
 
-        public override int GetHashCode()
-        {
-            return _hashCodes[Case]();
-        }
+        public override int GetHashCode() { return _hashCodes[Case](); }
 
         public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
         {
@@ -100,10 +102,7 @@ namespace SuccincT.Unions
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) { return !(a == b); }
 
         private bool UnionsEqual(Union<T1, T2> testObject)
         {

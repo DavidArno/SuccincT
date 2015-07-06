@@ -19,14 +19,14 @@ namespace SuccincT.Unions.PatternMatchers
             _matcher = matcher;
         }
 
-        public MatchExpressionHandler<TMatcher, TValue> Of(TValue value)
+        public WithForActionHandler<TMatcher, TValue> Of(TValue value)
         {
-            return new MatchExpressionHandler<TMatcher, TValue>(value, _recorder, _matcher);
+            return new WithForActionHandler<TMatcher, TValue>(value, _recorder, _matcher);
         }
 
-        public MatchWhereHandler<TMatcher, TValue> Where(Func<TValue, bool> expression)
+        public WhereForActionHandler<TMatcher, TValue> Where(Func<TValue, bool> expression)
         {
-            return new MatchWhereHandler<TMatcher, TValue>(expression, _recorder, _matcher);
+            return new WhereForActionHandler<TMatcher, TValue>(expression, _recorder, _matcher);
         }
 
         public TMatcher Do(Action<TValue> action)

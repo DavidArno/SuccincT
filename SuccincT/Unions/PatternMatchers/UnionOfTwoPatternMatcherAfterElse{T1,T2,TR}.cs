@@ -17,16 +17,16 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly Func<Union<T1, T2>, TResult> _elseAction;
 
         internal UnionOfTwoPatternMatcherAfterElse(Union<T1, T2> union,
-                                                   MatchActionSelector<T1, TResult> case1ActionSelector,
-                                                   MatchActionSelector<T2, TResult> case2ActionSelector,
+                                                   MatchFunctionSelector<T1, TResult> case1FunctionSelector,
+                                                   MatchFunctionSelector<T2, TResult> case2FunctionSelector,
                                                    Func<Union<T1, T2>, TResult> elseAction)
         {
             _union = union;
             _elseAction = elseAction;
             _resultActions = new Dictionary<Variant, Func<Option<TResult>>>
             {
-                {Variant.Case1, () => case1ActionSelector.DetermineResult(_union.Case1)},
-                {Variant.Case2, () => case2ActionSelector.DetermineResult(_union.Case2)}
+                {Variant.Case1, () => case1FunctionSelector.DetermineResult(_union.Case1)},
+                {Variant.Case2, () => case2FunctionSelector.DetermineResult(_union.Case2)}
             };
         }
 

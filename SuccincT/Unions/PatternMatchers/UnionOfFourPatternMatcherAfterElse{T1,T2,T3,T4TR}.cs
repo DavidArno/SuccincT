@@ -17,20 +17,20 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly Func<Union<T1, T2, T3, T4>, TResult> _elseAction;
 
         internal UnionOfFourPatternMatcherAfterElse(Union<T1, T2, T3, T4> union,
-                                                    MatchActionSelector<T1, TResult> case1ActionSelector,
-                                                    MatchActionSelector<T2, TResult> case2ActionSelector,
-                                                    MatchActionSelector<T3, TResult> case3ActionSelector,
-                                                    MatchActionSelector<T4, TResult> case4ActionSelector,
+                                                    MatchFunctionSelector<T1, TResult> case1FunctionSelector,
+                                                    MatchFunctionSelector<T2, TResult> case2FunctionSelector,
+                                                    MatchFunctionSelector<T3, TResult> case3FunctionSelector,
+                                                    MatchFunctionSelector<T4, TResult> case4FunctionSelector,
                                                     Func<Union<T1, T2, T3, T4>, TResult> elseAction)
         {
             _union = union;
             _elseAction = elseAction;
             _resultActions = new Dictionary<Variant, Func<Option<TResult>>>
             {
-                {Variant.Case1, () => case1ActionSelector.DetermineResult(_union.Case1)},
-                {Variant.Case2, () => case2ActionSelector.DetermineResult(_union.Case2)},
-                {Variant.Case3, () => case3ActionSelector.DetermineResult(_union.Case3)},
-                {Variant.Case4, () => case4ActionSelector.DetermineResult(_union.Case4)}
+                {Variant.Case1, () => case1FunctionSelector.DetermineResult(_union.Case1)},
+                {Variant.Case2, () => case2FunctionSelector.DetermineResult(_union.Case2)},
+                {Variant.Case3, () => case3FunctionSelector.DetermineResult(_union.Case3)},
+                {Variant.Case4, () => case4FunctionSelector.DetermineResult(_union.Case4)}
             };
         }
 

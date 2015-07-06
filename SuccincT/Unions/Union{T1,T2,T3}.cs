@@ -13,10 +13,7 @@ namespace SuccincT.Unions
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2, T3>, bool>> _unionsMatch;
 
-        public static UnionCreator<T1, T2, T3> Creator()
-        {
-            return new UnionCreator<T1, T2, T3>();
-        }
+        public static UnionCreator<T1, T2, T3> Creator() { return new UnionCreator<T1, T2, T3>(); }
 
         public Variant Case
         {
@@ -100,10 +97,7 @@ namespace SuccincT.Unions
             return obj is Union<T1, T2, T3> && UnionsEqual(testObject);
         }
 
-        public override int GetHashCode()
-        {
-            return _hashCodes[Case]();
-        }
+        public override int GetHashCode() { return _hashCodes[Case](); }
 
         public static bool operator ==(Union<T1, T2, T3> a, Union<T1, T2, T3> b)
         {
@@ -112,10 +106,7 @@ namespace SuccincT.Unions
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) { return !(a == b); }
 
         private bool UnionsEqual(Union<T1, T2, T3> testObject)
         {
