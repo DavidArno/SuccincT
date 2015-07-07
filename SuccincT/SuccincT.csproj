@@ -71,7 +71,7 @@
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
     <Compile Include="PatternMatchers\ExecMatcherAfterElse{T1,T2}.cs" />
     <Compile Include="PatternMatchers\ExecMatcher{T1,T2}.cs" />
-    <Compile Include="PatternMatchers\MatchActionSelector__{T1,T2}.cs" />
+    <Compile Include="PatternMatchers\MatchActionSelector{T1,T2}.cs" />
     <Compile Include="PatternMatchers\MatchFunctionSelector{T1,T2,TR}.cs" />
     <Compile Include="PatternMatchers\ResultMatcherWithElse{T1,T2,TR}.cs" />
     <Compile Include="PatternMatchers\ResultMatcherWithElse{T,TR}.cs" />
