@@ -5,7 +5,7 @@ using SuccincT.PatternMatchers;
 namespace SuccincTTests.SuccincT.Tuples
 {
     [TestFixture]
-    public class TupleExecTestsT
+    public class TupleExecTestsT1
     {
         [Test]
         public void Tuple_CanBeMatchedWithExec()

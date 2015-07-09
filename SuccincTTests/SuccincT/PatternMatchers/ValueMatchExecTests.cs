@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
+using SuccincT.PatternMatchers.GeneralMatcher;
 
 namespace SuccincTTests.SuccincT.PatternMatchers
 {

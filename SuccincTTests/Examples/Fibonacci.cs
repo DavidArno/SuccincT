@@ -1,4 +1,4 @@
-﻿using SuccincT.PatternMatchers;
+﻿using SuccincT.PatternMatchers.GeneralMatcher;
 
 namespace SuccincTTests.Examples
 {

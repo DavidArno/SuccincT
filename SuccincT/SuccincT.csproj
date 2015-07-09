@@ -69,31 +69,43 @@
     <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Options\ValueOrErrorMatcher.cs" />
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
+    <Compile Include="PatternMatchers\ExecMatcherAfterElse{T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\ExecMatcherAfterElse{T1,T2}.cs" />
+    <Compile Include="PatternMatchers\ExecMatcher{T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\ExecMatcher{T1,T2}.cs" />
+    <Compile Include="PatternMatchers\GeneralMatcher\GeneralMatcherExtensions.cs" />
+    <Compile Include="PatternMatchers\MatchActionSelector{T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\MatchActionSelector{T1,T2}.cs" />
+    <Compile Include="PatternMatchers\MatchFunctionSelector{T1,T2,T3,TR}.cs" />
     <Compile Include="PatternMatchers\MatchFunctionSelector{T1,T2,TR}.cs" />
+    <Compile Include="PatternMatchers\ResultMatcherWithElse{T1,T2,T3,TR}.cs" />
     <Compile Include="PatternMatchers\ResultMatcherWithElse{T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\ResultMatcherWithElse{T,TR}.cs" />
+    <Compile Include="PatternMatchers\ResultMatcherWithElse{T1,TR}.cs" />
+    <Compile Include="PatternMatchers\ResultMatcher{T1,T2,T3,TR}.cs" />
     <Compile Include="PatternMatchers\ResultMatcher{T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\ResultMatcher{T,TR}.cs" />
-    <Compile Include="PatternMatchers\ExecMatcher{T}.cs" />
-    <Compile Include="PatternMatchers\ExecMatcherAfterElse{T}.cs" />
-    <Compile Include="PatternMatchers\MatchFunctionSelector{T,TR}.cs" />
-    <Compile Include="PatternMatchers\MatchActionSelector{T}.cs" />
-    <Compile Include="PatternMatchers\MatcherExtensions.cs" />
+    <Compile Include="PatternMatchers\ResultMatcher{T1,TR}.cs" />
+    <Compile Include="PatternMatchers\ExecMatcher{T1}.cs" />
+    <Compile Include="PatternMatchers\ExecMatcherAfterElse{T1}.cs" />
+    <Compile Include="PatternMatchers\MatchFunctionSelector{T1,TR}.cs" />
+    <Compile Include="PatternMatchers\MatchActionSelector{T1}.cs" />
+    <Compile Include="PatternMatchers\SpecificTypeMatcherExtensions.cs" />
     <Compile Include="PatternMatchers\TupleComparers.cs" />
+    <Compile Include="PatternMatchers\WhereForActionHandler{TM,T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\WhereForActionHandler{TM,T1,T2}.cs" />
+    <Compile Include="PatternMatchers\WhereForFuncHandler{TM,T1,T2,T3,TR}.cs" />
     <Compile Include="PatternMatchers\WhereForFuncHandler{TM,T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\WithForActionHandler{TM,T1, T2}.cs" />
-    <Compile Include="PatternMatchers\WithForFuncHandler{TM,T,TR}.cs" />
+    <Compile Include="PatternMatchers\WithForActionHandler{TM,T1,T2,T3}.cs" />
+    <Compile Include="PatternMatchers\WithForActionHandler{TM,T1,T2}.cs" />
+    <Compile Include="PatternMatchers\WithForFuncHandler{TM,T1,TR}.cs" />
+    <Compile Include="PatternMatchers\WithForFuncHandler{TM,T1,T2,T3,TR}.cs" />
     <Compile Include="PatternMatchers\WithForFuncHandler{TM,T1,T2,TR}.cs" />
-    <Compile Include="PatternMatchers\WithForActionHandler{TM,T}.cs" />
-    <Compile Include="PatternMatchers\WhereForFuncHandler{TM,T,TR}.cs" />
-    <Compile Include="PatternMatchers\WhereForActionHandler{TM,T}.cs" />
+    <Compile Include="PatternMatchers\WithForActionHandler{TM,T1}.cs" />
+    <Compile Include="PatternMatchers\WhereForFuncHandler{TM,T1,TR}.cs" />
+    <Compile Include="PatternMatchers\WhereForActionHandler{TM,T1}.cs" />
     <Compile Include="PatternMatchers\NoMatchException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\Option{T}.cs" />
+    <Compile Include="Tuples\ITupleMatchable{T1,T2}.cs" />
     <Compile Include="Unions\InvalidCaseException.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4TR}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4}.cs" />
@@ -126,9 +138,7 @@
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tuples\PatternMatchers\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

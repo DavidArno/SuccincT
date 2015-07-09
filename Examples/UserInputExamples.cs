@@ -2,7 +2,7 @@
 using SuccincT.Options;
 using SuccincT.Parsers;
 using SuccincT.PartialApplications;
-using SuccincT.PatternMatchers;
+using SuccincT.PatternMatchers.GeneralMatcher;
 
 namespace SuccinctExamples
 {
