@@ -81,6 +81,7 @@
     <Compile Include="SuccincT\Tuples\TupleMatchableTestsT1T2.cs" />
     <Compile Include="SuccincT\Tuples\TupleTestsT1.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1T2.cs" />
+    <Compile Include="SuccincT\Tuples\TupleTestsT1T2T3T4.cs" />
     <Compile Include="SuccincT\Tuples\TupleTestsT1T2T3.cs" />
     <Compile Include="SuccincT\Tuples\TupleTestsT1T2.cs">
       <SubType>Code</SubType>
