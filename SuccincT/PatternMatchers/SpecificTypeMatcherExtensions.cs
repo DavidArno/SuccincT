@@ -23,6 +23,18 @@ namespace SuccincT.PatternMatchers
             return new ExecMatcher<T1, T2>(tuple.Item1, tuple.Item2);
         }
 
+        public static ExecMatcher<T1, T2, T3> Match<T1, T2, T3>(this ITupleMatchable<T1, T2, T3> item)
+        {
+            var tuple = item.PropertiesToMatch;
+            return new ExecMatcher<T1, T2, T3>(tuple.Item1, tuple.Item2, tuple.Item3);
+        }
+
+        public static ExecMatcher<T1, T2, T3, T4> Match<T1, T2, T3, T4>(this ITupleMatchable<T1, T2, T3, T4> item)
+        {
+            var tuple = item.PropertiesToMatch;
+            return new ExecMatcher<T1, T2, T3, T4>(tuple.Item1, tuple.Item2, tuple.Item3, tuple.Item4);
+        }
+
         public static ExecMatcher<T1, T2, T3> Match<T1, T2, T3>(this Tuple<T1, T2, T3> item)
         {
             return new ExecMatcher<T1, T2, T3>(item.Item1, item.Item2, item.Item3);
