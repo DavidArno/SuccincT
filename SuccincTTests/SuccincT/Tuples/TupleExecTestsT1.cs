@@ -25,7 +25,7 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(ExpectedException = typeof (NoMatchException))]
         public void Tuple_ExceptionIfNoMatchWithExec()
         {
             var tuple = Tuple.Create(1);
@@ -47,7 +47,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1);
             var result = false;
             tuple.Match().Where(x => x == 1).Do(_ => result = true)
-                         .Else(_ => result = false).Exec();
+                 .Else(_ => result = false).Exec();
             Assert.IsTrue(result);
         }
 
@@ -57,7 +57,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create("a");
             var result = false;
             tuple.Match().Where(x => x == "b").Do(_ => result = true)
-                         .Else(_ => result = false).Exec();
+                 .Else(_ => result = false).Exec();
             Assert.IsFalse(result);
         }
 
@@ -67,7 +67,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1);
             var result = false;
             tuple.Match().With(2).Or(3).Do(_ => result = false)
-                         .Where(x => x == 1).Do(_ => result = true).Exec();
+                 .Where(x => x == 1).Do(_ => result = true).Exec();
             Assert.IsTrue(result);
         }
 
@@ -77,7 +77,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create("a");
             var result = false;
             tuple.Match().With("a").Or("b").Do(_ => result = false)
-                         .Where(x => x == "c").Do(_ => result = true).Exec();
+                 .Where(x => x == "c").Do(_ => result = true).Exec();
             Assert.IsFalse(result);
         }
     }
