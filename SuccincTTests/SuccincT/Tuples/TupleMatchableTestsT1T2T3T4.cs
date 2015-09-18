@@ -17,7 +17,7 @@ namespace SuccincTTests.SuccincT.Tuples
             public string B;
             public Colors C;
             public Animals D;
-            public Tuple<int, string, Colors, Animals> PropertiesToMatch { get { return Tuple.Create(A, B, C, D); } }
+            public Tuple<int, string, Colors, Animals> PropertiesToMatch => Tuple.Create(A, B, C, D);
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = new TestClass { A = 1, B = "a", C = Colors.Red, D = Animals.Cow };

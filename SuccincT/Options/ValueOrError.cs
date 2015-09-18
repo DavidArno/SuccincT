@@ -22,7 +22,7 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithValue(string value)
         {
-            if (value == null) { throw new ArgumentNullException("value"); }
+            if (value == null) { throw new ArgumentNullException(nameof(value)); }
             return new ValueOrError(value, null);
         }
 
@@ -31,7 +31,7 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithError(string error)
         {
-            if (error == null) { throw new ArgumentNullException("error"); }
+            if (error == null) { throw new ArgumentNullException(nameof(error)); }
             return new ValueOrError(null, error);
         }
 
@@ -39,24 +39,18 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public ValueOrErrorMatcher<TResult> Match<TResult>()
-        {
-            return new ValueOrErrorMatcher<TResult>(this);
-        }
+        public ValueOrErrorMatcher<TResult> Match<TResult>() => new ValueOrErrorMatcher<TResult>(this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
         /// associated with the match.
         /// </summary>
-        public ValueOrErrorMatcher Match()
-        {
-            return new ValueOrErrorMatcher(this);
-        }
+        public ValueOrErrorMatcher Match() => new ValueOrErrorMatcher(this);
 
         /// <summary>
         /// True if created via WithValue(), else false.
         /// </summary>
-        public bool HasValue { get { return _value != null; } }
+        public bool HasValue => _value != null;
 
         /// <summary>
         /// The value held (if created by WithValue()). Will throw an InvalidOperationException if created via
@@ -84,23 +78,15 @@ namespace SuccincT.Options
             }
         }
 
-        public override string ToString()
-        {
-            return HasValue
-                ? string.Format("Value of {0}", _value)
-                : string.Format("Error of {0}", _error);
-        }
+        public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             var testObject = obj as ValueOrError;
             return obj is ValueOrError && testObject._error == _error && testObject._value == _value;
         }
 
-        public override int GetHashCode()
-        {
-            return HasValue ? _value.GetHashCode() : _error.GetHashCode();
-        }
+        public override int GetHashCode() => HasValue ? _value.GetHashCode() : _error.GetHashCode();
 
         public static bool operator ==(ValueOrError a, ValueOrError b)
         {
@@ -109,9 +95,6 @@ namespace SuccincT.Options
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(ValueOrError a, ValueOrError b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(ValueOrError a, ValueOrError b) => !(a == b);
     }
 }

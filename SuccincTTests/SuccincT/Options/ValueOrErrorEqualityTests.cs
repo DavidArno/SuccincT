@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.Options;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -11,9 +12,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithValue("1234");
             var b = ValueOrError.WithValue("1234");
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -21,9 +22,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithError("1234");
             var b = ValueOrError.WithError("1234");
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -31,8 +32,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithValue("1234");
             var b = ValueOrError.WithError("1234");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
         }
 
         [Test]
@@ -40,9 +41,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithValue("1234");
             var b = ValueOrError.WithValue("12345");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -50,27 +51,27 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithError("1234");
             var b = ValueOrError.WithError("12345");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
         public void ComparingValueWithNull_ResultsInNotEqual()
         {
             var a = ValueOrError.WithValue("1234");
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
 
         [Test]
         public void ComparingErrorWithNull_ResultsInNotEqual()
         {
             var a = ValueOrError.WithError("1234");
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
     }
 }

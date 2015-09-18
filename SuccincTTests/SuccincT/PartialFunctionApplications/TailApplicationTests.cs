@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.PartialApplications;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.PartialFunctionApplications
 {
@@ -14,7 +15,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(2, 3);
             var composedFunction = testFunction.TailApply(3);
             var actual = composedFunction(2);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -24,7 +25,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(2, 3, 4);
             var composedFunction = testFunction.TailApply(4);
             var actual = composedFunction(2, 3);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4);
             var composedFunction = testFunction.TailApply(4);
             var actual = composedFunction(1, 2, 3);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -44,7 +45,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5);
             var composedFunction = testFunction.TailApply(5);
             var actual = composedFunction(1, 2, 3, 4);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var composedFunction = testFunction.TailApply(6);
             var actual = composedFunction(1, 2, 3, 4, 5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -66,7 +67,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6, 7);
             var composedFunction = testFunction.TailApply(7);
             var actual = composedFunction(1, 2, 3, 4, 5, 6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6, 7, 8);
             var composedFunction = testFunction.TailApply(8);
             var actual = composedFunction(1, 2, 3, 4, 5, 6, 7);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -88,7 +89,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6, 7, 8, 9);
             var composedFunction = testFunction.TailApply(9);
             var actual = composedFunction(1, 2, 3, 4, 5, 6, 7, 8);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -99,7 +100,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
             var composedFunction = testFunction.TailApply(10);
             var actual = composedFunction(1, 2, 3, 4, 5, 6, 7, 8, 9);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.PartialApplications;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.PartialFunctionApplications
 {
@@ -20,7 +21,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(3);
             appliedAction(2);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -34,7 +35,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(3).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -48,7 +49,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(4).TailApply(3).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -62,7 +63,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(5).TailApply(4).TailApply(3).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -76,7 +77,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(true);
             appliedAction(2);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -90,7 +91,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(true).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -105,7 +106,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(true).TailApply(3).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -120,7 +121,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
 
             var appliedAction = testAction.TailApply(true).TailApply(4).TailApply(3).TailApply(2);
             appliedAction(1);
-            Assert.AreEqual(expected, result);
+            AreEqual(expected, result);
         }
 
         [Test]
@@ -142,13 +143,10 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             appliedActionFalse(2);
             var actualWhenFalse = _testFunctionResult;
 
-            Assert.AreEqual(expectedWhenTrue, actualWhenTrue);
-            Assert.AreEqual(expectedWhenFalse, actualWhenFalse);
+            AreEqual(expectedWhenTrue, actualWhenTrue);
+            AreEqual(expectedWhenFalse, actualWhenFalse);
         }
 
-        private void TestActionDefaultTrue(int a, bool b = true)
-        {
-            _testFunctionResult = a * (b ? 1 : 0);
-        }
+        private void TestActionDefaultTrue(int a, bool b = true) => _testFunctionResult = a * (b ? 1 : 0);
     }
 }

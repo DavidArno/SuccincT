@@ -26,7 +26,7 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);

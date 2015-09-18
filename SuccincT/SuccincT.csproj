@@ -133,6 +133,7 @@
     <Compile Include="Unions\PatternMatchers\UnionOfThreePatternMatcher{T1,T2,T3,TR}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcher{T1,T2,TR}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfTwoPatternMatcher{T1,T2}.cs" />
+    <Compile Include="Unions\Union.cs" />
     <Compile Include="Unions\UnionCreator{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\UnionCreator{T1,T2,T3}.cs" />
     <Compile Include="Unions\UnionCreator{T1,T2}.cs" />

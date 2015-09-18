@@ -17,50 +17,37 @@ namespace SuccincT.PatternMatchers
             _actionSelector = new MatchActionSelector<T1, T2, T3, T4>(
                 (w, x, y, z) =>
                 {
-                    throw new NoMatchException(
-                        string.Format(
-                            "No match action exists for value of ({0}, {1}, {2})",
-                            _item.Item1,
-                            _item.Item2,
-                            _item.Item3));
+                    throw new NoMatchException($"No match action exists for value of ({_item.Item1}, {_item.Item2}, {_item.Item3})");
                 });
         }
 
-        public ResultMatcher<T1, T2, T3, T4, TResult> To<TResult>()
-        {
-            return new ResultMatcher<T1, T2, T3, T4, TResult>(_item);
-        }
+        public ResultMatcher<T1, T2, T3, T4, TResult> To<TResult>() => new ResultMatcher<T1, T2, T3, T4, TResult>(_item);
 
         public WithForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4> With(T1 value1,
                                                                                       T2 value2,
                                                                                       T3 value3,
-                                                                                      T4 value4)
-        {
-            return new WithForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>(
-                Tuple.Create(value1, value2, value3, value4),
-                RecordAction,
-                this);
-        }
+                                                                                      T4 value4) => 
+            new WithForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>(Tuple.Create(value1, 
+                                                                                               value2, 
+                                                                                               value3, 
+                                                                                               value4),
+                                                                                  RecordAction,
+                                                                                  this);
 
-        public WhereForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4> Where(
-            Func<T1, T2, T3, T4, bool> expression)
-        {
-            return new WhereForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>(expression, RecordAction, this);
-        }
+        public WhereForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4> 
+            Where(Func<T1, T2, T3, T4, bool> expression) => 
+                new WhereForActionHandler<ExecMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>(expression, RecordAction, this);
 
-        private void RecordAction(Func<T1, T2, T3, T4, bool> test, Action<T1, T2, T3, T4> action)
-        {
+        private void RecordAction(Func<T1, T2, T3, T4, bool> test, Action<T1, T2, T3, T4> action) => 
             _actionSelector.AddTestAndAction(test, action);
-        }
 
-        public ExecMatcherAfterElse<T1, T2, T3, T4> Else(Action<T1, T2, T3, T4> action)
-        {
-            return new ExecMatcherAfterElse<T1, T2, T3, T4>(_actionSelector, action, _item);
-        }
+        public ExecMatcherAfterElse<T1, T2, T3, T4> Else(Action<T1, T2, T3, T4> action) => 
+            new ExecMatcherAfterElse<T1, T2, T3, T4>(_actionSelector, action, _item);
 
-        public void Exec()
-        {
-            _actionSelector.InvokeMatchedActionUsingDefaultIfRequired(_item.Item1, _item.Item2, _item.Item3, _item.Item4);
-        }
+        public void Exec() => 
+            _actionSelector.InvokeMatchedActionUsingDefaultIfRequired(_item.Item1, 
+                                                                      _item.Item2, 
+                                                                      _item.Item3, 
+                                                                      _item.Item4);
     }
 }

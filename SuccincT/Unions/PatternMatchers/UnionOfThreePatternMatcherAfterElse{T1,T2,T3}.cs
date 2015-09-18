@@ -31,10 +31,7 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public void Exec()
-        {
-            _execActions[_union.Case]();
-        }
+        public void Exec() => _execActions[_union.Case]();
 
         private void Exec<T>(MatchActionSelector<T> selector, T value)
         {

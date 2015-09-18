@@ -37,45 +37,30 @@ namespace SuccincT.Options
             };
         }
 
-        public UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult> Some()
-        {
-            return new UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult>(RecordAction, this);
-        }
+        public UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult> Some() => 
+            new UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult>(RecordAction, this);
 
-        public NoneMatchHandler<T, TResult> None()
-        {
-            return new NoneMatchHandler<T, TResult>(RecordAction, this);
-        }
+        public NoneMatchHandler<T, TResult> None() => 
+            new NoneMatchHandler<T, TResult>(RecordAction, this);
 
-        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(Func<Option<T>, TResult> elseAction)
-        {
-            return new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
-                                                                           _case1FunctionSelector,
-                                                                           _case2FunctionSelector,
-                                                                           x => elseAction(_option));
-        }
+        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(Func<Option<T>, TResult> elseAction) => 
+            new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
+                                                                    _case1FunctionSelector,
+                                                                    _case2FunctionSelector,
+                                                                    x => elseAction(_option));
 
-        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(TResult elseValue)
-        {
-            return new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
-                                                                           _case1FunctionSelector,
-                                                                           _case2FunctionSelector,
-                                                                           x => elseValue);
-        }
+        public UnionOfTwoPatternMatcherAfterElse<T, None, TResult> Else(TResult elseValue) => 
+            new UnionOfTwoPatternMatcherAfterElse<T, None, TResult>(_union,
+                                                                    _case1FunctionSelector,
+                                                                    _case2FunctionSelector,
+                                                                    x => elseValue);
 
-        public TResult Result()
-        {
-            return _resultActions[_union.Case]();
-        }
+        public TResult Result() => _resultActions[_union.Case]();
 
-        private void RecordAction(Func<T, bool> test, Func<T, TResult> action)
-        {
+        private void RecordAction(Func<T, bool> test, Func<T, TResult> action) =>
             _case1FunctionSelector.AddTestAndAction(test, action);
-        }
 
-        private void RecordAction(Func<TResult> action)
-        {
+        private void RecordAction(Func<TResult> action) => 
             _case2FunctionSelector.AddTestAndAction(x => true, x => action());
-        }
     }
 }

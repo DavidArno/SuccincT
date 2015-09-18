@@ -1,6 +1,7 @@
 using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -16,7 +17,7 @@ namespace SuccincTTests.SuccincT.Unions
             union.Match().Case1().Do(x => result = x)
                  .Case2().Do(x => result = 2)
                  .Case3().Do(x => result = 3).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -27,7 +28,7 @@ namespace SuccincTTests.SuccincT.Unions
             union.Match().Case1().Do(x => result = 1)
                  .Case2().Do(x => result = 2)
                  .Case3().Do(x => result = 3).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -38,24 +39,24 @@ namespace SuccincTTests.SuccincT.Unions
             union.Match().Case1().Do(x => result = 1)
                  .Case2().Do(x => result = 2)
                  .Case3().Do(x => result = 3).Exec();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void UnionWithT1AndNoCase1MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(2);
             union.Match().Case2().Do(x => { }).Case3().Do(x => { }).Exec();
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void UnionWithT2AndNoCase2MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>("la la");
             union.Match().Case1().Do(x => { }).Case3().Do(x => { }).Exec();
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void UnionWithT3AndNoCase3MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
@@ -68,7 +69,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(11);
             var result = 0;
             union.Match().Case2().Do(x => result = 1).Case3().Do(x => result = 3).Else(x => result = x.Case1).Exec();
-            Assert.AreEqual(11, result);
+            AreEqual(11, result);
         }
 
         [Test]
@@ -77,7 +78,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>("fred");
             var result = 0;
             union.Match().Case1().Do(x => result = 1).Case3().Do(x => result = 3).Else(x => result = 2).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -86,7 +87,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(Colors.Blue);
             var result = 0;
             union.Match().Case1().Do(x => result = 1).Case2().Do(x => result = 2).Else(x => result = 3).Exec();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -95,7 +96,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(2);
             var result = 0;
             union.Match().Case1().Do(x => result = x).Else(x => result = 1).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>("x");
             var result = 0;
             union.Match().Case2().Do(x => result = 1).Else(x => result = 2).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(Colors.Green);
             var result = 0;
             union.Match().Case3().Do(x => result = 1).Else(x => result = 3).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
     }
 }

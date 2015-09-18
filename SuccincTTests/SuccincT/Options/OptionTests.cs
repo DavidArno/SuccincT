@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -12,28 +13,28 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsValue_ResultIsValue()
         {
             var result = Option<int>.Some(1);
-            Assert.AreEqual(1, result.Value);
+            AreEqual(1, result.Value);
         }
 
         [Test]
         public void WhenOptionIsValue_ResultHasValue()
         {
             var result = Option<int>.Some(1);
-            Assert.IsTrue(result.HasValue);
+            IsTrue(result.HasValue);
         }
 
         [Test]
         public void WhenOptionNotValue_ResultIsNone()
         {
             var result = Option<int>.None();
-            Assert.IsFalse(result.HasValue);
+            IsFalse(result.HasValue);
         }
 
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
             var result = Option<bool>.None();
-            Assert.IsFalse(result.Value);
+            IsFalse(result.Value);
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace SuccincTTests.SuccincT.Options
             var intValue = 0;
             var option = Option<int>.Some(1);
             option.Match().Some().Do(x => intValue = x).None().Do(() => { }).Exec();
-            Assert.AreEqual(1, intValue);
+            AreEqual(1, intValue);
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace SuccincTTests.SuccincT.Options
             var noneInvoked = false;
             var option = Option<int>.None();
             option.Match().Some().Do(x => { }).None().Do(() => noneInvoked = true).Exec();
-            Assert.IsTrue(noneInvoked);
+            IsTrue(noneInvoked);
         }
 
         [Test]
@@ -59,7 +60,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Do(x => x).None().Do(() => 0).Result();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -67,7 +68,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).None().Do(() => 0).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
         [Test]
@@ -75,7 +76,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Else(o => 0).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
         [Test]
@@ -83,7 +84,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Else(0).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
         [Test]
@@ -91,7 +92,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().None().Do(() => 0).Else(o => o.Value).Result();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -99,33 +100,33 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(2);
             var result = option.Match<int>().Some().Of(1).Do(x => 1).None().Do(() => 0).Else(o => o.Value).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().None().Do(() => 0).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.None();
             option.Match().Some().Do(x => { }).Exec();
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
+        [Test, ExpectedException(typeof(NoMatchException))]
         public void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
@@ -137,7 +138,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -145,7 +146,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Of(1).Do(1).Some().Do(2).None().Do(3).Result();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Where(x => x < 2).Do(0).Some().Do(2).None().Do(3).Result();
-            Assert.AreEqual(0, result);
+            AreEqual(0, result);
         }
 
         [Test]
@@ -161,7 +162,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
     }
 }

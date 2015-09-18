@@ -23,35 +23,29 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() { return new Option<T>(); }
+        public static Option<T> None() => new Option<T>();
 
         /// <summary>
         /// Creates an instance of option with the specified value.
         /// </summary>
-        public static Option<T> Some(T value) { return new Option<T>(value); }
+        public static Option<T> Some(T value) => new Option<T>(value);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public OptionMatcher<T, TResult> Match<TResult>()
-        {
-            return new OptionMatcher<T, TResult>(_union, this);
-        }
+        public OptionMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(_union, this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
         /// associated with the match.
         /// </summary>
-        public OptionMatcher<T> Match()
-        {
-            return new OptionMatcher<T>(_union, this);
-        }
+        public OptionMatcher<T> Match() => new OptionMatcher<T>(_union, this);
 
         /// <summary>
         /// True if created via Some(), false if via None().
         /// </summary>
-        public bool HasValue { get { return _union.Case == Variant.Case1; } }
+        public bool HasValue => _union.Case == Variant.Case1;
 
         /// <summary>
         /// The value held (if created by Some()). Will throw an InvalidOperationException if created via None().
@@ -65,16 +59,13 @@ namespace SuccincT.Options
             }
         }
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             var testObject = obj as Option<T>;
             return obj is Option<T> && testObject._union.Equals(_union);
         }
 
-        public override int GetHashCode()
-        {
-            return _union.GetHashCode();
-        }
+        public override int GetHashCode() => _union.GetHashCode();
 
         public static bool operator ==(Option<T> a, Option<T> b)
         {
@@ -83,9 +74,6 @@ namespace SuccincT.Options
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Option<T> a, Option<T> b)
-        {
-            return !(a == b);
-        }
+        public static bool operator !=(Option<T> a, Option<T> b) => !(a == b);
     }
 }

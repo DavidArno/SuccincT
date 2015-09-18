@@ -30,15 +30,11 @@ namespace SuccincT.Options
             };
         }
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Value()
-        {
-            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordValueAction, this);
-        }
+        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Value() => 
+            new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordValueAction, this);
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Error()
-        {
-            return new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordErrorAction, this);
-        }
+        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Error() => 
+            new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordErrorAction, this);
 
         public UnionOfTwoPatternMatcherAfterElse<string, string, TResult> Else(TResult value)
         {
@@ -60,26 +56,17 @@ namespace SuccincT.Options
                 x => elseAction(_valueOrError));
         }
 
-        public TResult Result()
-        {
-            return _resultActions[_valueOrError.HasValue]();
-        }
+        public TResult Result() => _resultActions[_valueOrError.HasValue]();
 
-        private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action)
-        {
+        private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action) => 
             _valueFunctionSelector.AddTestAndAction(test, action);
-        }
 
-        private void RecordErrorAction(Func<string, bool> test, Func<string, TResult> action)
-        {
+        private void RecordErrorAction(Func<string, bool> test, Func<string, TResult> action) => 
             _errorFunctionSelector.AddTestAndAction(test, action);
-        }
 
-        private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError)
-        {
-            return valueOrError.HasValue
-                       ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
-                       : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
-        }
+        private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError) => 
+            valueOrError.HasValue
+                ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
+                : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
     }
 }

@@ -19,10 +19,8 @@ namespace SuccincT.Parsers
         /// compiler throws an error if one tries to. An ArgumentException will be thrown if T is
         /// not an enum.
         /// </typeparam>
-        public static Option<T> ParseEnum<T>(this string source) where T : struct, IConvertible
-        {
-            return Parse<T>(source, false);
-        }
+        public static Option<T> ParseEnum<T>(this string source) where T : struct, IConvertible => 
+            Parse<T>(source, false);
 
         /// <summary>
         /// Parses the source string for a value from the specified enum, ignoring the case of the
@@ -33,10 +31,8 @@ namespace SuccincT.Parsers
         /// compiler throws an error if one tries to. An ArgumentException will be thrown if T is
         /// not an enum.
         /// </typeparam>
-        public static Option<T> ParseEnumIgnoringCase<T>(this string source) where T : struct, IConvertible
-        {
-            return Parse<T>(source, true);
-        }
+        public static Option<T> ParseEnumIgnoringCase<T>(this string source) where T : struct, IConvertible => 
+            Parse<T>(source, true);
 
         private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct, IConvertible
         {

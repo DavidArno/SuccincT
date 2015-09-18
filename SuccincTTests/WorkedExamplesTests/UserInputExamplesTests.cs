@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.PartialApplications;
 using SuccinctExamples;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.WorkedExamplesTests
 {
@@ -23,9 +24,9 @@ namespace SuccincTTests.WorkedExamplesTests
             var result = GetNumberBetween0And10(() => askedCalled = true,
                                                 () => reAskCalled = true,
                                                 () => "10");
-            Assert.IsTrue(askedCalled);
-            Assert.IsFalse(reAskCalled);
-            Assert.AreEqual(10, result.Value);
+            IsTrue(askedCalled);
+            IsFalse(reAskCalled);
+            AreEqual(10, result.Value);
         }
 
         [Test]
@@ -38,9 +39,9 @@ namespace SuccincTTests.WorkedExamplesTests
             var result = GetNumberBetween0And10(() => askedCalled = true,
                                                 () => reAskCalled = true,
                                                 () => responses[index++]);
-            Assert.IsTrue(askedCalled);
-            Assert.IsTrue(reAskCalled);
-            Assert.AreEqual(9, result.Value);
+            IsTrue(askedCalled);
+            IsTrue(reAskCalled);
+            AreEqual(9, result.Value);
         }
 
         [Test]
@@ -53,9 +54,9 @@ namespace SuccincTTests.WorkedExamplesTests
             var result = GetNumberBetween0And10(() => askedCalled = true,
                                                 () => reAskCalled = true,
                                                 () => responses[index++]);
-            Assert.IsTrue(askedCalled);
-            Assert.IsTrue(reAskCalled);
-            Assert.IsFalse(result.HasValue);
+            IsTrue(askedCalled);
+            IsTrue(reAskCalled);
+            IsFalse(result.HasValue);
         }
     }
 }

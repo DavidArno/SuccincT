@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.PartialApplications;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.PartialFunctionApplications
 {
@@ -14,7 +15,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(2, 3);
             var composedFunction = testFunction.Apply(2);
             var actual = composedFunction(3);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -25,7 +26,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction = testFunction.Apply(1);
             var completelyComposedFunction = partiallyComposedFunction.Apply(2);
             var actual = completelyComposedFunction(3);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -35,7 +36,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3);
             var completelyComposedFunction = testFunction.Apply(1, 2);
             var actual = completelyComposedFunction(3);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(2);
             var completelyComposedFunction = partiallyComposedFunction2.Apply(3);
             var actual = completelyComposedFunction(4);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -58,7 +59,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction = testFunction.Apply(1, 2);
             var completelyComposedFunction = partiallyComposedFunction.Apply(3);
             var actual = completelyComposedFunction(4);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -68,7 +69,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3);
             var actual = completelyComposedFunction(4);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -81,7 +82,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction3 = partiallyComposedFunction2.Apply(3);
             var completelyComposedFunction = partiallyComposedFunction3.Apply(4);
             var actual = completelyComposedFunction(5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -93,7 +94,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(3);
             var completelyComposedFunction = partiallyComposedFunction2.Apply(4);
             var actual = completelyComposedFunction(5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -104,7 +105,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction = testFunction.Apply(1, 2, 3);
             var completelyComposedFunction = partiallyComposedFunction.Apply(4);
             var actual = completelyComposedFunction(5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -114,7 +115,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3, 4);
             var actual = completelyComposedFunction(5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -124,7 +125,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             Func<int, int, int, int, int, int> testFunction = TestMethod;
             var completelyComposedFunction = testFunction.Apply(1, 2, 3, 4);
             var actual = completelyComposedFunction(5);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -139,7 +140,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction4 = partiallyComposedFunction3.Apply(4);
             var completelyComposedFunction = partiallyComposedFunction4.Apply(5);
             var actual = completelyComposedFunction(6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -153,7 +154,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction3 = partiallyComposedFunction2.Apply(4);
             var completelyComposedFunction = partiallyComposedFunction3.Apply(5);
             var actual = completelyComposedFunction(6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -166,7 +167,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(4);
             var completelyComposedFunction = partiallyComposedFunction2.Apply(5);
             var actual = completelyComposedFunction(6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -178,7 +179,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var partiallyComposedFunction = testFunction.Apply(1, 2, 3, 4);
             var completelyComposedFunction = partiallyComposedFunction.Apply(5);
             var actual = completelyComposedFunction(6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
         [Test]
@@ -189,12 +190,9 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3, 4, 5);
             var actual = completelyComposedFunction(6);
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
 
-        private static int TestMethod(int p1, int p2, int p3, int p4, int p5)
-        {
-            return (p1 + p2) * (p3 + p4) + p5;
-        }
+        private static int TestMethod(int p1, int p2, int p3, int p4, int p5) => (p1 + p2) * (p3 + p4) + p5;
     }
 }

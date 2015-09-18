@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SuccincT.Unions;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -16,7 +17,7 @@ namespace SuccincTTests.SuccincT.Unions
             var result = false;
             union.Match().Case2().Do(_ => result = false).Case3().Do(_ => result = false)
                          .Case4().Do(_ => result = false).Else(_ => result = true).Exec();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -26,7 +27,7 @@ namespace SuccincTTests.SuccincT.Unions
             var result = false;
             union.Match().Case1().Do(_ => result = false).Case3().Do(_ => result = false)
                          .Case4().Do(_ => result = false).Else(_ => result = true).Exec();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -36,7 +37,7 @@ namespace SuccincTTests.SuccincT.Unions
             var result = false;
             union.Match().Case1().Do(_ => result = false).Case2().Do(_ => result = false)
                          .Case4().Do(_ => result = false).Else(_ => result = true).Exec();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -46,7 +47,7 @@ namespace SuccincTTests.SuccincT.Unions
             var result = false;
             union.Match().Case1().Do(_ => result = false).Case2().Do(_ => result = false)
                          .Case3().Do(_ => result = false).Else(_ => result = true).Exec();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>(2);
             var result = 0;
             union.Match().Case1().Do(x => result = x).Else(_ => result = 1).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -64,7 +65,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>("x");
             var result = 0;
             union.Match().Case2().Do(_ => result = 1).Else(_ => result = 2).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -73,7 +74,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>(Colors.Blue);
             var result = 0;
             union.Match().Case3().Do(_ => result = 1).Else(_ => result = 3).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
 
         [Test]
@@ -82,7 +83,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>(Animals.Sheep);
             var result = 0;
             union.Match().Case4().Do(_ => result = 1).Else(_ => result = 3).Exec();
-            Assert.AreEqual(1, result);
+            AreEqual(1, result);
         }
     }
 }

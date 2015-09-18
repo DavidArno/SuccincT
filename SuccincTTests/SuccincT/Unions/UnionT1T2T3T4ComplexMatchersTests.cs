@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SuccincT.Unions;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -19,7 +20,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case4().Do(x => 5)
                               .Case1().Do(x => x)
                               .Case2().Do(x => 4).Result();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -33,7 +34,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(x => 4)
                               .Case4().Do(x => 6)
                               .Case2().Do(x => 5).Result();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(x => 4)
                               .Case4().Do(x => 6)
                               .Case2().Do(x => 5).Result();
-            Assert.AreEqual(4, result);
+            AreEqual(4, result);
         }
 
         [Test]
@@ -61,7 +62,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(x => 4)
                               .Case4().Do(6)
                               .Case2().Do(x => 5).Result();
-            Assert.AreEqual(6, result);
+            AreEqual(6, result);
         }
 
         [Test]
@@ -74,7 +75,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case1().Do(x => 3)
                               .Case4().Do(5)
                               .Case2().Do(x => 4).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -87,7 +88,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case2().Do(x => 3)
                               .Case4().Do(5)
                               .Case1().Do(x => 4).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(x => 3)
                               .Case4().Do(5)
                               .Case1().Do(x => 4).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -113,7 +114,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case4().Do(3)
                               .Case3().Do(5)
                               .Case1().Do(x => 4).Result();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -127,7 +128,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case4().Do(6)
                               .Case1().Of(3).Or(2).Do(x => 4)
                               .Case1().Do(x => 5).Result();
-            Assert.AreEqual(4, result);
+            AreEqual(4, result);
         }
 
         [Test]
@@ -141,7 +142,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(x => 4)
                               .Case4().Do(6)
                               .Case1().Do(x => 5).Result();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -155,7 +156,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case2().Do(x => 4)
                               .Case4().Do(6)
                               .Case1().Do(x => 5).Result();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -169,7 +170,7 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case2().Do(x => 4)
                               .Case3().Do(6)
                               .Case1().Do(x => 5).Result();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
     }
 }

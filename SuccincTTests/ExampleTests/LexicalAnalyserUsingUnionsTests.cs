@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using NUnit.Framework;
 using SuccinctExamples;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -11,17 +12,17 @@ namespace SuccincTTests.ExampleTests
         public void WhenSuppliedWithEmptyString_ParserJustReturnsNoResults()
         {
             var result = LexicalAnalyserUsingUnions.GenerateTokens(string.Empty);
-            Assert.AreEqual(0, result.Count());
+            AreEqual(0, result.Count());
         }
 
         [Test]
         public void WhenSuppliedWithTokens_CorrectTypesAreReturned()
         {
             var result = LexicalAnalyserUsingUnions.GenerateTokens("false 1.2 42 hello").ToList();
-            Assert.AreEqual(false, result[0].Case3);
-            Assert.AreEqual(1.2, result[1].Case4);
-            Assert.AreEqual(42, result[2].Case2);
-            Assert.AreEqual("hello", result[3].Case1);
+            AreEqual(false, result[0].Case3);
+            AreEqual(1.2, result[1].Case4);
+            AreEqual(42, result[2].Case2);
+            AreEqual("hello", result[3].Case1);
         }
     }
 }

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using SuccincT.Unions;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -17,7 +18,7 @@ namespace SuccincTTests.SuccincT.Unions
                  .Case1().Of(2).Do(x => result = 3)
                  .Case1().Do(x => result = 4)
                  .Case2().Do(x => result = 5).Exec();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -30,7 +31,7 @@ namespace SuccincTTests.SuccincT.Unions
                  .Case3().Do(x => result = 3)
                  .Case2().Of("t").Do(x => result = 4)
                  .Case2().Do(x => result = 5).Exec();
-            Assert.AreEqual(4, result);
+            AreEqual(4, result);
         }
 
         [Test]
@@ -43,7 +44,7 @@ namespace SuccincTTests.SuccincT.Unions
                  .Case3().Do(x => result = 3)
                  .Case2().Of("t").Do(x => result = 4)
                  .Case2().Do(x => result = 5).Exec();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case1().Of(1).Or(2).Do(x => result = 2)
                          .Case1().Do(x => result = 3)
                          .Case2().Do(x => result = 4).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -67,7 +68,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case2().Of("y").Or("x").Do(x => result = 2)
                          .Case2().Do(x => result = 3)
                          .Case1().Do(x => result = 4).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case3().Of(Colors.Green).Or(Colors.Blue).Do(x => result = 2)
                          .Case3().Do(x => result = 3)
                          .Case1().Do(x => result = 4).Exec();
-            Assert.AreEqual(2, result);
+            AreEqual(2, result);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case1().Of(3).Or(2).Do(x => result = 3)
                          .Case3().Do(x => result = 4)
                          .Case1().Do(x => result = 5).Exec();
-            Assert.AreEqual(3, result);
+            AreEqual(3, result);
         }
 
         [Test]
@@ -105,7 +106,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case3().Do(x => result = 3)
                          .Case2().Of("c").Or("d").Do(x => result = 4)
                          .Case1().Do(x => result = 5).Exec();
-            Assert.AreEqual(4, result);
+            AreEqual(4, result);
         }
 
         [Test]
@@ -118,7 +119,7 @@ namespace SuccincTTests.SuccincT.Unions
                          .Case2().Do(x => result = 3)
                          .Case3().Of(Colors.Green).Or(Colors.Red).Do(x => result = 4)
                          .Case1().Do(x => result = 5).Exec();
-            Assert.AreEqual(4, result);
+            AreEqual(4, result);
         }
     }
 }

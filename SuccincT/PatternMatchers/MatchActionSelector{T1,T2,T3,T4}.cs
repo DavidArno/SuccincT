@@ -14,10 +14,8 @@ namespace SuccincT.PatternMatchers
 
         public MatchActionSelector(Action<T1, T2, T3, T4> defaultAction) { _defaultAction = defaultAction; }
 
-        public void AddTestAndAction(Func<T1, T2, T3, T4, bool> test, Action<T1, T2, T3, T4> action)
-        {
+        public void AddTestAndAction(Func<T1, T2, T3, T4, bool> test, Action<T1, T2, T3, T4> action) => 
             _testsAndActions.Add(new Tuple<Func<T1, T2, T3, T4, bool>, Action<T1, T2, T3, T4>>(test, action));
-        }
 
         public void InvokeMatchedActionUsingDefaultIfRequired(T1 value1, T2 value2, T3 value3, T4 value4)
         {

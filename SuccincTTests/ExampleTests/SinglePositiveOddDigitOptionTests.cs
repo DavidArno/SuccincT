@@ -5,6 +5,8 @@ using System.Linq;
 using NUnit.Framework;
 using SuccincT.Options;
 using SuccincTTests.Examples;
+using static System.Environment;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -24,8 +26,7 @@ namespace SuccincTTests.ExampleTests
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(7));
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(9));
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "1", "3", "5", "7", "9" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "1", "3", "5", "7", "9" }), sw.ToString());
             }
         }
 
@@ -40,8 +41,7 @@ namespace SuccincTTests.ExampleTests
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(4));
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(6));
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "2 isn't odd", "4 isn't odd", "6 isn't odd" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "2 isn't odd", "4 isn't odd", "6 isn't odd" }), sw.ToString());
             }
         }
 
@@ -52,8 +52,7 @@ namespace SuccincTTests.ExampleTests
             {
                 Console.SetOut(sw);
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(0));
-                Assert.AreEqual(ExpectedBuilder(new[] { "0 isn't positive or negative" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "0 isn't positive or negative" }), sw.ToString());
             }
         }
 
@@ -64,7 +63,7 @@ namespace SuccincTTests.ExampleTests
             {
                 Console.SetOut(sw);
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(10));
-                Assert.AreEqual(ExpectedBuilder(new[] { "10 isn't 1 digit" }), sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "10 isn't 1 digit" }), sw.ToString());
             }
         }
 
@@ -75,7 +74,7 @@ namespace SuccincTTests.ExampleTests
             {
                 Console.SetOut(sw);
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.Some(-20));
-                Assert.AreEqual(ExpectedBuilder(new[] { "-20 isn't positive" }), sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "-20 isn't positive" }), sw.ToString());
             }
         }
 
@@ -86,7 +85,7 @@ namespace SuccincTTests.ExampleTests
             {
                 Console.SetOut(sw);
                 OptionMatcherExamples.SinglePositiveOddDigitPrinter(Option<int>.None());
-                Assert.AreEqual(ExpectedBuilder(new[] { "There was no value" }), sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "There was no value" }), sw.ToString());
             }
         }
 
@@ -99,7 +98,7 @@ namespace SuccincTTests.ExampleTests
                          OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(7)) +
                          OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(9));
 
-            Assert.AreEqual("13579", result);
+            AreEqual("13579", result);
         }
 
         [Test]
@@ -109,40 +108,38 @@ namespace SuccincTTests.ExampleTests
                          OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(4)) +
                          OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(6));
 
-            Assert.AreEqual("2 isn't odd4 isn't odd6 isn't odd", result);
+            AreEqual("2 isn't odd4 isn't odd6 isn't odd", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitReporterHandles0()
         {
             var result = OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(0));
-            Assert.AreEqual("0 isn't positive or negative", result);
+            AreEqual("0 isn't positive or negative", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitReporterHandles10()
         {
             var result = OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(10));
-            Assert.AreEqual("10 isn't 1 digit", result);
+            AreEqual("10 isn't 1 digit", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitReporterHandlesNegative()
         {
             var result = OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.Some(-20));
-            Assert.AreEqual("-20 isn't positive", result);
+            AreEqual("-20 isn't positive", result);
         }
 
         [Test]
         public void SinglePositiveOddDigitReporterHandlesNone()
         {
             var result = OptionMatcherExamples.SinglePositiveOddDigitReporter(Option<int>.None());
-            Assert.AreEqual("There was no value", result);
+            AreEqual("There was no value", result);
         }
 
-        private static string ExpectedBuilder(IEnumerable<string> parts)
-        {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
-        }
+        private static string ExpectedBuilder(IEnumerable<string> parts) => 
+            parts.Aggregate("", (current, part) => $"{current}{part}{NewLine}");
     }
 }

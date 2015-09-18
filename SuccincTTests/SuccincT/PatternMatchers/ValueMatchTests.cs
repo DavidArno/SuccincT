@@ -21,11 +21,8 @@ namespace SuccincTTests.SuccincT.PatternMatchers
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(ExpectedException = typeof(NoMatchException))]
-        public void IntValue_ExceptionIfNoMatch()
-        {
-            3.Match().To<int>().With(2).Or(1).Do(x => x).Result();
-        }
+        [Test, ExpectedException(typeof(NoMatchException))]
+        public void IntValue_ExceptionIfNoMatch() => 3.Match().To<int>().With(2).Or(1).Do(x => x).Result();
 
         [Test]
         public void IntValue_WhenNoMatchElseUsed()

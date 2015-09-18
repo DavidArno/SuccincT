@@ -33,39 +33,26 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1> Case1()
-        {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1>(RecordAction,
-                                                                                     this);
-        }
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1> Case1() => 
+            new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1>(RecordAction,
+                                                                              this);
 
-        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2> Case2()
-        {
-            return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2>(RecordAction,
-                                                                                     this);
-        }
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2> Case2() => 
+            new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2>(RecordAction,
+                                                                              this);
 
-        public UnionOfTwoPatternMatcherAfterElse<T1, T2> Else(Action<Union<T1, T2>> elseAction)
-        {
-            return new UnionOfTwoPatternMatcherAfterElse<T1, T2>(_union,
-                                                                 _case1ActionSelector,
-                                                                 _case2ActionSelector,
-                                                                 elseAction);
-        }
+        public UnionOfTwoPatternMatcherAfterElse<T1, T2> Else(Action<Union<T1, T2>> elseAction) => 
+            new UnionOfTwoPatternMatcherAfterElse<T1, T2>(_union,
+                                                          _case1ActionSelector,
+                                                          _case2ActionSelector,
+                                                          elseAction);
 
-        public void Exec()
-        {
-            _resultActions[_union.Case]();
-        }
+        public void Exec() => _resultActions[_union.Case]();
 
-        private void RecordAction(Func<T1, bool> test, Action<T1> action)
-        {
+        private void RecordAction(Func<T1, bool> test, Action<T1> action) => 
             _case1ActionSelector.AddTestAndAction(test, action);
-        }
 
-        private void RecordAction(Func<T2, bool> test, Action<T2> action)
-        {
+        private void RecordAction(Func<T2, bool> test, Action<T2> action) => 
             _case2ActionSelector.AddTestAndAction(test, action);
-        }
     }
 }

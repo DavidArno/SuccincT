@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using NUnit.Framework;
-using SuccincTTests.Examples;
+using static System.Console;
+using static NUnit.Framework.Assert;
+using static SuccincTTests.Examples.ColorMatcher;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -15,13 +17,13 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
+                SetOut(sw);
 
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Red);
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Green);
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Blue);
+                PrintColorName(Color.Red);
+                PrintColorName(Color.Green);
+                PrintColorName(Color.Blue);
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "Red", "Green", "Blue" }), sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "Red", "Green", "Blue" }), sw.ToString());
             }
         }
 
@@ -30,19 +32,17 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
+                SetOut(sw);
 
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Green);
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Blue);
-                ColorMatcher.PrintColorName(ColorMatcher.Color.Red);
+                PrintColorName(Color.Green);
+                PrintColorName(Color.Blue);
+                PrintColorName(Color.Red);
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "Green", "Blue", "Red" }), sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "Green", "Blue", "Red" }), sw.ToString());
             }
         }
 
-        private string ExpectedBuilder(IEnumerable<string> parts)
-        {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
-        }
+        private static string ExpectedBuilder(IEnumerable<string> parts) => 
+            parts.Aggregate("", (current, part) => current + $"{part}{Environment.NewLine}");
     }
 }

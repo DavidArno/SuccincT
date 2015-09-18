@@ -18,7 +18,7 @@ namespace SuccinctExamples
     public static class LexicalAnalyserUsingUnions
     {
         private static readonly UnionCreator<string, long, bool, double> Creator =
-            Union<string, long, bool, double>.Creator();
+            Union.UnionCreator<string, long, bool, double>();
 
         public static IEnumerable<Union<string, long, bool, double>> GenerateTokens(string input)
         {

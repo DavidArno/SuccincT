@@ -11,13 +11,11 @@ namespace SuccincTTests.Examples
     {
         public enum Color { Red, Green, Blue }
 
-        public static void PrintColorName(Color color)
-        {
+        public static void PrintColorName(Color color) => 
             color.Match()
                  .With(Color.Red).Do(x => Console.WriteLine("Red"))
                  .With(Color.Green).Do(x => Console.WriteLine("Green"))
                  .With(Color.Blue).Do(x => Console.WriteLine("Blue"))
                  .Exec();
-        }
     }
 }

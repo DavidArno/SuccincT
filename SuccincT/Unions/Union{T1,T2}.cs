@@ -6,24 +6,21 @@ namespace SuccincT.Unions
 {
     public sealed class Union<T1, T2>
     {
-        private readonly Variant _case;
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
         private readonly T1 _value1;
         private readonly T2 _value2;
 
-        public Union(T1 value)
-            : this()
+        public Union(T1 value) : this()
         {
             _value1 = value;
-            _case = Variant.Case1;
+            Case = Variant.Case1;
         }
 
-        public Union(T2 value)
-            : this()
+        public Union(T2 value) : this()
         {
             _value2 = value;
-            _case = Variant.Case2;
+            Case = Variant.Case2;
         }
 
         private Union()
@@ -46,54 +43,27 @@ namespace SuccincT.Unions
         {
             _value1 = case1Value;
             _value2 = case2Value;
-            _case = caseToUse;
+            Case = caseToUse;
         }
 
-        public Variant Case
-        {
-            get { return _case; }
-        }
+        public Variant Case { get; }
 
-        public T1 Case1
-        {
-            get
-            {
-                if (_case == Variant.Case1)
-                {
-                    return _value1;
-                }
-                throw new InvalidCaseException(Variant.Case1, _case);
-            }
-        }
+        public T1 Case1 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case1, _value1);
 
-        public T2 Case2
-        {
-            get
-            {
-                if (_case == Variant.Case2)
-                {
-                    return _value2;
-                }
-                throw new InvalidCaseException(Variant.Case2, _case);
-            }
-        }
+        public T2 Case2 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case2, _value2);
 
-        public static UnionCreator<T1, T2> Creator() { return new UnionCreator<T1, T2>(); }
+        public UnionOfTwoPatternMatcher<T1, T2, TResult> Match<TResult>() =>
+            new UnionOfTwoPatternMatcher<T1, T2, TResult>(this);
 
-        public UnionOfTwoPatternMatcher<T1, T2, TResult> Match<TResult>()
-        {
-            return new UnionOfTwoPatternMatcher<T1, T2, TResult>(this);
-        }
+        public UnionOfTwoPatternMatcher<T1, T2> Match() => new UnionOfTwoPatternMatcher<T1, T2>(this);
 
-        public UnionOfTwoPatternMatcher<T1, T2> Match() { return new UnionOfTwoPatternMatcher<T1, T2>(this); }
-
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             var testObject = obj as Union<T1, T2>;
-            return obj is Union<T1, T2> && UnionsEqual(testObject);
+            return testObject != null && UnionsEqual(testObject);
         }
 
-        public override int GetHashCode() { return _hashCodes[Case](); }
+        public override int GetHashCode() => _hashCodes[Case]();
 
         public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
         {
@@ -102,11 +72,17 @@ namespace SuccincT.Unions
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) { return !(a == b); }
+        public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
 
-        private bool UnionsEqual(Union<T1, T2> testObject)
+        private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && _unionsMatch[Case](testObject);
+
+        private T GetValueOrThrowExceptionIfInvalidCase<T>(Variant requestedCase, T value)
         {
-            return Case == testObject.Case && _unionsMatch[Case](testObject);
+            if (Case == requestedCase)
+            {
+                return value;
+            }
+            throw new InvalidCaseException(Variant.Case2, Case);
         }
     }
 }

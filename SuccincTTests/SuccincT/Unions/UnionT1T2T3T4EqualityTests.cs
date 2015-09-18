@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -15,9 +16,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             var b = new Union<int, string, Colors, Animals>(2);
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -25,8 +26,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             var b = new Union<int, string, Colors, Animals>(3);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsFalse(a == b);
+            IsFalse(a.Equals(b));
+            IsFalse(a == b);
         }
 
         [Test]
@@ -34,9 +35,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>("1234");
             var b = new Union<int, string, Colors, Animals>("1234");
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -44,8 +45,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>("abc");
             var b = new Union<int, string, Colors, Animals>("def");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsFalse(a == b);
+            IsFalse(a.Equals(b));
+            IsFalse(a == b);
         }
 
         [Test]
@@ -53,9 +54,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(Colors.Blue);
             var b = new Union<int, string, Colors, Animals>(Colors.Blue);
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -63,8 +64,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(Colors.Blue);
             var b = new Union<int, string, Colors, Animals>(Colors.Red);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsFalse(a == b);
+            IsFalse(a.Equals(b));
+            IsFalse(a == b);
         }
 
         [Test]
@@ -72,9 +73,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(Animals.Cat);
             var b = new Union<int, string, Colors, Animals>(Animals.Cat);
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -82,8 +83,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(Animals.Cat);
             var b = new Union<int, string, Colors, Animals>(Animals.Cow);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsFalse(a == b);
+            IsFalse(a.Equals(b));
+            IsFalse(a == b);
         }
 
         [Test]
@@ -91,9 +92,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             var b = new Union<int, string, Colors, Animals>("1234");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -101,9 +102,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             var b = new Union<int, string, Colors, Animals>(Colors.Green);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -111,9 +112,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             var b = new Union<int, string, Colors, Animals>(Animals.Dog);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -121,9 +122,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>("xyz");
             var b = new Union<int, string, Colors, Animals>(Colors.Green);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -131,9 +132,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>("xyz");
             var b = new Union<int, string, Colors, Animals>(Animals.Cow);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -141,45 +142,45 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(Colors.Red);
             var b = new Union<int, string, Colors, Animals>(Animals.Cow);
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
         public void ComparingT1ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors, Animals>(2);
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
 
         [Test]
         public void ComparingT2ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors, Animals>("1234");
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
 
         [Test]
         public void ComparingT3ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors, Animals>(Colors.Red);
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
 
         [Test]
         public void ComparingT4ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors, Animals>(Animals.Dog);
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
     }
 }

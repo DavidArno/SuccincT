@@ -14,46 +14,32 @@ namespace SuccincT.PatternMatchers
                 (w, x, y, z) =>
                 {
                     throw new NoMatchException(
-                        string.Format(
-                            "No match action exists for value of ({0}, {1}, {2})",
-                            _item.Item1,
-                            _item.Item2,
-                            _item.Item3));
+                        $"No match action exists for value of ({_item.Item1}, {_item.Item2}, {_item.Item3})");
                 });
         }
 
         public WithForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>
-            With(T1 value1, T2 value2, T3 value3, T4 value4)
-        {
-            return new WithForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>(
-                Tuple.Create(value1, value2, value3, value4),
-                RecordAction,
-                this);
-        }
+            With(T1 value1, T2 value2, T3 value3, T4 value4) => 
+                new WithForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>(
+                    Tuple.Create(value1, value2, value3, value4),
+                    RecordAction,
+                    this);
 
-        public WhereForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult> Where(
-            Func<T1, T2, T3, T4, bool> expression)
-        {
-            return new WhereForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>(expression,
-                                                                                                            RecordAction,
-                                                                                                            this);
-        }
+        public WhereForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult> 
+            Where(Func<T1, T2, T3, T4, bool> expression) => 
+                new WhereForFuncHandler<ResultMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>(expression,
+                                                                                                         RecordAction,
+                                                                                                         this);
 
-        private void RecordAction(Func<T1, T2, T3, T4, bool> test, Func<T1, T2, T3, T4, TResult> action)
-        {
+        private void RecordAction(Func<T1, T2, T3, T4, bool> test, Func<T1, T2, T3, T4, TResult> action) => 
             _functionSelector.AddTestAndAction(test, action);
-        }
 
-        public ResultMatcherWithElse<T1, T2, T3, T4, TResult> Else(Func<T1, T2, T3, T4, TResult> action)
-        {
-            return new ResultMatcherWithElse<T1, T2, T3, T4, TResult>(_functionSelector, action, _item);
-        }
+        public ResultMatcherWithElse<T1, T2, T3, T4, TResult> Else(Func<T1, T2, T3, T4, TResult> action) => 
+            new ResultMatcherWithElse<T1, T2, T3, T4, TResult>(_functionSelector, action, _item);
 
-        public ResultMatcherWithElse<T1, T2, T3, T4, TResult> Else(TResult result)
-        {
-            return new ResultMatcherWithElse<T1, T2, T3, T4, TResult>(_functionSelector, (w, x, y, z) => result, _item);
-        }
+        public ResultMatcherWithElse<T1, T2, T3, T4, TResult> Else(TResult result) => 
+            new ResultMatcherWithElse<T1, T2, T3, T4, TResult>(_functionSelector, (w, x, y, z) => result, _item);
 
-        public TResult Result() { return _functionSelector.DetermineResultUsingDefaultIfRequired(_item); }
+        public TResult Result() => _functionSelector.DetermineResultUsingDefaultIfRequired(_item);
     }
 }

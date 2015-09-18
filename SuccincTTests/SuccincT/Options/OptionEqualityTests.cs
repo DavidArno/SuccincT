@@ -1,5 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.Options;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -11,9 +12,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = Option<string>.Some("1234");
             var b = Option<string>.Some("1234");
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -21,9 +22,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = Option<string>.None();
             var b = Option<string>.None();
-            Assert.IsTrue(a.Equals(b));
-            Assert.IsTrue(a == b);
-            Assert.AreEqual(a.GetHashCode(), b.GetHashCode());
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
@@ -31,8 +32,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = Option<string>.Some("1234");
             var b = Option<string>.None();
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
         }
 
         [Test]
@@ -40,27 +41,27 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = Option<string>.Some("1234");
             var b = Option<string>.Some("12345");
-            Assert.IsFalse(a.Equals(b));
-            Assert.IsTrue(a != b);
-            Assert.AreNotEqual(a.GetHashCode(), b.GetHashCode());
+            IsFalse(a.Equals(b));
+            IsTrue(a != b);
+            AreNotEqual(a.GetHashCode(), b.GetHashCode());
         }
 
         [Test]
         public void ComparingSomeValueWithNull_ResultsInNotEqual()
         {
             var a = Option<string>.Some("1234");
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
 
         [Test]
         public void ComparingNoneWithNull_ResultsInNotEqual()
         {
             var a = Option<string>.None();
-            Assert.IsFalse(a.Equals(null));
-            Assert.IsTrue(a != null);
-            Assert.IsTrue(null != a);
+            IsFalse(a.Equals(null));
+            IsTrue(a != null);
+            IsTrue(null != a);
         }
     }
 }

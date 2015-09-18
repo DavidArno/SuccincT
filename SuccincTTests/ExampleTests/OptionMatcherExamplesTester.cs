@@ -4,7 +4,9 @@ using System.IO;
 using System.Linq;
 using NUnit.Framework;
 using SuccincT.Options;
-using SuccincTTests.Examples;
+using static System.Console;
+using static NUnit.Framework.Assert;
+using static SuccincTTests.Examples.OptionMatcherExamples;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -16,16 +18,15 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
+                SetOut(sw);
 
-                OptionMatcherExamples.PrintOption(Option<int>.Some(-1));
-                OptionMatcherExamples.PrintOption(Option<int>.Some(0));
-                OptionMatcherExamples.PrintOption(Option<int>.Some(1));
-                OptionMatcherExamples.PrintOption(Option<int>.Some(5));
-                OptionMatcherExamples.PrintOption(Option<int>.Some(8));
+                PrintOption(Option<int>.Some(-1));
+                PrintOption(Option<int>.Some(0));
+                PrintOption(Option<int>.Some(1));
+                PrintOption(Option<int>.Some(5));
+                PrintOption(Option<int>.Some(8));
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "-1", "0", "1", "5", "8" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "-1", "0", "1", "5", "8" }), sw.ToString());
             }
         }
 
@@ -34,9 +35,9 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                OptionMatcherExamples.PrintOption(Option<int>.None());
-                Assert.AreEqual("", sw.ToString());
+                SetOut(sw);
+                PrintOption(Option<int>.None());
+                AreEqual("", sw.ToString());
             }
         }
 
@@ -45,14 +46,13 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
+                SetOut(sw);
 
-                OptionMatcherExamples.OptionMatcher(Option<int>.Some(1));
-                OptionMatcherExamples.OptionMatcher(Option<int>.Some(2));
-                OptionMatcherExamples.OptionMatcher(Option<int>.Some(3));
+                OptionMatcher(Option<int>.Some(1));
+                OptionMatcher(Option<int>.Some(2));
+                OptionMatcher(Option<int>.Some(3));
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "1", "2", "3" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "1", "2", "3" }), sw.ToString());
             }
         }
 
@@ -61,13 +61,13 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
+                SetOut(sw);
 
-                OptionMatcherExamples.OptionMatcher(Option<int>.Some(0));
-                OptionMatcherExamples.OptionMatcher(Option<int>.Some(4));
+                OptionMatcher(Option<int>.Some(0));
+                OptionMatcher(Option<int>.Some(4));
 
-                Assert.AreEqual(ExpectedBuilder(new[] { "0 isn't 1, 2 or 3!", "4 isn't 1, 2 or 3!" }),
-                                sw.ToString());
+                AreEqual(ExpectedBuilder(new[] { "0 isn't 1, 2 or 3!", "4 isn't 1, 2 or 3!" }),
+                         sw.ToString());
             }
         }
 
@@ -76,48 +76,46 @@ namespace SuccincTTests.ExampleTests
         {
             using (var sw = new StringWriter())
             {
-                Console.SetOut(sw);
-                OptionMatcherExamples.OptionMatcher(Option<int>.None());
-                Assert.AreEqual("", sw.ToString());
+                SetOut(sw);
+                OptionMatcher(Option<int>.None());
+                AreEqual("", sw.ToString());
             }
         }
 
         [Test]
         public void NumberNamerReturnsCorrectNames()
         {
-            var result = OptionMatcherExamples.NumberNamer(Option<int>.Some(1)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(2)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(3)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(4)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(5)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(6)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(7)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(8)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(9));
+            var result = NumberNamer(Option<int>.Some(1)) +
+                         NumberNamer(Option<int>.Some(2)) +
+                         NumberNamer(Option<int>.Some(3)) +
+                         NumberNamer(Option<int>.Some(4)) +
+                         NumberNamer(Option<int>.Some(5)) +
+                         NumberNamer(Option<int>.Some(6)) +
+                         NumberNamer(Option<int>.Some(7)) +
+                         NumberNamer(Option<int>.Some(8)) +
+                         NumberNamer(Option<int>.Some(9));
 
-            Assert.AreEqual("OneTwoThreeFourFiveSixSevenEightNine", result);
+            AreEqual("OneTwoThreeFourFiveSixSevenEightNine", result);
         }
 
         [Test]
         public void NumberNamerReturnsNumbersForValuesOutside1To4()
         {
-            var result = OptionMatcherExamples.NumberNamer(Option<int>.Some(-1)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(0)) +
-                         OptionMatcherExamples.NumberNamer(Option<int>.Some(10));
+            var result = NumberNamer(Option<int>.Some(-1)) +
+                         NumberNamer(Option<int>.Some(0)) +
+                         NumberNamer(Option<int>.Some(10));
 
-            Assert.AreEqual("-1010", result);
+            AreEqual("-1010", result);
         }
 
         [Test]
         public void NumberNamerReturnsNoneForNone()
         {
-            var result = OptionMatcherExamples.NumberNamer(Option<int>.None());
-            Assert.AreEqual("None", result);
+            var result = NumberNamer(Option<int>.None());
+            AreEqual("None", result);
         }
 
-        private static string ExpectedBuilder(IEnumerable<string> parts)
-        {
-            return parts.Aggregate("", (current, part) => current + string.Format("{0}{1}", part, Environment.NewLine));
-        }
+        private static string ExpectedBuilder(IEnumerable<string> parts) =>
+            parts.Aggregate("", (current, part) => current + $"{part}{Environment.NewLine}");
     }
 }

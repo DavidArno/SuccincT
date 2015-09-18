@@ -30,12 +30,10 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public TResult Result()
-        {
-            return _resultActions[_union.Case]().Match<TResult>()
-                                                .Some().Do(x => x)
-                                                .None().Do(() => _elseAction(_union))
-                                                .Result();
-        }
+        public TResult Result() => 
+            _resultActions[_union.Case]().Match<TResult>()
+                                         .Some().Do(x => x)
+                                         .None().Do(() => _elseAction(_union))
+                                         .Result();
     }
 }

@@ -9,33 +9,28 @@ namespace SuccincT.Unions
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
-        private readonly Variant _case;
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2, T3>, bool>> _unionsMatch;
 
-        public static UnionCreator<T1, T2, T3> Creator() { return new UnionCreator<T1, T2, T3>(); }
 
-        public Variant Case
-        {
-            get { return _case; }
-        }
+        public Variant Case { get; }
 
         public Union(T1 value) : this()
         {
             _value1 = value;
-            _case = Variant.Case1;
+            Case = Variant.Case1;
         }
 
         public Union(T2 value) : this()
         {
             _value2 = value;
-            _case = Variant.Case2;
+            Case = Variant.Case2;
         }
 
         public Union(T3 value) : this()
         {
             _value3 = value;
-            _case = Variant.Case3;
+            Case = Variant.Case3;
         }
 
         private Union()
@@ -58,7 +53,7 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case != Variant.Case1) { throw new InvalidCaseException(Variant.Case1, _case); }
+                if (Case != Variant.Case1) { throw new InvalidCaseException(Variant.Case1, Case); }
                 return _value1;
             }
         }
@@ -67,7 +62,7 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case != Variant.Case2) { throw new InvalidCaseException(Variant.Case2, _case); }
+                if (Case != Variant.Case2) { throw new InvalidCaseException(Variant.Case2, Case); }
                 return _value2;
             }
         }
@@ -76,28 +71,24 @@ namespace SuccincT.Unions
         {
             get
             {
-                if (_case != Variant.Case3) { throw new InvalidCaseException(Variant.Case3, _case); }
+                if (Case != Variant.Case3) { throw new InvalidCaseException(Variant.Case3, Case); }
                 return _value3;
             }
         }
 
-        public UnionOfThreePatternMatcher<T1, T2, T3, TResult> Match<TResult>()
-        {
-            return new UnionOfThreePatternMatcher<T1, T2, T3, TResult>(this);
-        }
+        public UnionOfThreePatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
+            new UnionOfThreePatternMatcher<T1, T2, T3, TResult>(this);
 
-        public UnionOfThreePatternMatcher<T1, T2, T3> Match()
-        {
-            return new UnionOfThreePatternMatcher<T1, T2, T3>(this);
-        }
+        public UnionOfThreePatternMatcher<T1, T2, T3> Match() => 
+            new UnionOfThreePatternMatcher<T1, T2, T3>(this);
 
         public override bool Equals(Object obj)
         {
             var testObject = obj as Union<T1, T2, T3>;
-            return obj is Union<T1, T2, T3> && UnionsEqual(testObject);
+            return testObject != null && UnionsEqual(testObject);
         }
 
-        public override int GetHashCode() { return _hashCodes[Case](); }
+        public override int GetHashCode() => _hashCodes[Case]();
 
         public static bool operator ==(Union<T1, T2, T3> a, Union<T1, T2, T3> b)
         {
@@ -106,11 +97,9 @@ namespace SuccincT.Unions
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) { return !(a == b); }
+        public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) => !(a == b);
 
-        private bool UnionsEqual(Union<T1, T2, T3> testObject)
-        {
-            return Case == testObject.Case && _unionsMatch[Case](testObject);
-        }
+        private bool UnionsEqual(Union<T1, T2, T3> testObject) => 
+            Case == testObject.Case && _unionsMatch[Case](testObject);
     }
 }

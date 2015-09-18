@@ -8,24 +8,12 @@
     {
         internal UnionCreator() { }
 
-        public Union<T1, T2, T3, T4> Create(T1 value)
-        {
-            return new Union<T1, T2, T3, T4>(value);
-        }
+        public Union<T1, T2, T3, T4> Create(T1 value) => new Union<T1, T2, T3, T4>(value);
 
-        public Union<T1, T2, T3, T4> Create(T2 value)
-        {
-            return new Union<T1, T2, T3, T4>(value);
-        }
+        public Union<T1, T2, T3, T4> Create(T2 value) => new Union<T1, T2, T3, T4>(value);
 
-        public Union<T1, T2, T3, T4> Create(T3 value)
-        {
-            return new Union<T1, T2, T3, T4>(value);
-        }
+        public Union<T1, T2, T3, T4> Create(T3 value) => new Union<T1, T2, T3, T4>(value);
 
-        public Union<T1, T2, T3, T4> Create(T4 value)
-        {
-            return new Union<T1, T2, T3, T4>(value);
-        }
+        public Union<T1, T2, T3, T4> Create(T4 value) => new Union<T1, T2, T3, T4>(value);
     }
 }

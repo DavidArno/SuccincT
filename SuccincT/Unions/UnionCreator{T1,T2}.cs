@@ -8,14 +8,8 @@
     {
         internal UnionCreator() { }
 
-        public Union<T1, T2> Create(T1 value)
-        {
-            return new Union<T1, T2>(value);
-        }
+        public Union<T1, T2> Create(T1 value) => new Union<T1, T2>(value);
 
-        public Union<T1, T2> Create(T2 value)
-        {
-            return new Union<T1, T2>(value);
-        }
+        public Union<T1, T2> Create(T2 value) => new Union<T1, T2>(value);
     }
 }

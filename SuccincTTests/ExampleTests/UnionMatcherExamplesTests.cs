@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
 using SuccincTTests.Examples;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -11,42 +12,42 @@ namespace SuccincTTests.ExampleTests
         public void PassingInAnIntToBoolOrIntMatcherExampleReturnsAnInt()
         {
             var result = UnionMatcherExamples.BoolOrIntMatcherExample(new Union<int, bool>(2));
-            Assert.AreEqual("int=2", result);
+            AreEqual("int=2", result);
         }
 
         [Test]
         public void PassingInAnIntToBoolOrIntMatcherExampleReturnsBool()
         {
             var result = UnionMatcherExamples.BoolOrIntMatcherExample(new Union<int, bool>(true));
-            Assert.AreEqual("bool=True", result);
+            AreEqual("bool=True", result);
         }
 
         [Test]
         public void PassingTrueToYesNoOrIntMatcherExampleReturnsYes()
         {
             var result = UnionMatcherExamples.YesNoOrIntMatcherExample(new Union<int, bool>(true));
-            Assert.AreEqual("Yes", result);
+            AreEqual("Yes", result);
         }
 
         [Test]
         public void PassingFalseToYesNoOrIntMatcherExampleReturnsNo()
         {
             var result = UnionMatcherExamples.YesNoOrIntMatcherExample(new Union<int, bool>(false));
-            Assert.AreEqual("No", result);
+            AreEqual("No", result);
         }
 
         [Test]
         public void PassingTrueToYesNo123OrOtherIntMatcherExampleReturnsYes()
         {
             var result = UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(true));
-            Assert.AreEqual("Yes", result);
+            AreEqual("Yes", result);
         }
 
         [Test]
         public void PassingFalseToYesNo123OrOtherIntMatcherExampleReturnsNo()
         {
             var result = UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(false));
-            Assert.AreEqual("No", result);
+            AreEqual("No", result);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace SuccincTTests.ExampleTests
             var result = UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(1)) +
                          UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(2)) +
                          UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(3));
-            Assert.AreEqual("1 in range 1-32 in range 1-33 in range 1-3", result);
+            AreEqual("1 in range 1-32 in range 1-33 in range 1-3", result);
         }
 
         [Test]
@@ -63,7 +64,7 @@ namespace SuccincTTests.ExampleTests
         {
             var result = UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(0)) +
                          UnionMatcherExamples.YesNo123OrOtherIntMatcherExample(new Union<int, bool>(4));
-            Assert.AreEqual("int=0int=4", result);
+            AreEqual("int=0int=4", result);
         }
 
         [Test]
@@ -71,7 +72,7 @@ namespace SuccincTTests.ExampleTests
         {
             var result = UnionMatcherExamples.ElseExample(new Union<int, bool>(0)) +
                          UnionMatcherExamples.ElseExample(new Union<int, bool>(false));
-            Assert.AreEqual("0false", result);
+            AreEqual("0false", result);
         }
 
         [Test]
@@ -79,7 +80,7 @@ namespace SuccincTTests.ExampleTests
         {
             var result = UnionMatcherExamples.ElseExample(new Union<int, bool>(1)) +
                          UnionMatcherExamples.ElseExample(new Union<int, bool>(true));
-            Assert.AreEqual("????", result);
+            AreEqual("????", result);
         }
     }
 }
