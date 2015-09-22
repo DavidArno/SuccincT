@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.3.2 fixes two bugs (https://github.com/DavidArno/SuccincT/issues/1 and https://github.com/DavidArno/SuccincT/issues/2) as well as enhancements in the 1.3.0 release (see https://github.com/DavidArno/SuccincT/wiki for details)</releaseNotes>
+    <releaseNotes>V1.4.0 introduces pattern matching for tuples. Also, please refer to https://github.com/DavidArno/SuccincT/wiki for details of a small breaking change.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Partial application Discriminated unions Options Pattern matching</tags>
   </metadata>
