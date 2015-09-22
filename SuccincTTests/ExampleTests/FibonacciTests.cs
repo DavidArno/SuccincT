@@ -1,4 +1,4 @@
-﻿using NUnit.Framework;
+using NUnit.Framework;
 using SuccincTTests.Examples;
 using static NUnit.Framework.Assert;
 
