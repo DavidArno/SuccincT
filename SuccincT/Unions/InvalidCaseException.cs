@@ -2,7 +2,6 @@
 
 namespace SuccincT.Unions
 {
-    [Serializable]
     public sealed class InvalidCaseException : InvalidOperationException
     {
         public InvalidCaseException(Variant invalidCase, Variant validCase) :
