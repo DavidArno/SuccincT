@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2014
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincT", "SuccincT\SuccincT.csproj", "{23A68981-A42D-471D-AE34-3481D8551C1E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTTests", "SuccincTTests\SuccincTTests.csproj", "{7295200E-9754-4F3C-B003-7C7766D8E5BE}"

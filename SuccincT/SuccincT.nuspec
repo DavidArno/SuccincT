@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.4.0 introduces pattern matching for tuples. Also, please refer to https://github.com/DavidArno/SuccincT/wiki for details of a small breaking change.</releaseNotes>
+    <releaseNotes>V1.4.1 sees SuccincT changed to be a portable class libray targeting .NET 4 and Windows 8.</releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>Partial application Discriminated unions Options Pattern matching</tags>
   </metadata>
