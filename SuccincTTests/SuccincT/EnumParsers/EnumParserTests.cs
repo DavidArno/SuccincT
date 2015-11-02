@@ -44,7 +44,7 @@ namespace SuccincTTests.SuccincT.EnumParsers
         }
 
         [Test, ExpectedException(typeof(ArgumentException))]
-        public void ParsingNonEnum_ResultsInException() => "true".ParseEnum<bool>();
+        public void ParsingNonEnum_ResultsInException() => "2".ParseEnum<int>();
 
         [Test, ExpectedException(typeof(ArgumentException))]
         public void ParsingWithCaseIgnoreNonEnum_ResultsInException() => "1".ParseEnumIgnoringCase<int>();

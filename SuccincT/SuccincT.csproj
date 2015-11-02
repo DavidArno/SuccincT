@@ -51,6 +51,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Options\FirstOrNoneExtensions.cs" />
     <Compile Include="PartialApplications\TailActionApplications.cs" />
     <Compile Include="PartialApplications\TailFunctionApplications.cs" />
     <Compile Include="GlobalSuppressions.cs" />
