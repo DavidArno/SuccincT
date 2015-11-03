@@ -133,5 +133,27 @@ namespace SuccincT.Options
             }
             return count == 1 ? result : Option<T>.None();
         }
+
+        public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> collection, int index)
+        {
+            if (collection != null && index >= 0)
+            {
+                var list = collection as IList<T>;
+                if (list != null)
+                {
+                    return index < list.Count ? Option<T>.Some(list[index]) : Option<T>.None();
+                }
+
+                using (var enumerator = collection.GetEnumerator())
+                {
+                    while (true)
+                    {
+                        if (!enumerator.MoveNext()) { break; }
+                        if (index-- == 0) { return Option<T>.Some(enumerator.Current); }
+                    }
+                }
+            }
+            return Option<T>.None();
+        }
     }
 }
