@@ -27,6 +27,10 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void IntValue_ExceptionIfNoMatchWithExec() => 3.Match().With(2).Or(1).Do(x => { }).Exec();
 
         [Test]
+        public void IntValue_NoExceptionIfIgnoreElseUsedWithNoMatchWithExec() =>
+            3.Match().With(2).Or(1).Do(x => { }).IgnoreElse().Exec();
+
+        [Test]
         public void IntValue_WhenNoMatchElseUsedWithExec()
         {
             var result = false;
@@ -65,6 +69,14 @@ namespace SuccincTTests.SuccincT.PatternMatchers
             var result = false;
             2.Match().With(1).Or(2).Do(x => result = false)
                      .Where(x => x == 5).Do(x => result = true).Exec();
+            Assert.IsFalse(result);
+        }
+
+        [Test]
+        public void IntValueWithNoMatchAndIgnoreElse_DoesNothing()
+        {
+            var result = false;
+            2.Match().With(1).Do(x => result = true).IgnoreElse().Exec();
             Assert.IsFalse(result);
         }
     }

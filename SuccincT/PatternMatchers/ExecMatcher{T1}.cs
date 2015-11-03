@@ -20,7 +20,7 @@ namespace SuccincT.PatternMatchers
 
         public ResultMatcher<T1, TResult> To<TResult>() => new ResultMatcher<T1, TResult>(_item);
 
-        public WithForActionHandler<ExecMatcher<T1>, T1> With(T1 value) => 
+        public WithForActionHandler<ExecMatcher<T1>, T1> With(T1 value) =>
             new WithForActionHandler<ExecMatcher<T1>, T1>(value, RecordAction, this);
 
         public WhereForActionHandler<ExecMatcher<T1>, T1> Where(Func<T1, bool> expression) =>
@@ -29,6 +29,8 @@ namespace SuccincT.PatternMatchers
         private void RecordAction(Func<T1, bool> test, Action<T1> action) => _actionSelector.AddTestAndAction(test, action);
 
         public ExecMatcherAfterElse<T1> Else(Action<T1> action) => new ExecMatcherAfterElse<T1>(_actionSelector, action, _item);
+
+        public ExecMatcherAfterElse<T1> IgnoreElse() => new ExecMatcherAfterElse<T1>(_actionSelector, x => { }, _item);
 
         public void Exec() => _actionSelector.InvokeMatchedActionUsingDefaultIfRequired(_item);
     }

@@ -6,7 +6,7 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    class TreeUsingUnionsTests
+    public class TreeUsingUnionsTests
     {
         [Test]
         public void SumTree_CorrectlyAddsUpTheValues()

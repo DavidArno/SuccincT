@@ -108,7 +108,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void UnionWithT2_UsesElseIfNoCase2MatchWithExec()
+        public void UnionWithT1_UsesElseIfNoCase1MatchWithExec()
         {
             var union = new Union<int, string>("fred");
             var result = 0;

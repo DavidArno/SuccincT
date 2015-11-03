@@ -32,23 +32,29 @@ namespace SuccincT.Options
             };
         }
 
-        public UnionPatternCaseHandler<OptionMatcher<T>, T> Some() => 
+        public UnionPatternCaseHandler<OptionMatcher<T>, T> Some() =>
             new UnionPatternCaseHandler<OptionMatcher<T>, T>(RecordAction, this);
 
         public NoneMatchHandler<T> None() => new NoneMatchHandler<T>(RecordAction, this);
 
-        public UnionOfTwoPatternMatcherAfterElse<T, None> Else(Action<Option<T>> elseAction) => 
+        public UnionOfTwoPatternMatcherAfterElse<T, None> Else(Action<Option<T>> elseAction) =>
             new UnionOfTwoPatternMatcherAfterElse<T, None>(_union,
                                                            _case1ActionSelector,
                                                            _case2ActionSelector,
                                                            x => elseAction(_option));
-        
+
+        public UnionOfTwoPatternMatcherAfterElse<T, None> IgnoreElse() =>
+            new UnionOfTwoPatternMatcherAfterElse<T, None>(_union,
+                                                           _case1ActionSelector,
+                                                           _case2ActionSelector,
+                                                           x => { });
+
         public void Exec() => _resultActions[_union.Case]();
 
-        private void RecordAction(Func<T, bool> test, Action<T> action) => 
+        private void RecordAction(Func<T, bool> test, Action<T> action) =>
             _case1ActionSelector.AddTestAndAction(test, action);
 
-        private void RecordAction(Action action) => 
+        private void RecordAction(Action action) =>
             _case2ActionSelector.AddTestAndAction(x => true, x => action());
     }
 }

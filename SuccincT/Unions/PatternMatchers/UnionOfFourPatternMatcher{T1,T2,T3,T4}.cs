@@ -43,25 +43,33 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T1> Case1() => 
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T1> Case1() =>
             new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T1>(RecordAction, this);
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T2> Case2() => 
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T2> Case2() =>
             new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T2>(RecordAction, this);
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T3> Case3() => 
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T3> Case3() =>
             new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T3>(RecordAction, this);
 
-        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4> Case4() => 
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4> Case4() =>
             new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4>(RecordAction, this);
 
-        public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4> Else(Action<Union<T1, T2, T3, T4>> elseAction) => 
+        public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4> Else(Action<Union<T1, T2, T3, T4>> elseAction) =>
             new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4>(_union,
                                                                    _case1ActionSelector,
                                                                    _case2ActionSelector,
                                                                    _case3ActionSelector,
                                                                    _case4ActionSelector,
                                                                    elseAction);
+
+        public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4> IgnoreElse() =>
+            new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4>(_union,
+                                                                   _case1ActionSelector,
+                                                                   _case2ActionSelector,
+                                                                   _case3ActionSelector,
+                                                                   _case4ActionSelector,
+                                                                   x => { });
 
         public void Exec() => _execActions[_union.Case]();
 

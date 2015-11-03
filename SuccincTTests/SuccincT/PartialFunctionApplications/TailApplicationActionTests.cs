@@ -42,7 +42,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void FourParamAction_IsTailComposable()
         {
             var result = 0;
-            Action<int, int, int, int> testAction = (p1, p2, p3, p4) => result = (p1 + p2) * (p3 * p4);
+            Action<int, int, int, int> testAction = (p1, p2, p3, p4) => result = (p1 + p2) * p3 * p4;
             testAction(1, 2, 3, 4);
             var expected = result;
             result = 0;
@@ -56,7 +56,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void FiveParamAction_IsTailComposable()
         {
             var result = 0;
-            Action<int, int, int, int, int> testAction = (p1, p2, p3, p4, p5) => result = (p1 + p2) * (p3 * p4) + p5;
+            Action<int, int, int, int, int> testAction = (p1, p2, p3, p4, p5) => result = (p1 + p2) * p3 * p4 + p5;
             testAction(1, 2, 3, 4, 5);
             var expected = result;
             result = 0;

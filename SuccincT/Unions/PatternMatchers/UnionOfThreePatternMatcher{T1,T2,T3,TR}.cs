@@ -38,27 +38,28 @@ namespace SuccincT.Unions.PatternMatchers
             };
         }
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T1, TResult> Case1() => 
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T1, TResult> Case1() =>
             new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T1, TResult>(RecordAction,
                                                                                                       this);
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T2, TResult> Case2() => 
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T2, TResult> Case2() =>
             new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T2, TResult>(RecordAction,
                                                                                                       this);
 
-        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T3, TResult> Case3() => 
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T3, TResult> Case3() =>
             new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3, TResult>, T3, TResult>(RecordAction,
                                                                                                       this);
 
-        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult> Else(Func<Union<T1, T2, T3>, 
-                                                                                  TResult> elseAction) => 
-            new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult>(_union,
-                                                                         _case1FunctionSelector,
-                                                                         _case2FunctionSelector,
-                                                                         _case3FunctionSelector,
-                                                                         elseAction);
+        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult> Else(Func<Union<T1, T2, T3>, TResult> elseAction)
+        {
+            return new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult>(_union,
+                                                                                _case1FunctionSelector,
+                                                                                _case2FunctionSelector,
+                                                                                _case3FunctionSelector,
+                                                                                elseAction);
+        }
 
-        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult> Else(TResult elseValue) => 
+        public UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult> Else(TResult elseValue) =>
             new UnionOfThreePatternMatcherAfterElse<T1, T2, T3, TResult>(_union,
                                                                          _case1FunctionSelector,
                                                                          _case2FunctionSelector,
@@ -67,13 +68,13 @@ namespace SuccincT.Unions.PatternMatchers
 
         public TResult Result() => _resultActions[_union.Case]();
 
-        private void RecordAction(Func<T1, bool> test, Func<T1, TResult> action) => 
+        private void RecordAction(Func<T1, bool> test, Func<T1, TResult> action) =>
             _case1FunctionSelector.AddTestAndAction(test, action);
 
-        private void RecordAction(Func<T2, bool> test, Func<T2, TResult> action) => 
+        private void RecordAction(Func<T2, bool> test, Func<T2, TResult> action) =>
             _case2FunctionSelector.AddTestAndAction(test, action);
 
-        private void RecordAction(Func<T3, bool> test, Func<T3, TResult> action) => 
+        private void RecordAction(Func<T3, bool> test, Func<T3, TResult> action) =>
             _case3FunctionSelector.AddTestAndAction(test, action);
     }
 }

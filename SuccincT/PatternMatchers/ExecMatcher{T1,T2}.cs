@@ -28,11 +28,14 @@ namespace SuccincT.PatternMatchers
         public WhereForActionHandler<ExecMatcher<T1, T2>, T1, T2> Where(Func<T1, T2, bool> expression) =>
             new WhereForActionHandler<ExecMatcher<T1, T2>, T1, T2>(expression, RecordAction, this);
 
-        private void RecordAction(Func<T1, T2, bool> test, Action<T1, T2> action) => 
+        private void RecordAction(Func<T1, T2, bool> test, Action<T1, T2> action) =>
             _actionSelector.AddTestAndAction(test, action);
 
-        public ExecMatcherAfterElse<T1, T2> Else(Action<T1, T2> action) => 
+        public ExecMatcherAfterElse<T1, T2> Else(Action<T1, T2> action) =>
             new ExecMatcherAfterElse<T1, T2>(_actionSelector, action, _item);
+
+        public ExecMatcherAfterElse<T1, T2> IgnoreElse() =>
+            new ExecMatcherAfterElse<T1, T2>(_actionSelector, (x, y) => { }, _item);
 
         public void Exec() => _actionSelector.InvokeMatchedActionUsingDefaultIfRequired(_item.Item1, _item.Item2);
     }
