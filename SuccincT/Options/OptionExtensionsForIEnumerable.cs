@@ -90,5 +90,48 @@ namespace SuccincT.Options
 
             return result;
         }
+
+        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection)
+        {
+            if (collection != null)
+            {
+                var list = collection as IList<T>;
+                if (list != null)
+                {
+                    return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
+                }
+
+                using (var enumerator = collection.GetEnumerator())
+                {
+                    if (enumerator.MoveNext())
+                    {
+                        var result = enumerator.Current;
+                        return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
+                    }
+                }
+            }
+
+            return Option<T>.None();
+        }
+
+        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        {
+            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+
+            var result = Option<T>.None();
+            var count = 0;
+            if (collection != null)
+            {
+                foreach (var element in collection)
+                {
+                    if (predicate(element))
+                    {
+                        if (++count > 1) { break; }
+                        result = Option<T>.Some(element);
+                    }
+                }
+            }
+            return count == 1 ? result : Option<T>.None();
+        }
     }
 }

@@ -63,6 +63,7 @@
     <Compile Include="SuccincT\BasicTypesParsers\FloatParsersTests.cs" />
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
     <Compile Include="SuccincT\EnumParsers\EnumParserTests.cs" />
+    <Compile Include="SuccincT\Options\SingleOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\LastOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\FirstOrNoneTests.cs" />
     <Compile Include="SuccincT\PartialFunctionApplications\TailApplicationActionTests.cs" />
