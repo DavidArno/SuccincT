@@ -8,9 +8,12 @@ Succinc\<T\> is a small .NET framework that started out as a means of providing 
 Now Succinc\<T\> has grown into a library that provides discriminated unions, pattern matching and partial applications for C#, in addition to providing a set of value parsers that do away with the need for `out` parameters and exceptions, and instead return return an `Option<T>`.
 
 ### Current Release ###
-The current release of Succinc\<T\> is 1.4.1, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is 1.5.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
 
-This release changes Succinc\<T\> to be a portable class library (PCL). This then allows other PCL's to use Succinc\<T\>. It should have had no other effect.
+This release offers these new features: 
+1. Added new extension methods for `IEnumerable<T>`: `FirstOrNone`, `LastOrNone`, `SingleOrNone` and `ElementAtOrNone`. These are equivalent to the XxxOrDefault methods, except they return `Option<T>` with a value or, if no match, `None` rather than a default value. 
+2. Added an `IgnoreElse()` method, that does the same as `Else((params...) => { })`, for all Exec matchers. This can be used in situations where no action need be performed when there's no match. 
+
 ### Features ###
 #### Discriminated Unions ####
 Succinc\<T\> provides a set of union types ([`Union<T1, T2>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2), [`Union<T1, T2, T3>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3) and [`Union<T1, T2, T3, T4>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3T4)) where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) that can have the value `Some<T>` or `None`.
