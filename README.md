@@ -39,7 +39,7 @@ See the [Succinc\<T\> pattern matching guide](https://github.com/DavidArno/Succi
 Succinc\<T\> supports partial function applications. A parameter can be supplied to a multi-parameter method and a new function will be returned that takes the remaining parameters. For example:
 
 ```csharp
-Func<int,int> times = (p1, p2) => p1 * p2;
+Func<int,int,int> times = (p1, p2) => p1 * p2;
 var times8 = times.Apply(8);
 var result = times8(9); // <- result == 72
 ```
