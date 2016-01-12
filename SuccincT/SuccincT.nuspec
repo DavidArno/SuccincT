@@ -11,8 +11,8 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.5.0 adds Option&lt;T&gt; variations on FirstOrDefault, LastOrDefault, SingleOrDefault and ElementAtOrDefault methods to IEnumerable&lt;T&gt; and adds the option of using IgnoreElse() instead of Else(empty lambda) with Exec matchers.</releaseNotes>
-    <copyright>Copyright 2015</copyright>
+    <releaseNotes>V1.5.1 fixes a small bug with the message contents for exceptions resulting from reading the wrong case in a union.</releaseNotes>
+    <copyright>Copyright 2016, David Arno</copyright>
     <tags>Partial application Discriminated unions Options Pattern matching</tags>
   </metadata>
 </package>
