@@ -82,7 +82,7 @@ namespace SuccincT.Unions
             {
                 return value;
             }
-            throw new InvalidCaseException(Variant.Case2, Case);
+            throw new InvalidCaseException(requestedCase, Case);
         }
     }
 }

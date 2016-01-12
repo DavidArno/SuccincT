@@ -58,11 +58,43 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual("", union.Case2);
         }
 
+        [Test]
+        public void AccessingCase2ForUnionWithT1_GivesMeaningfulException()
+        {
+            var union = new Union<int, string, Colors>(2);
+            try
+            {
+                var _ = union.Case2;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case2} when case {Variant.Case1} is selected one.",
+                    e.Message);
+            }
+        }
+
         [Test, ExpectedException(typeof(InvalidCaseException))]
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
             AreEqual(Colors.Red, union.Case3);
+        }
+
+        [Test]
+        public void AccessingCase3ForUnionWithT1_GivesMeaningfulException()
+        {
+            var union = new Union<int, string, Colors>(2);
+            try
+            {
+                var _ = union.Case3;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case3} when case {Variant.Case1} is selected one.",
+                    e.Message);
+            }
         }
 
         [Test, ExpectedException(typeof(InvalidCaseException))]
@@ -91,6 +123,22 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors>(Colors.Blue);
             AreEqual("", union.Case2);
+        }
+
+        [Test]
+        public void AccessingCase2ForUnionWithT3_GivesMeaningfulException()
+        {
+            var union = new Union<int, string, Colors>(Colors.Blue);
+            try
+            {
+                var _ = union.Case2;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case2} when case {Variant.Case3} is selected one.",
+                    e.Message);
+            }
         }
 
         [Test]

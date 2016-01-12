@@ -43,11 +43,43 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual("", union.Case2);
         }
 
+        [Test]
+        public void AccessingCase2ForUnionWithT1_GivesMeaningfulException()
+        {
+            var union = new Union<int, string>(2);
+            try
+            {
+                var _ = union.Case2;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case2} when case {Variant.Case1} is selected one.",
+                    e.Message);
+            }
+        }
+
         [Test, ExpectedException(typeof(InvalidCaseException))]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string>("Test");
             AreEqual(1, union.Case1);
+        }
+
+        [Test]
+        public void AccessingCase1ForUnionWithT2_GivesMeaningfulException()
+        {
+            var union = new Union<int, string>("x");
+            try
+            {
+                var _ = union.Case1;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case1} when case {Variant.Case2} is selected one.",
+                    e.Message);
+            }
         }
 
         [Test]

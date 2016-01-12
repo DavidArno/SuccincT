@@ -74,6 +74,22 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual("", union.Case2);
         }
 
+        [Test]
+        public void AccessingCase2ForUnionWithT1_GivesMeaningfulException()
+        {
+            var union = new Union<int, string, Colors, Animals>(2);
+            try
+            {
+                var _ = union.Case2;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case2} when case {Variant.Case1} is selected one.",
+                    e.Message);
+            }
+        }
+
         [Test, ExpectedException(typeof(InvalidCaseException))]
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
@@ -128,6 +144,22 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
             AreEqual(Animals.Dog, union.Case4);
+        }
+
+        [Test]
+        public void AccessingCase4ForUnionWithT3_GivesMeaningfulException()
+        {
+            var union = new Union<int, string, Colors, Animals>(Colors.Green);
+            try
+            {
+                var _ = union.Case4;
+                Fail("Expected exception to be thrown");
+            }
+            catch (InvalidCaseException e)
+            {
+                AreEqual($"Cannot access union case {Variant.Case4} when case {Variant.Case3} is selected one.",
+                    e.Message);
+            }
         }
 
         [Test, ExpectedException(typeof(InvalidCaseException))]
