@@ -43,7 +43,7 @@ namespace SuccincTTests.ExampleTests
             }
         }
 
-        private string ExpectedBuilder(IEnumerable<string> parts) => 
+        private static string ExpectedBuilder(IEnumerable<string> parts) =>
             parts.Aggregate("", (current, part) => current + $"{part}{Environment.NewLine}");
     }
 }
