@@ -75,5 +75,12 @@ namespace SuccincT.Options
         }
 
         public static bool operator !=(Option<T> a, Option<T> b) => !(a == b);
+
+        public string ValueOrNone2(Option<T> option) =>
+            option match (
+                case None<T>() : "None"
+                case Some<T>(var value) : value.ToString()
+            );
+
     }
 }

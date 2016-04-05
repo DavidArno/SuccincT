@@ -7,6 +7,7 @@ using SuccincT.Options;
 using static System.Console;
 using static NUnit.Framework.Assert;
 using static SuccincTTests.Examples.OptionMatcherExamples;
+using static SuccinctExamples.CSharp7PatternMatchOfOptionExample;
 
 namespace SuccincTTests.ExampleTests
 {
@@ -112,6 +113,13 @@ namespace SuccincTTests.ExampleTests
         public void NumberNamerReturnsNoneForNone()
         {
             var result = NumberNamer(Option<int>.None());
+            AreEqual("None", result);
+        }
+
+        [Test]
+        public void ValueOrNoneWithNone_ReturnsNone()
+        {
+            var result = ValueOrNone(Option<int>.None());
             AreEqual("None", result);
         }
 
