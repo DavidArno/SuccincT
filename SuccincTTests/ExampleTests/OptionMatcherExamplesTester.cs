@@ -119,8 +119,15 @@ namespace SuccincTTests.ExampleTests
         [Test]
         public void ValueOrNoneWithNone_ReturnsNone()
         {
-            var result = ValueOrNone(Option<int>.None());
+            var result = ValueOrNone(Option<int>.None());   
             AreEqual("None", result);
+        }
+
+        [Test]
+        public void ValueOrNoneWithSome_ReturnsValue()
+        {
+            var result = ValueOrNone(Option<int>.Some(3));   
+            AreEqual("3", result);
         }
 
         private static string ExpectedBuilder(IEnumerable<string> parts) =>
