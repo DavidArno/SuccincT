@@ -10,7 +10,7 @@ Now Succinc\<T\> has grown into a library that provides discriminated unions, pa
 ### Current Release ###
 The current release of Succinc\<T\> is 1.6.0, which is [available as a nuget package](https://www.nuget.org/packages/SuccincT/). 
 
-This release [implements a new way of pattern matching unions](https://github.com/DavidArno/SuccincT/issues/4), using `CaseOf<type>`. Please see the [union pattern matching page for more details](https://github.com/DavidArno/SuccincT/wiki/PatternMatchingUnions).
+This release [implements a new way of pattern matching unions](https://github.com/DavidArno/SuccincT/issues/5), using `CaseOf<type>`. Please see the [union pattern matching page for more details](https://github.com/DavidArno/SuccincT/wiki/PatternMatchingUnions).
 
 ### Features ###
 #### Discriminated Unions ####
