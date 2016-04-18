@@ -23,15 +23,13 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void FirstOrNoneWithEmptyCollection_ReturnsNone()
         {
-            var collection = new List<bool>();
-            Assert.IsFalse(collection.FirstOrNone().HasValue);
+            Assert.IsFalse(new List<bool>().FirstOrNone().HasValue);
         }
 
         [Test]
         public void FirstOrNoneWithEmptyCollectionAndFunc_ReturnsNone()
         {
-            var collection = new List<bool>();
-            Assert.IsFalse(collection.FirstOrNone(x => true).HasValue);
+            Assert.IsFalse(new List<bool>().FirstOrNone(x => true).HasValue);
         }
 
         [Test]

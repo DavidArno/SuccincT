@@ -17,8 +17,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void ElementAtOrNoneWithEmptyCollection_ReturnsNone()
         {
-            var collection = new List<bool>();
-            Assert.IsFalse(collection.ElementAtOrNone(0).HasValue);
+            Assert.IsFalse(new List<bool>().ElementAtOrNone(0).HasValue);
         }
 
         [Test]

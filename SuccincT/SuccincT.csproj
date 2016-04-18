@@ -117,6 +117,7 @@
     <Compile Include="Tuples\ITupleMatchable{T1,T2,T3,T4}.cs" />
     <Compile Include="Tuples\ITupleMatchable{T1,T2,T3}.cs" />
     <Compile Include="Tuples\ITupleMatchable{T1,T2}.cs" />
+    <Compile Include="Unions\InvalidCaseOfTypeException.cs" />
     <Compile Include="Unions\InvalidCaseException.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4TR}.cs" />
     <Compile Include="Unions\PatternMatchers\UnionOfFourPatternMatcherAfterElse{T1,T2,T3,T4}.cs" />

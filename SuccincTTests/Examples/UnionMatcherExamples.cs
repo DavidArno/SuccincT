@@ -39,12 +39,12 @@ namespace SuccincTTests.Examples
 
         public static void SinglePositiveOddDigitAndTruePrinter(Union<int, bool> value) => 
             value.Match()
-                 .Case1().Of(0).Do(x => WriteLine("0 isn't positive or negative"))
-                 .Case1().Where(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(WriteLine)
-                 .Case1().Where(x => x > 9).Do(x => WriteLine("{0} isn't 1 digit", x))
-                 .Case1().Where(x => x < 0).Do(i => WriteLine("{0} isn't positive", i))
-                 .Case1().Do(x => WriteLine("{0} isn't odd", x))
-                 .Case2().Of(true).Do(b => WriteLine("Found true"))
+                 .CaseOf<int>().Of(0).Do(x => WriteLine("0 isn't positive or negative"))
+                 .CaseOf<int>().Where(x => x == 1 || x == 3 || x == 5 || x == 7 || x == 9).Do(WriteLine)
+                 .CaseOf<int>().Where(x => x > 9).Do(x => WriteLine("{0} isn't 1 digit", x))
+                 .CaseOf<int>().Where(x => x < 0).Do(i => WriteLine("{0} isn't positive", i))
+                 .CaseOf<int>().Do(x => WriteLine("{0} isn't odd", x))
+                 .CaseOf<bool>().Of(true).Do(b => WriteLine("Found true"))
                  .Else(o => WriteLine("{0} isn't true or single odd digit.", o.Case2))
                  .Exec();
 

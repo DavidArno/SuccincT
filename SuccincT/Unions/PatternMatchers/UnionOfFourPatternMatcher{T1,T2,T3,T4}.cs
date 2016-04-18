@@ -6,8 +6,8 @@ namespace SuccincT.Unions.PatternMatchers
 {
     /// <summary>
     /// Fluent class created by Union{T1,T2,T3,T4}.Match(). Whilst this is a public
-    /// class (as the user needs access to Case1-4(), Else() and Exec()), it has an internal constructor as it's
-    /// intended for pattern matching internal usage only.
+    /// class (as the user needs access to Case1-4(), CaseOf(), Else() and Result()), it has an 
+    /// internal constructor as it is intended for pattern matching internal usage only.
     /// </summary>
     public sealed class UnionOfFourPatternMatcher<T1, T2, T3, T4>
     {
@@ -54,6 +54,35 @@ namespace SuccincT.Unions.PatternMatchers
 
         public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4> Case4() =>
             new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4>(RecordAction, this);
+
+        public UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T> CaseOf<T>()
+        {
+            if (typeof(T) == typeof(T1))
+            {
+                return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T1>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T>;
+            }
+
+            if (typeof(T) == typeof(T2))
+            {
+                return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T2>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T>;
+            }
+
+            if (typeof(T) == typeof(T3))
+            {
+                return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T3>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T>;
+            }
+
+            if (typeof(T) == typeof(T4))
+            {
+                return new UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T4>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfFourPatternMatcher<T1, T2, T3, T4>, T>;
+            }
+
+            throw new InvalidCaseOfTypeException(typeof(T));
+        }
 
         public UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4> Else(Action<Union<T1, T2, T3, T4>> elseAction) =>
             new UnionOfFourPatternMatcherAfterElse<T1, T2, T3, T4>(_union,

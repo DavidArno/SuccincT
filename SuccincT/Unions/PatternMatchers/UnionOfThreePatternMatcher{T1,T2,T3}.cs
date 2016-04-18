@@ -6,8 +6,8 @@ namespace SuccincT.Unions.PatternMatchers
 {
     /// <summary>
     /// Fluent class created by Union{T1,T2,T3}.Match(). Whilst this is a public
-    /// class (as the user needs access to Case1-4(), Else() and Exec()), it has an internal constructor as it's
-    /// intended for pattern matching internal usage only.
+    /// class (as the user needs access to Case1-3(), CaseOf(), Else() and Result()), it has an 
+    /// internal constructor as it is intended for pattern matching internal usage only.
     /// </summary>
     public sealed class UnionOfThreePatternMatcher<T1, T2, T3>
     {
@@ -49,6 +49,29 @@ namespace SuccincT.Unions.PatternMatchers
         public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T3> Case3() =>
             new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T3>(RecordAction,
                                                                                     this);
+
+        public UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T> CaseOf<T>()
+        {
+            if (typeof(T) == typeof(T1))
+            {
+                return new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T1>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T>;
+            }
+
+            if (typeof(T) == typeof(T2))
+            {
+                return new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T2>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T>;
+            }
+
+            if (typeof(T) == typeof(T3))
+            {
+                return new UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T3>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfThreePatternMatcher<T1, T2, T3>, T>;
+            }
+
+            throw new InvalidCaseOfTypeException(typeof(T));
+        }
 
         public UnionOfThreePatternMatcherAfterElse<T1, T2, T3> Else(Action<Union<T1, T2, T3>> elseAction) =>
             new UnionOfThreePatternMatcherAfterElse<T1, T2, T3>(_union,

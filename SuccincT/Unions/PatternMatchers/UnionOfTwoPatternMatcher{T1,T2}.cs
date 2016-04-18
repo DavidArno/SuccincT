@@ -6,8 +6,8 @@ namespace SuccincT.Unions.PatternMatchers
 {
     /// <summary>
     /// Fluent class created by Union{T1,T2}.Match(). Whilst this is a public
-    /// class (as the user needs access to Case1-2(), Else() and Result()), it has an internal constructor as it's
-    /// intended for pattern matching internal usage only.
+    /// class (as the user needs access to Case1-2(), CaseOf(), Else() and Result()), it has an 
+    /// internal constructor as it is intended for pattern matching internal usage only.
     /// </summary>
     public sealed class UnionOfTwoPatternMatcher<T1, T2>
     {
@@ -40,6 +40,23 @@ namespace SuccincT.Unions.PatternMatchers
         public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2> Case2() =>
             new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2>(RecordAction,
                                                                               this);
+
+        public UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T> CaseOf<T>()
+        {
+            if (typeof(T) == typeof(T1))
+            {
+                return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T1>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T>;
+            }
+
+            if (typeof(T) == typeof(T2))
+            {
+                return new UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T2>(RecordAction, this)
+                    as UnionPatternCaseHandler<UnionOfTwoPatternMatcher<T1, T2>, T>;
+            }
+
+            throw new InvalidCaseOfTypeException(typeof(T));
+        }
 
         public UnionOfTwoPatternMatcherAfterElse<T1, T2> Else(Action<Union<T1, T2>> elseAction) =>
             new UnionOfTwoPatternMatcherAfterElse<T1, T2>(_union,

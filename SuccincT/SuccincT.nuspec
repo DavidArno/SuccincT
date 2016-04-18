@@ -11,7 +11,7 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.5.1 fixes a small bug with the message contents for exceptions resulting from reading the wrong case in a union.</releaseNotes>
+    <releaseNotes>V1.6.0 introduces CaseOf for pattern matching unions.</releaseNotes>
     <copyright>Copyright 2016, David Arno</copyright>
     <tags>Partial application Discriminated unions Options Pattern matching</tags>
   </metadata>
