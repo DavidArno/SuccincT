@@ -1,4 +1,6 @@
-﻿namespace SuccincT.PatternMatchers.GeneralMatcher
+﻿using SuccincT.Functional;
+
+namespace SuccincT.PatternMatchers.GeneralMatcher
 {
     /// <summary>
     /// Defines a extension method for supplying Match() to general types. Due to the way extension methods are resolved
@@ -7,6 +9,6 @@
     /// </summary>
     public static class GeneralMatcherExtensions
     {
-        public static ExecMatcher<T> Match<T>(this T item) => new ExecMatcher<T>(item);
+        public static IMatcher<T> Match<T>(this T item) => new Matcher<T, Unit>(item);
     }
 }

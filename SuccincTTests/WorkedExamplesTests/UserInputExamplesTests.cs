@@ -1,8 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.Options;
-using SuccincT.PartialApplications;
 using SuccinctExamples;
+using SuccincT.Functional;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.WorkedExamplesTests

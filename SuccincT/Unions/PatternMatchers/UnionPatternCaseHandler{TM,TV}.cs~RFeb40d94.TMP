@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using SuccincT.PatternMatchers;
+
+namespace SuccincT.Unions.PatternMatchers
+{
+    /// <summary>
+    /// Fluent class created by Union{T1...}.Match().CaseN(). Whilst this is a public
+    /// class (as the user needs access to Of() and Where()), it has an internal constructor as it's
+    /// intended for pattern matching internal usage only.
+    /// </summary>
+    public sealed class UnionPatternCaseHandler<TMatcher, TValue> : IActionWithHandler<TMatcher, TValue>
+    {
+        private readonly Action<Func<TValue, bool>, Action<TValue>> _recorder;
+        private readonly TMatcher _matcher;
+        private List<TValue> _withValues;
+
+        internal UnionPatternCaseHandler(Action<Func<TValue, bool>, Action<TValue>> recorder, TMatcher matcher)
+        {
+            _recorder = recorder;
+            _matcher = matcher;
+        }
+
+        public IActionWithHandler<TMatcher, TValue> Of(TValue value)
+        {
+            _withValues = new List<TValue> { value };
+            return this;
+        }
+
+        public WhereForActionHandler<TMatcher, TValue> Where(Func<TValue, bool> expression) => 
+            new WhereForActionHandler<TMatcher, TValue>(expression, _recorder, _matcher);
+
+        public TMatcher Do(Action<TValue> action)
+        {
+            _recorder(x => true, action);
+            return _matcher;
+        }
+
+        IActionWithHandler<TMatcher, TValue> IActionWithHandler<TMatcher, TValue>.Or(TValue value)
+        {
+            _withValues.Add(value);
+            return this;
+        }
+
+        TMatcher IActionWithHandler<TMatcher, TValue>.Do(Action<TValue> action)
+        {
+            var values = _withValues;
+            _recorder(x => values.Any(y => EqualityComparer<TValue>.Default.Equals(x, y)), action);
+            return _matcher;
+        }
+    }
+}

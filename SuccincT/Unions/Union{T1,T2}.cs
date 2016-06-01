@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2>
+    public sealed class Union<T1, T2> : IUnion<T1, T2, Unit, Unit>
     {
         private readonly Dictionary<Variant, Func<int>> _hashCodes;
         private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
@@ -52,10 +53,10 @@ namespace SuccincT.Unions
 
         public T2 Case2 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case2, _value2);
 
-        public UnionOfTwoPatternMatcher<T1, T2, TResult> Match<TResult>() =>
-            new UnionOfTwoPatternMatcher<T1, T2, TResult>(this);
+        public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>() =>
+            new UnionPatternMatcher<T1, T2, TResult>(this);
 
-        public UnionOfTwoPatternMatcher<T1, T2> Match() => new UnionOfTwoPatternMatcher<T1, T2>(this);
+        public IUnionActionPatternMatcher<T1, T2> Match() => new UnionPatternMatcher<T1, T2, Unit>(this);
 
         public override bool Equals(object obj)
         {
@@ -67,8 +68,8 @@ namespace SuccincT.Unions
 
         public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
         {
-            var aObj = (object)a;
-            var bObj = (object)b;
+            var aObj = (object) a;
+            var bObj = (object) b;
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
@@ -82,7 +83,11 @@ namespace SuccincT.Unions
             {
                 return value;
             }
+
             throw new InvalidCaseException(requestedCase, Case);
         }
+
+        Unit IUnion<T1, T2, Unit, Unit>.Case3 { get { throw new InvalidCaseException(Variant.Case3, Case); } }
+        Unit IUnion<T1, T2, Unit, Unit>.Case4 { get { throw new InvalidCaseException(Variant.Case4, Case); } }
     }
 }

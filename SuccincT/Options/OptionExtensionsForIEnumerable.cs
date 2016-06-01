@@ -13,20 +13,19 @@ namespace SuccincT.Options
     {
         public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection)
         {
-            if (collection != null)
-            {
-                var list = collection as IList<T>;
-                if (list != null && list.Count > 0)
-                {
-                    return Option<T>.Some(list[0]);
-                }
+            if (collection == null) return Option<T>.None();
 
-                using (var enumerator = collection.GetEnumerator())
+            var list = collection as IList<T>;
+            if (list != null && list.Count > 0)
+            {
+                return Option<T>.Some(list[0]);
+            }
+
+            using (var enumerator = collection.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
                 {
-                    if (enumerator.MoveNext())
-                    {
-                        return Option<T>.Some(enumerator.Current);
-                    }
+                    return Option<T>.Some(enumerator.Current);
                 }
             }
 
@@ -37,12 +36,11 @@ namespace SuccincT.Options
         {
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate)); }
 
-            if (collection != null)
+            if (collection == null) return Option<T>.None();
+
+            foreach (var element in collection)
             {
-                foreach (var element in collection)
-                {
-                    if (predicate(element)) { return Option<T>.Some(element); }
-                }
+                if (predicate(element)) { return Option<T>.Some(element); }
             }
 
             return Option<T>.None();
@@ -50,25 +48,24 @@ namespace SuccincT.Options
 
         public static Option<T> LastOrNone<T>(this IEnumerable<T> collection)
         {
-            if (collection != null)
-            {
-                var list = collection as IList<T>;
-                if (list != null && list.Count > 0)
-                {
-                    return Option<T>.Some(list[list.Count - 1]);
-                }
+            if (collection == null) return Option<T>.None();
 
-                using (var e = collection.GetEnumerator())
+            var list = collection as IList<T>;
+            if (list != null && list.Count > 0)
+            {
+                return Option<T>.Some(list[list.Count - 1]);
+            }
+
+            using (var e = collection.GetEnumerator())
+            {
+                if (e.MoveNext())
                 {
-                    if (e.MoveNext())
+                    T result;
+                    do
                     {
-                        T result;
-                        do
-                        {
-                            result = e.Current;
-                        } while (e.MoveNext());
-                        return Option<T>.Some(result);
-                    }
+                        result = e.Current;
+                    } while (e.MoveNext());
+                    return Option<T>.Some(result);
                 }
             }
 
@@ -80,12 +77,11 @@ namespace SuccincT.Options
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate)); }
 
             var result = Option<T>.None();
-            if (collection != null)
+            if (collection == null) return result;
+
+            foreach (var element in collection)
             {
-                foreach (var element in collection)
-                {
-                    if (predicate(element)) { result = Option<T>.Some(element); }
-                }
+                if (predicate(element)) { result = Option<T>.Some(element); }
             }
 
             return result;
@@ -93,21 +89,20 @@ namespace SuccincT.Options
 
         public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection)
         {
-            if (collection != null)
-            {
-                var list = collection as IList<T>;
-                if (list != null)
-                {
-                    return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
-                }
+            if (collection == null) return Option<T>.None();
 
-                using (var enumerator = collection.GetEnumerator())
+            var list = collection as IList<T>;
+            if (list != null)
+            {
+                return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
+            }
+
+            using (var enumerator = collection.GetEnumerator())
+            {
+                if (enumerator.MoveNext())
                 {
-                    if (enumerator.MoveNext())
-                    {
-                        var result = enumerator.Current;
-                        return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
-                    }
+                    var result = enumerator.Current;
+                    return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
                 }
             }
 
@@ -120,39 +115,39 @@ namespace SuccincT.Options
 
             var result = Option<T>.None();
             var count = 0;
-            if (collection != null)
+            if (collection == null) return result;
+
+            foreach (var element in collection)
             {
-                foreach (var element in collection)
+                if (predicate(element))
                 {
-                    if (predicate(element))
-                    {
-                        if (++count > 1) { break; }
-                        result = Option<T>.Some(element);
-                    }
+                    if (++count > 1) { break; }
+                    result = Option<T>.Some(element);
                 }
             }
+
             return count == 1 ? result : Option<T>.None();
         }
 
         public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> collection, int index)
         {
-            if (collection != null && index >= 0)
-            {
-                var list = collection as IList<T>;
-                if (list != null)
-                {
-                    return index < list.Count ? Option<T>.Some(list[index]) : Option<T>.None();
-                }
+            if (collection == null || index < 0) return Option<T>.None();
 
-                using (var enumerator = collection.GetEnumerator())
+            var list = collection as IList<T>;
+            if (list != null)
+            {
+                return index < list.Count ? Option<T>.Some(list[index]) : Option<T>.None();
+            }
+
+            using (var enumerator = collection.GetEnumerator())
+            {
+                while (true)
                 {
-                    while (true)
-                    {
-                        if (!enumerator.MoveNext()) { break; }
-                        if (index-- == 0) { return Option<T>.Some(enumerator.Current); }
-                    }
+                    if (!enumerator.MoveNext()) break;
+                    if (index-- == 0) { return Option<T>.Some(enumerator.Current); }
                 }
             }
+
             return Option<T>.None();
         }
     }

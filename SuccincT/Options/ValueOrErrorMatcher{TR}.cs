@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using SuccincT.Functional;
 using SuccincT.PatternMatchers;
-using SuccincT.Unions;
 using SuccincT.Unions.PatternMatchers;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Options
 {
-    public sealed class ValueOrErrorMatcher<TResult>
+    internal sealed class ValueOrErrorMatcher<TResult> : IUnionFuncPatternMatcherAfterElse<TResult>, IValueOrErrorFuncMatcher<TResult>, IValueOrErrorActionMatcher, IUnionActionPatternMatcherAfterElse
     {
         private readonly ValueOrError _valueOrError;
 
@@ -18,55 +19,98 @@ namespace SuccincT.Options
             new MatchFunctionSelector<string, TResult>(
                 x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
 
-        private readonly Dictionary<bool, Func<TResult>> _resultActions;
+        private Func<ValueOrError, TResult> _elseAction;
 
         internal ValueOrErrorMatcher(ValueOrError valueOrError)
         {
             _valueOrError = valueOrError;
-            _resultActions = new Dictionary<bool, Func<TResult>>
-            {
-                {false, () => _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error)},
-                {true, () => _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)}
-            };
         }
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Value() => 
-            new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordValueAction, this);
+        IUnionFuncPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>
+            IValueOrErrorFuncMatcher<TResult>.Value() =>
+                new UnionPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>(RecordValueAction, this);
 
-        public UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult> Error() => 
-            new UnionPatternCaseHandler<ValueOrErrorMatcher<TResult>, string, TResult>(RecordErrorAction, this);
+        IUnionFuncPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>
+            IValueOrErrorFuncMatcher<TResult>.Error() =>
+                new UnionPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>(RecordErrorAction, this);
 
-        public UnionOfTwoPatternMatcherAfterElse<string, string, TResult> Else(TResult value)
+        IUnionFuncPatternMatcherAfterElse<TResult> IValueOrErrorFuncMatcher<TResult>.Else(TResult value)
         {
-            var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(union,
-                                                                                  _valueFunctionSelector,
-                                                                                  _errorFunctionSelector,
-                                                                                  _ => value);
+            _elseAction = _ => value;
+            return this;
         }
 
-        public UnionOfTwoPatternMatcherAfterElse<string, string, TResult> Else(
+        IUnionFuncPatternMatcherAfterElse<TResult> IValueOrErrorFuncMatcher<TResult>.Else(
             Func<ValueOrError, TResult> elseAction)
         {
-            var union = CreateUnionFromValueOrError(_valueOrError);
-            return new UnionOfTwoPatternMatcherAfterElse<string, string, TResult>(
-                union,
-                _valueFunctionSelector,
-                _errorFunctionSelector,
-                x => elseAction(_valueOrError));
+            _elseAction = elseAction;
+            return this;
         }
 
-        public TResult Result() => _resultActions[_valueOrError.HasValue]();
+        TResult IValueOrErrorFuncMatcher<TResult>.Result()
+        {
+            return _valueOrError.HasValue
+                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+        }
 
-        private void RecordValueAction(Func<string, bool> test, Func<string, TResult> action) => 
-            _valueFunctionSelector.AddTestAndAction(test, action);
+        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> IValueOrErrorActionMatcher.Value() =>
+                new UnionPatternCaseHandler<IValueOrErrorActionMatcher, string, TResult>(RecordValueAction, this);
 
-        private void RecordErrorAction(Func<string, bool> test, Func<string, TResult> action) => 
-            _errorFunctionSelector.AddTestAndAction(test, action);
+        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> IValueOrErrorActionMatcher.Error() =>
+                new UnionPatternCaseHandler<IValueOrErrorActionMatcher, string, TResult>(RecordErrorAction, this);
 
-        private static Union<string, string> CreateUnionFromValueOrError(ValueOrError valueOrError) => 
-            valueOrError.HasValue
-                ? new Union<string, string>(valueOrError.Value, null, Variant.Case1)
-                : new Union<string, string>(null, valueOrError.Error, Variant.Case2);
+        IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.Else(Action<ValueOrError> elseAction)
+        {
+            _elseAction = elseAction.ToUnitFunc() as Func<ValueOrError, TResult>;
+            return this;
+        }
+
+        IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.IgnoreElse()
+        {
+            _elseAction = x => default(TResult);
+            return this;
+        }
+
+        void IValueOrErrorActionMatcher.Exec()
+        {
+            Ignore(_valueOrError.HasValue
+                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error));
+        }
+
+        TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
+        {
+            var possibleResult = _valueOrError.HasValue
+                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
+                : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
+
+            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
+        }
+
+        void IUnionActionPatternMatcherAfterElse.Exec()
+        {
+            var possibleResult = _valueOrError.HasValue
+                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
+                : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
+
+            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError));
+        }
+
+        private void RecordValueAction(Func<string, IList<string>, bool> withTest,
+                                       Func<string, bool> whereTest,
+                                       IList<string> withValues,
+                                       Func<string, TResult> action)
+        {
+            _valueFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
+        }
+
+        private void RecordErrorAction(Func<string, IList<string>, bool> withTest,
+                                       Func<string, bool> whereTest,
+                                       IList<string> withValues,
+                                       Func<string, TResult> action)
+        {
+            _errorFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
+        }
     }
 }

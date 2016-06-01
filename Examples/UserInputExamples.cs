@@ -1,8 +1,9 @@
 ﻿using System;
 using SuccincT.Options;
 using SuccincT.Parsers;
-using SuccincT.PartialApplications;
+using SuccincT.Functional;
 using SuccincT.PatternMatchers.GeneralMatcher;
+using static SuccincT.Functional.TypedLambdas;
 
 namespace SuccinctExamples
 {
@@ -15,8 +16,8 @@ namespace SuccinctExamples
                                                     int maxValue,
                                                     int numberOfAttempts)
         {
-            Func<Action, Action, Func<string>, int, int, int, Option<int>> getNumber = GetNumberFromUser;
-            var askAgain = getNumber.Apply(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
+            var askAgain = Lambda<Action, Action, Func<string>, int, int, int, Option<int>>(GetNumberFromUser)
+                .Apply(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
 
             askMethod();
             return getValueMethod()

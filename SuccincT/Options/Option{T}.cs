@@ -1,4 +1,5 @@
 ﻿using System;
+using SuccincT.Functional;
 using SuccincT.Unions;
 
 namespace SuccincT.Options
@@ -34,13 +35,13 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public OptionMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(_union, this);
+        public IOptionFuncMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(_union, this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
         /// associated with the match.
         /// </summary>
-        public OptionMatcher<T> Match() => new OptionMatcher<T>(_union, this);
+        public IOptionActionMatcher<T> Match() => new OptionMatcher<T, Unit>(_union, this);
 
         /// <summary>
         /// True if created via Some(), false if via None().

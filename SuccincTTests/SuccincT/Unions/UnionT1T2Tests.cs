@@ -1,7 +1,9 @@
 ﻿using NUnit.Framework;
+using SuccincT.Functional;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -49,7 +51,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string>(2);
             try
             {
-                var _ = union.Case2;
+                Unit.Ignore(union.Case2);
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)
@@ -72,7 +74,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string>("x");
             try
             {
-                var _ = union.Case1;
+                Ignore(union.Case1);
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)

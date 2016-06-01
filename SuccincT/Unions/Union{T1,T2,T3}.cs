@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2, T3>
+    public sealed class Union<T1, T2, T3> : IUnion<T1, T2, T3, Unit>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -76,13 +77,13 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionOfThreePatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
-            new UnionOfThreePatternMatcher<T1, T2, T3, TResult>(this);
+        public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
+            new UnionFuncPatternMatcher<T1, T2, T3, TResult>(this);
 
-        public UnionOfThreePatternMatcher<T1, T2, T3> Match() => 
-            new UnionOfThreePatternMatcher<T1, T2, T3>(this);
+        public IUnionActionPatternMatcher<T1, T2, T3> Match() => 
+            new UnionFuncPatternMatcher<T1, T2, T3, Unit>(this);
 
-        public override bool Equals(Object obj)
+        public override bool Equals(object obj)
         {
             var testObject = obj as Union<T1, T2, T3>;
             return testObject != null && UnionsEqual(testObject);
@@ -101,5 +102,6 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2, T3> testObject) => 
             Case == testObject.Case && _unionsMatch[Case](testObject);
+        Unit IUnion<T1, T2, T3, Unit>.Case4 { get { throw new InvalidCaseException(Variant.Case4, Case); } }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using SuccincT.PartialApplications;
+using SuccincT.Functional;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.PartialFunctionApplications

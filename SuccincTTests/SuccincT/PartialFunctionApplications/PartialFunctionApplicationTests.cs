@@ -1,7 +1,8 @@
 ﻿using System;
 using NUnit.Framework;
-using SuccincT.PartialApplications;
+using SuccincT.Functional;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.TypedLambdas;
 
 namespace SuccincTTests.SuccincT.PartialFunctionApplications
 {
@@ -11,7 +12,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void TwoParamFunctionIsComposable()
         {
-            Func<int, int, int> testFunction = (p1, p2) => p1 + p2;
+            var testFunction = Lambda((int p1, int p2) => p1 + p2);
             var expected = testFunction(2, 3);
             var composedFunction = testFunction.Apply(2);
             var actual = composedFunction(3);
@@ -21,7 +22,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void ThreeParamFunctionIsComposableWithOneParam()
         {
-            Func<int, int, int, int> testFunction = (p1, p2, p3) => (p1 + p2) * p3;
+            var testFunction = Lambda((int p1, int p2, int p3) => (p1 + p2) * p3);
             var expected = testFunction(1, 2, 3);
             var partiallyComposedFunction = testFunction.Apply(1);
             var completelyComposedFunction = partiallyComposedFunction.Apply(2);
@@ -32,7 +33,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void ThreeParamFunctionIsComposableWithTwoParams()
         {
-            Func<int, int, int, int> testFunction = (p1, p2, p3) => (p1 + p2) * p3;
+            var testFunction = Lambda((int p1, int p2, int p3) => (p1 + p2) * p3);
             var expected = testFunction(1, 2, 3);
             var completelyComposedFunction = testFunction.Apply(1, 2);
             var actual = completelyComposedFunction(3);
@@ -42,7 +43,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FourParamFunctionIsComposableWithOneParam()
         {
-            Func<int, int, int, int, int> testFunction = (p1, p2, p3, p4) => (p1 + p2) * (p3 + p4);
+            var testFunction = Lambda((int p1, int p2, int p3, int p4) => (p1 + p2) * (p3 + p4));
             var expected = testFunction(1, 2, 3, 4);
             var partiallyComposedFunction1 = testFunction.Apply(1);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(2);
@@ -54,7 +55,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FourParamFunctionIsComposableWithTwoParams()
         {
-            Func<int, int, int, int, int> testFunction = (p1, p2, p3, p4) => (p1 + p2) * (p3 + p4);
+            var testFunction = Lambda((int p1, int p2, int p3, int p4) => (p1 + p2) * (p3 + p4));
             var expected = testFunction(1, 2, 3, 4);
             var partiallyComposedFunction = testFunction.Apply(1, 2);
             var completelyComposedFunction = partiallyComposedFunction.Apply(3);
@@ -65,7 +66,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FourParamFunctionIsComposableWithThreeParams()
         {
-            Func<int, int, int, int, int> testFunction = (p1, p2, p3, p4) => (p1 + p2) * (p3 + p4);
+            var testFunction = Lambda((int p1, int p2, int p3, int p4) => (p1 + p2) * (p3 + p4));
             var expected = testFunction(1, 2, 3, 4);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3);
             var actual = completelyComposedFunction(4);
@@ -75,7 +76,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FiveParamFunctionIsComposableWithOneParam()
         {
-            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var testFunction = Lambda((int p1, int p2, int p3, int p4, int p5) => (p1 + p2) * (p3 + p4) + p5);
             var expected = testFunction(1, 2, 3, 4, 5);
             var partiallyComposedFunction1 = testFunction.Apply(1);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(2);
@@ -88,7 +89,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FiveParamFunctionIsComposableWithTwoParams()
         {
-            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var testFunction = Lambda((int p1, int p2, int p3, int p4, int p5) => (p1 + p2) * (p3 + p4) + p5);
             var expected = testFunction(1, 2, 3, 4, 5);
             var partiallyComposedFunction1 = testFunction.Apply(1, 2);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(3);
@@ -100,7 +101,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FiveParamFunctionIsComposableWithThreeParams()
         {
-            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var testFunction = Lambda((int p1, int p2, int p3, int p4, int p5) => (p1 + p2) * (p3 + p4) + p5);
             var expected = testFunction(1, 2, 3, 4, 5);
             var partiallyComposedFunction = testFunction.Apply(1, 2, 3);
             var completelyComposedFunction = partiallyComposedFunction.Apply(4);
@@ -111,7 +112,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void FiveParamFunctionIsComposableWithFourParams()
         {
-            Func<int, int, int, int, int, int> testFunction = (p1, p2, p3, p4, p5) => (p1 + p2) * (p3 + p4) + p5;
+            var testFunction = Lambda((int p1, int p2, int p3, int p4, int p5) => (p1 + p2) * (p3 + p4) + p5);
             var expected = testFunction(1, 2, 3, 4, 5);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3, 4);
             var actual = completelyComposedFunction(5);
@@ -131,8 +132,8 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void SixParamFunctionIsComposableWithOneParam()
         {
-            Func<int, int, int, int, int, int, int> testFunction =
-                (p1, p2, p3, p4, p5, p6) => (p1 + p2) * (p3 + p4) * (p5 + p6);
+            var testFunction =
+                Lambda((int p1, int p2, int p3, int p4, int p5, int p6) => (p1 + p2) * (p3 + p4) * (p5 + p6));
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var partiallyComposedFunction1 = testFunction.Apply(1);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(2);
@@ -146,8 +147,8 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void SixParamFunctionIsComposableWithTwoParams()
         {
-            Func<int, int, int, int, int, int, int> testFunction =
-                (p1, p2, p3, p4, p5, p6) => (p1 + p2) * (p3 + p4) * (p5 + p6);
+            var testFunction =
+                Lambda((int p1, int p2, int p3, int p4, int p5, int p6) => (p1 + p2) * (p3 + p4) * (p5 + p6));
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var partiallyComposedFunction1 = testFunction.Apply(1, 2);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(3);
@@ -160,8 +161,8 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void SixParamFunctionIsComposableWithThreeParams()
         {
-            Func<int, int, int, int, int, int, int> testFunction =
-                (p1, p2, p3, p4, p5, p6) => (p1 + p2) * (p3 + p4) * (p5 + p6);
+            var testFunction =
+                Lambda((int p1, int p2, int p3, int p4, int p5, int p6) => (p1 + p2) * (p3 + p4) * (p5 + p6));
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var partiallyComposedFunction1 = testFunction.Apply(1, 2, 3);
             var partiallyComposedFunction2 = partiallyComposedFunction1.Apply(4);
@@ -173,8 +174,8 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void SixParamFunctionIsComposableWithFourParams()
         {
-            Func<int, int, int, int, int, int, int> testFunction =
-                (p1, p2, p3, p4, p5, p6) => (p1 + p2) * (p3 + p4) * (p5 + p6);
+            var testFunction =
+                Lambda((int p1, int p2, int p3, int p4, int p5, int p6) => (p1 + p2) * (p3 + p4) * (p5 + p6));
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var partiallyComposedFunction = testFunction.Apply(1, 2, 3, 4);
             var completelyComposedFunction = partiallyComposedFunction.Apply(5);
@@ -185,8 +186,8 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         [Test]
         public void SixParamFunctionIsComposableWithFiveParams()
         {
-            Func<int, int, int, int, int, int, int> testFunction =
-                (p1, p2, p3, p4, p5, p6) => (p1 + p2) * (p3 + p4) * (p5 + p6);
+            var testFunction =
+                Lambda((int p1, int p2, int p3, int p4, int p5, int p6) => (p1 + p2) * (p3 + p4) * (p5 + p6));
             var expected = testFunction(1, 2, 3, 4, 5, 6);
             var completelyComposedFunction = testFunction.Apply(1, 2, 3, 4, 5);
             var actual = completelyComposedFunction(6);

@@ -1,4 +1,5 @@
 ﻿using System;
+using SuccincT.Functional;
 
 namespace SuccincT.Options
 {
@@ -39,13 +40,13 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public ValueOrErrorMatcher<TResult> Match<TResult>() => new ValueOrErrorMatcher<TResult>(this);
+        public IValueOrErrorFuncMatcher<TResult> Match<TResult>() => new ValueOrErrorMatcher<TResult>(this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
         /// associated with the match.
         /// </summary>
-        public ValueOrErrorMatcher Match() => new ValueOrErrorMatcher(this);
+        public IValueOrErrorActionMatcher Match() => new ValueOrErrorMatcher<Unit>(this);
 
         /// <summary>
         /// True if created via WithValue(), else false.

@@ -1,0 +1,79 @@
+using System;
+using System.Collections.Generic;
+using SuccincT.PatternMatchers;
+using SuccincT.Unions;
+using SuccincT.Unions.PatternMatchers;
+
+namespace SuccincT.Options
+{
+    /// <summary>
+    /// Fluent class created by Option{T}.Match{TResult}(). Whilst this is a public class (as the user needs access
+    /// to Some(), None() and Else()), it has an internal constructor as it's intended for internal
+    /// pattern matching usage only.
+    /// </summary>
+    public sealed class OptionMatcher<T, TResult> : IUnionOfTwoPatternMatcherAfterElse<TResult>
+    {
+        private readonly Union<T, None> _union;
+        private readonly Option<T> _option;
+
+        private readonly MatchFunctionSelector<T, TResult> _case1FunctionSelector =
+            new MatchFunctionSelector<T, TResult>(
+                x => { throw new NoMatchException("No match action defined for Option with value"); });
+
+        private readonly MatchFunctionSelector<None, TResult> _case2FunctionSelector =
+            new MatchFunctionSelector<None, TResult>(
+                x => { throw new NoMatchException("No match action defined for Option with no value"); });
+
+        private Func<Option<T>, TResult> _elseAction;
+
+        internal OptionMatcher(Union<T, None> union, Option<T> option)
+        {
+            _union = union;
+            _option = option;
+        }
+
+        public UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult> Some() => 
+            new UnionPatternCaseHandler<OptionMatcher<T, TResult>, T, TResult>(RecordAction, this);
+
+        public NoneMatchHandler<T, TResult> None() => 
+            new NoneMatchHandler<T, TResult>(RecordAction, this);
+
+        public IUnionOfTwoPatternMatcherAfterElse<TResult> Else(Func<Option<T>, TResult> elseAction)
+        {
+            _elseAction = elseAction;
+            return this;
+        }
+
+        public IUnionOfTwoPatternMatcherAfterElse<TResult> Else(TResult elseValue)
+        {
+            _elseAction = _ => elseValue;
+            return this;
+        }
+
+        public TResult Result()
+        {
+            TResult possibleResult;
+            if (_union.Case == Variant.Case1)
+            {
+                return _case1FunctionSelector.DetermineResult(_union.Case1, out possibleResult)
+                    ? possibleResult
+                    : _elseAction(_option);
+            }
+
+            return _case2FunctionSelector.DetermineResult(_union.Case2, out possibleResult)
+                ? possibleResult
+                : _elseAction(_option);
+        }
+
+        private void RecordAction(Func<T, IList<T>, bool> withTest,
+                                  Func<T, bool> whereTest,
+                                  IList<T> withData,
+                                  Func<T, TResult> action)
+        {
+            _case1FunctionSelector.AddTestAndAction(withTest, withData, whereTest, action);
+        }
+
+        private void RecordAction(Func<TResult> action) => 
+            _case2FunctionSelector.AddTestAndAction((x, y) => true, null, null, x => action());
+    }
+}

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2, T3, T4>
+    public sealed class Union<T1, T2, T3, T4> : IUnion<T1, T2, T3, T4>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -93,11 +94,11 @@ namespace SuccincT.Unions
             }
         }
 
-        public UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() => 
-            new UnionOfFourPatternMatcher<T1, T2, T3, T4, TResult>(this);
+        public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() => 
+            new UnionPatternMatcher<T1, T2, T3, T4, TResult>(this);
 
-        public UnionOfFourPatternMatcher<T1, T2, T3, T4> Match() => 
-            new UnionOfFourPatternMatcher<T1, T2, T3, T4>(this);
+        public IUnionActionPatternMatcher<T1, T2, T3, T4> Match() => 
+            new UnionPatternMatcher<T1, T2, T3, T4, Unit>(this);
 
         public override bool Equals(Object obj)
         {

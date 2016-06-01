@@ -1,6 +1,8 @@
 ﻿using NUnit.Framework;
+using SuccincT.Functional;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -80,7 +82,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>(2);
             try
             {
-                var _ = union.Case2;
+                Unit.Ignore(union.Case2);
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)
@@ -152,7 +154,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors, Animals>(Colors.Green);
             try
             {
-                var _ = union.Case4;
+                Ignore(union.Case4);
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)
