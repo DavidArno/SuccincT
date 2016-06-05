@@ -21,7 +21,7 @@ namespace SuccinctExamples
 
             askMethod();
             return getValueMethod()
-                .ParseInt()
+                .TryParseInt()
                 .Match<Option<int>>()
                 .Some().Where(i => i >= minValue && i <= maxValue).Do(Option<int>.Some)
                 .Else(_ => numberOfAttempts.Match().To<Option<int>>()

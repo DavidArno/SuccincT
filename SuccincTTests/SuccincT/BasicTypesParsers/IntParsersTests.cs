@@ -18,119 +18,119 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         [Test]
         public void ValidIntString_ResultsInValue()
         {
-            var result = "12345".ParseInt();
+            var result = "12345".TryParseInt();
             AreEqual(12345, result.Value);
         }
 
         [Test]
         public void ValidNegativeIntString_ResultsInValue()
         {
-            var result = "-12345".ParseInt();
+            var result = "-12345".TryParseInt();
             AreEqual(-12345, result.Value);
         }
 
         [Test]
         public void InvalidIntString_ResultsInNone()
         {
-            var result = "la la".ParseInt();
+            var result = "la la".TryParseInt();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void OutOfRangeIntString_ResultsInNone()
         {
-            var result = "-3000000000".ParseInt();
+            var result = "-3000000000".TryParseInt();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidUnsignedIntString_ResultsInValue()
         {
-            var result = "4000000000".ParseUnsignedInt();
+            var result = "4000000000".TryParseUnsignedInt();
             AreEqual(4000000000, result.Value);
         }
 
         [Test]
         public void InvalidUnsignedIntString_ResultsInNone()
         {
-            var result = "-1".ParseUnsignedInt();
+            var result = "-1".TryParseUnsignedInt();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidSignedByteString_ResultsInValue()
         {
-            var result = "-123".ParseSignedByte();
+            var result = "-123".TryParseSignedByte();
             AreEqual(-123, result.Value);
         }
 
         [Test]
         public void InvalidSignedByteString_ResultsInNone()
         {
-            var result = "180".ParseSignedByte();
+            var result = "180".TryParseSignedByte();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidUnsignedByteString_ResultsInValue()
         {
-            var result = "200".ParseUnsignedByte();
+            var result = "200".TryParseUnsignedByte();
             AreEqual(200, result.Value);
         }
 
         [Test]
         public void InvalidUnsignedByteString_ResultsInNone()
         {
-            var result = "-1".ParseUnsignedByte();
+            var result = "-1".TryParseUnsignedByte();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidShortString_ResultsInValue()
         {
-            var result = "-10000".ParseShort();
+            var result = "-10000".TryParseShort();
             AreEqual(-10000, result.Value);
         }
 
         [Test]
         public void InvalidShortString_ResultsInNone()
         {
-            var result = "200000".ParseShort();
+            var result = "200000".TryParseShort();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidUnsignedShortString_ResultsInValue()
         {
-            var result = "300".ParseUnsignedShort();
+            var result = "300".TryParseUnsignedShort();
             AreEqual(300, result.Value);
         }
 
         [Test]
         public void InvalidUnsignedShortString_ResultsInNone()
         {
-            var result = "-1000".ParseUnsignedShort();
+            var result = "-1000".TryParseUnsignedShort();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidLongString_ResultsInValue()
         {
-            var result = "-23000000000".ParseLong();
+            var result = "-23000000000".TryParseLong();
             AreEqual(-23000000000, result.Value);
         }
 
         [Test]
         public void InvalidLongString_ResultsInNone()
         {
-            var result = "not a number".ParseLong();
+            var result = "not a number".TryParseLong();
             IsFalse(result.HasValue);
         }
 
         [Test]
         public void ValidUnsignedLongString_ResultsInValue()
         {
-            var result = "18446744073709551615".ParseUnsignedLong();
+            var result = "18446744073709551615".TryParseUnsignedLong();
             AreEqual(18446744073709551615, result.Value);
         }
     }

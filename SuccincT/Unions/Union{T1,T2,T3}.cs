@@ -98,7 +98,7 @@ namespace SuccincT.Unions
             return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) => !(a == b);
+        public static bool operator !=(Union<T1, T2, T3> p1, Union<T1, T2, T3> p2) => !(p1 == p2);
 
         private bool UnionsEqual(Union<T1, T2, T3> testObject) => 
             Case == testObject.Case && _unionsMatch[Case](testObject);

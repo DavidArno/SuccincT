@@ -13,35 +13,35 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         [Test]
         public void ValidTrueBooleanString_ResultsInValue()
         {
-            var result = "true".ParseBoolean();
+            var result = "true".TryParseBoolean();
             Assert.IsTrue(result.Value);
         }
 
         [Test]
         public void ValidFalseBooleanString_ResultsInValue()
         {
-            var result = "false".ParseBoolean();
+            var result = "false".TryParseBoolean();
             Assert.IsFalse(result.Value);
         }
 
         [Test]
         public void ValidBooleanString_ResultsInHavingValue()
         {
-            var result = "true".ParseBoolean();
+            var result = "true".TryParseBoolean();
             Assert.IsTrue(result.HasValue);
         }
 
         [Test]
         public void InvalidBooleanString_ResultsInNone()
         {
-            var result = "maybe".ParseBoolean();
+            var result = "maybe".TryParseBoolean();
             Assert.IsFalse(result.HasValue);
         }
 
         [Test, ExpectedException(typeof(InvalidOperationException))]
         public void InvalidBooleanString_ResultsInExceptionIfValueRead()
         {
-            var result = "maybe".ParseBoolean();
+            var result = "maybe".TryParseBoolean();
             Assert.IsFalse(result.Value);
         }
     }

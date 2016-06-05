@@ -66,11 +66,11 @@ namespace SuccincT.Unions
 
         public override int GetHashCode() => _hashCodes[Case]();
 
-        public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
+        public static bool operator ==(Union<T1, T2> p1, Union<T1, T2> p2)
         {
-            var aObj = (object) a;
-            var bObj = (object) b;
-            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+            var aObj = (object) p1;
+            var bObj = (object) p2;
+            return (aObj == null && bObj == null) || (aObj != null && p1.Equals(p2));
         }
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);

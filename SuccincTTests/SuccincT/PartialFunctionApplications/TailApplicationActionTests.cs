@@ -70,7 +70,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void TwoParamActionWithOptionalBool_IsTailComposable()
         {
             var result = 0;
-            ActionWithOptionalParam<int, bool> testAction = (p1, p2) => result = p1 * (p2 ? 1 : 0);
+            ActionWithOptionalParameter<int, bool> testAction = (p1, p2) => result = p1 * (p2 ? 1 : 0);
             testAction(2, true);
             var expected = result;
             result = 0;
@@ -84,7 +84,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void ThreeParamActionWithOptionalBool_IsTailComposable()
         {
             var result = 0;
-            ActionWithOptionalParam<int, int, bool> testAction = (p1, p2, p3) => result = (p1 + p2) * (p3 ? 1 : 0);
+            ActionWithOptionalParameter<int, int, bool> testAction = (p1, p2, p3) => result = (p1 + p2) * (p3 ? 1 : 0);
             testAction(1, 2, true);
             var expected = result;
             result = 0;
@@ -98,7 +98,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void FourParamActionWithOptionalBool_IsTailComposable()
         {
             var result = 0;
-            ActionWithOptionalParam<int, int, int, bool> testAction =
+            ActionWithOptionalParameter<int, int, int, bool> testAction =
                 (p1, p2, p3, p4) => result = (p1 + p2 + p3) * (p4 ? 1 : 0);
             testAction(1, 2, 3, true);
             var expected = result;
@@ -113,7 +113,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void FiveParamActionWithOptionalBool_IsTailComposable()
         {
             var result = 0;
-            ActionWithOptionalParam<int, int, int, int, bool> testAction =
+            ActionWithOptionalParameter<int, int, int, int, bool> testAction =
                 (p1, p2, p3, p4, p5) => result = (p1 + p2) * (p3 + p4) * (p5 ? 1 : 0);
             testAction(1, 2, 3, 4, true);
             var expected = result;
@@ -128,7 +128,7 @@ namespace SuccincTTests.SuccincT.PartialFunctionApplications
         public void TwoParamActionWithOptionalTrueUsingTestAction_IsTailComposable()
         {
             _testFunctionResult = 0;
-            ActionWithOptionalParam<int, bool> testAction = TestActionDefaultTrue;
+            ActionWithOptionalParameter<int, bool> testAction = TestActionDefaultTrue;
             testAction(2, true);
             var expectedWhenTrue = _testFunctionResult;
             _testFunctionResult = 0;

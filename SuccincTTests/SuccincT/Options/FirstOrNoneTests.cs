@@ -11,7 +11,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void FirstOrNoneWithNull_ReturnsNone()
         {
-            Assert.IsFalse(OptionExtensionsForIEnumerable.FirstOrNone<bool>(null).HasValue);
+            Assert.IsFalse(OptionExtensionsForIEnumerable.TryFirst<bool>(null).HasValue);
         }
 
         [Test]
@@ -23,7 +23,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void FirstOrNoneWithEmptyCollection_ReturnsNone()
         {
-            Assert.IsFalse(new List<bool>().FirstOrNone().HasValue);
+            Assert.IsFalse(new List<bool>().TryFirst().HasValue);
         }
 
         [Test]
@@ -36,13 +36,13 @@ namespace SuccincTTests.SuccincT.Options
         public void FirstOrNoneWithList_ReturnsFirstElement()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.AreEqual(1, collection.FirstOrNone().Value);
+            Assert.AreEqual(1, collection.TryFirst().Value);
         }
 
         [Test]
         public void FirstOrNoneWithNoListCollection_ReturnsFirstElement()
         {
-            Assert.AreEqual(1, IntCollection().FirstOrNone().Value);
+            Assert.AreEqual(1, IntCollection().TryFirst().Value);
         }
 
         [Test]

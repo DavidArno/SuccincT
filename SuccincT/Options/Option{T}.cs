@@ -1,6 +1,7 @@
 ﻿using System;
 using SuccincT.Functional;
 using SuccincT.Unions;
+using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
 {
@@ -13,7 +14,7 @@ namespace SuccincT.Options
 
         private Option()
         {
-            _union = new Union<T, None>(Unions.None.Value);
+            _union = new Union<T, None>(none);
         }
 
         private Option(T value)

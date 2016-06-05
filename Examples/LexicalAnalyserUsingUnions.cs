@@ -28,19 +28,19 @@ namespace SuccinctExamples
 
         private static Union<string, long, bool, double> DetermineTokenType(string rawToken)
         {
-            var possibleLong = rawToken.ParseLong();
+            var possibleLong = rawToken.TryParseLong();
             return possibleLong.HasValue ? Creator.Create(possibleLong.Value) : DetermineIfBoolDoubleOrString(rawToken);
         }
 
         private static Union<string, long, bool, double> DetermineIfBoolDoubleOrString(string rawToken)
         {
-            var possibleBool = rawToken.ParseBoolean();
+            var possibleBool = rawToken.TryParseBoolean();
             return possibleBool.HasValue ? Creator.Create(possibleBool.Value) : DetermineIfDoubleOrString(rawToken);
         }
 
         private static Union<string, long, bool, double> DetermineIfDoubleOrString(string rawToken)
         {
-            var possibleDouble = rawToken.ParseDouble();
+            var possibleDouble = rawToken.TryParseDouble();
             return possibleDouble.HasValue ? Creator.Create(possibleDouble.Value) : Creator.Create(rawToken);
         }
     }

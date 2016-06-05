@@ -5,10 +5,14 @@ namespace SuccincT.Options
 {
     public interface IValueOrErrorActionMatcher
     {
-        IUnionActionPatternMatcherAfterElse Else(Action<ValueOrError> elseAction);
-        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> Error();
-        void Exec();
-        IUnionActionPatternMatcherAfterElse IgnoreElse();
         IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> Value();
+
+        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> Error();
+
+        IUnionActionPatternMatcherAfterElse Else(Action<ValueOrError> elseAction);
+
+        IUnionActionPatternMatcherAfterElse IgnoreElse();
+
+        void Exec();
     }
 }

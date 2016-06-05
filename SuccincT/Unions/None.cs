@@ -1,4 +1,5 @@
-﻿namespace SuccincT.Unions
+﻿// ReSharper disable InconsistentNaming - "none" seems a better fit name than "Value". 
+namespace SuccincT.Unions
 {
     /// <summary>
     /// Singleton value class that encapsulates the None literal used by various Succinct classes.
@@ -8,9 +9,10 @@
         private None() { }
 
         /// <summary>
-        /// The sole implemented value of None. f used with the the Option{T} type, this value need never be explicitly
+        /// The sole implemented value of None. If used with the the Option{T} type, this value need never be explicitly
         /// accessed. However, it is exposed for third-party use, should the need arise
         /// </summary>
-        public static None Value { get; } = new None();
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "none")]
+        public static None none { get; } = new None();
     }
 }

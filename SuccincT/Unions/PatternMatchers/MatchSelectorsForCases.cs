@@ -136,6 +136,7 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         private TResult ElseFunction(IUnion<T1, T2, T3, T4> union)
         {
             if (union is Union<T1, T2>)

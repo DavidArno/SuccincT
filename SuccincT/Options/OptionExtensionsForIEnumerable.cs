@@ -11,7 +11,7 @@ namespace SuccincT.Options
     //
     public static class OptionExtensionsForIEnumerable
     {
-        public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection)
+        public static Option<T> TryFirst<T>(this IEnumerable<T> collection)
         {
             if (collection == null) return Option<T>.None();
 
@@ -150,5 +150,9 @@ namespace SuccincT.Options
 
             return Option<T>.None();
         }
+
+        [Obsolete("FirstOrNone has been replaced with TryFirst and will be removed in v2.1.")]
+        public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection) => collection.TryFirst();
+
     }
 }

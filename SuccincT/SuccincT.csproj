@@ -45,6 +45,8 @@
     <DocumentationFile>
     </DocumentationFile>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <CodeAnalysisRuleSet>Code analysis rules as errors.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -110,7 +112,6 @@
     <Compile Include="PatternMatchers\Matcher{T1.TR}.cs" />
     <Compile Include="PatternMatchers\MatchFunctionSelector{T,TR}.cs" />
     <Compile Include="PatternMatchers\SpecificTypeMatcherExtensions.cs" />
-    <Compile Include="PatternMatchers\TupleComparers.cs" />
     <Compile Include="PatternMatchers\IFuncWithHandler{TM,T1,TR}.cs" />
     <Compile Include="PatternMatchers\IActionWithHandler{TM,T1}.cs" />
     <Compile Include="PatternMatchers\IFuncWhereHandler{TM,T1,TR}.cs" />
