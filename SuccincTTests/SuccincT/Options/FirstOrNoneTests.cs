@@ -17,7 +17,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void FirstOrNoneWithNullAndFunc_ReturnsNone()
         {
-            Assert.IsFalse(OptionExtensionsForIEnumerable.FirstOrNone<bool>(null, x => true).HasValue);
+            Assert.IsFalse(OptionExtensionsForIEnumerable.TryFirst<bool>(null, x => true).HasValue);
         }
 
         [Test]
@@ -29,7 +29,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void FirstOrNoneWithEmptyCollectionAndFunc_ReturnsNone()
         {
-            Assert.IsFalse(new List<bool>().FirstOrNone(x => true).HasValue);
+            Assert.IsFalse(new List<bool>().TryFirst(x => true).HasValue);
         }
 
         [Test]
@@ -49,14 +49,14 @@ namespace SuccincTTests.SuccincT.Options
         public void FirstOrNoneWithCollectionAndFunc_ReturnsCorrectElement()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.AreEqual(2, collection.FirstOrNone(x => x == 2).Value);
+            Assert.AreEqual(2, collection.TryFirst(x => x == 2).Value);
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
         public void FirstOrNoneWithNullFunc_ThrowsExcpetion()
         {
             var collection = new List<int> { 1, 2, 3 };
-            var failMessage = collection.FirstOrNone(null).HasValue ? "value" : "none";
+            var failMessage = collection.TryFirst(null).HasValue ? "value" : "none";
             Assert.Fail($"Expected exception but call returned {failMessage}");
         }
 

@@ -32,7 +32,7 @@ namespace SuccincT.Options
             return Option<T>.None();
         }
 
-        public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        public static Option<T> TryFirst<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate)); }
 
@@ -46,7 +46,7 @@ namespace SuccincT.Options
             return Option<T>.None();
         }
 
-        public static Option<T> LastOrNone<T>(this IEnumerable<T> collection)
+        public static Option<T> TryLast<T>(this IEnumerable<T> collection)
         {
             if (collection == null) return Option<T>.None();
 
@@ -72,7 +72,7 @@ namespace SuccincT.Options
             return Option<T>.None();
         }
 
-        public static Option<T> LastOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        public static Option<T> TryLast<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             if (predicate == null) { throw new ArgumentNullException(nameof(predicate)); }
 
@@ -87,7 +87,7 @@ namespace SuccincT.Options
             return result;
         }
 
-        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection)
+        public static Option<T> TrySingle<T>(this IEnumerable<T> collection)
         {
             if (collection == null) return Option<T>.None();
 
@@ -109,7 +109,7 @@ namespace SuccincT.Options
             return Option<T>.None();
         }
 
-        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+        public static Option<T> TrySingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             if (predicate == null) throw new ArgumentNullException(nameof(predicate));
 
@@ -129,7 +129,7 @@ namespace SuccincT.Options
             return count == 1 ? result : Option<T>.None();
         }
 
-        public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> collection, int index)
+        public static Option<T> TryElementAt<T>(this IEnumerable<T> collection, int index)
         {
             if (collection == null || index < 0) return Option<T>.None();
 
@@ -154,5 +154,26 @@ namespace SuccincT.Options
         [Obsolete("FirstOrNone has been replaced with TryFirst and will be removed in v2.1.")]
         public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection) => collection.TryFirst();
 
+        [Obsolete("FirstOrNone has been replaced with TryFirst and will be removed in v2.1.")]
+        public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
+            collection.TryFirst(predicate);
+
+        [Obsolete("LastOrNone has been replaced with TryLast and will be removed in v2.1.")]
+        public static Option<T> LastOrNone<T>(this IEnumerable<T> collection) => collection.TryLast();
+
+        [Obsolete("LastOrNone has been replaced with TryLast and will be removed in v2.1.")]
+        public static Option<T> LastOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
+            collection.TryLast(predicate);
+
+        [Obsolete("SingleOrNone has been replaced with TrySingle and will be removed in v2.1.")]
+        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection) => collection.TrySingle();
+
+        [Obsolete("SingleOrNone has been replaced with TrySingle and will be removed in v2.1.")]
+        public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
+            collection.TrySingle(predicate);
+
+        [Obsolete("ElementAtOrNone has been replaced with TryElementAt and will be removed in v2.1.")]
+        public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> collection, int index) =>
+            collection.TryElementAt(index);
     }
 }

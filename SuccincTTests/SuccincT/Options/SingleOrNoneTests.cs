@@ -6,77 +6,77 @@ using SuccincT.Options;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public class SingleOrNoneTests
+    public class TrySingleTests
     {
         [Test]
-        public void SingleOrNoneWithNull_ReturnsNone()
+        public void TrySingleWithNull_ReturnsNone()
         {
-            Assert.IsFalse(OptionExtensionsForIEnumerable.SingleOrNone<bool>(null).HasValue);
+            Assert.IsFalse(OptionExtensionsForIEnumerable.TrySingle<bool>(null).HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithNullAndFunc_ReturnsNone()
+        public void TrySingleWithNullAndFunc_ReturnsNone()
         {
-            Assert.IsFalse(OptionExtensionsForIEnumerable.SingleOrNone<bool>(null, x => true).HasValue);
+            Assert.IsFalse(OptionExtensionsForIEnumerable.TrySingle<bool>(null, x => true).HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithEmptyCollection_ReturnsNone()
+        public void TrySingleWithEmptyCollection_ReturnsNone()
         {
-            Assert.IsFalse(new List<bool>().SingleOrNone().HasValue);
+            Assert.IsFalse(new List<bool>().TrySingle().HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithEmptyCollectionAndFunc_ReturnsNone()
+        public void TrySingleWithEmptyCollectionAndFunc_ReturnsNone()
         {
-            Assert.IsFalse(new List<bool>().SingleOrNone(x => true).HasValue);
+            Assert.IsFalse(new List<bool>().TrySingle(x => true).HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithSingleItemList_ReturnsElement()
+        public void TrySingleWithSingleItemList_ReturnsElement()
         {
             var collection = new List<int> { 1 };
-            Assert.AreEqual(1, collection.LastOrNone().Value);
+            Assert.AreEqual(1, collection.TryLast().Value);
         }
 
         [Test]
-        public void SingleOrNoneWithMultipleItemList_ReturnsNone()
+        public void TrySingleWithMultipleItemList_ReturnsNone()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.IsFalse(collection.SingleOrNone().HasValue);
+            Assert.IsFalse(collection.TrySingle().HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithSingleItemNonListCollection_ReturnsElement()
+        public void TrySingleWithSingleItemNonListCollection_ReturnsElement()
         {
-            Assert.AreEqual(1, SingleIntCollection().SingleOrNone().Value);
+            Assert.AreEqual(1, SingleIntCollection().TrySingle().Value);
         }
 
         [Test]
-        public void SingleOrNoneWithMultiItemNonListCollection_ReturnsNone()
+        public void TrySingleWithMultiItemNonListCollection_ReturnsNone()
         {
-            Assert.IsFalse(MultiIntCollection().SingleOrNone().HasValue);
+            Assert.IsFalse(MultiIntCollection().TrySingle().HasValue);
         }
 
         [Test]
-        public void SingleOrNoneWithCollectionAndMatchOneElementFunc_ReturnsElement()
-        {
-            var collection = new List<int> { 1, 2, 3 };
-            Assert.AreEqual(2, collection.SingleOrNone(x => x == 2).Value);
-        }
-
-        [Test]
-        public void SingleOrNoneWithCollectionAndMatchManyElementFunc_ReturnsNone()
+        public void TrySingleWithCollectionAndMatchOneElementFunc_ReturnsElement()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.IsFalse(collection.SingleOrNone(x => true).HasValue);
+            Assert.AreEqual(2, collection.TrySingle(x => x == 2).Value);
+        }
+
+        [Test]
+        public void TrySingleWithCollectionAndMatchManyElementFunc_ReturnsNone()
+        {
+            var collection = new List<int> { 1, 2, 3 };
+            Assert.IsFalse(collection.TrySingle(x => true).HasValue);
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
-        public void SingleOrNoneWithNullFunc_ThrowsExcpetion()
+        public void TrySingleWithNullFunc_ThrowsExcpetion()
         {
             var collection = new List<int> { 1, 2, 3 };
-            var failMessage = collection.SingleOrNone(null).HasValue ? "value" : "none";
+            var failMessage = collection.TrySingle(null).HasValue ? "value" : "none";
             Assert.Fail($"Expected exception but call returned {failMessage}");
         }
 
