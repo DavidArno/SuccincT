@@ -5,6 +5,6 @@
     /// </summary>
     public static class Version
     {
-        public const string AssemblyVersion = "1.7.0.3";
+        public const string AssemblyVersion = "1.7.1.0";
     }
 }

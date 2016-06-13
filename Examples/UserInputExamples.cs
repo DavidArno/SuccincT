@@ -16,7 +16,7 @@ namespace SuccinctExamples
                                                     int maxValue,
                                                     int numberOfAttempts)
         {
-            var askAgain = Lambda<Action, Action, Func<string>, int, int, int, Option<int>>(GetNumberFromUser)
+            var askAgain = Func<Action, Action, Func<string>, int, int, int, Option<int>>(GetNumberFromUser)
                 .Apply(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
 
             askMethod();

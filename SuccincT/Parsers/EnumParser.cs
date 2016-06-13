@@ -32,6 +32,7 @@ namespace SuccincT.Parsers
         /// not an enum.
         /// </typeparam>
         [Obsolete("ParseEnum has been replaced with TryParseEnum and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> ParseEnum<T>(this string source) where T : struct, IConvertible =>
             Parse<T>(source, false);
 
@@ -57,6 +58,7 @@ namespace SuccincT.Parsers
         /// not an enum.
         /// </typeparam>
         [Obsolete("ParseEnumIgnoringCase has been replaced with TryParseEnumIgnoringCase and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> ParseEnumIgnoringCase<T>(this string source) where T : struct, IConvertible =>
             Parse<T>(source, true);
 

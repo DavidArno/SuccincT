@@ -38,15 +38,6 @@ namespace SuccincT.Unions
             };
         }
 
-        // Used purely for ValueOrError, as that is a Union<string, string>, which isn't normally
-        // allowed.
-        internal Union(T1 case1Value, T2 case2Value, Variant caseToUse)
-        {
-            _value1 = case1Value;
-            _value2 = case2Value;
-            Case = caseToUse;
-        }
-
         public Variant Case { get; }
 
         public T1 Case1 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case1, _value1);

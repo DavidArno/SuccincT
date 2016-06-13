@@ -4,26 +4,25 @@ using SuccincT.Options;
 using SuccinctExamples;
 using SuccincT.Functional;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.TypedLambdas;
 
 namespace SuccincTTests.WorkedExamplesTests
 {
     [TestFixture]
     internal class UserInputExamplesTests
     {
-        private static readonly Func<Action, Action, Func<string>, int, int, int, Option<int>> GetNumber =
-            UserInputExamples.GetNumberFromUser;
-
-        private static readonly Func<Action, Action, Func<string>, Option<int>> GetNumberBetween0And10 =
-            GetNumber.TailApply(2).TailApply(10).TailApply(0);
+        private static readonly Func<Action, Action, Func<string>, Option<int>> GetNumberBetween0And10Max2Times =
+           Func<Action, Action, Func<string>, int, int, int, Option<int>>(UserInputExamples.GetNumberFromUser)
+            .TailApply(2).TailApply(10).TailApply(0);
 
         [Test]
         public void ProvidingValidValue1stTime_CallsAskAndGetValueAndReturnsValue()
         {
             var askedCalled = false;
             var reAskCalled = false;
-            var result = GetNumberBetween0And10(() => askedCalled = true,
-                                                () => reAskCalled = true,
-                                                () => "10");
+            var result = GetNumberBetween0And10Max2Times(() => askedCalled = true,
+                                                         () => reAskCalled = true,
+                                                         () => "10");
             IsTrue(askedCalled);
             IsFalse(reAskCalled);
             AreEqual(10, result.Value);
@@ -36,7 +35,7 @@ namespace SuccincTTests.WorkedExamplesTests
             var reAskCalled = false;
             var responses = new[] { "-1", "9" };
             var index = 0;
-            var result = GetNumberBetween0And10(() => askedCalled = true,
+            var result = GetNumberBetween0And10Max2Times(() => askedCalled = true,
                                                 () => reAskCalled = true,
                                                 () => responses[index++]);
             IsTrue(askedCalled);
@@ -45,13 +44,13 @@ namespace SuccincTTests.WorkedExamplesTests
         }
 
         [Test]
-        public void ProvidingValidValue3rdTime_CallsAskAndAskAgainAndGetValueAndReturnsNone()
+        public void ProvidingValidValue3rdTime_CallsAskAndAskAgainButNotThirdTimeAndReturnsNone()
         {
             var askedCalled = false;
             var reAskCalled = false;
             var responses = new[] { "-1", "11", "5" };
             var index = 0;
-            var result = GetNumberBetween0And10(() => askedCalled = true,
+            var result = GetNumberBetween0And10Max2Times(() => askedCalled = true,
                                                 () => reAskCalled = true,
                                                 () => responses[index++]);
             IsTrue(askedCalled);

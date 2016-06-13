@@ -7,157 +7,157 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public sealed class OptionTests
+    public sealed class MaybeTests
     {
         [Test]
-        public void WhenOptionIsValue_ResultIsValue()
+        public void WhenMaybeIsValue_ResultIsValue()
         {
-            var result = Option<int>.Some(1);
+            var result = Maybe<int>.Some(1);
             AreEqual(1, result.Value);
         }
 
         [Test]
-        public void WhenOptionIsValue_ResultHasValue()
+        public void WhenMaybeIsValue_ResultHasValue()
         {
-            var result = Option<int>.Some(1);
+            var result = Maybe<int>.Some(1);
             IsTrue(result.HasValue);
         }
 
         [Test]
-        public void WhenOptionNotValue_ResultIsNone()
+        public void WhenMaybeNotValue_ResultIsNone()
         {
-            var result = Option<int>.None();
+            var result = Maybe<int>.None();
             IsFalse(result.HasValue);
         }
 
         [Test]
-        public void WhenOptionIsValueAndCastToMaybe_ResultIsStillValue()
+        public void WhenMaybeIsValueAndCastToOption_ResultIsStillValue()
         {
-            Maybe<int> result = Option<int>.Some(1);
+            Option<int> result = Maybe<int>.Some(1);
             AreEqual(1, result.Value);
         }
 
         [Test]
-        public void WhenOptionIsValueAndCastToMaybe_MaybeHasValue()
+        public void WhenMaybeIsValueAndCastToOption_OptionHasValue()
         {
-            Maybe<int> result = Option<int>.Some(1);
+            Option<int> result = Maybe<int>.Some(1);
             IsTrue(result.HasValue);
         }
 
         [Test]
-        public void WhenOptionNotValueAndCastToMaybe_ResultIsStillNone()
+        public void WhenMaybeNotValueAndCastToOption_ResultIsStillNone()
         {
-            Maybe<int> result = Option<int>.None();
+            Option<int> result = Maybe<int>.None();
             IsFalse(result.HasValue);
         }
 
         [Test, ExpectedException(typeof(InvalidOperationException))]
-        public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
+        public void WhenMaybeNotValue_ResultsInExceptionIfValueRead()
         {
-            var result = Option<bool>.None();
+            var result = Maybe<bool>.None();
             IsFalse(result.Value);
         }
 
         [Test]
-        public void WhenOptionIsValue_ValueActionInvoked()
+        public void WhenMaybeIsValue_ValueActionInvoked()
         {
             var intValue = 0;
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             option.Match().Some().Do(x => intValue = x).None().Do(() => { }).Exec();
             AreEqual(1, intValue);
         }
 
         [Test]
-        public void WhenOptionIsNone_NoneActionInvoked()
+        public void WhenMaybeIsNone_NoneActionInvoked()
         {
             var noneInvoked = false;
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             option.Match().Some().Do(x => { }).None().Do(() => noneInvoked = true).Exec();
             IsTrue(noneInvoked);
         }
 
         [Test]
-        public void WhenOptionIsValue_ValueResultIsReturned()
+        public void WhenMaybeIsValue_ValueResultIsReturned()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().Some().Do(x => x).None().Do(() => 0).Result();
             AreEqual(1, result);
         }
 
         [Test]
-        public void WhenOptionIsNone_NoneResultIsReturned()
+        public void WhenMaybeIsNone_NoneResultIsReturned()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).None().Do(() => 0).Result();
             AreEqual(0, result);
         }
 
         [Test]
-        public void WhenOptionIsNoneElseIsDefinedAndNoNoneMatch_ElseResultIsReturned()
+        public void WhenMaybeIsNoneElseIsDefinedAndNoNoneMatch_ElseResultIsReturned()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Else(o => 0).Result();
             AreEqual(0, result);
         }
 
         [Test]
-        public void WhenOptionIsNoneElseIsDefinedAndNoNoneMatch_ElseExpressionIsReturned()
+        public void WhenMaybeIsNoneElseIsDefinedAndNoNoneMatch_ElseExpressionIsReturned()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Else(0).Result();
             AreEqual(0, result);
         }
 
         [Test]
-        public void WhenOptionIsSomeElseIsDefinedAndNoSomeMatch_ElseResultIsReturned()
+        public void WhenMaybeIsSomeElseIsDefinedAndNoSomeMatch_ElseResultIsReturned()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().None().Do(() => 0).Else(o => o.Value).Result();
             AreEqual(1, result);
         }
 
         [Test]
-        public void WhenOptionIsSomeElseIsDefinedAndSomeDoesntMatch_ElseResultIsReturned()
+        public void WhenMaybeIsSomeElseIsDefinedAndSomeDoesntMatch_ElseResultIsReturned()
         {
-            var option = Option<int>.Some(2);
+            var option = Maybe<int>.Some(2);
             var result = option.Match<int>().Some().Of(1).Do(x => 1).None().Do(() => 0).Else(o => o.Value).Result();
             AreEqual(2, result);
         }
 
         [Test, ExpectedException(typeof(NoMatchException))]
-        public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
+        public void WhenMaybeIsNoneAndNoMatchDefined_ExceptionThrown()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(x => 1).Result();
             AreEqual(0, result);
         }
 
         [Test, ExpectedException(typeof(NoMatchException))]
-        public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
+        public void WhenMaybeIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().None().Do(() => 0).Result();
             AreEqual(0, result);
         }
 
         [Test, ExpectedException(typeof(NoMatchException))]
-        public void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
+        public void WhenMaybeIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             option.Match().Some().Do(x => { }).Exec();
         }
 
         [Test, ExpectedException(typeof(NoMatchException))]
-        public void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
+        public void WhenMaybeIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             option.Match().None().Do(() => { }).Exec();
         }
 
         [Test]
         public void WhenSome_SimpleSomeDoWithExpressionSupported()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
             AreEqual(1, result);
         }
@@ -165,7 +165,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenSome_SomeOfDoWithExpressionSupported()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().Some().Of(1).Do(1).Some().Do(2).None().Do(3).Result();
             AreEqual(1, result);
         }
@@ -173,7 +173,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenSome_SomeWhereDoWithExpressionSupported()
         {
-            var option = Option<int>.Some(1);
+            var option = Maybe<int>.Some(1);
             var result = option.Match<int>().Some().Where(x => x < 2).Do(0).Some().Do(2).None().Do(3).Result();
             AreEqual(0, result);
         }
@@ -181,7 +181,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenNone_NoneDoWithExpressionSupported()
         {
-            var option = Option<int>.None();
+            var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
             AreEqual(2, result);
         }

@@ -25,6 +25,6 @@ namespace SuccincT.Functional
         public static Unit unit { get; } = new Unit();
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
-        public static void Ignore(object anything) { }
+        public static void Ignore<T>(T anything) { }
     }
 }

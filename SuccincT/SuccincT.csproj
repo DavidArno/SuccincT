@@ -65,6 +65,7 @@
     <Compile Include="Options\IValueOrErrorActionMatcher.cs" />
     <Compile Include="Options\IValueOrErrorFuncMatcher.cs" />
     <Compile Include="Options\OptionExtensionsForIEnumerable.cs" />
+    <Compile Include="Options\Maybe{T}.cs" />
     <Compile Include="PartialApplications\TailActionApplications.cs" />
     <Compile Include="PartialApplications\TailFunctionApplications.cs" />
     <Compile Include="GlobalSuppressions.cs" />

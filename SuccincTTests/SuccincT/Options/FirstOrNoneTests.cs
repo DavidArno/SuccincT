@@ -6,58 +6,66 @@ using SuccincT.Options;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public class FirstOrNoneTests
+    public class TryFirstTests
     {
         [Test]
-        public void FirstOrNoneWithNull_ReturnsNone()
+        public void TryFirstWithNull_ReturnsNone()
         {
             Assert.IsFalse(OptionExtensionsForIEnumerable.TryFirst<bool>(null).HasValue);
         }
 
         [Test]
-        public void FirstOrNoneWithNullAndFunc_ReturnsNone()
+        public void TryFirstWithNullAndFunc_ReturnsNone()
         {
             Assert.IsFalse(OptionExtensionsForIEnumerable.TryFirst<bool>(null, x => true).HasValue);
         }
 
         [Test]
-        public void FirstOrNoneWithEmptyCollection_ReturnsNone()
+        public void TryFirstWithEmptyCollection_ReturnsNone()
         {
             Assert.IsFalse(new List<bool>().TryFirst().HasValue);
         }
 
         [Test]
-        public void FirstOrNoneWithEmptyCollectionAndFunc_ReturnsNone()
+        public void TryFirstWithEmptyCollectionAndFunc_ReturnsNone()
         {
             Assert.IsFalse(new List<bool>().TryFirst(x => true).HasValue);
         }
 
         [Test]
-        public void FirstOrNoneWithList_ReturnsFirstElement()
+        public void TryFirstWithList_ReturnsFirstElement()
         {
             var collection = new List<int> { 1, 2, 3 };
             Assert.AreEqual(1, collection.TryFirst().Value);
         }
 
         [Test]
-        public void FirstOrNoneWithNoListCollection_ReturnsFirstElement()
+        public void TryFirstWithNoListCollection_ReturnsFirstElement()
         {
             Assert.AreEqual(1, IntCollection().TryFirst().Value);
         }
 
         [Test]
-        public void FirstOrNoneWithCollectionAndFunc_ReturnsCorrectElement()
+        public void TryFirstWithCollectionAndFunc_ReturnsCorrectElement()
         {
             var collection = new List<int> { 1, 2, 3 };
             Assert.AreEqual(2, collection.TryFirst(x => x == 2).Value);
         }
 
         [Test, ExpectedException(typeof(ArgumentNullException))]
-        public void FirstOrNoneWithNullFunc_ThrowsExcpetion()
+        public void TryFirstWithNullFunc_ThrowsExcpetion()
         {
             var collection = new List<int> { 1, 2, 3 };
             var failMessage = collection.TryFirst(null).HasValue ? "value" : "none";
             Assert.Fail($"Expected exception but call returned {failMessage}");
+        }
+
+        [Test]
+        public void TryFirst_CanBeAssignedToMaybe()
+        {
+            var collection = new List<int> { 1, 2, 3 };
+            Maybe<int> maybe = collection.TryFirst(x => x == 2);
+            Assert.AreEqual(2, maybe.Value);
         }
 
         private static IEnumerable<int> IntCollection()

@@ -5,6 +5,7 @@ namespace SuccincT.PartialApplications
     /// <summary>
     /// Extension methods for partially applying C# functions (ie, methods that return a value)
     /// </summary>
+        // ReSharper disable UnusedMember.Global - Obsolete
     public static class PartialFunctionApplications
     {
         /// <summary>

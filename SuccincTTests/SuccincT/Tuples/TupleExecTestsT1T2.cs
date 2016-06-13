@@ -65,8 +65,10 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = false;
-            tuple.Match().With(1, "b").Or(2, "a").Do((x, y) => result = false)
-                         .Where((x, y) => x == 1 && y == "a").Do((x, y) => result = true).Exec();
+            tuple.Match()
+                 .With(1, "b").Or(2, "a").Do((x, y) => result = false)
+                 .Where((x, y) => x == 1 && y == "a").Do((x, y) => result = true)
+                 .Exec();
             Assert.IsTrue(result);
         }
 
@@ -75,8 +77,10 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = false;
-            tuple.Match().With(1, "a").Or(2, "a").Do((x, y) => result = false)
-                         .Where((x, y) => x == 3 && y == "a").Do((x, y) => result = true).Exec();
+            tuple.Match()
+                .Where((x, y) => x == 3 && y == "a").Do((x, y) => result = true)
+                .With(1, "a").Or(2, "a").Do((x, y) => result = false)
+                .Exec();
             Assert.IsFalse(result);
         }
     }

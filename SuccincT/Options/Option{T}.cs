@@ -69,13 +69,12 @@ namespace SuccincT.Options
 
         public override int GetHashCode() => _union.GetHashCode();
 
-        public static bool operator ==(Option<T> a, Option<T> b)
+        public static bool operator ==(Option<T> a, object b)
         {
             var aObj = (object)a;
-            var bObj = (object)b;
-            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+            return (aObj == null && b == null) || (aObj != null && a.Equals(b));
         }
 
-        public static bool operator !=(Option<T> a, Option<T> b) => !(a == b);
+        public static bool operator !=(Option<T> a, object b) => !(a == b);
     }
 }

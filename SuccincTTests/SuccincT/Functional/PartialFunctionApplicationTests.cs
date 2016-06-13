@@ -10,7 +10,7 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void TwoParamFunctionIsComposable()
         {
-            var testFunction = TypedLambdas.Lambda((int p1, int p2) => p1 + p2);
+            var testFunction = TypedLambdas.Lambda<int>((p1, p2) => p1 + p2);
             var expected = testFunction(2, 3);
             var composedFunction = testFunction.Apply(2);
             var actual = composedFunction(3);

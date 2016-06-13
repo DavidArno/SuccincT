@@ -64,8 +64,14 @@
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
     <Compile Include="SuccincT\EnumParsers\EnumParserTests.cs" />
     <Compile Include="SuccincT\Functional\ActionExtensionsTests.cs" />
+    <Compile Include="SuccincT\Functional\TypedLambdasActionTests.cs" />
+    <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
+    <Compile Include="SuccincT\Functional\TypedLambdasTransformTests.cs" />
+    <Compile Include="SuccincT\Functional\TypedLambdasFuncTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
+    <Compile Include="SuccincT\Options\MaybeEqualityTests.cs" />
     <Compile Include="SuccincT\Options\OptionIgnoreElseTests.cs" />
+    <Compile Include="SuccincT\Options\MaybeTests.cs" />
     <Compile Include="SuccincT\Options\SingleOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\LastOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\FirstOrNoneTests.cs" />

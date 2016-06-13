@@ -87,9 +87,11 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
             var result = false;
-            tuple.Match().With(1, "a", Colors.Red, Animals.Cow)
-                         .Or(1, "a", Colors.Red, Animals.Goat).Do((w, x, y, z) => result = false)
-                         .Where((w, x, y, z) => z == Animals.Pig).Do((w, x, y, z) => result = true).Exec();
+            tuple.Match()
+                 .Where((w, x, y, z) => z == Animals.Pig).Do((w, x, y, z) => result = true)
+                 .With(1, "a", Colors.Red, Animals.Cow).Or(1, "a", Colors.Red, Animals.Goat)
+                 .Do((w, x, y, z) => result = false)
+                 .Exec();
             Assert.IsFalse(result);
         }
     }

@@ -42,9 +42,16 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TryElementAtWithNoListCollection_ReturnsCorrectElement()
+        public void TryElementAtWithNonListCollection_ReturnsCorrectElement()
         {
             Assert.AreEqual(2, IntCollection().TryElementAt(1).Value);
+        }
+
+        [Test]
+        public void TryElementAtResult_CanBeAssignedToMaybe()
+        {
+            Maybe<int> maybe = IntCollection().TryElementAt(1);
+            Assert.AreEqual(2, maybe.Value);
         }
 
         [Test]

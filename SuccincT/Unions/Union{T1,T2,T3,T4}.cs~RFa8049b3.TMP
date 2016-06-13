@@ -100,7 +100,7 @@ namespace SuccincT.Unions
         public IUnionActionPatternMatcher<T1, T2, T3, T4> Match() => 
             new UnionPatternMatcher<T1, T2, T3, T4, Unit>(this);
 
-        public override bool Equals(object obj)
+        public override bool Equals(Object obj)
         {
             var testObject = obj as Union<T1, T2, T3, T4>;
             return testObject != null && UnionsEqual(testObject);

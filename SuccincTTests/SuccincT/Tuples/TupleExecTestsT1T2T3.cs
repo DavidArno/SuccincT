@@ -80,8 +80,10 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);
             var result = false;
-            tuple.Match().With(1, "a", Colors.Green).Or(1, "a", Colors.Red).Do((x, y, z) => result = false)
-                         .Where((x, y, z) => z == Colors.Blue).Do((x, y, z) => result = true).Exec();
+            tuple.Match()
+                 .Where((x, y, z) => z == Colors.Blue).Do((x, y, z) => result = true)
+                 .With(1, "a", Colors.Green).Or(1, "a", Colors.Red).Do((x, y, z) => result = false)
+                 .Exec();
             Assert.IsFalse(result);
         }
     }

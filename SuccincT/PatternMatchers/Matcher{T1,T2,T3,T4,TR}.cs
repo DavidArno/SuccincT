@@ -184,7 +184,7 @@ namespace SuccincT.PatternMatchers
             _functionSelector.AddTestAndAction(null, null, test, function);
 
         private static Func<Tuple<T1, T2, T3, T4>, TResult> ActionToFunc(Action<T1, T2, T3, T4> action) =>
-            (x) =>
+            x =>
             {
                 action(x.Item1, x.Item2, x.Item3, x.Item4);
                 return default(TResult);

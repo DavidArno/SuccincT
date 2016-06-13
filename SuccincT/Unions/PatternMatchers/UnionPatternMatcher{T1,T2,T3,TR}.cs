@@ -77,7 +77,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         IUnionFuncPatternMatcherAfterElse<TResult> IUnionFuncPatternMatcher<T1, T2, T3, TResult>.Else(TResult elseValue)
         {
-            _selector.RecordElseFunction(Lambda<Union<T1, T2, T3>, TResult>(_ => elseValue));
+            _selector.RecordElseFunction(Func((Union<T1, T2, T3> _) => elseValue));
             return this;
         }
 
@@ -142,7 +142,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         IUnionActionPatternMatcherAfterElse IUnionActionPatternMatcher<T1, T2, T3>.IgnoreElse()
         {
-            _selector.RecordElseAction(Lambda<Union<T1, T2, T3>>(_ => { }));
+            _selector.RecordElseAction(Action((Union<T1, T2, T3> _) => { }));
             return this;
         }
 

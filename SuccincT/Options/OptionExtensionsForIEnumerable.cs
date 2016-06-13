@@ -58,18 +58,15 @@ namespace SuccincT.Options
 
             using (var e = collection.GetEnumerator())
             {
-                if (e.MoveNext())
-                {
-                    T result;
-                    do
-                    {
-                        result = e.Current;
-                    } while (e.MoveNext());
-                    return Option<T>.Some(result);
-                }
-            }
+                if (!e.MoveNext()) return Option<T>.None();
 
-            return Option<T>.None();
+                T result;
+                do
+                {
+                    result = e.Current;
+                } while (e.MoveNext());
+                return Option<T>.Some(result);
+            }
         }
 
         public static Option<T> TryLast<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
@@ -99,14 +96,11 @@ namespace SuccincT.Options
 
             using (var enumerator = collection.GetEnumerator())
             {
-                if (enumerator.MoveNext())
-                {
-                    var result = enumerator.Current;
-                    return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
-                }
-            }
+                if (!enumerator.MoveNext()) return Option<T>.None();
 
-            return Option<T>.None();
+                var result = enumerator.Current;
+                return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
+            }
         }
 
         public static Option<T> TrySingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
@@ -119,11 +113,10 @@ namespace SuccincT.Options
 
             foreach (var element in collection)
             {
-                if (predicate(element))
-                {
-                    if (++count > 1) { break; }
-                    result = Option<T>.Some(element);
-                }
+                if (!predicate(element)) continue;
+                if (++count > 1) break;
+
+                result = Option<T>.Some(element);
             }
 
             return count == 1 ? result : Option<T>.None();
@@ -152,27 +145,34 @@ namespace SuccincT.Options
         }
 
         [Obsolete("FirstOrNone has been replaced with TryFirst and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection) => collection.TryFirst();
 
         [Obsolete("FirstOrNone has been replaced with TryFirst and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> FirstOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
             collection.TryFirst(predicate);
 
         [Obsolete("LastOrNone has been replaced with TryLast and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> LastOrNone<T>(this IEnumerable<T> collection) => collection.TryLast();
 
         [Obsolete("LastOrNone has been replaced with TryLast and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> LastOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
             collection.TryLast(predicate);
 
         [Obsolete("SingleOrNone has been replaced with TrySingle and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection) => collection.TrySingle();
 
         [Obsolete("SingleOrNone has been replaced with TrySingle and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> SingleOrNone<T>(this IEnumerable<T> collection, Func<T, bool> predicate) =>
             collection.TrySingle(predicate);
 
         [Obsolete("ElementAtOrNone has been replaced with TryElementAt and will be removed in v2.1.")]
+        // ReSharper disable once UnusedMember.Global - Obsolete
         public static Option<T> ElementAtOrNone<T>(this IEnumerable<T> collection, int index) =>
             collection.TryElementAt(index);
     }
