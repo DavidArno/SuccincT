@@ -22,5 +22,7 @@ namespace SuccincT.Unions
         [Obsolete("None.Value has been replaced with None.none and will be removed in v2.1.")]
         // ReSharper disable once UnusedMember.Global - Obsolete
         public static None Value => none;
+
+        public override string ToString() => "!none!";
     }
 }

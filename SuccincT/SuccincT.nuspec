@@ -11,8 +11,8 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V1.6.0 introduces CaseOf for pattern matching unions.</releaseNotes>
+    <releaseNotes>V2.0.0 introduces a number of breaking changes, a completely rewritten implementation of pattern matching (keeping the same semantics, so this shouldn't break and existing uses), new methods to simplify the declaration and typing of lambdas, a new Unit type and Maybe, which is a struct-based alternative to the Option type.</releaseNotes>
     <copyright>Copyright 2016, David Arno</copyright>
-    <tags>Partial application Discriminated unions Options Pattern matching</tags>
+    <tags>Partial application Discriminated unions Options Maybe Pattern matching</tags>
   </metadata>
 </package>

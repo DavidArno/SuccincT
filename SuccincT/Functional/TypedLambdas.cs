@@ -1,5 +1,8 @@
 ﻿using System;
-
+//
+// This file is partially copied from https://github.com/247Entertainment/E247.Fun/blob/master/E247.Fun/Fun.cs & those
+// copied parts are copyright (c) 2016 247Entertainment.
+//
 namespace SuccincT.Functional
 {
     public static class TypedLambdas

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using SuccincT.Options;
+using SuccincT.Parsers;
 using SuccincT.PatternMatchers;
 using static NUnit.Framework.Assert;
 
@@ -184,6 +186,27 @@ namespace SuccincTTests.SuccincT.Options
             var option = Maybe<int>.None();
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
             AreEqual(2, result);
+        }
+
+        [Test]
+        public void OptionParsers_CanBeUsedWithMaybe()
+        {
+            Maybe<int> intValue = "8".TryParseInt();
+            Maybe<bool> boolValue = "True".TryParseBoolean();
+
+            AreEqual(8, intValue.Value);
+            IsTrue(boolValue.Value);
+        }
+
+        [Test]
+        public void IEnumerableExtensions_CanBeUsedWithMaybe()
+        {
+            var list = new List<int> {1, 2, 3, 4};
+            Maybe<int> match = list.TryFirst(item => item == 2);
+            Maybe<int> noMatch = list.TryElementAt(5);
+
+            AreEqual(2, match.Value);
+            IsFalse(noMatch.HasValue);
         }
     }
 }
