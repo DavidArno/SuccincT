@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
 using static SuccincT.Unions.None;
@@ -63,11 +64,22 @@ namespace SuccincT.Options
 
         public override bool Equals(object obj)
         {
-            var testObject = obj as Option<T>;
-            return obj is Option<T> && testObject._union.Equals(_union);
+            if (obj is Option<T>)
+                return (obj as Option<T>)._union.Equals(_union);
+            if (obj is Maybe<T>)
+                return ((Maybe<T>)obj).Equals(this);
+
+            return false;
         }
 
         public override int GetHashCode() => _union.GetHashCode();
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool operator ==(Option<T> a, Maybe<T> b) => 
+            a != null ? a.Equals(b) : false;
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool operator !=(Option<T> a, Maybe<T> b) => 
+            a != null ? !(a.Equals(b)) : false;
 
         public static bool operator ==(Option<T> a, object b)
         {
