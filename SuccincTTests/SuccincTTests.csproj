@@ -64,6 +64,8 @@
     <Compile Include="SuccincT\BasicTypesParsers\IntParsersTests.cs" />
     <Compile Include="SuccincT\EnumParsers\EnumParserTests.cs" />
     <Compile Include="SuccincT\Functional\ActionExtensionsTests.cs" />
+    <Compile Include="SuccincT\Functional\ConsEnumerableTests.cs" />
+    <Compile Include="SuccincT\Functional\RepeatingEnumerationsTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasActionTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasTransformTests.cs" />
