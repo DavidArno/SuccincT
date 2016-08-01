@@ -117,15 +117,14 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(5, result);
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseOfTypeException))]
+        [Test]
         public void UnionT1T2T3WithInvalidTypeCaseOf_ThrowsException()
         {
             var union = new Union<int, string, Plants, Foods>(2);
-            union.Match<int>()
-                 .CaseOf<Foods>().Do(1)
-                 .CaseOf<float>().Do(2)
-                 .Result();
-            Fail("Exception should have been thrown");
+            Throws<InvalidCaseOfTypeException>(() => union.Match<int>()
+                                                          .CaseOf<Foods>().Do(1)
+                                                          .CaseOf<float>().Do(2)
+                                                          .Result());
         }
 
         [Test]
@@ -244,16 +243,15 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(5, result);
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseOfTypeException))]
+        [Test]
         public void UnionT1T2WithInvalidExecTypeCaseOf_ThrowsException()
         {
             var union = new Union<int, string,Plants,Foods>(2);
-            union.Match()
-                 .CaseOf<Foods>().Do(_ => { })
-                 .CaseOf<Plants>().Do(_ => { })
-                 .CaseOf<float>().Do(_ => { })
-                 .Exec();
-            Fail("Exception should have been thrown");
+            Throws<InvalidCaseOfTypeException>(() => union.Match()
+                                                          .CaseOf<Foods>().Do(_ => { })
+                                                          .CaseOf<Plants>().Do(_ => { })
+                                                          .CaseOf<float>().Do(_ => { })
+                                                          .Exec());
         }
     }
 }

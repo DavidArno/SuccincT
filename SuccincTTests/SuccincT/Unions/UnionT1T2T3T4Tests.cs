@@ -69,11 +69,11 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(Animals.Cat, union.Case4);
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase2ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
         [Test]
@@ -92,60 +92,60 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            AreEqual(Colors.Red, union.Case3);
+            Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase4ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            AreEqual(Animals.Dog, union.Case4);
+            Throws<InvalidCaseException>(() => Ignore(union.Case4));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase3ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            AreEqual(Colors.Blue, union.Case3);
+            Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase4ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            AreEqual(Animals.Cow, union.Case4);
+            Throws<InvalidCaseException>(() => Ignore(union.Case4));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase1ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase2ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Blue);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase4ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
-            AreEqual(Animals.Dog, union.Case4);
+            Throws<InvalidCaseException>(() => Ignore(union.Case4));
         }
 
         [Test]
@@ -164,25 +164,25 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase1ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase2ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase3ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
-            AreEqual(Colors.Green, union.Case3);
+            Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
     }
 }

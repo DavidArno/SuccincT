@@ -38,11 +38,11 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual("Test", union.Case2);
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase2ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string>(2);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
         [Test]
@@ -61,11 +61,11 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string>("Test");
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
         [Test]
@@ -101,19 +101,18 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(2, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT1AndNoCase1Match_ThrowsException()
         {
             var union = new Union<int, string>(2);
-            var result = union.Match<bool>().Case2().Do(x => true).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>().Case2().Do(x => true).Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT1AndNoCase1MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string>(2);
-            union.Match().Case2().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => union.Match().Case2().Do(x => { }).Exec());
         }
 
         [Test]
@@ -150,19 +149,18 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(2, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT2AndNoCase2Match_ThrowsException()
         {
             var union = new Union<int, string>("la la");
-            var result = union.Match<bool>().Case1().Do(x => false).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>().Case1().Do(x => false).Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT2AndNoCase2MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string>("la la");
-            union.Match().Case1().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Exec());
         }
 
         [Test]

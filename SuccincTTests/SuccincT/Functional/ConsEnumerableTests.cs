@@ -139,6 +139,26 @@ namespace SuccincTTests.SuccincT.Functional
             Assert.AreEqual(10, count2);
         }
 
+        [Test]
+        public void ForEach_WorksWithConsEnumerable()
+        {
+            var enumRunCount = 0;
+            var result = "";
+            var cons = EnumerationWithNotificationOfEnd(() => enumRunCount++).ToConsEnumerable();
+
+            for (var i = 0; i < 10; i++)
+            {
+                foreach (var item in cons)
+                {
+                    result += item.Substring(0, 1);
+                }
+
+            }
+
+            Assert.AreEqual(1, enumRunCount);
+            Assert.AreEqual("rgbrgbrgbrgbrgbrgbrgbrgbrgbrgb", result);
+        }
+
         private static IEnumerable<string> EnumerationWithNotificationOfEnd(Action endReached)
         {
             yield return "red";

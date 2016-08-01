@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -51,11 +52,11 @@ namespace SuccincTTests.SuccincT.Options
             IsFalse(result.HasValue);
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
             var result = Option<bool>.None();
-            IsFalse(result.Value);
+            Throws<InvalidOperationException>(() => Ignore(result.Value));
         }
 
         [Test]
@@ -124,34 +125,32 @@ namespace SuccincTTests.SuccincT.Options
             AreEqual(2, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.None();
-            var result = option.Match<int>().Some().Do(x => 1).Result();
-            AreEqual(0, result);
+            Throws<NoMatchException>(() => Ignore(option.Match<int>().Some().Do(x => 1).Result()));
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            var result = option.Match<int>().None().Do(() => 0).Result();
-            AreEqual(0, result);
+            Throws<NoMatchException>(() => Ignore(option.Match<int>().None().Do(() => 0).Result()));
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.None();
-            option.Match().Some().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => option.Match().Some().Do(x => { }).Exec());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            option.Match().None().Do(() => { }).Exec();
+            Throws<NoMatchException>(() => option.Match().None().Do(() => { }).Exec());
         }
 
         [Test]

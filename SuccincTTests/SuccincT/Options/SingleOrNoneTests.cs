@@ -72,12 +72,11 @@ namespace SuccincTTests.SuccincT.Options
             Assert.IsFalse(collection.TrySingle(x => true).HasValue);
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void TrySingleWithNullFunc_ThrowsExcpetion()
         {
             var collection = new List<int> { 1, 2, 3 };
-            var failMessage = collection.TrySingle(null).HasValue ? "value" : "none";
-            Assert.Fail($"Expected exception but call returned {failMessage}");
+            Assert.Throws<ArgumentNullException>(() => collection.TrySingle(null));
         }
 
         private static IEnumerable<int> SingleIntCollection()

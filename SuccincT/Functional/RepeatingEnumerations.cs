@@ -7,32 +7,37 @@ namespace SuccincT.Functional
     {
         public static IEnumerable<T> Cycle<T>(this IEnumerable<T> collection)
         {
-            var list = collection as IList<T>;
-            IList<T> cache = new List<T>();
-            if (list == null)
-            {
-                using (var enumerator = collection.GetEnumerator())
-                {
-                    while (enumerator.MoveNext())
-                    {
-                        cache.Add(enumerator.Current);
-                        yield return enumerator.Current;
-                    }
-                }
-            }
-            else
-            {
-                cache = list;
-            }
+            //var list = collection as IList<T>;
+            //IList<T> cache = new List<T>();
+            //if (list == null)
+            //{
+            //    using (var enumerator = collection.GetEnumerator())
+            //    {
+            //        while (enumerator.MoveNext())
+            //        {
+            //            cache.Add(enumerator.Current);
+            //            yield return enumerator.Current;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    cache = list;
+            //}
 
-            if (cache.Count == 0) yield break;
+            //if (cache.Count == 0) yield break;
 
+            var enumerationContainsItems = false;
+            var consEnumeration = collection.ToConsEnumerable();
             while (true)
             {
-                foreach (var item in cache)
+                foreach (var item in consEnumeration)
                 {
                     yield return item;
+                    enumerationContainsItems = true;
                 }
+
+                if (!enumerationContainsItems) yield break;
             }
         }
 

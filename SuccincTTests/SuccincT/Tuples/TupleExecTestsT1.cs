@@ -25,11 +25,11 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(typeof (NoMatchException))]
+        [Test]
         public void Tuple_ExceptionIfNoMatchWithExec()
         {
             var tuple = Tuple.Create(1);
-            tuple.Match().With(2).Or(3).Do(_ => { }).Exec();
+            Assert.Throws<NoMatchException>(() => tuple.Match().With(2).Or(3).Do(_ => { }).Exec());
         }
 
         [Test]

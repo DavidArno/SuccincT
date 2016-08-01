@@ -42,25 +42,25 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(3, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT1AndNoCase1MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(2);
-            union.Match().Case2().Do(x => { }).Case3().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => union.Match().Case2().Do(x => { }).Case3().Do(x => { }).Exec());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT2AndNoCase2MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>("la la");
-            union.Match().Case1().Do(x => { }).Case3().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Case3().Do(x => { }).Exec());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT3AndNoCase3MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            union.Match().Case1().Do(x => { }).Case2().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Case2().Do(x => { }).Exec());
         }
 
         [Test]

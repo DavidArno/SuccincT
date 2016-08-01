@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.Parsers;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
@@ -38,11 +39,11 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
             Assert.IsFalse(result.HasValue);
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void InvalidBooleanString_ResultsInExceptionIfValueRead()
         {
             var result = "maybe".TryParseBoolean();
-            Assert.IsFalse(result.Value);
+            Assert.Throws<InvalidOperationException>(() => Ignore(result.Value));
         }
     }
 }

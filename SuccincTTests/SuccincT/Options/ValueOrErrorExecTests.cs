@@ -64,18 +64,18 @@ namespace SuccincTTests.SuccincT.Options
             AreEqual("1", result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenValueIsSetAndNoValueMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = ValueOrError.WithValue("1");
-            valueOrError.Match().Error().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => valueOrError.Match().Error().Do(x => { }).Exec());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenErrorIsSetAndNoErrorMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = ValueOrError.WithError("1");
-            valueOrError.Match().Value().Do(x => { }).Exec();
+            Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => { }).Exec());
         }
     }
 }

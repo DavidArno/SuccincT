@@ -124,36 +124,48 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(3, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT1AndNoCase1Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            var result = union.Match<bool>().Case2().Do(x => true).Case3().Do(x => true).Case4().Do(false).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>()
+                                                .Case2().Do(x => true)
+                                                .Case3().Do(x => true)
+                                                .Case4().Do(false)
+                                                .Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT2AndNoCase2Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>("la la");
-            var result = union.Match<bool>().Case1().Do(x => false).Case3().Do(x => false).Case4().Do(false).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>()
+                                                .Case1().Do(x => false)
+                                                .Case3().Do(x => false)
+                                                .Case4().Do(false)
+                                                .Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT3AndNoCase3Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
-            var result = union.Match<bool>().Case1().Do(x => false).Case2().Do(x => false).Case4().Do(false).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>()
+                                                .Case1().Do(x => false)
+                                                .Case2().Do(x => false)
+                                                .Case4().Do(false)
+                                                .Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void UnionWithT4AndNoCase4Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Cat);
-            var result = union.Match<bool>().Case1().Do(false).Case2().Do(false).Case3().Do(false).Result();
-            IsFalse(result);
+            Throws<NoMatchException>(() => union.Match<bool>()
+                                                .Case1().Do(false)
+                                                .Case2().Do(false)
+                                                .Case3().Do(false)
+                                                .Result());
         }
     }
 }

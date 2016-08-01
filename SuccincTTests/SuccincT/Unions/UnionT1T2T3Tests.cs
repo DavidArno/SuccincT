@@ -53,11 +53,11 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(Colors.Green, union.Case3);
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase2ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
         [Test]
@@ -76,11 +76,11 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
-            AreEqual(Colors.Red, union.Case3);
+            Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
 
         [Test]
@@ -99,32 +99,32 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase3ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
-            AreEqual(Colors.Blue, union.Case3);
+            Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase1ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            AreEqual(1, union.Case1);
+            Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ExpectedException(typeof(InvalidCaseException))]
+        [Test, ]
         public void AccessingCase2ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Blue);
-            AreEqual("", union.Case2);
+            Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 
         [Test]

@@ -26,11 +26,13 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);
-            tuple.Match().To<int>().With(2, "a", Colors.Green).Or(1, "b", Colors.Blue).Do((x, y, z) => x).Result();
+            Assert.Throws<NoMatchException>(
+                () => tuple.Match().To<int>()
+                           .With(2, "a", Colors.Green).Or(1, "b", Colors.Blue).Do((x, y, z) => x).Result());
         }
 
         [Test]

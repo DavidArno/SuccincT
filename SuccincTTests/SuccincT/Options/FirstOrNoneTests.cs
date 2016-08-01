@@ -52,12 +52,11 @@ namespace SuccincTTests.SuccincT.Options
             Assert.AreEqual(2, collection.TryFirst(x => x == 2).Value);
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
-        public void TryFirstWithNullFunc_ThrowsExcpetion()
+        [Test]
+        public void TryFirstWithNullFunc_ThrowsException()
         {
             var collection = new List<int> { 1, 2, 3 };
-            var failMessage = collection.TryFirst(null).HasValue ? "value" : "none";
-            Assert.Fail($"Expected exception but call returned {failMessage}");
+            Assert.Throws<ArgumentNullException>(() => collection.TryFirst(null));
         }
 
         [Test]

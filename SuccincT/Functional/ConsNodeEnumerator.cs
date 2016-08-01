@@ -16,40 +16,47 @@ namespace SuccincT.Functional
 
         public bool MoveNext()
         {
-            if (_node.State == IgnoredNode) _node = _node.Next;
-            if (_node?.State == MarkIgnoredNextPass) _node.State = IgnoredNode;
-            if (_node?.Next == null) return false;
-
-            _node = _node.Next;
+            if (!AdvanceToNextNode()) return false;
 
             if (_node.State == HasEnumeration)
             {
-                _node.State = Enumerating;
-                _node.Enumerator = new ConsListBuilderEnumerator<ConsNode<T>, T>(_node);
+                _node.Enumerating(new ConsListBuilderEnumerator<ConsNode<T>, T>(_node));
             }
 
-            if (_node.State == Enumerating)
+            if (_node.State == HasValue) return true;
+
+            if (_node.Enumerator.MoveNext())
             {
-                if (_node.Enumerator.MoveNext())
-                {
-                    var newNode = new ConsNode<T>
-                    {
-                        Enumerator = _node.Enumerator,
-                        Next = _node.Next,
-                        State = Enumerating
-                    };
-                    _node.Value = _node.Enumerator.Current.Value;
-                    _node.Next = newNode;
-                    _node.State = HasValue;
-                    return true;
-                }
+                var newNode = new ConsNode<T> { Next = _node.Next };
+                newNode.Enumerating(_node.Enumerator);
 
-                _node.State = MarkIgnoredNextPass;
-                _node.Enumerator.Dispose();
-                _node.Enumerator = null;
-                return MoveNext();
+                _node.HasValue(_node.Enumerator.Current.Value);
+                _node.Next = newNode;
+                return true;
             }
 
+            _node.IgnoredNode();
+            return MoveNext();
+        }
+
+        private bool AdvanceToNextNode()
+        {
+            _node = _node.Next;
+            if (_node == null)
+            {
+                Dispose();
+                return false;
+            }
+
+            while (_node.State == IgnoredNode)
+            {
+                _node = _node.Next;
+                if (_node == null)
+                {
+                    Dispose();
+                    return false;
+                }
+            }
             return true;
         }
 

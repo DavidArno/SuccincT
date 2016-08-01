@@ -32,11 +32,12 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = new TestClass { A = 1, B = "a" };
-            tuple.Match().To<int>().With(2, "a").Or(1, "b").Do((x, y) => x).Result();
+            Assert.Throws<NoMatchException>(
+                () => tuple.Match().To<int>().With(2, "a").Or(1, "b").Do((x, y) => x).Result());
         }
 
         [Test]

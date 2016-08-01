@@ -27,11 +27,12 @@ namespace SuccincTTests.SuccincT.Tuples
             Assert.IsTrue(result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void Tuple_ExceptionIfNoMatchWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);
-            tuple.Match().With(1, "a", Colors.Green).Or(1, "a", Colors.Blue).Do((x, y, z) => { }).Exec();
+            Assert.Throws<NoMatchException>(
+                () => tuple.Match().With(1, "a", Colors.Green).Or(1, "a", Colors.Blue).Do((x, y, z) => { }).Exec());
         }
 
         [Test]

@@ -6,7 +6,6 @@
         HasValue,
         HasEnumeration,
         Enumerating,
-        IgnoredNode,
-        MarkIgnoredNextPass
+        IgnoredNode
     }
 }

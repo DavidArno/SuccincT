@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -53,18 +54,18 @@ namespace SuccincTTests.SuccincT.Options
             AreEqual("2", valueOrError.Error);
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void WhenValueIsSet_AccessingErrorCausesException()
         {
             var valueOrError = ValueOrError.WithValue("2");
-            AreEqual("2", valueOrError.Error);
+            Throws<InvalidOperationException>(() => Ignore(valueOrError.Error));
         }
 
-        [Test, ExpectedException(typeof(InvalidOperationException))]
+        [Test]
         public void WhenErrorIsSet_AccessingValueCausesAnException()
         {
             var valueOrError = ValueOrError.WithError("2");
-            AreEqual("2", valueOrError.Value);
+            Throws<InvalidOperationException>(() => Ignore(valueOrError.Value));
         }
 
         [Test]
@@ -97,34 +98,30 @@ namespace SuccincTTests.SuccincT.Options
             AreEqual(3, result);
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenValueIsSetAndNoValueMatchDefined_ExceptionThrown()
         {
             var valueOrError = ValueOrError.WithValue("1");
-            var result = valueOrError.Match<int>().Error().Do(x => 2).Result();
-            AreEqual(result, -1);
+            Throws<NoMatchException>(() => valueOrError.Match<int>().Error().Do(x => 2).Result());
         }
 
-        [Test, ExpectedException(typeof(NoMatchException))]
+        [Test]
         public void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
         {
             var valueOrError = ValueOrError.WithError("1");
-            var result = valueOrError.Match<int>().Value().Do(x => 2).Result();
-            AreEqual(result, -1);
+            Throws<NoMatchException>(() => Ignore(valueOrError.Match<int>().Value().Do(x => 2).Result()));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void CreatingWithNullValue_CausesNullException()
         {
-            var a = ValueOrError.WithValue(null);
-            IsInstanceOf(typeof(ValueOrError), a);
+            Throws<ArgumentNullException>(() => ValueOrError.WithValue(null));
         }
 
-        [Test, ExpectedException(typeof(ArgumentNullException))]
+        [Test]
         public void CreatingWithNullError_CausesNullException()
         {
-            var a = ValueOrError.WithError(null);
-            IsInstanceOf(typeof(ValueOrError), a);
+            Throws<ArgumentNullException>(() => ValueOrError.WithError(null));
         }
 
         [Test]
