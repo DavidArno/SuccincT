@@ -63,6 +63,7 @@
     <Compile Include="Functional\ConsExtensionsForIEnumerable.cs" />
     <Compile Include="Functional\IConsEnumerable.cs" />
     <Compile Include="Functional\PartialFunctionApplications.cs" />
+    <Compile Include="Functional\PipeExtensions.cs" />
     <Compile Include="Functional\RepeatingEnumerations.cs" />
     <Compile Include="Functional\TailActionApplications.cs" />
     <Compile Include="Functional\TailFunctionApplications.cs" />
