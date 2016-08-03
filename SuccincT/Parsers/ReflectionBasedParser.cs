@@ -16,7 +16,7 @@ namespace SuccincT.Parsers
             var value = default(T);
             var arguments = new object[] { source, value };
             var argumentTypes = new[] { typeof(string), typeof(T).MakeByRefType() };
-            var success = (bool)typeof(T).GetMethod("TryParse", argumentTypes).Invoke(null, arguments);
+            var success = (bool)typeof(T).GetMethodInfo("TryParse", argumentTypes).Invoke(null, arguments);
 
             return success ? Option<T>.Some((T)arguments[1]) : Option<T>.None();
         }

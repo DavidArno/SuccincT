@@ -48,11 +48,15 @@
     <CodeAnalysisRuleSet>Code analysis rules as errors.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
@@ -76,15 +80,12 @@
     <Compile Include="Options\IValueOrErrorFuncMatcher.cs" />
     <Compile Include="Options\OptionExtensionsForIEnumerable.cs" />
     <Compile Include="Options\Maybe{T}.cs" />
-    <Compile Include="PartialApplications\TailActionApplications.cs" />
-    <Compile Include="PartialApplications\TailFunctionApplications.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Parsers\BooleanParser.cs" />
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Parsers\FloatParsers.cs" />
     <Compile Include="Parsers\IntParsers.cs" />
     <Compile Include="Parsers\ReflectionBasedParser.cs" />
-    <Compile Include="PartialApplications\PartialFunctionApplications.cs" />
     <Compile Include="Options\INoneActionMatchHandler.cs" />
     <Compile Include="Options\OptionMatcher{T,TR}.cs" />
     <Compile Include="Options\ValueOrError.cs" />
@@ -180,4 +181,7 @@
   </Target>
   -->
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <PropertyGroup>
+    <PostBuildEvent>call $(ProjectDir)\post-build.bat $(ProjectDir)</PostBuildEvent>
+  </PropertyGroup>
 </Project>

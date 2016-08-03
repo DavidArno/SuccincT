@@ -1,5 +1,4 @@
-﻿using System;
-using SuccincT.Options;
+﻿using SuccincT.Options;
 
 namespace SuccincT.Parsers
 {
@@ -13,12 +12,5 @@ namespace SuccincT.Parsers
         /// Parses the current string for a true/false value and returns an Option{bool} of the result.
         /// </summary>
         public static Option<bool> TryParseBoolean(this string source) => ReflectionBasedParser.Parse<bool>(source);
-
-        /// <summary>
-        /// Parses the current string for a true/false value and returns an Option{bool} of the result.
-        /// </summary>
-        [Obsolete("ParseBoolean has been replaced with TryParseBoolean and will be removed in v2.1.")]
-        // ReSharper disable once UnusedMember.Global - Obsolete
-        public static Option<bool> ParseBoolean(this string source) => ReflectionBasedParser.Parse<bool>(source);
     }
 }

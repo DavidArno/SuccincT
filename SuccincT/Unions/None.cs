@@ -1,6 +1,5 @@
 ﻿// ReSharper disable InconsistentNaming - "none" seems a better fit name than "Value". 
 
-using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace SuccincT.Unions
@@ -18,10 +17,6 @@ namespace SuccincT.Unions
         /// </summary>
         [SuppressMessage("Microsoft.Naming","CA1709:IdentifiersShouldBeCasedCorrectly")]
         public static None none { get; } = new None();
-
-        [Obsolete("None.Value has been replaced with None.none and will be removed in v2.1.")]
-        // ReSharper disable once UnusedMember.Global - Obsolete
-        public static None Value => none;
 
         public override string ToString() => "!none!";
     }
