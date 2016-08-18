@@ -9,7 +9,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("SuccincT")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyTitle("SuccincT")]
-[assembly: AssemblyDescription("Discriminated unions, pattern matching and partial applications for C#")]
+[assembly: AssemblyDescription("Discriminated unions, pattern matching and partial applications for C# (.NET Core version)")]
 [assembly: AssemblyCopyright("Copyright © David Arno, 2016")]
 [assembly: AssemblyCulture("")]
 

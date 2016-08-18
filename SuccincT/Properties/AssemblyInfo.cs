@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("SuccincT")]
-[assembly: AssemblyDescription("Discriminated unions, pattern matching and partial applications for C#")]
+[assembly: AssemblyDescription("Discriminated unions, pattern matching and many other functional features for C#")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("David Arno")]
 [assembly: AssemblyProduct("SuccincT")]

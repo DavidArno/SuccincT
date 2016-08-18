@@ -3,3 +3,4 @@
 /*.Cache
 /*.csproj.user
 *.nupkg
+*.v2.ncrunchproject

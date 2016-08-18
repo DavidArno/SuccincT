@@ -1,4 +1,6 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.Linq;
+using NUnit.Framework;
 using ReversedString;
 using SuccincT.Functional;
 using static SuccincT.Functional.TypedLambdas;
@@ -16,7 +18,7 @@ namespace SuccincTTests.SuccincT.Functional
             var rev = Lambda<string>(x => x.Reverse());
             var expected = rev(toStr(square(512)));
 
-            var actual = 512.PipeTo(square).PipeTo(toStr).PipeTo(rev);
+            var actual = 512.Into(square).Into(toStr).Into(rev);
 
             Assert.AreEqual(expected, actual);
         }
@@ -24,8 +26,9 @@ namespace SuccincTTests.SuccincT.Functional
         public void OneParameterPipeWithMethods_GivesSameResultAsStandardWay()
         {
             var expected = ToString(Square(512)).Reverse();
+            var rev = Lambda<string>(StringReverseExtension.Reverse);
 
-            var actual = 512.PipeTo(Square).PipeTo(ToString).PipeTo(StringReverseExtension.Reverse);
+            var actual = 512.Into(Square).Into(ToString).Into(rev);
 
             Assert.AreEqual(expected, actual);
         }

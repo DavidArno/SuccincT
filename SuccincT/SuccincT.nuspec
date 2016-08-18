@@ -11,8 +11,13 @@
     <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>V2.0.0 introduces a number of breaking changes, a completely rewritten implementation of pattern matching (keeping the same semantics, so this shouldn't break and existing uses), new methods to simplify the declaration and typing of lambdas, a new Unit type and Maybe, which is a struct-based alternative to the Option type.</releaseNotes>
+    <releaseNotes>V2.1.0 introduces "cons" support for `IEnumerable<T>`, Cycle functions, a forward pipe operator method and .NET Core support.</releaseNotes>
     <copyright>Copyright 2016, David Arno</copyright>
-    <tags>Partial application Discriminated unions Options Maybe Pattern matching</tags>
+    <tags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</tags>
   </metadata>
+  <files>
+    <file src="..\SuccincT.Core\bin\Release\netstandard1.6\SuccincT.Core.deps.json" target="lib\dotnet\SuccincT.Core.deps.json" />
+    <file src="..\SuccincT.Core\bin\Release\netstandard1.6\SuccincT.Core.dll" target="lib\dotnet\SuccincT.Core.dll" />
+    <file src="..\SuccincT.Core\bin\Release\netstandard1.6\SuccincT.Core.pdb" target="lib\dotnet\SuccincT.Core.pdb" />
+  </files>
 </package>
