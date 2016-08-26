@@ -5,7 +5,8 @@ using static SuccincT.Functional.ConsNodeState;
 
 namespace SuccincT.Functional
 {
-    internal class ConsListBuilderEnumerator<TConsNode, T> : IEnumerator<TConsNode> where TConsNode : ConsNode<T>, new()
+    internal sealed class ConsListBuilderEnumerator<TConsNode, T> : IEnumerator<TConsNode> where 
+        TConsNode : ConsNode<T>, new()
     {
         private readonly IEnumerator<T> _enumerator;
         private TConsNode _node;

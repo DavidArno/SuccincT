@@ -60,6 +60,7 @@
     <Compile Include="ExampleTests\OptionMatcherExamplesTester.cs" />
     <Compile Include="ExampleTests\SinglePositiveOddDigitUnionTests.cs" />
     <Compile Include="ExampleTests\SinglePositiveOddDigitOptionTests.cs" />
+    <Compile Include="ExampleTests\TrafficLightsTests.cs" />
     <Compile Include="ExampleTests\TreeUsingUnionsTests.cs" />
     <Compile Include="ExampleTests\UnionMatcherExamplesTests.cs" />
     <Compile Include="ExampleTests\ValueOrErrorExamplesTests.cs" />

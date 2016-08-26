@@ -174,7 +174,7 @@ namespace SuccincTTests.SuccincT.Unions
         [Test]
         public void AccessingCase2ForUnionWithT4_CausesException()
         {
-            var union = new Union<int, string, Colors, Animals>(Animals.Dog);
+            var union = new Union<int, string, Colors, Animals>(Animals.Cow);
             Throws<InvalidCaseException>(() => Ignore(union.Case2));
         }
 

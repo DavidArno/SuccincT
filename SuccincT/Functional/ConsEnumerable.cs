@@ -4,7 +4,7 @@ using static SuccincT.Functional.ConsNodeState;
 
 namespace SuccincT.Functional
 {
-    internal class ConsEnumerable<T> : IConsEnumerable<T>
+    internal sealed class ConsEnumerable<T> : IConsEnumerable<T>
     {
         private readonly ConsNode<T> _node;
 

@@ -27,11 +27,11 @@ This release includes:
 
 ### Features ###
 #### Discriminated Unions ####
-Succinc\<T\> provides a set of union types ([`Union<T1, T2>`](UnionT1T2), [`Union<T1, T2, T3>`](UnionT1T2T3) and [`Union<T1, T2, T3, T4>`](UnionT1T2T3T4))  where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of [`Option<T>`](Option_T_) and [`Maybe<T>`](Maybe_T_) that can have the value `Some<T>` or [`None`](None).
+Succinc\<T\> provides a set of union types ([`Union<T1, T2>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2), [`Union<T1, T2, T3>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3) and [`Union<T1, T2, T3, T4>`](https://github.com/DavidArno/SuccincT/wiki/UnionT1T2T3T4))  where an instance will hold exactly one value of one of the specified types. In addition, it provides the likes of [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) and [`Maybe<T>`](https://github.com/DavidArno/SuccincT/wiki/Maybe_T_) that can have the value `Some<T>` or [`None`](https://github.com/DavidArno/SuccincT/wiki/None).
 
-Succinc\<T\> uses [`Option<T>`](Option_T_) to provide replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`. In all cases, these are extension methods to `string` and they return `Some<T>` on a successful parse and [`None`](None) when the string is not a valid value for that type. No more `out` parameters! See the [Option Parsers guide](OptionParsers) for more details.
+Succinc\<T\> uses [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) to provide replacements for the .NET basic types' `TryParse()` methods and `Enum.Parse()`. In all cases, these are extension methods to `string` and they return `Some<T>` on a successful parse and [`None`](https://github.com/DavidArno/SuccincT/wiki/None) when the string is not a valid value for that type. No more `out` parameters! See the [Option Parsers guide](https://github.com/DavidArno/SuccincT/wiki/OptionParsers) for more details.
 
-Further Succinc\<T\> uses [`Option<T>`](Option_T_) to [provide replacements for the XxxxOrDefault LINQ extension methods on `IEnumerable<T>`](IEnumerableExtensions). In all cases, these new extension methods, eg `TryFirst<T>()` return an option with a value if a match occurred, or `None` if not.
+Further Succinc\<T\> uses [`Option<T>`](https://github.com/DavidArno/SuccincT/wiki/Option_T_) to [provide replacements for the XxxxOrDefault LINQ extension methods on `IEnumerable<T>`](https://github.com/DavidArno/SuccincT/wiki/IEnumerableExtensions). In all cases, these new extension methods, eg `TryFirst<T>()` return an option with a value if a match occurred, or `None` if not.
 
 #### Pattern Matching ####
 Succinc\<T\> can pattern match values, tuples, unions etc in a way similar to F#'s pattern matching features. It uses a fluent (method chaining) syntax to achieve this. Some examples of its abilities:
@@ -55,7 +55,7 @@ public static string SinglePositiveOddDigitReporter(Option<int> data) =>
         .Result();
 ```
 
-See the [Succinc\<T\> pattern matching guide](PatternMatching) for more details.
+See the [Succinc\<T\> pattern matching guide](https://github.com/DavidArno/SuccincT/wiki/PatternMatching) for more details.
 
 #### Partial Applications ####
 Succinc\<T\> supports partial function applications. A parameter can be supplied to a multi-parameter method and a new function will be returned that takes the remaining parameters. For example:
@@ -66,7 +66,7 @@ var times8 = times.Apply(8);
 var result = times8(9); // <- result == 72
 ```
 
-See the [Succinc\<T\> partial applications guide](PartialFunctionApplications) for more details.
+See the [Succinc\<T\> partial applications guide](https://github.com/DavidArno/SuccincT/wiki/PartialFunctionApplications) for more details.
 
 #### "Implicitly" Typed Lambdas ####
 C# doesn't support implicitly typed lambdas, meaning it's not possible to declare something like:
@@ -83,12 +83,12 @@ var times = Lambda<double>((p1, p2) => p1 * p2);
 ```
 For functions, the `Lambda` methods can be used when the parameters and return type all have the same value, as above. This means the type parameter need only be specified once. `Transform` can be used when all the parameters are of one type and the return value, another. The `Func` methods are used when the parameters and/or return type are of different values. For actions, `Lambda` can also be used when only one type is involved and the `Action` methods do a similar job to the `Func` methods. 
 
-This is explained in detail in the [Succinc\<T\> typed lambdas guide](TypedLambdas).
+This is explained in detail in the [Succinc\<T\> typed lambdas guide](https://github.com/DavidArno/SuccincT/wiki/TypedLambdas).
 
 #### `Action`/`Func` conversions ####
 The `ToUnitFunc` methods supplied by Succinc\<T\> can be used to cast an `Action` lambda or method (from 0 to 4 parameters) to a `Func` delegate that returns [`unit`](Unit), allowing `void` methods to be treated as functions and thus eg used in ternary oprators. In addition, Succinc\<T\> provides an `Ignore` method that can be used to explicitly ignore the result of any expression, effectively turning that expression into a `void` statement.
 
-These methods are explained in detail in the [Succinc\<T\> `Action`/`Func` conversions guide](ActionFuncConversions).
+These methods are explained in detail in the [Succinc\<T\> `Action`/`Func` conversions guide](https://github.com/DavidArno/SuccincT/wiki/ActionFuncConversions).
 
 #### `IEnumerable<T>` cons ####
 In many functional languages, collections of data are (can be) treated as linked lists and they have the built in pattern of treating that list as the head (first element) and tail (the rest of the list). This pattern is referred to as "cons". It allows recursive composition and decomposition of the list via a simple syntax, such as:
@@ -112,7 +112,7 @@ var head = consResult.Head;
 var tail = consResult.Tail;
 ````
 
-For more details, see the [Cons help page](Cons).
+For more details, see the [Cons help page](https://github.com/DavidArno/SuccincT/wiki/Cons).
 
 #### `Cycle()` methods ####
 Sometimes, with declarative programming, it's useful to be able to treat a set of data as an endlessly repeating set. Haskell's solution to this is the `cycle` functions, which endlessly repeat a list. Succinc\<T\> provides `Cycle` methods too, as either an extension method for `IEnumerable<T>`, or as a method that takes a list of values as it's parameters.
@@ -128,7 +128,7 @@ var fizzBuzz = numbers.Zip(words, (n, w) => w == "" ? n.ToString() : w);
 ````
 In the above code, `fizzBuzz` is a 100 element enumeration of the form "1", "2", "Fizz", "4", "Buzz", etc. All achieved without using a single `if` or loop.
 
-For more details, see the [Cycle help page](Cycle).
+For more details, see the [Cycle help page](https://github.com/DavidArno/SuccincT/wiki/Cycle).
 
 #### Pipe operators ####
 Another feature in many functional languages is the concept of the pipe operator. The idea behind it is that, rather than expressing a series of functions - where each returns a value which is passed to the next function - as:
@@ -147,4 +147,4 @@ Succinc\<T\> offers similar functionality. Custom operators aren't supported in 
 var result = value.Into(f1).Into(f2).Into(f3).Into(f4);
 ````
 
-For more details, see the [Forward Pipe Operator page](PipeOperators).
+For more details, see the [Forward Pipe Operator page](https://github.com/DavidArno/SuccincT/wiki/PipeOperators).

@@ -5,14 +5,15 @@ namespace SuccincT.Options
 {
     /// <summary>
     /// Maybe{T} is an alternative to Option{T}. It behaves in exactly the same way and is implcitly convertable from
-    /// one to the other. It is provided simply as an alternative for those who prefer "Maybe" as a type name.
+    /// one to the other. It is provided simply as an alternative for those who prefer "Maybe" as a type name, or prefer
+    /// the use of a struct, to avoid null problems.
     /// </summary>
     public struct Maybe<T>
     {
         private readonly Option<T> _option;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
-        // ReSharper disable once UnusedParameter.Local - uunsed "_" parameter needed to satisfy "cannot declare 
+        // ReSharper disable once UnusedParameter.Local - unused "_" parameter needed to satisfy "cannot declare 
         // constructor with no parameters in structs" C# language rule.
         private Maybe(None _) { _option = Option<T>.None(); }
 

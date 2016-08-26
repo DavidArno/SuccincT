@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using ReversedString;
 using SuccincT.Functional;
 using static SuccincT.Functional.TypedLambdas;
@@ -28,7 +26,7 @@ namespace SuccincTTests.SuccincT.Functional
             var expected = ToString(Square(512)).Reverse();
             var rev = Lambda<string>(StringReverseExtension.Reverse);
 
-            var actual = 512.Into(Square).Into(ToString).Into(rev);
+            var actual = 512.Into(Square).ToString().Into(rev);
 
             Assert.AreEqual(expected, actual);
         }

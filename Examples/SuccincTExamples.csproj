@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="LexicalAnalyserUsingUnions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TrafficLights.cs" />
     <Compile Include="TreeUsingUnions.cs" />
     <Compile Include="UserInputExamples.cs" />
   </ItemGroup>
