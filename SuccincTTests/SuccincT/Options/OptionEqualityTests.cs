@@ -63,5 +63,36 @@ namespace SuccincTTests.SuccincT.Options
             IsTrue(a != null);
             IsTrue(null != a);
         }
+
+        [Test]
+        public void OptionAndMaybe_AreEqualWithoutCasting()
+        {
+            var a = Option<string>.Some("1234");
+            var b = Maybe<string>.Some("1234");
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a, b);
+        }
+
+        [Test]
+        public void EmptyOptionAndMaybe_AreEqualWithoutCasting()
+        {
+            var a = Option<string>.None();
+            var b = Maybe<string>.None();
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a, b);
+        }
+
+        [Test]
+        public void DifferentOptionAndMaybe_AreNotEqualWithoutCasting()
+        {
+            var a = Option<string>.Some("1234");
+            var b = Maybe<string>.Some("5678");
+            IsFalse(a.Equals(b));
+            IsFalse(a == b);
+            AreNotEqual(a, b);
+            IsTrue(a != b);
+        }
     }
 }
