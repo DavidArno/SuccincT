@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Diagnostics.CodeAnalysis;
+using NUnit.Framework;
 using SuccincT.Options;
 using static NUnit.Framework.Assert;
 
@@ -62,6 +63,41 @@ namespace SuccincTTests.SuccincT.Options
             IsFalse(a.Equals(null));
             IsTrue(a != null);
             IsTrue(null != a);
+        }
+
+        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
+        public void OptionAndMaybe_AreEqualWithoutCasting()
+        {
+            var a = Option<string>.Some("1234");
+            var b = Maybe<string>.Some("1234");
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            AreEqual(a, b);
+        }
+
+        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
+        public void EmptyOptionAndMaybe_AreEqualWithoutCasting()
+        {
+            var a = Option<string>.None();
+            var b = Maybe<string>.None();
+            IsTrue(a.Equals(b));
+            IsTrue(a == b);
+            IsTrue(b == a);
+            AreEqual(a, b);
+        }
+
+        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
+        public void DifferentOptionAndMaybe_AreNotEqualWithoutCasting()
+        {
+            var a = Option<string>.Some("1234");
+            var b = Maybe<string>.Some("5678");
+            IsFalse(a.Equals(b));
+            IsFalse(b.Equals(a));
+            IsFalse(a == b);
+            IsFalse(b == a);
+            AreNotEqual(a, b);
+            IsTrue(a != b);
+            IsTrue(b != a);
         }
     }
 }

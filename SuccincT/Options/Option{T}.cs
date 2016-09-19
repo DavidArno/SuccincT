@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
 using static SuccincT.Unions.None;
@@ -63,11 +64,26 @@ namespace SuccincT.Options
 
         public override bool Equals(object obj)
         {
-            var testObject = obj as Option<T>;
-            return obj is Option<T> && testObject._union.Equals(_union);
+            if (obj is Option<T>) return EqualsOption((Option<T>) obj);
+            if (obj is Maybe<T>) return EqualsMaybe((Maybe<T>) obj);
+            return false;
         }
 
+        internal bool EqualsOption(Option<T> other) =>
+            (other.HasValue && HasValue && Value.Equals(other.Value)) || !(HasValue || other.HasValue);
+
+        internal bool EqualsMaybe(Maybe<T> other) =>
+            (other.HasValue && HasValue && Value.Equals(other.Value)) || !(HasValue || !other.CorrectlyLoad || other.HasValue);
+
         public override int GetHashCode() => _union.GetHashCode();
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool operator ==(Option<T> a, Maybe<T> b) => 
+            (object)a != null ? a.EqualsMaybe(b) : false;
+
+        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
+        public static bool operator !=(Option<T> a, Maybe<T> b) =>
+            (object)a == null || !a.EqualsMaybe(b);
 
         public static bool operator ==(Option<T> a, object b)
         {
