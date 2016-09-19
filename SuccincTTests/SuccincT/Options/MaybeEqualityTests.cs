@@ -33,7 +33,7 @@ namespace SuccincTTests.SuccincT.Options
             var a = Option<string>.Some("1234");
             var b = Maybe<string>.Some("1234");
             IsTrue(a.Equals((Option<string>)b));
-            IsTrue(a == (Option<string>)b);
+            IsTrue(a == b);
         }
 
         [Test]
