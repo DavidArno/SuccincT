@@ -8,12 +8,12 @@ using static SuccincT.Unions.Variant;
 
 namespace SuccincT.Unions.PatternMatchers
 {
-    internal class MatchSelectorsForCases<T1, T2, T3, T4, TResult>
+    internal sealed class MatchSelectorsForCases<T1, T2, T3, T4, TResult>
     {
-        private readonly MatchFunctionSelector<T1, TResult> _case1Selector;
-        private readonly MatchFunctionSelector<T2, TResult> _case2Selector;
-        private readonly MatchFunctionSelector<T3, TResult> _case3Selector;
-        private readonly MatchFunctionSelector<T4, TResult> _case4Selector;
+        private readonly MatchFunctionSelector<T1, T1, TResult> _case1Selector;
+        private readonly MatchFunctionSelector<T2, T2, TResult> _case2Selector;
+        private readonly MatchFunctionSelector<T3, T3, TResult> _case3Selector;
+        private readonly MatchFunctionSelector<T4, T4, TResult> _case4Selector;
         private Func<Union<T1, T2>, TResult> _u2ElseFunction;
         private Func<Union<T1, T2, T3>, TResult> _u3ElseFunction;
         private Func<Union<T1, T2, T3, T4>, TResult> _u4ElseFunction;
@@ -21,18 +21,18 @@ namespace SuccincT.Unions.PatternMatchers
         internal MatchSelectorsForCases()
         {
             _case1Selector =
-                new MatchFunctionSelector<T1, TResult>(
+                new MatchFunctionSelector<T1, T1, TResult>(
                     x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
             _case2Selector =
-                new MatchFunctionSelector<T2, TResult>(
+                new MatchFunctionSelector<T2, T2, TResult>(
                     x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
             _case3Selector = typeof(T3) == typeof(Unit)
                 ? null
-                : new MatchFunctionSelector<T3, TResult>(
+                : new MatchFunctionSelector<T3, T3, TResult>(
                     x => { throw new NoMatchException("No match action defined for union with Case3 value"); });
             _case4Selector = typeof(T4) == typeof(Unit)
                 ? null
-                : new MatchFunctionSelector<T4, TResult>(
+                : new MatchFunctionSelector<T4, T4, TResult>(
                     x => { throw new NoMatchException("No match action defined for union with Case4 value"); });
         }
 
@@ -88,22 +88,22 @@ namespace SuccincT.Unions.PatternMatchers
             Ignore(possibleResult.HasValue ? possibleResult.Value : ElseFunction(union));
         }
 
-        private MatchFunctionSelector<T, TResult> Selector<T>()
+        private MatchFunctionSelector<T, T, TResult> Selector<T>()
         {
             if (typeof(T) == typeof(T1))
             {
-                return _case1Selector as MatchFunctionSelector<T, TResult>;
+                return _case1Selector as MatchFunctionSelector<T, T, TResult>;
             }
             if (typeof(T) == typeof(T2))
             {
-                return _case2Selector as MatchFunctionSelector<T, TResult>;
+                return _case2Selector as MatchFunctionSelector<T, T, TResult>;
             }
             if (typeof(T) == typeof(T3))
             {
-                return _case3Selector as MatchFunctionSelector<T, TResult>;
+                return _case3Selector as MatchFunctionSelector<T, T, TResult>;
             }
 
-            return _case4Selector as MatchFunctionSelector<T, TResult>;
+            return _case4Selector as MatchFunctionSelector<T, T, TResult>;
         }
 
         private TResult DetermineResultUsingDefaultIfRequired(IUnion<T1, T2, T3, T4> union)

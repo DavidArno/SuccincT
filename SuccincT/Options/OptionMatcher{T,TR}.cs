@@ -18,12 +18,12 @@ namespace SuccincT.Options
         private readonly Union<T, None> _union;
         private readonly Option<T> _option;
 
-        private readonly MatchFunctionSelector<T, TResult> _case1FunctionSelector =
-            new MatchFunctionSelector<T, TResult>(
+        private readonly MatchFunctionSelector<T, T, TResult> _case1FunctionSelector =
+            new MatchFunctionSelector<T, T, TResult>(
                 x => { throw new NoMatchException("No match action defined for Option with value"); });
 
-        private readonly MatchFunctionSelector<None, TResult> _case2FunctionSelector =
-            new MatchFunctionSelector<None, TResult>(
+        private readonly MatchFunctionSelector<None, None, TResult> _case2FunctionSelector =
+            new MatchFunctionSelector<None, None, TResult>(
                 x => { throw new NoMatchException("No match action defined for Option with no value"); });
 
         private Func<Option<T>, TResult> _elseAction;

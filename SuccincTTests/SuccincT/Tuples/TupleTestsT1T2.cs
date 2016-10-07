@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.PatternMatchers;
+using static SuccincT.PatternMatchers.Any;
 
 namespace SuccincTTests.SuccincT.Tuples
 {
@@ -20,6 +21,54 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(2, "a").Or(1, "a").Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingIntWildcard()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(_, "a").Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingStringWildcard()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(1, _).Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingAllWildcards()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(_, _).Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingOrWithIntWildcard()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(2, "a").Or(_, "a").Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingOrWIthStringWildcard()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(1, "b").Or(1, _).Do((x, y) => true).Result();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void Tuple_CanBeMatchedUsingOrWithAllWildcards()
+        {
+            var tuple = Tuple.Create(1, "a");
+            var result = tuple.Match().To<bool>().With(2, "b").Or(_, _).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 

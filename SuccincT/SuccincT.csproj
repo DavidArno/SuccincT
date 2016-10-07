@@ -58,6 +58,8 @@
   <ItemGroup>
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
+    <Compile Include="Functional\Either.cs" />
+    <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
     <Compile Include="Functional\ConsNode.cs" />
@@ -90,6 +92,8 @@
     <Compile Include="Options\OptionMatcher{T,TR}.cs" />
     <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
+    <Compile Include="PatternMatchers\EitherTuple.cs" />
+    <Compile Include="PatternMatchers\EitherTuple{T1,T2}.cs" />
     <Compile Include="PatternMatchers\GeneralMatcher\GeneralMatcherExtensions.cs" />
     <Compile Include="PatternMatchers\IActionMatcherAfterElse.cs" />
     <Compile Include="PatternMatchers\IActionMatcher{T1,T2,T3,T4}.cs" />
@@ -122,7 +126,7 @@
     <Compile Include="PatternMatchers\Matcher{T1,T2,TR}.cs" />
     <Compile Include="PatternMatchers\IFuncMatcher{T1,TR}.cs" />
     <Compile Include="PatternMatchers\Matcher{T1.TR}.cs" />
-    <Compile Include="PatternMatchers\MatchFunctionSelector{T,TR}.cs" />
+    <Compile Include="PatternMatchers\MatchFunctionSelector.cs" />
     <Compile Include="PatternMatchers\SpecificTypeMatcherExtensions.cs" />
     <Compile Include="PatternMatchers\IFuncWithHandler{TM,T1,TR}.cs" />
     <Compile Include="PatternMatchers\IActionWithHandler{TM,T1}.cs" />

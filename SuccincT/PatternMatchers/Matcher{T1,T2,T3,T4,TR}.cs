@@ -16,7 +16,7 @@ namespace SuccincT.PatternMatchers
         IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>,
         IFuncMatcherAfterElse<TResult>
     {
-        private readonly MatchFunctionSelector<Tuple<T1, T2, T3, T4>, TResult> _functionSelector;
+        private readonly MatchFunctionSelector<Tuple<T1, T2, T3, T4>, Tuple<T1, T2, T3, T4>, TResult> _functionSelector;
         private readonly Tuple<T1, T2, T3, T4> _item;
         private IList<Tuple<T1, T2, T3, T4>> _withValues;
         private Func<Tuple<T1, T2, T3, T4>, bool> _whereExpression;
@@ -25,7 +25,7 @@ namespace SuccincT.PatternMatchers
         internal Matcher(Tuple<T1, T2, T3, T4> item)
         {
             _item = item;
-            _functionSelector = new MatchFunctionSelector<Tuple<T1, T2, T3, T4>, TResult>(x =>
+            _functionSelector = new MatchFunctionSelector<Tuple<T1, T2, T3, T4>, Tuple<T1, T2, T3, T4>, TResult>(x =>
             {
                 throw new NoMatchException(
                     $"No match action exists for value of ({_item.Item1}, {_item.Item2}, {_item.Item3}, {_item.Item4}");

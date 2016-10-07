@@ -14,7 +14,7 @@ namespace SuccincT.PatternMatchers
                                                  IFuncWhereHandler<IFuncMatcher<T1, TResult>, T1, TResult>,
                                                  IFuncMatcherAfterElse<TResult>
     {
-        private readonly MatchFunctionSelector<T1, TResult> _functionSelector;
+        private readonly MatchFunctionSelector<T1, T1, TResult> _functionSelector;
         private readonly T1 _item;
         private List<T1> _withValues;
         private Func<T1, bool> _whereExpression;
@@ -23,7 +23,7 @@ namespace SuccincT.PatternMatchers
         internal Matcher(T1 item)
         {
             _item = item;
-            _functionSelector = new MatchFunctionSelector<T1, TResult>(
+            _functionSelector = new MatchFunctionSelector<T1, T1, TResult>(
                 x => { throw new NoMatchException($"No match action exists for value of {_item}"); });
         }
 

@@ -70,6 +70,7 @@
     <Compile Include="SuccincT\EnumParsers\EnumParserTests.cs" />
     <Compile Include="SuccincT\Functional\ActionExtensionsTests.cs" />
     <Compile Include="SuccincT\Functional\ConsEnumerableTests.cs" />
+    <Compile Include="SuccincT\Functional\EitherTests.cs" />
     <Compile Include="SuccincT\Functional\ForwardPipeTests.cs" />
     <Compile Include="SuccincT\Functional\RepeatingEnumerationsTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasActionTests.cs" />
