@@ -16,16 +16,16 @@ namespace SuccincT.PatternMatchers
         IFuncWhereHandler<IFuncMatcher<T1, T2, T3, TResult>, T1, T2, T3, TResult>,
         IFuncMatcherAfterElse<TResult>
     {
-        private readonly MatchFunctionSelector<Tuple<T1, T2, T3>, Tuple<T1, T2, T3>, TResult> _functionSelector;
+        private readonly MatchFunctionSelector<Tuple<T1, T2, T3>, EitherTuple<T1, T2, T3>, TResult> _functionSelector;
         private readonly Tuple<T1, T2, T3> _item;
-        private IList<Tuple<T1, T2, T3>> _withValues;
+        private IList<EitherTuple<T1, T2, T3>> _withValues;
         private Func<Tuple<T1, T2, T3>, bool> _whereExpression;
         private Func<Tuple<T1, T2, T3>, TResult> _elseFunction;
 
         internal Matcher(Tuple<T1, T2, T3> item)
         {
             _item = item;
-            _functionSelector = new MatchFunctionSelector<Tuple<T1, T2, T3>, Tuple<T1, T2, T3>, TResult>(x =>
+            _functionSelector = new MatchFunctionSelector<Tuple<T1, T2, T3>, EitherTuple<T1, T2, T3>, TResult>(x =>
             {
                 throw new NoMatchException(
                     $"No match action exists for value of ({_item.Item1}, {_item.Item2}, {_item.Item3}");
@@ -38,7 +38,31 @@ namespace SuccincT.PatternMatchers
                                                                                              T2 value2,
                                                                                              T3 value3)
         {
-            _withValues = new List<Tuple<T1, T2, T3>> {Tuple.Create(value1, value2, value3)};
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(Any value1,
+                                                                                             T2 value2,
+                                                                                             T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                             Any value2,
+                                                                                             T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                             T2 value2,
+                                                                                             Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
             return this;
         }
 
@@ -46,7 +70,95 @@ namespace SuccincT.PatternMatchers
                                                                                                    T2 value2,
                                                                                                    T3 value3)
         {
-            _withValues = new List<Tuple<T1, T2, T3>> {Tuple.Create(value1, value2, value3)};
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(Any value1,
+                                                                                                   T2 value2,
+                                                                                                   T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                                   Any value2,
+                                                                                                   T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                                   T2 value2,
+                                                                                                   Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(Any value1,
+                                                                                                   Any value2,
+                                                                                                   T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(Any value1,
+                                                                                                   T2 value2,
+                                                                                                   Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                                   Any value2,
+                                                                                                   Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IActionMatcher<T1, T2, T3>.With(Any value1,
+                                                                                                   Any value2,
+                                                                                                   Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(Any value1,
+                                                                                             Any value2,
+                                                                                             T3 value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(Any value1,
+                                                                                             T2 value2,
+                                                                                             Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(T1 value1,
+                                                                                             Any value2,
+                                                                                             Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
+            return this;
+        }
+
+        IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3> IMatcher<T1, T2, T3>.With(Any value1,
+                                                                                             Any value2,
+                                                                                             Any value3)
+        {
+            _withValues = new List<EitherTuple<T1, T2, T3>> { EitherTuple.Create<T1, T2, T3>(value1, value2, value3) };
             return this;
         }
 
@@ -55,7 +167,7 @@ namespace SuccincT.PatternMatchers
             T2 value2,
             T3 value3)
         {
-            _withValues = new List<Tuple<T1, T2, T3>> {Tuple.Create(value1, value2, value3)};
+            _withValues = new List<EitherTuple<T1, T2, T3>> {EitherTuple.Create(value1, value2, value3)};
             return this;
         }
 
@@ -107,14 +219,14 @@ namespace SuccincT.PatternMatchers
         IFuncWithHandler<IFuncMatcher<T1, T2, T3, TResult>, T1, T2, T3, TResult>
             IFuncWithHandler<IFuncMatcher<T1, T2, T3, TResult>, T1, T2, T3, TResult>.Or(T1 value1, T2 value2, T3 value3)
         {
-            _withValues.Add(Tuple.Create(value1, value2, value3));
+            _withValues.Add(EitherTuple.Create(value1, value2, value3));
             return this;
         }
 
         IActionMatcher<T1, T2, T3> IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3>.Do(
             Action<T1, T2, T3> action)
         {
-            RecordFunction((x, y) => y.Any(v => EqualityComparer<Tuple<T1, T2, T3>>.Default.Equals(x, v)),
+            RecordFunction((x, y) => y.Any(v => v.MatchesTuple(x)),
                            _withValues,
                            ActionToFunc(action));
             return this;
@@ -130,7 +242,7 @@ namespace SuccincT.PatternMatchers
         IFuncMatcher<T1, T2, T3, TResult> IFuncWithHandler<IFuncMatcher<T1, T2, T3, TResult>, T1, T2, T3, TResult>.Do(
             Func<T1, T2, T3, TResult> function)
         {
-            RecordFunction((x, y) => y.Any(v => EqualityComparer<Tuple<T1, T2, T3>>.Default.Equals(x, v)),
+            RecordFunction((x, y) => y.Any(v => v.MatchesTuple(x)),
                            _withValues,
                            x => function(x.Item1, x.Item2, x.Item3));
             return this;
@@ -139,7 +251,7 @@ namespace SuccincT.PatternMatchers
         IFuncMatcher<T1, T2, T3, TResult> IFuncWithHandler<IFuncMatcher<T1, T2, T3, TResult>, T1, T2, T3, TResult>.Do(
             TResult value)
         {
-            RecordFunction((x, y) => y.Any(v => EqualityComparer<Tuple<T1, T2, T3>>.Default.Equals(x, v)),
+            RecordFunction((x, y) => y.Any(v => v.MatchesTuple(x)),
                            _withValues,
                            x => value);
             return this;
@@ -176,8 +288,8 @@ namespace SuccincT.PatternMatchers
             return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
-        private void RecordFunction(Func<Tuple<T1, T2, T3>, IList<Tuple<T1, T2, T3>>, bool> test,
-                                    IList<Tuple<T1, T2, T3>> values,
+        private void RecordFunction(Func<Tuple<T1, T2, T3>, IList<EitherTuple<T1, T2, T3>>, bool> test,
+                                    IList<EitherTuple<T1, T2, T3>> values,
                                     Func<Tuple<T1, T2, T3>, TResult> function)
         {
             _functionSelector.AddTestAndAction(test, values, null, function);
@@ -196,7 +308,7 @@ namespace SuccincT.PatternMatchers
         IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3>
             IActionWithHandler<IActionMatcher<T1, T2, T3>, T1, T2, T3>.Or(T1 value1, T2 value2, T3 value3)
         {
-            _withValues.Add(Tuple.Create(value1, value2, value3));
+            _withValues.Add(EitherTuple.Create(value1, value2, value3));
             return this;
         }
     }

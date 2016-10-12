@@ -93,6 +93,7 @@
     <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
     <Compile Include="PatternMatchers\EitherTuple.cs" />
+    <Compile Include="PatternMatchers\EitherTuple{T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\EitherTuple{T1,T2}.cs" />
     <Compile Include="PatternMatchers\GeneralMatcher\GeneralMatcherExtensions.cs" />
     <Compile Include="PatternMatchers\IActionMatcherAfterElse.cs" />
