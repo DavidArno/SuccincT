@@ -182,5 +182,33 @@ namespace SuccincTTests.SuccincT.Unions
             IsTrue(a != null);
             IsTrue(null != a);
         }
+
+        [Test]
+        public void T1HashCode_IsBasedOnT1Value()
+        {
+            var a = new Union<int, string, Colors, Animals>(2);
+            AreEqual(a.GetHashCode(), 2.GetHashCode());
+        }
+
+        [Test]
+        public void T2HashCode_IsBasedOnT2Value()
+        {
+            var a = new Union<int, string, Colors, Animals>("party");
+            AreEqual(a.GetHashCode(), "party".GetHashCode());
+        }
+
+        [Test]
+        public void T3HashCode_IsBasedOnT3Value()
+        {
+            var a = new Union<int, string, Colors, Animals>(Colors.Blue);
+            AreEqual(a.GetHashCode(), Colors.Blue.GetHashCode());
+        }
+
+        [Test]
+        public void T4HashCode_IsBasedOnT4Value()
+        {
+            var a = new Union<int, string, Colors, Animals>(Animals.Cow);
+            AreEqual(a.GetHashCode(), Animals.Cow.GetHashCode());
+        }
     }
 }
