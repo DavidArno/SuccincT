@@ -20,6 +20,7 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void EmptyListConvertedToCons_CanBeEnumerated()
         {
+            // ReSharper disable once CollectionNeverUpdated.Local
             var list = new List<int>();
             var consList = list.ToConsEnumerable();
             var count = consList.Count();
@@ -50,6 +51,7 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void ItemAddedToEmptyList_ResultsInItBeingEnumerated()
         {
+            // ReSharper disable once CollectionNeverUpdated.Local
             var list = new List<int>();
             var consList = list.Cons(1);
             var count = consList.Aggregate((x, y) => x + y);

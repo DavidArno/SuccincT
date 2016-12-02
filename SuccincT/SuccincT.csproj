@@ -59,6 +59,7 @@
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\Either.cs" />
+    <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <None Include="Code analysis rules as errors.ruleset" />
     <None Include="packages.config" />
+    <None Include="post-build.bat" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
@@ -187,6 +189,6 @@
   -->
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>call $(ProjectDir)\post-build.bat $(ProjectDir)</PostBuildEvent>
+    <PostBuildEvent>rem call $(ProjectDir)\post-build.bat $(ProjectDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

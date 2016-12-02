@@ -58,6 +58,7 @@ namespace SuccinctExamples
                         break;
                 }
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         public static IEnumerable<Lights> SequenceTrafficLightDeclarative() =>
