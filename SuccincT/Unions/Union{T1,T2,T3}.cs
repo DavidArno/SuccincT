@@ -39,7 +39,7 @@ namespace SuccincT.Unions
             _hashCodes = new Dictionary<Variant, Func<int>>
             {
                 { Variant.Case1, () => _value1.GetHashCode() },
-                { Variant.Case2, () => _value1.GetHashCode() },
+                { Variant.Case2, () => _value2.GetHashCode() },
                 { Variant.Case3, () => _value3.GetHashCode() }
             };
             _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2, T3>, bool>>
