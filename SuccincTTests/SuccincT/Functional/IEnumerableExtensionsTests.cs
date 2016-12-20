@@ -6,14 +6,14 @@ using System.Linq;
 namespace SuccincTTests.SuccincT.Functional
 {
     [TestFixture]
-    public class UEnumerableExtensionsTests
+    public class IEnumerableExtensionsTests
     {
         [Test]
         public void ForEmptyEnumeration_EmptyIndexEnumerationReturned()
         {
             var emptyList = new List<string>();
             var indexedList = emptyList.Indexed().ToList();
-            Assert.AreEqual(1, indexedList.Count);
+            Assert.AreEqual(0, indexedList.Count);
         }
     }
 }

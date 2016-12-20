@@ -80,7 +80,7 @@
     <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasTransformTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasFuncTests.cs" />
-    <Compile Include="SuccincT\Functional\UEnumerableExtensionsTests.cs" />
+    <Compile Include="SuccincT\Functional\IEnumerableExtensionsTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\MaybeEqualityTests.cs" />
     <Compile Include="SuccincT\Options\OptionIgnoreElseTests.cs" />
