@@ -14,7 +14,7 @@ namespace SuccincTTests.SuccincT.Options
             var valueOrError = ValueOrError.WithValue("x");
             var valueSet = false;
             var errorSet = false;
-            valueOrError.Match().Value().Do(s => valueSet = true).Error().Do(s => errorSet = true).Exec();
+            valueOrError.Match().Value().Do(_ => valueSet = true).Error().Do(_ => errorSet = true).Exec();
             AreEqual(new[] { true, false }, new[] { valueSet, errorSet });
         }
 
@@ -24,7 +24,7 @@ namespace SuccincTTests.SuccincT.Options
             var valueOrError = ValueOrError.WithError("x");
             var valueSet = false;
             var errorSet = false;
-            valueOrError.Match().Value().Do(s => valueSet = true).Error().Do(s => errorSet = true).Exec();
+            valueOrError.Match().Value().Do(_ => valueSet = true).Error().Do(_ => errorSet = true).Exec();
             AreEqual(new[] { false, true }, new[] { valueSet, errorSet });
         }
 
@@ -33,7 +33,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = ValueOrError.WithValue("x");
             var value = string.Empty;
-            valueOrError.Match().Value().Do(s => value = s).Error().Do(s => { }).Exec();
+            valueOrError.Match().Value().Do(s => value = s).Error().Do(_ => { }).Exec();
             AreEqual("x", value);
         }
 
@@ -42,7 +42,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = ValueOrError.WithError("x");
             var errorValue = string.Empty;
-            valueOrError.Match().Value().Do(s => { }).Error().Do(s => errorValue = s).Exec();
+            valueOrError.Match().Value().Do(_ => { }).Error().Do(s => errorValue = s).Exec();
             AreEqual("x", errorValue);
         }
 

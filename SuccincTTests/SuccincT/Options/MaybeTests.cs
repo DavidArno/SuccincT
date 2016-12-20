@@ -91,7 +91,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsNone_NoneResultIsReturned()
         {
             var option = Maybe<int>.None();
-            var result = option.Match<int>().Some().Do(x => 1).None().Do(() => 0).Result();
+            var result = option.Match<int>().Some().Do(_ => 1).None().Do(() => 0).Result();
             AreEqual(0, result);
         }
 
@@ -99,7 +99,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsNoneElseIsDefinedAndNoNoneMatch_ElseResultIsReturned()
         {
             var option = Maybe<int>.None();
-            var result = option.Match<int>().Some().Do(x => 1).Else(o => 0).Result();
+            var result = option.Match<int>().Some().Do(_ => 1).Else(_ => 0).Result();
             AreEqual(0, result);
         }
 
@@ -107,7 +107,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsNoneElseIsDefinedAndNoNoneMatch_ElseExpressionIsReturned()
         {
             var option = Maybe<int>.None();
-            var result = option.Match<int>().Some().Do(x => 1).Else(0).Result();
+            var result = option.Match<int>().Some().Do(_ => 1).Else(0).Result();
             AreEqual(0, result);
         }
 
@@ -123,7 +123,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsSomeElseIsDefinedAndSomeDoesntMatch_ElseResultIsReturned()
         {
             var option = Maybe<int>.Some(2);
-            var result = option.Match<int>().Some().Of(1).Do(x => 1).None().Do(() => 0).Else(o => o.Value).Result();
+            var result = option.Match<int>().Some().Of(1).Do(_ => 1).None().Do(() => 0).Else(o => o.Value).Result();
             AreEqual(2, result);
         }
 
@@ -131,7 +131,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Maybe<int>.None();
-            Throws<NoMatchException>(() => Ignore(option.Match<int>().Some().Do(x => 1).Result()));
+            Throws<NoMatchException>(() => Ignore(option.Match<int>().Some().Do(_ => 1).Result()));
         }
 
         [Test]
@@ -145,7 +145,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenMaybeIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Maybe<int>.None();
-            Throws<NoMatchException>(() => option.Match().Some().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => option.Match().Some().Do(_ => { }).Exec());
         }
 
         [Test]

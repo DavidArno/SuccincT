@@ -83,8 +83,7 @@ namespace SuccincT.Options
 
         public override bool Equals(object obj)
         {
-            var testObject = obj as ValueOrError;
-            return obj is ValueOrError && testObject._error == _error && testObject._value == _value;
+            return obj is ValueOrError testObject  && testObject._error == _error && testObject._value == _value;
         }
 
         public override int GetHashCode() => HasValue ? _value.GetHashCode() : _error.GetHashCode();
@@ -93,7 +92,7 @@ namespace SuccincT.Options
         {
             var aObj = (object)a;
             var bObj = (object)b;
-            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+            return aObj == null && bObj == null || aObj != null && a.Equals(b);
         }
 
         public static bool operator !=(ValueOrError a, ValueOrError b) => !(a == b);

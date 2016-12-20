@@ -1,5 +1,5 @@
-﻿using System;
-using SuccincT.Options;
+﻿using SuccincT.Options;
+using System;
 
 namespace SuccincT.Functional
 {

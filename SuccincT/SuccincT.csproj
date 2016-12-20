@@ -11,7 +11,7 @@
     <RootNamespace>SuccincT</RootNamespace>
     <AssemblyName>SuccincT</AssemblyName>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile92</TargetFrameworkProfile>
+    <TargetFrameworkProfile>Profile5</TargetFrameworkProfile>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -54,11 +54,16 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\Either.cs" />
+    <Compile Include="Functional\IEnumerableExtensions.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
@@ -83,7 +88,6 @@
     <Compile Include="Options\IValueOrErrorFuncMatcher.cs" />
     <Compile Include="Options\OptionExtensionsForIEnumerable.cs" />
     <Compile Include="Options\Maybe{T}.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Parsers\BooleanParser.cs" />
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Parsers\FloatParsers.cs" />
@@ -189,6 +193,6 @@
   -->
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>call $(ProjectDir)\post-build.bat $(ProjectDir)</PostBuildEvent>
+    <PostBuildEvent>rem call $(ProjectDir)\post-build.bat $(ProjectDir)</PostBuildEvent>
   </PropertyGroup>
 </Project>

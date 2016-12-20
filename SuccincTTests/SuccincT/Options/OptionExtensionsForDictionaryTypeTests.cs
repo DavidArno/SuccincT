@@ -5,7 +5,7 @@ using SuccincT.Options;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    class OptionExtensionsForDictionaryTypeTests
+    public class OptionExtensionsForDictionaryTypeTests
     {
         [Test]
         public void WhenKeyExists_TryGetValueReturnsValue()

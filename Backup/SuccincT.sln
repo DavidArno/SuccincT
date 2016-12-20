@@ -1,8 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26009.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincT", "SuccincT\SuccincT.csproj", "{23A68981-A42D-471D-AE34-3481D8551C1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTTests", "SuccincTTests\SuccincTTests.csproj", "{7295200E-9754-4F3C-B003-7C7766D8E5BE}"
+EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ED21DAA-EE74-433A-B82F-1978B0DB8657}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -10,13 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ED21D
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincT", "SuccincT\SuccincT.csproj", "{23A68981-A42D-471D-AE34-3481D8551C1E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTTests", "SuccincTTests\SuccincTTests.csproj", "{7295200E-9754-4F3C-B003-7C7766D8E5BE}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTExamples", "Examples\SuccincTExamples.csproj", "{337EE74A-9071-4007-A4F5-36C03E2ECEAE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.Core", "SuccincT.Core\SuccincT.Core.csproj", "{3E5208EE-3E88-4E1D-A346-A195DC879E59}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "SuccincT.Core", "SuccincT.Core\SuccincT.Core.xproj", "{3E5208EE-3E88-4E1D-A346-A195DC879E59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

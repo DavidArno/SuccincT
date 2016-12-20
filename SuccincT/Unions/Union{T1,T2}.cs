@@ -61,7 +61,7 @@ namespace SuccincT.Unions
         {
             var aObj = (object) p1;
             var bObj = (object) p2;
-            return (aObj == null && bObj == null) || (aObj != null && p1.Equals(p2));
+            return aObj == null && bObj == null || aObj != null && p1.Equals(p2);
         }
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
