@@ -6,6 +6,7 @@
 Please note that I am in the process of migrating to VS2017/C# 7. This is currently having two effects on the code:
 * The migration to VS 2017 is not backward compatible, due to changes to the dotnetcore project. Anyone forking and building the code should therefore be aware that you'll need VS 2017 RC2 with dotnetcore features installed.
 * At the moment, appveyor are running a beta programme for compiling against VS 2017. I have applied to join, but until then, appveyor builds are failing, so I've removed the build status badge.
+
 ----------
 ### Introduction ###
 Succinc\<T\> is a small, but growing, .NET library that adds a number of functional features to C#:
