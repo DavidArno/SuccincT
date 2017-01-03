@@ -194,7 +194,7 @@
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
     <PostBuildEvent>call $(ProjectDir)\post-build.bat $(ProjectDir)
-cd $(SolutionDir)SuccinT.Core
+cd $(SolutionDir)SuccincT.Core
 dotnet restore</PostBuildEvent>
   </PropertyGroup>
 </Project>
