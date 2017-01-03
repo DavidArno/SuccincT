@@ -193,7 +193,20 @@
   -->
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <PropertyGroup>
-    <PostBuildEvent>call $(ProjectDir)\post-build.bat $(ProjectDir)
+    <PostBuildEvent>if not [%25MKLINK%25] == [] goto mklinkset
+set MKLINK=mklink
+:mklinkset
+
+if not exist "$(SolutionDir)SuccincT.Core\Functional" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Functional" "$(SolutionDir)SuccincT\Functional"
+if not exist "$(SolutionDir)SuccincT.Core\Options" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Options" "$(SolutionDir)SuccincT\Options"
+if not exist "$(SolutionDir)SuccincT.Core\Parsers" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Parsers" "$(SolutionDir)SuccincT\Parsers"
+if not exist "$(SolutionDir)SuccincT.Core\PatternMatchers" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\PatternMatchers" "$(SolutionDir)SuccincT\PatternMatchers"
+if not exist "$(SolutionDir)SuccincT.Core\Tuples" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Tuples" "$(SolutionDir)SuccincT\Tuples"
+if not exist "$(SolutionDir)SuccincT.Core\Unions" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Unions" "$(SolutionDir)SuccincT\Unions"
+
+if not exist "$(SolutionDir)SuccincT.Core\CompilationTargetHandler.cs" %25MKLINK%25 "$(SolutionDir)SuccincT.Core\CompilationTargetHandler.cs" "$(SolutionDir)SuccincT\CompilationTargetHandler.cs"
+if not exist "$(SolutionDir)SuccincT.Core\Version.cs" %25MKLINK%25 "$(SolutionDir)SuccincT.Core\Version.cs" "$(SolutionDir)SuccincT\Version.cs"
+
 cd $(SolutionDir)SuccincT.Core
 dotnet restore</PostBuildEvent>
   </PropertyGroup>
