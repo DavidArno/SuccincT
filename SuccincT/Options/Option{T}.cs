@@ -13,15 +13,9 @@ namespace SuccincT.Options
     {
         private readonly Union<T, None> _union;
 
-        private Option()
-        {
-            _union = new Union<T, None>(none);
-        }
+        private Option() => _union = new Union<T, None>(none);
 
-        private Option(T value)
-        {
-            _union = new Union<T, None>(value);
-        }
+        private Option(T value) => _union = new Union<T, None>(value);
 
         /// <summary>
         /// Creates an instance of an option with no value.

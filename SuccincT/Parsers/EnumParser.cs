@@ -21,7 +21,7 @@ namespace SuccincT.Parsers
         /// not an enum.
         /// </typeparam>
         public static Option<T> TryParseEnum<T>(this string source) where T : struct, IConvertible =>
-            Parse<T>(source, false);
+            CheckIsEnumAndParse<T>(source, false);
 
         /// <summary>
         /// Parses the source string for a value from the specified enum, ignoring the case of the
@@ -33,16 +33,12 @@ namespace SuccincT.Parsers
         /// not an enum.
         /// </typeparam>
         public static Option<T> TryParseEnumIgnoringCase<T>(this string source) where T : struct, IConvertible =>
-            Parse<T>(source, true);
+            CheckIsEnumAndParse<T>(source, true);
 
-        private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct, IConvertible
-        {
-            if (!typeof(T).IsEnum()) { throw new ArgumentException("T must be an enumerated type"); }
+        private static Option<T> CheckIsEnumAndParse<T>(string source, bool ignoreCase) where T : struct, IConvertible =>
+            typeof(T).IsEnum() ? Parse<T>(source, ignoreCase) : throw new ArgumentException("T must be an enum type");
 
-            // ReSharper disable once RedundantAssignment - R# can't spot the use of it in Some() below
-            var value = default(T);
-            var success = Enum.TryParse(source, ignoreCase, out value);
-            return success ? Option<T>.Some(value) : Option<T>.None();
-        }
+        private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct, IConvertible =>
+            Enum.TryParse(source, ignoreCase, out T value) ? Option<T>.Some(value) : Option<T>.None();
     }
 }

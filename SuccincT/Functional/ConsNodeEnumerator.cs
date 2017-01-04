@@ -9,10 +9,7 @@ namespace SuccincT.Functional
     {
         private ConsNode<T> _node;
 
-        public ConsNodeEnumerator(ConsNode<T> node)
-        {
-            _node = node;
-        }
+        public ConsNodeEnumerator(ConsNode<T> node) => _node = node;
 
         public bool MoveNext()
         {
@@ -60,8 +57,7 @@ namespace SuccincT.Functional
             return true;
         }
 
-        public void Reset() { throw new NotImplementedException(); }
-
+        public void Reset() => throw new NotImplementedException();
         public T Current => _node.Value;
 
         object IEnumerator.Current => Current;

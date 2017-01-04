@@ -14,8 +14,7 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly MatchSelectorsForCases<T1, T2, Unit, Unit, TResult> _selector =
             MatchSelectorsCreator.CreateSelectors<T1, T2, TResult>();
 
-        internal UnionPatternMatcher(Union<T1, T2> union) { _union = union; }
-
+        internal UnionPatternMatcher(Union<T1, T2> union) => _union = union;
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T1, TResult>
             IUnionFuncPatternMatcher<T1, T2, TResult>.Case1()
         {
@@ -75,17 +74,13 @@ namespace SuccincT.Unions.PatternMatchers
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result() => _selector.ResultUsingElse(_union);
 
-        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1> IUnionActionPatternMatcher<T1, T2>.Case1()
-        {
-            return new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1, Unit>(_selector.RecordAction,
-                                                                                             this);
-        }
+        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1> IUnionActionPatternMatcher<T1, T2>.Case1() => 
+            new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1, Unit>(_selector.RecordAction,
+                                                                                      this);
 
-        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2> IUnionActionPatternMatcher<T1, T2>.Case2()
-        {
-            return new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction,
-                                                                                             this);
-        }
+        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2> IUnionActionPatternMatcher<T1, T2>.Case2() => 
+            new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction,
+                                                                                      this);
 
         IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T> IUnionActionPatternMatcher<T1, T2>.CaseOf
             <T>()

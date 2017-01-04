@@ -19,7 +19,7 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly MatchSelectorsForCases<T1, T2, T3, T4, TResult> _selector =
             MatchSelectorsCreator.CreateSelectors<T1, T2, T3, T4, TResult>();
 
-        internal UnionPatternMatcher(Union<T1, T2, T3, T4> union) { _union = union; }
+        internal UnionPatternMatcher(Union<T1, T2, T3, T4> union) => _union = union;
 
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult>
             IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>.Case1() =>

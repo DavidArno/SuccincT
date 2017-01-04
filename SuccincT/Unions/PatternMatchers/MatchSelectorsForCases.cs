@@ -39,18 +39,14 @@ namespace SuccincT.Unions.PatternMatchers
         internal void RecordAction<T>(Func<T, IList<T>, bool> withTest,
                                       Func<T, bool> whereTest,
                                       IList<T> withData,
-                                      Func<T, TResult> action)
-        {
+                                      Func<T, TResult> action) => 
             Selector<T>().AddTestAndAction(withTest, withData, whereTest, action);
-        }
 
         internal void RecordAction<T>(Func<T, IList<T>, bool> withTest,
                                       Func<T, bool> whereTest,
                                       IList<T> withData,
-                                      Func<T, Unit> action)
-        {
+                                      Func<T, Unit> action) => 
             Selector<T>().AddTestAndAction(withTest, withData, whereTest, action as Func<T, TResult>);
-        }
 
         internal void RecordElseFunction(Func<Union<T1, T2>, TResult> elseFunction) =>
             _u2ElseFunction = elseFunction;

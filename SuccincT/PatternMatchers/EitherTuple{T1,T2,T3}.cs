@@ -6,9 +6,9 @@ namespace SuccincT.PatternMatchers
 {
     internal struct EitherTuple<T1, T2, T3>
     {
-        private Either<T1,Any> _value1;
-        private Either<T2, Any> _value2;
-        private Either<T3, Any> _value3;
+        private readonly Either<T1,Any> _value1;
+        private readonly Either<T2, Any> _value2;
+        private readonly Either<T3, Any> _value3;
 
         public EitherTuple(T1 value1, T2 value2, T3 value3)
         {

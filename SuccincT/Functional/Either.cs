@@ -31,23 +31,9 @@ namespace SuccincT.Functional
 
         public bool IsLeft => !_isRight;
 
-        public TLeft Left
-        {
-            get
-            {
-                if (IsLeft) return _left;
-                throw new InvalidOperationException("Doesn't contain a left value");
-            }
-        }
+        public TLeft Left => IsLeft ? _left : throw new InvalidOperationException("Doesn't contain a left value");
 
-        public TRight Right
-        {
-            get
-            {
-                if (!IsLeft) return _right;
-                throw new InvalidOperationException("Doesn't contain a right value");
-            }
-        }
+        public TRight Right => !IsLeft ? _right : throw new InvalidOperationException("Doesn't contain a right value");
 
         public Option<TLeft> TryLeft => _tryLeft ??
             (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());
@@ -72,9 +58,6 @@ namespace SuccincT.Functional
             return x.IsLeft ? x._left.Equals(y._left) : x._right.Equals(y._right);
         }
 
-        public static bool operator !=(Either<TLeft, TRight> x, Either<TLeft, TRight> y)
-        {
-            return !(x == y);
-        }
+        public static bool operator !=(Either<TLeft, TRight> x, Either<TLeft, TRight> y) => !(x == y);
     }
 }

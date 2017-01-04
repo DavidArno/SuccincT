@@ -53,12 +53,9 @@ namespace SuccincT.Options
             return this;
         }
 
-        TResult IOptionFuncMatcher<T, TResult>.Result()
-        {
-            return _union.Case == Variant.Case1
-                ? _case1FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
-                : _case2FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
-        }
+        TResult IOptionFuncMatcher<T, TResult>.Result() => _union.Case == Variant.Case1
+            ? _case1FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
+            : _case2FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2);
 
         IUnionActionPatternCaseHandler<IOptionActionMatcher<T>, T> IOptionActionMatcher<T>.Some() =>
             new UnionPatternCaseHandler<IOptionActionMatcher<T>, T, TResult>(RecordAction, this);
@@ -77,12 +74,10 @@ namespace SuccincT.Options
             return this;
         }
 
-        void IOptionActionMatcher<T>.Exec()
-        {
+        void IOptionActionMatcher<T>.Exec() => 
             Ignore(_union.Case == Variant.Case1
                 ? _case1FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case1)
                 : _case2FunctionSelector.DetermineResultUsingDefaultIfRequired(_union.Case2));
-        }
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
@@ -123,10 +118,8 @@ namespace SuccincT.Options
         private void RecordAction(Func<T, IList<T>, bool> withTest,
                                   Func<T, bool> whereTest,
                                   IList<T> withData,
-                                  Func<T, TResult> action)
-        {
+                                  Func<T, TResult> action) => 
             _case1FunctionSelector.AddTestAndAction(withTest, withData, whereTest, action);
-        }
 
         private void RecordAction(Func<TResult> action) =>
             _case2FunctionSelector.AddTestAndAction((x, y) => true, null, null, x => action());
