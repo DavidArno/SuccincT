@@ -1,0 +1,39 @@
+﻿using System;
+
+namespace SuccincT.Options
+{
+    public struct Success<T>
+    {
+        private readonly bool _hasError;
+        private readonly T _error;
+
+        internal Success(T error)
+        {
+            _hasError = true;
+            _error = error;
+        }
+
+        public bool IsFailure => _hasError;
+
+        public T Failure => _hasError 
+            ? _error 
+            : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
+
+        public static implicit operator bool(Success<T> success) => !success._hasError;
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Success<T> success)
+            {
+                return success._hasError == _hasError && ((_hasError && _error.Equals(success._error)) || !_hasError);
+            }
+            return false;
+        }
+
+        public override int GetHashCode() => _hasError ? _error.GetHashCode() : 1;
+
+        public static bool operator ==(Success<T> a, object b) => a.Equals(b);
+
+        public static bool operator !=(Success<T> a, object b) => !a.Equals(b);
+    }
+}

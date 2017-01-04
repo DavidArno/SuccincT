@@ -95,6 +95,7 @@
     <Compile Include="SuccincT\Options\OptionTests.cs" />
     <Compile Include="SuccincT\Options\OptionEqualityTests.cs" />
     <Compile Include="SuccincT\Options\OptionExtensionsForDictionaryTypeTests.cs" />
+    <Compile Include="SuccincT\Options\SuccessTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorEqualityTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorExecTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />

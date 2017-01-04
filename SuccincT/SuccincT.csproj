@@ -65,6 +65,8 @@
     <Compile Include="Functional\IEnumerableExtensions.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
+    <Compile Include="Options\Success.cs" />
+    <Compile Include="Options\Success{T}.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
