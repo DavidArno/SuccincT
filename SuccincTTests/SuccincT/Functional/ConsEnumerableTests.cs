@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SuccincT.Functional;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional
 {
@@ -15,7 +16,7 @@ namespace SuccincTTests.SuccincT.Functional
             var list = new List<int> { 1, 2, 3 };
             var consList = list.ToConsEnumerable();
             var count = consList.Aggregate((x, y) => x + y);
-            Assert.AreEqual(6, count);
+            AreEqual(6, count);
         }
         [Test]
         public void EmptyListConvertedToCons_CanBeEnumerated()
@@ -24,7 +25,7 @@ namespace SuccincTTests.SuccincT.Functional
             var list = new List<int>();
             var consList = list.ToConsEnumerable();
             var count = consList.Count();
-            Assert.AreEqual(0, count);
+            AreEqual(0, count);
         }
 
         [Test]
@@ -34,9 +35,9 @@ namespace SuccincTTests.SuccincT.Functional
             var cons = EnumerationWithNotificationOfEnd(() => enumRunCount++).ToConsEnumerable();
             var joinedString1 = cons.Aggregate((x, y) => x + y);
             var joinedString2 = cons.Aggregate((x, y) => x + y);
-            Assert.AreEqual("redgreenblue", joinedString1);
-            Assert.AreEqual("redgreenblue", joinedString2);
-            Assert.AreEqual(1, enumRunCount);
+            AreEqual("redgreenblue", joinedString1);
+            AreEqual("redgreenblue", joinedString2);
+            AreEqual(1, enumRunCount);
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace SuccincTTests.SuccincT.Functional
             var list = new List<int> { 2, 3, 4 };
             var consList = list.Cons(1);
             var count = consList.Aggregate((x, y) => x + y);
-            Assert.AreEqual(10, count);
+            AreEqual(10, count);
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace SuccincTTests.SuccincT.Functional
             var list = new List<int>();
             var consList = list.Cons(1);
             var count = consList.Aggregate((x, y) => x + y);
-            Assert.AreEqual(1, count);
+            AreEqual(1, count);
         }
 
         [Test]
@@ -66,7 +67,7 @@ namespace SuccincTTests.SuccincT.Functional
             var consList2 = consList1.Cons(2);
             var consList3 = consList2.Cons(1);
             var count = consList3.Aggregate((x, y) => x + y);
-            Assert.AreEqual(21, count);
+            AreEqual(21, count);
         }
 
         [Test]
@@ -77,9 +78,9 @@ namespace SuccincTTests.SuccincT.Functional
             var cons2 = cons1.Cons("yellow");
             var joinedString1 = cons2.Aggregate((x, y) => x + y);
             var joinedString2 = cons2.Aggregate((x, y) => x + y);
-            Assert.AreEqual("yellowredgreenblue", joinedString1);
-            Assert.AreEqual("yellowredgreenblue", joinedString2);
-            Assert.AreEqual(1, enumRunCount);
+            AreEqual("yellowredgreenblue", joinedString1);
+            AreEqual("yellowredgreenblue", joinedString2);
+            AreEqual(1, enumRunCount);
         }
 
         [Test]
@@ -92,7 +93,7 @@ namespace SuccincTTests.SuccincT.Functional
             var consList3 = consList2.Cons(new List<int> { 8, 9 });
             var consList4 = consList1.Cons(consList3);
             var count = consList4.Aggregate((x, y) => x + y);
-            Assert.AreEqual(45, count);
+            AreEqual(45, count);
         }
 
         [Test]
@@ -100,7 +101,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var enumRunCount = 0;
             EnumerationWithNotificationOfEnd(() => enumRunCount++).Cons();
-            Assert.AreEqual(0, enumRunCount);
+            AreEqual(0, enumRunCount);
         }
 
         [Test]
@@ -108,8 +109,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var consData = new List<int> { 1, 2, 3, 4 }.Cons();
             var count = consData.Tail.Aggregate((x, y) => x + y);
-            Assert.AreEqual(1, consData.Head.Value);
-            Assert.AreEqual(9, count);
+            AreEqual(1, consData.Head.Value);
+            AreEqual(9, count);
         }
 
         [Test]
@@ -117,8 +118,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var consData = new List<int> { 1 }.Cons();
             var count = consData.Tail.Count();
-            Assert.AreEqual(1, consData.Head.Value);
-            Assert.AreEqual(0, count);
+            AreEqual(1, consData.Head.Value);
+            AreEqual(0, count);
         }
 
         [Test]
@@ -126,8 +127,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var consData = new List<int>().Cons();
             var count = consData.Tail.Count();
-            Assert.IsFalse(consData.Head.HasValue);
-            Assert.AreEqual(0, count);
+            IsFalse(consData.Head.HasValue);
+            AreEqual(0, count);
         }
 
         [Test]
@@ -137,8 +138,8 @@ namespace SuccincTTests.SuccincT.Functional
             var consData = consList.Cons();
             var count1 = consData.Tail.Aggregate((x, y) => x + y);
             var count2 = consList.Aggregate((x, y) => x + y);
-            Assert.AreEqual(9, count1);
-            Assert.AreEqual(10, count2);
+            AreEqual(9, count1);
+            AreEqual(10, count2);
         }
 
         [Test]
@@ -157,8 +158,26 @@ namespace SuccincTTests.SuccincT.Functional
 
             }
 
-            Assert.AreEqual(1, enumRunCount);
-            Assert.AreEqual("rgbrgbrgbrgbrgbrgbrgbrgbrgbrgb", result);
+            AreEqual(1, enumRunCount);
+            AreEqual("rgbrgbrgbrgbrgbrgbrgbrgbrgbrgb", result);
+        }
+
+        [Test]
+        public void AConsEnumeration_CanBeHeadTailDeconstructed()
+        {
+            var (head1, (head2, tail)) = EnumerationWithNotificationOfEnd(() => { }).ToConsEnumerable();
+            AreEqual("red", head1.Value);
+            AreEqual("green", head2.Value);
+            AreEqual(1, tail.ToList().Count);
+        }
+
+        [Test]
+        public void AnEnumeration_CanBeHeadTailDeconstructed()
+        {
+            var (head1, (head2, tail)) = EnumerationWithNotificationOfEnd(() => { });
+            AreEqual("red", head1.Value);
+            AreEqual("green", head2.Value);
+            AreEqual(1, tail.ToList().Count);
         }
 
         private static IEnumerable<string> EnumerationWithNotificationOfEnd(Action endReached)

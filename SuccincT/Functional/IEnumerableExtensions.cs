@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using SuccincT.Options;
+using System.Collections.Generic;
 
 namespace SuccincT.Functional
 {
@@ -12,5 +13,18 @@ namespace SuccincT.Functional
                 yield return (index++, item);
             }
         }
+
+
+        public static void Deconstruct<T>(this IEnumerable<T> enumeration, out Option<T> head, out IConsEnumerable<T> tail)
+        {
+            var consEnumeration = enumeration is IConsEnumerable<T> alreadyCons
+                ? alreadyCons
+                : enumeration.ToConsEnumerable();
+
+            var splitResult = consEnumeration.Cons();
+            head = splitResult.Head;
+            tail = splitResult.Tail;
+        }
+
     }
 }
