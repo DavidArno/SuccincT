@@ -2,7 +2,7 @@
 
 namespace SuccincT.Functional
 {
-    public struct ConsResult<T>
+    public sealed class ConsResult<T>
     {
         public Option<T> Head { get; }
         public IConsEnumerable<T> Tail { get; }
