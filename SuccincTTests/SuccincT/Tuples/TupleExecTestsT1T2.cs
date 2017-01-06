@@ -18,9 +18,18 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void TupleWithAnyInt_CanBeMatchedWithExec()
+        public void ValueTuple_CanBeMatchedWithExec()
         {
-            var tuple = Tuple.Create(1, "a");
+            var tuple = (1, "a");
+            var result = false;
+            tuple.Match().With(1, "a").Do((x, y) => result = true).Exec();
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void ValueTupleWithAnyInt_CanBeMatchedWithExec()
+        {
+            var tuple = (1, "a");
             var result = false;
             tuple.Match().With(_, "a").Do((x, y) => result = true).Exec();
             Assert.IsTrue(result);
@@ -36,9 +45,9 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void TupleWithAnyAndAny_CanBeMatchedWithExec()
+        public void ValueTupleWithAnyAndAny_CanBeMatchedWithExec()
         {
-            var tuple = Tuple.Create(1, "a");
+            var tuple = (1, "a");
             var result = false;
             tuple.Match().With(_, _).Do((x, y) => result = true).Exec();
             Assert.IsTrue(result);

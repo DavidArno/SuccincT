@@ -23,7 +23,6 @@ namespace SuccincT.PatternMatchers
         public static bool operator !=(Any any1, Any any2) => false;
 
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-        // ReSharper disable once ConvertToAutoProperty
-        public static Any _ => AnAny;
+        public static Any _ { get; } = AnAny;
     }
 }

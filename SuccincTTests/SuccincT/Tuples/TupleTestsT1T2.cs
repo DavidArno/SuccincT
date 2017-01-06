@@ -17,9 +17,9 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOr()
+        public void ValueTuple_CanBeMatchedViaOr()
         {
-            var tuple = Tuple.Create(1, "a");
+            var tuple = (1, "a");
             var result = tuple.Match().To<bool>().With(2, "a").Or(1, "a").Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
@@ -33,9 +33,9 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedUsingStringWildcard()
+        public void ValueTuple_CanBeMatchedUsingStringWildcard()
         {
-            var tuple = Tuple.Create(1, "a");
+            var tuple = (1, "a");
             var result = tuple.Match().To<bool>().With(1, _).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
