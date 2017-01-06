@@ -1,11 +1,9 @@
 ## Succinc\<T\> ##
 #### Discriminated unions, pattern matching and partial applications for C#  ####
-[![NuGet](https://img.shields.io/nuget/v/SuccincT.svg)](http://www.nuget.org/packages/SuccincT)&nbsp;
+[![Build Status](https://ci.appveyor.com/api/projects/status/github/DavidArno/Succinct?svg=true)](https://ci.appveyor.com/project/DavidArno/succinct) &nbsp;[![NuGet](https://img.shields.io/nuget/v/SuccincT.svg)](http://www.nuget.org/packages/SuccincT)
 ----------
 **Notice regarding the latest pushes**
-Please note that I am in the process of migrating to VS2017/C# 7. This is currently having two effects on the code:
-* The migration to VS 2017 is not backward compatible, due to changes to the dotnetcore project. Anyone forking and building the code should therefore be aware that you'll need VS 2017 RC2 with dotnetcore features installed.
-* At the moment, appveyor are running a beta programme for compiling against VS 2017. I have applied to join, but until then, appveyor builds are failing, so I've removed the build status badge.
+Please note that this library has been migrated to VS2017/C#7. The migration to VS2017 is not backward compatible, due to changes to the dotnetcore project. Anyone forking and building the code should therefore be aware that you'll need VS2017 RC2 with dotnetcore features installed in order to compile the source.
 
 ----------
 ### Introduction ###
