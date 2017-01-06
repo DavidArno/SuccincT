@@ -6,6 +6,17 @@ namespace SuccincT.Functional
 {
     public static class IEnumerableExtensions
     {
+        public static IConsEnumerable<T> ToConsEnumerable<T>(this IEnumerable<T> collection) =>
+            new ConsEnumerable<T>(collection);
+
+        public static IConsEnumerable<T> Cons<T>(this IEnumerable<T> collection, T head) =>
+            collection.ToConsEnumerable().Cons(head);
+
+        public static IConsEnumerable<T> Cons<T>(this IEnumerable<T> collection, IEnumerable<T> head) =>
+            collection.ToConsEnumerable().Cons(head);
+
+        public static ConsResult<T> Cons<T>(this IEnumerable<T> collection) => collection.ToConsEnumerable().Cons();
+
         public static IEnumerable<(int index, T item)> Indexed<T>(this IEnumerable<T> enumeration)
         {
             var index = 0;
