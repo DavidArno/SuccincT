@@ -16,3 +16,4 @@ packages/StyleCop.MSBuild.4.7.44.1/tools/*
 *.sln.iml
 /.idea.SuccincT/
 *.sln.tddstud10.user
+*.v3.ncrunchsolution

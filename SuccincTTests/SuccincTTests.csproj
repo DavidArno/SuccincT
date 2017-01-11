@@ -35,8 +35,12 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=3.4.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
-      <HintPath>..\packages\NUnit.3.4.1\lib\net45\nunit.framework.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
+      <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ReversedString, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
@@ -77,6 +81,7 @@
     <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasTransformTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasFuncTests.cs" />
+    <Compile Include="SuccincT\JSON\UnionOf2ConverterTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\MaybeEqualityTests.cs" />
     <Compile Include="SuccincT\Options\OptionIgnoreElseTests.cs" />
@@ -140,6 +145,10 @@
     <ProjectReference Include="..\Examples\SuccincTExamples.csproj">
       <Project>{337ee74a-9071-4007-a4f5-36c03e2eceae}</Project>
       <Name>SuccincTExamples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SuccincT.JSON\SuccincT.JSON.csproj">
+      <Project>{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}</Project>
+      <Name>SuccincT.JSON</Name>
     </ProjectReference>
     <ProjectReference Include="..\SuccincT\SuccincT.csproj">
       <Project>{23a68981-a42d-471d-ae34-3481d8551c1e}</Project>
