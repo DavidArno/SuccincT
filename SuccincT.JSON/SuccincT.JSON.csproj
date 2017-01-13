@@ -35,6 +35,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="SuccinctContractResolver.cs" />
+    <Compile Include="OptionConverter.cs" />
+    <Compile Include="UnionOf4Converter.cs" />
+    <Compile Include="UnionOf3Converter.cs" />
     <Compile Include="UnionOf2Converter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

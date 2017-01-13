@@ -7,11 +7,10 @@ using static SuccincT.Unions.Variant;
 
 namespace SuccincT.JSON
 {
-    // don't forget to document stuff from http://stackoverflow.com/questions/19510532/registering-a-custom-jsonconverter-globally-in-json-net
-    public class UnionOf2Converter : JsonConverter
+    public class UnionOf3Converter : JsonConverter
     {
         public override bool CanConvert(Type objectType) => 
-            objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Union<,>);
+            objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Union<,,>);
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
@@ -20,8 +19,9 @@ namespace SuccincT.JSON
         {
             var type1 = objectType.GetGenericArguments()[0];
             var type2 = objectType.GetGenericArguments()[1];
-            var rawUnionType = typeof(Union<,>);
-            var unionType = rawUnionType.MakeGenericType(type1, type2);
+            var type3 = objectType.GetGenericArguments()[2];
+            var rawUnionType = typeof(Union<,,>);
+            var unionType = rawUnionType.MakeGenericType(type1, type2, type3);
 
             var jsonObject = JObject.Load(reader);
             var variant = jsonObject["case"].ToObject<Variant>(serializer);
@@ -29,6 +29,7 @@ namespace SuccincT.JSON
             var value = variant.Match().To<object>()
                                .With(Case1).Do(_ => valueJson.ToObject(type1, serializer))
                                .With(Case2).Do(_ => valueJson.ToObject(type2, serializer))
+                               .With(Case3).Do(_ => valueJson.ToObject(type3, serializer))
                                .Result();
 
             return Activator.CreateInstance(unionType, value);
@@ -42,6 +43,7 @@ namespace SuccincT.JSON
             var variantValue = variant.Match().To<object>()
                                       .With(Case1).Do(_ => unionType.GetProperty("Case1").GetValue(value, null))
                                       .With(Case2).Do(_ => unionType.GetProperty("Case2").GetValue(value, null))
+                                      .With(Case3).Do(_ => unionType.GetProperty("Case3").GetValue(value, null))
                                       .Result();
 
             writer.WriteStartObject();

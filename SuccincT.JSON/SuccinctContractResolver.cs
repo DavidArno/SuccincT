@@ -12,11 +12,23 @@ namespace SuccincT.JSON
         {
             var contract = base.CreateContract(objectType);
 
-            if (objectType.IsGenericType && objectType.GetGenericTypeDefinition() == typeof(Union<,>))
+            if (objectType.IsGenericType)
             {
-                contract.Converter = new UnionOf2Converter();
-            }
+                if (objectType.GetGenericTypeDefinition() == typeof(Union<,>))
+                {
+                    contract.Converter = new UnionOf2Converter();
+                }
 
+                if (objectType.GetGenericTypeDefinition() == typeof(Union<,,>))
+                {
+                    contract.Converter = new UnionOf3Converter();
+                }
+
+                if (objectType.GetGenericTypeDefinition() == typeof(Union<,,,>))
+                {
+                    contract.Converter = new UnionOf4Converter();
+                }
+            }
             return contract;
         }
     }
