@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
@@ -16,31 +17,33 @@ namespace SuccincT.Unions
 
         public Variant Case { get; }
 
-        public Union(T1 value) : this()
+        public Union(T1 value) : this(unit)
         {
             _value1 = value;
             Case = Variant.Case1;
         }
 
-        public Union(T2 value) : this()
+        public Union(T2 value) : this(unit)
         {
             _value2 = value;
             Case = Variant.Case2;
         }
 
-        public Union(T3 value) : this()
+        public Union(T3 value) : this(unit)
         {
             _value3 = value;
             Case = Variant.Case3;
         }
 
-        public Union(T4 value) : this()
+        public Union(T4 value) : this(unit)
         {
             _value4 = value;
             Case = Variant.Case4;
         }
 
-        private Union()
+        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // prevent JSON serializer from using this constructor to create an invalid union.
+        private Union(Unit _)
         {
             _hashCodes = new Dictionary<Variant, Func<int>>
             {
@@ -113,7 +116,7 @@ namespace SuccincT.Unions
         {
             var aObj = (object)a;
             var bObj = (object)b;
-            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+            return aObj == null && bObj == null || aObj != null && a.Equals(b);
         }
 
         public static bool operator !=(Union<T1, T2, T3, T4> a, Union<T1, T2, T3, T4> b) => !(a == b);

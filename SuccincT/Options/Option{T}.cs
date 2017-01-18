@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
+using static SuccincT.Functional.Unit;
 using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
@@ -13,7 +14,9 @@ namespace SuccincT.Options
     {
         private readonly Union<T, None> _union;
 
-        private Option()
+        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // prevent JSON serializer from using this constructor to create an invalid union.
+        private Option(Unit _)
         {
             _union = new Union<T, None>(none);
         }
@@ -26,7 +29,7 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() => new Option<T>();
+        public static Option<T> None() => new Option<T>(unit);
 
         /// <summary>
         /// Creates an instance of option with the specified value.
@@ -70,16 +73,16 @@ namespace SuccincT.Options
         }
 
         internal bool EqualsOption(Option<T> other) =>
-            (other.HasValue && HasValue && Value.Equals(other.Value)) || !(HasValue || other.HasValue);
+            other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue);
 
         internal bool EqualsMaybe(Maybe<T> other) =>
-            (other.HasValue && HasValue && Value.Equals(other.Value)) || !(HasValue || !other.CorrectlyLoad || other.HasValue);
+            other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || !other.CorrectlyLoad || other.HasValue);
 
         public override int GetHashCode() => _union.GetHashCode();
 
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         public static bool operator ==(Option<T> a, Maybe<T> b) => 
-            (object)a != null ? a.EqualsMaybe(b) : false;
+            (object)a != null && a.EqualsMaybe(b);
 
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         public static bool operator !=(Option<T> a, Maybe<T> b) =>
@@ -88,7 +91,7 @@ namespace SuccincT.Options
         public static bool operator ==(Option<T> a, object b)
         {
             var aObj = (object)a;
-            return (aObj == null && b == null) || (aObj != null && a.Equals(b));
+            return aObj == null && b == null || aObj != null && a.Equals(b);
         }
 
         public static bool operator !=(Option<T> a, object b) => !(a == b);

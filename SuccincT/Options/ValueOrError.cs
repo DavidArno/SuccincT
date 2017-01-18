@@ -93,7 +93,7 @@ namespace SuccincT.Options
         {
             var aObj = (object)a;
             var bObj = (object)b;
-            return (aObj == null && bObj == null) || (aObj != null && a.Equals(b));
+            return aObj == null && bObj == null || aObj != null && a.Equals(b);
         }
 
         public static bool operator !=(ValueOrError a, ValueOrError b) => !(a == b);

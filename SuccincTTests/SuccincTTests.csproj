@@ -81,6 +81,10 @@
     <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasTransformTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasFuncTests.cs" />
+    <Compile Include="SuccincT\JSON\SuccinctContractResolverTests.cs" />
+    <Compile Include="SuccincT\JSON\OptionConverterTests.cs" />
+    <Compile Include="SuccincT\JSON\UnionOf4ConverterTests.cs" />
+    <Compile Include="SuccincT\JSON\UnionOf3ConverterTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf2ConverterTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\MaybeEqualityTests.cs" />
