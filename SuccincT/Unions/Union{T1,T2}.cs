@@ -27,6 +27,7 @@ namespace SuccincT.Unions
 
         // ReSharper disable once UnusedParameter.Local - unit param used to 
         // prevent JSON serializer from using this constructor to create an invalid union.
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Union(Unit _)
         {
             _hashCodes = new Dictionary<Variant, Func<int>>

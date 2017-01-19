@@ -18,7 +18,7 @@ namespace SuccincT.JSON
                                         JsonSerializer serializer)
         {
             var type = objectType.GetGenericArguments()[0];
-            var rawOptionType = typeof(Option<>);
+            var rawOptionType = objectType.Name == "Maybe`1" ? typeof(Maybe<>) : typeof(Option<>);
             var optionType = rawOptionType.MakeGenericType(type);
 
             var jsonObject = JObject.Load(reader);

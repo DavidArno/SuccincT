@@ -1,11 +1,14 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
 using NUnit.Framework;
+using SuccincT.Functional;
 using SuccincT.JSON;
 using SuccincT.Options;
 using SuccincT.Unions;
 using static Newtonsoft.Json.JsonConvert;
 using static NUnit.Framework.Assert;
+using static SuccincT.Functional.Unit;
+using static SuccincT.Unions.None;
 
 namespace SuccincTTests.SuccincT.JSON
 {
@@ -25,6 +28,26 @@ namespace SuccincTTests.SuccincT.JSON
             var list = new List<Option<string>> { option1, option2 };
             var json = SerializeObject(list, settings);
             var newList = DeserializeObject<List<Option<string>>>(json, settings);
+
+            AreEqual(2, newList.Count);
+            IsTrue(newList[0].HasValue);
+            IsFalse(newList[1].HasValue);
+            AreEqual("a", newList[0].Value);
+        }
+
+        [Test]
+        public void ContractResolver_CanConvertMaybeToJsonAndBack()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+
+            var maybe1 = Maybe<string>.Some("a");
+            var maybe2 = Maybe<string>.None();
+            var list = new List<Maybe<string>> { maybe1, maybe2 };
+            var json = SerializeObject(list, settings);
+            var newList = DeserializeObject<List<Maybe<string>>>(json, settings);
 
             AreEqual(2, newList.Count);
             IsTrue(newList[0].HasValue);
@@ -102,6 +125,47 @@ namespace SuccincTTests.SuccincT.JSON
             AreEqual(2.0, newList[1].Case2);
             AreEqual("3", newList[2].Case3);
             AreEqual(Variant.Case3, newList[3].Case4);
+        }
+
+        [Test]
+        public void ConvertingValueToJsonAndBack_PreservesOptionState()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+
+            var value = ValueOrError.WithValue("a");
+            var json = SerializeObject(value, settings);
+            var newValue = DeserializeObject<ValueOrError>(json, settings);
+
+            IsTrue(newValue.HasValue);
+            AreEqual("a", newValue.Value);
+        }
+        [Test]
+        public void ConvertingNoneToJsonAndBack_CreatesANone()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+            var value = none;
+            var json = SerializeObject(value, settings);
+            var newValue = DeserializeObject<None>(json, settings);
+            AreEqual(value, newValue);
+        }
+
+        [Test]
+        public void ConvertingUnitToJsonAndBack_CreatesAUnit()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+            var value = unit;
+            var json = SerializeObject(value, settings);
+            var newValue = DeserializeObject<Unit>(json, settings);
+            AreEqual(value, newValue);
         }
     }
 }

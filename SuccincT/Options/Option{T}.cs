@@ -16,6 +16,7 @@ namespace SuccincT.Options
 
         // ReSharper disable once UnusedParameter.Local - unit param used to 
         // prevent JSON serializer from using this constructor to create an invalid union.
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Option(Unit _)
         {
             _union = new Union<T, None>(none);

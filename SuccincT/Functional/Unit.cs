@@ -27,7 +27,8 @@ namespace SuccincT.Functional
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         public static bool operator !=(Unit u1, Unit u2) => false;
 
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "unit")] public static Unit unit { get; } = new Unit();
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "unit")]
+        public static Unit unit { get; } = new Unit();
 
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         public static void Ignore<T>(T anything) {}

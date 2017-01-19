@@ -34,6 +34,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="NoneAndUnitConverter.cs" />
+    <Compile Include="ValueOrErrorConverter.cs" />
     <Compile Include="SuccinctContractResolver.cs" />
     <Compile Include="OptionConverter.cs" />
     <Compile Include="UnionOf4Converter.cs" />

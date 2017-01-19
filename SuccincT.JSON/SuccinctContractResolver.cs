@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using SuccincT.Functional;
 using SuccincT.Options;
 using SuccincT.Unions;
 
@@ -15,7 +16,11 @@ namespace SuccincT.JSON
                 [typeof(Union<,>)] = () => new UnionOf2Converter(),
                 [typeof(Union<,,>)] = () => new UnionOf3Converter(),
                 [typeof(Union<,,,>)] = () => new UnionOf4Converter(),
-                [typeof(Option<>)] = () => new OptionConverter()
+                [typeof(Option<>)] = () => new OptionConverter(),
+                [typeof(Maybe<>)] = () => new OptionConverter(),
+                [typeof(ValueOrError)] = () => new ValueOrErrorConverter(),
+                [typeof(None)] = () => new NoneAndUnitConverter(),
+                [typeof(Unit)] = () => new NoneAndUnitConverter()
             };
 
         public static readonly SuccinctContractResolver Instance = new SuccinctContractResolver();
@@ -24,13 +29,18 @@ namespace SuccincT.JSON
         {
             var contract = base.CreateContract(objectType);
 
-            if (!objectType.IsGenericType) return contract;
-
-            var genericType = objectType.GetGenericTypeDefinition();
-            if (_converterProvider.ContainsKey(genericType))
+            if (_converterProvider.ContainsKey(objectType))
             {
-                contract.Converter = _converterProvider[genericType]();
+                contract.Converter = _converterProvider[objectType]();
             }
+            else if (objectType.IsGenericType)
+            {
+                var genericType = objectType.GetGenericTypeDefinition();
+                if (_converterProvider.ContainsKey(genericType))
+                {
+                    contract.Converter = _converterProvider[genericType]();
+                }
+            }            
 
             return contract;
         }
