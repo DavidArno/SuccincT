@@ -167,5 +167,33 @@ namespace SuccincTTests.SuccincT.JSON
             var newValue = DeserializeObject<Unit>(json, settings);
             AreEqual(value, newValue);
         }
+
+        [Test]
+        public void TheContractResolver_EnablesSerializationSupportForMultipleTypes()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+
+            var value = new TestCollection
+            {
+                Value1 = Option<int>.Some(1),
+                Value2 = none,
+                Value3 = new Union<int, string>("a")
+            };
+            var json = SerializeObject(value, settings);
+            var newValue = DeserializeObject<TestCollection>(json, settings);
+            AreEqual(value.Value1, newValue.Value1);
+            AreEqual(value.Value2, newValue.Value2);
+            AreEqual(value.Value3, newValue.Value3);
+        }
+
+        private class TestCollection
+        {
+            public Option<int> Value1 { get; set; }
+            public None Value2 { get; set; }
+            public Union<int, string> Value3 { get; set; }
+        }
     }
 }

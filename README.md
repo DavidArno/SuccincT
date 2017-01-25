@@ -3,7 +3,7 @@
 [![Build Status](https://ci.appveyor.com/api/projects/status/github/DavidArno/Succinct?svg=true)](https://ci.appveyor.com/project/DavidArno/succinct) &nbsp;[![NuGet](https://img.shields.io/nuget/v/SuccincT.svg)](http://www.nuget.org/packages/SuccincT)
 ----------
 ### Introduction ###
-Succinc\<T\> is a small, but growing, .NET library that adds a number of functional features to C#:
+Succinc\<T\> is a .NET library that adds a number of functional features to C#:
 
 * Discriminated unions, 
 * Pattern matching,
@@ -17,13 +17,12 @@ Succinc\<T\> is a small, but growing, .NET library that adds a number of functio
 * And finally, as an experimental feature at this stage, forward pipe support.
 
 ### Current Release ###
-The current release of Succinc\<T\> is 2.1.0, which is available as a [nuget package that supports .NET 4+, Windows 8+ appstore apps, Windows Phone 8.1 apps and .NET Core](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is 2.2.0, which is available as a [nuget package that supports .NET 4+, Windows 8+ appstore apps](https://www.nuget.org/packages/SuccincT/). 
 
-This release includes:
-* "cons" support for `IEnumerable<T>`. This allows items to be added to the head of an enumeration and for enumerations to be split into the head item and the "tail" enumeration.
-* `Cycle()` methods that can endlessly repeat an enumeration without repeatedly enumerating it.
-* A new experimental feature of forward piping parameters into method calls.
-* Support for .NET Core.
+This release also includes SuccincT.Json, which is available as a separate [nuget package that supports .NET 4+ and Windows 8+ appstore apps](https://www.nuget.org/packages/SuccincT.Json/). SuccincT.Json is dependent on Succinc\<T\>, so will pull that package in as part of the install. Also, please note that this nuget package is also dependent on the Newtonsoft.JSON v4.0.30319 nuget package.
+
+**WARNING**: Support for .NET Core has been temporarily dropped with this release. Previously, the Succinc\<T\> nuget package was incorrectly using the .NET Core version of the dll for framework projects, which could cause runtime failures as it tried to link to v4.1 of `System.Runtime`. Experiments with .NET Core suggest it didn't work reliably with that technology either. So with v2.2, support for .NET Core has been temporarily dropped while I work out how to properly support it.
+
 
 ### Features ###
 #### Discriminated Unions ####
@@ -148,3 +147,8 @@ var result = value.Into(f1).Into(f2).Into(f3).Into(f4);
 ````
 
 For more details, see the [Forward Pipe Operator page](https://github.com/DavidArno/SuccincT/wiki/PipeOperators).
+
+### Serialization ###
+This release sees the introduction of of JSON.Net serialization support for Succinc\<T\>. Using the Succinc\<T\> serializers, all types can now be correctly serialized/deserialized to JSON.
+
+For details, see the [Serializing to JSON](https://github.com/DavidArno/SuccincT/wiki/JsonSerialization) page.

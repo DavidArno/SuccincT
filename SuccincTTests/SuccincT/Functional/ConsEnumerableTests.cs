@@ -17,6 +17,7 @@ namespace SuccincTTests.SuccincT.Functional
             var count = consList.Aggregate((x, y) => x + y);
             Assert.AreEqual(6, count);
         }
+
         [Test]
         public void EmptyListConvertedToCons_CanBeEnumerated()
         {
