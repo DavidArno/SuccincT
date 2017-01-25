@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
@@ -12,19 +13,22 @@ namespace SuccincT.Unions
         private readonly T1 _value1;
         private readonly T2 _value2;
 
-        public Union(T1 value) : this()
+        public Union(T1 value) : this(unit)
         {
             _value1 = value;
             Case = Variant.Case1;
         }
 
-        public Union(T2 value) : this()
+        public Union(T2 value) : this(unit)
         {
             _value2 = value;
             Case = Variant.Case2;
         }
 
-        private Union()
+        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // prevent JSON serializer from using this constructor to create an invalid union.
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
+        private Union(Unit _)
         {
             _hashCodes = new Dictionary<Variant, Func<int>>
             {

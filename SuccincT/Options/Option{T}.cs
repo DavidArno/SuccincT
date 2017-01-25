@@ -2,6 +2,7 @@
 using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
+using static SuccincT.Functional.Unit;
 using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
@@ -13,14 +14,17 @@ namespace SuccincT.Options
     {
         private readonly Union<T, None> _union;
 
-        private Option() => _union = new Union<T, None>(none);
+        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // prevent JSON serializer from using this constructor to create an invalid union.
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
+        private Option(Unit _) => _union = new Union<T, None>(none);
 
         private Option(T value) => _union = new Union<T, None>(value);
 
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() => new Option<T>();
+        public static Option<T> None() => new Option<T>(unit);
 
         /// <summary>
         /// Creates an instance of option with the specified value.

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/DavidArno/SuccincT</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.JSON..png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>SuccincT.JSON adds JSON serialization support to Succinc&lt;T&gt;</summary>
+    <description>SuccincT.JSON adds JSON serialization support to Succinc&lt;T&gt;, a .NET library that adds a number of functional features to C#.</description>
+    <releaseNotes>V2.2.0 is the first release, compatible with Succinc&lt;T&gt; v2.2.0</releaseNotes>
+    <copyright>Copyright 2017, David Arno</copyright>
+    <tags>JSON serialization Partial application Discriminated unions Options Maybe Pattern matching cons functional</tags>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="9.0" />
+      <dependency id="SuccincT" version="2.2.0" />
+    </dependencies>
+  </metadata>
+</package>
