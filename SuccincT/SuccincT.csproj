@@ -59,7 +59,9 @@
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\Either.cs" />
+    <Compile Include="Options\OptionExtensions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
+    <Compile Include="Options\OptionExtensionsForGeneralTypes.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
