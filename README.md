@@ -39,6 +39,6 @@ This release also includes SuccincT.Json, which is available as a separate [nuge
 
 
 ### Forking and Contributing ###
-If you wish to fork this repo and build it on your own machine, please refer to the [Branches page](Documents/Branches) for details of the currently active branches.
+If you wish to fork this repo and build it on your own machine, please refer to the [Branches page](Documents/Branches.md) for details of the currently active branches.
 
-If you wish to contribute in any way (from saying "hi" to submitting a PR), please refer to the [Contributing page](Documents/Contributing). 
+If you wish to contribute in any way (from saying "hi" to submitting a PR), please refer to the [Contributing page](Documents/Contributing.md). 
