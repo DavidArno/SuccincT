@@ -11,7 +11,6 @@ namespace SuccincT.Parsers
         /// <summary>
         /// Parses the current string for a true/false value and returns an Option{bool} of the result.
         /// </summary>
-        public static Option<bool> TryParseBoolean(this string source) => 
-            bool.TryParse(source, out var result) ? Option<bool>.Some(result) : Option<bool>.None();
+        public static Option<bool> TryParseBoolean(this string source) => ReflectionBasedParser.Parse<bool>(source);
     }
 }

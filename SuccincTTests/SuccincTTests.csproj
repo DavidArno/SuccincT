@@ -61,8 +61,6 @@
     <Compile Include="Examples\UnionMatcherExamples.cs" />
     <Compile Include="Examples\ValueOrErrorExamples.cs" />
     <Compile Include="ExampleTests\ColorMatcherTester.cs" />
-    <Compile Include="ExampleTests\DiscountTestsV2.cs" />
-    <Compile Include="ExampleTests\DiscountTests.cs" />
     <Compile Include="ExampleTests\FibonacciTests.cs" />
     <Compile Include="ExampleTests\LexicalAnalyserUsingUnionsTests.cs" />
     <Compile Include="ExampleTests\PatternWithOrAndElseMatcherTester.cs" />
@@ -91,7 +89,6 @@
     <Compile Include="SuccincT\JSON\SuccinctContractResolverTests.cs" />
     <Compile Include="SuccincT\JSON\OptionConverterTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf4ConverterTests.cs" />
-    <Compile Include="SuccincT\Functional\IEnumerableExtensionsTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf3ConverterTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf2ConverterTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
@@ -110,7 +107,6 @@
     <Compile Include="SuccincT\Options\OptionTests.cs" />
     <Compile Include="SuccincT\Options\OptionEqualityTests.cs" />
     <Compile Include="SuccincT\Options\OptionExtensionsForDictionaryTypeTests.cs" />
-    <Compile Include="SuccincT\Options\SuccessTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorEqualityTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorExecTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />

@@ -21,14 +21,20 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates a new instance with a value (and no error)
         /// </summary>
-        public static ValueOrError WithValue(string value) =>
-            value != null ? new ValueOrError(value, null) : throw new ArgumentNullException(nameof(value));
+        public static ValueOrError WithValue(string value)
+        {
+            if (value == null) { throw new ArgumentNullException(nameof(value)); }
+            return new ValueOrError(value, null);
+        }
 
         /// <summary>
         /// Creates a new instance with an error (and no value)
         /// </summary>
-        public static ValueOrError WithError(string error) => 
-            error != null ? new ValueOrError(null, error) : throw new ArgumentNullException(nameof(error));
+        public static ValueOrError WithError(string error)
+        {
+            if (error == null) { throw new ArgumentNullException(nameof(error)); }
+            return new ValueOrError(null, error);
+        }
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
@@ -51,23 +57,45 @@ namespace SuccincT.Options
         /// The value held (if created by WithValue()). Will throw an InvalidOperationException if created via
         /// WithError().
         /// </summary>
-        public string Value => _value ?? throw new InvalidOperationException("ValueOrError doesn't contain a value");
+        public string Value
+        {
+            get
+            {
+                if (!HasValue) { throw new InvalidOperationException("ValueOrError doesn't contain a value"); }
+                return _value;
+            }
+        }
 
         /// <summary>
         /// The error held (if created by WithError()). Will throw an InvalidOperationException if created via
         /// WithValue().
         /// </summary>
-        public string Error => _value == null ? _error : throw new InvalidOperationException("ValueOrError doesn't contain an error");
+        public string Error
+        {
+            get
+            {
+                if (HasValue) { throw new InvalidOperationException("ValueOrError doesn't contain an error"); }
+                return _error;
+            }
+        }
 
         public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 
-        public override bool Equals(object obj) => 
-            obj is ValueOrError testObject  && testObject._error == _error && testObject._value == _value;
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
+        public override bool Equals(object obj)
+        {
+            var testObject = obj as ValueOrError;
+            return obj is ValueOrError && testObject._error == _error && testObject._value == _value;
+        }
 
         public override int GetHashCode() => HasValue ? _value.GetHashCode() : _error.GetHashCode();
 
-        public static bool operator ==(ValueOrError a, ValueOrError b) => 
-            a is object aObj && b is object bObj && (aObj == null && bObj == null || aObj != null && a.Equals(b));
+        public static bool operator ==(ValueOrError a, ValueOrError b)
+        {
+            var aObj = (object)a;
+            var bObj = (object)b;
+            return aObj == null && bObj == null || aObj != null && a.Equals(b);
+        }
 
         public static bool operator !=(ValueOrError a, ValueOrError b) => !(a == b);
     }

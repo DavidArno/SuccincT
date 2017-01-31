@@ -31,9 +31,23 @@ namespace SuccincT.Functional
 
         public bool IsLeft => !_isRight;
 
-        public TLeft Left => IsLeft ? _left : throw new InvalidOperationException("Doesn't contain a left value");
+        public TLeft Left
+        {
+            get
+            {
+                if (!IsLeft) throw new InvalidOperationException("Doesn't contain a left value");
+                return _left;
+            }
+        }
 
-        public TRight Right => !IsLeft ? _right : throw new InvalidOperationException("Doesn't contain a right value");
+        public TRight Right
+        {
+            get
+            {
+                if (IsLeft) throw new InvalidOperationException("Doesn't contain a right value");
+                return _right;
+            }
+        }
 
         public Option<TLeft> TryLeft => _tryLeft ??
             (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());

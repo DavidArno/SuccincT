@@ -18,38 +18,11 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void ValueTuple_CanBeMatchedWithExec()
-        {
-            var tuple = (1, "a");
-            var result = false;
-            tuple.Match().With(1, "a").Do((x, y) => result = true).Exec();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void ValueTupleWithAnyInt_CanBeMatchedWithExec()
-        {
-            var tuple = (1, "a");
-            var result = false;
-            tuple.Match().With(_, "a").Do((x, y) => result = true).Exec();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
         public void TupleWithAnyString_CanBeMatchedWithExec()
         {
             var tuple = Tuple.Create(1, "a");
             var result = false;
             tuple.Match().With(1, _).Do((x, y) => result = true).Exec();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void ValueTupleWithAnyAndAny_CanBeMatchedWithExec()
-        {
-            var tuple = (1, "a");
-            var result = false;
-            tuple.Match().With(_, _).Do((x, y) => result = true).Exec();
             Assert.IsTrue(result);
         }
 

@@ -6,8 +6,8 @@ namespace SuccincT.PatternMatchers
 {
     internal struct EitherTuple<T1, T2>
     {
-        private readonly Either<T1,Any> _value1;
-        private readonly Either<T2, Any> _value2;
+        private Either<T1, Any> _value1;
+        private Either<T2, Any> _value2;
 
         public EitherTuple(T1 value1, T2 value2)
         {
@@ -33,7 +33,7 @@ namespace SuccincT.PatternMatchers
             _value2 = new Either<T2, Any>(value2);
         }
 
-        public bool MatchesTuple((T1, T2) tuple) =>
+        public bool MatchesTuple(Tuple<T1, T2> tuple) =>
             (!_value1.IsLeft || EqualityComparer<T1>.Default.Equals(_value1.Left, tuple.Item1)) &&
             (!_value2.IsLeft || EqualityComparer<T2>.Default.Equals(_value2.Left, tuple.Item2));
     }
