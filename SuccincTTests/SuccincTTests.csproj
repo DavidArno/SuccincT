@@ -96,6 +96,8 @@
     <Compile Include="SuccincT\JSON\UnionOf2ConverterTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
     <Compile Include="SuccincT\Options\MaybeEqualityTests.cs" />
+    <Compile Include="SuccincT\Options\OptionExtensionsForGeneralTypesTests.cs" />
+    <Compile Include="SuccincT\Options\OptionExtensionsTests.cs" />
     <Compile Include="SuccincT\Options\OptionIgnoreElseTests.cs" />
     <Compile Include="SuccincT\Options\MaybeTests.cs" />
     <Compile Include="SuccincT\Options\SingleOrNoneTests.cs" />

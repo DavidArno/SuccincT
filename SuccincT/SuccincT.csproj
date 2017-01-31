@@ -54,19 +54,14 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\Either.cs" />
-    <Compile Include="Functional\IEnumerableExtensions.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Options\OptionExtensions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
-    <Compile Include="Options\Success.cs" />
-    <Compile Include="Options\Success{T}.cs" />
+    <Compile Include="Options\OptionExtensionsForGeneralTypes.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
@@ -74,6 +69,7 @@
     <Compile Include="Functional\ConsNodeEnumerator.cs" />
     <Compile Include="Functional\ConsNodeState.cs" />
     <Compile Include="Functional\ConsResult.cs" />
+    <Compile Include="Functional\ConsExtensionsForIEnumerable.cs" />
     <Compile Include="Functional\IConsEnumerable.cs" />
     <Compile Include="Functional\PartialFunctionApplications.cs" />
     <Compile Include="Functional\PipeExtensions.cs" />
@@ -89,10 +85,12 @@
     <Compile Include="Options\IValueOrErrorFuncMatcher.cs" />
     <Compile Include="Options\OptionExtensionsForIEnumerable.cs" />
     <Compile Include="Options\Maybe{T}.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Parsers\BooleanParser.cs" />
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Parsers\FloatParsers.cs" />
     <Compile Include="Parsers\IntParsers.cs" />
+    <Compile Include="Parsers\ReflectionBasedParser.cs" />
     <Compile Include="Options\INoneActionMatchHandler.cs" />
     <Compile Include="Options\OptionMatcher{T,TR}.cs" />
     <Compile Include="Options\ValueOrError.cs" />
@@ -176,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Code analysis rules as errors.ruleset" />
-    <None Include="packages.config" />
+    <None Include="post-build.bat" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
@@ -204,9 +202,6 @@ if not exist "$(SolutionDir)SuccincT.Core\Tuples" %25MKLINK%25 /D "$(SolutionDir
 if not exist "$(SolutionDir)SuccincT.Core\Unions" %25MKLINK%25 /D "$(SolutionDir)SuccincT.Core\Unions" "$(SolutionDir)SuccincT\Unions"
 
 if not exist "$(SolutionDir)SuccincT.Core\CompilationTargetHandler.cs" %25MKLINK%25 "$(SolutionDir)SuccincT.Core\CompilationTargetHandler.cs" "$(SolutionDir)SuccincT\CompilationTargetHandler.cs"
-if not exist "$(SolutionDir)SuccincT.Core\Version.cs" %25MKLINK%25 "$(SolutionDir)SuccincT.Core\Version.cs" "$(SolutionDir)SuccincT\Version.cs"
-
-cd $(SolutionDir)SuccincT.Core
-dotnet restore</PostBuildEvent>
+if not exist "$(SolutionDir)SuccincT.Core\Version.cs" %25MKLINK%25 "$(SolutionDir)SuccincT.Core\Version.cs" "$(SolutionDir)SuccincT\Version.cs"</PostBuildEvent>
   </PropertyGroup>
 </Project>
