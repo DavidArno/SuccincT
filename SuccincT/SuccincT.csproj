@@ -54,14 +54,20 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\Either.cs" />
+    <Compile Include="Functional\IEnumerableExtensions.cs" />
     <Compile Include="Options\OptionExtensions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
     <Compile Include="Options\OptionExtensionsForGeneralTypes.cs" />
+    <Compile Include="Options\Success.cs" />
+    <Compile Include="Options\Success{T}.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
@@ -69,7 +75,6 @@
     <Compile Include="Functional\ConsNodeEnumerator.cs" />
     <Compile Include="Functional\ConsNodeState.cs" />
     <Compile Include="Functional\ConsResult.cs" />
-    <Compile Include="Functional\ConsExtensionsForIEnumerable.cs" />
     <Compile Include="Functional\IConsEnumerable.cs" />
     <Compile Include="Functional\PartialFunctionApplications.cs" />
     <Compile Include="Functional\PipeExtensions.cs" />
@@ -90,7 +95,6 @@
     <Compile Include="Parsers\EnumParser.cs" />
     <Compile Include="Parsers\FloatParsers.cs" />
     <Compile Include="Parsers\IntParsers.cs" />
-    <Compile Include="Parsers\ReflectionBasedParser.cs" />
     <Compile Include="Options\INoneActionMatchHandler.cs" />
     <Compile Include="Options\OptionMatcher{T,TR}.cs" />
     <Compile Include="Options\ValueOrError.cs" />
