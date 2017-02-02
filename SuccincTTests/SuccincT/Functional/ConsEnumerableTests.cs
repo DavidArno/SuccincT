@@ -163,24 +163,6 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual("rgbrgbrgbrgbrgbrgbrgbrgbrgbrgb", result);
         }
 
-        [Test]
-        public void AConsEnumeration_CanBeHeadTailDeconstructed()
-        {
-            var (head1, (head2, tail)) = EnumerationWithNotificationOfEnd(() => { }).ToConsEnumerable();
-            AreEqual("red", head1.Value);
-            AreEqual("green", head2.Value);
-            AreEqual(1, tail.ToList().Count);
-        }
-
-        [Test]
-        public void AnEnumeration_CanBeHeadTailDeconstructed()
-        {
-            var (head1, (head2, tail)) = EnumerationWithNotificationOfEnd(() => { });
-            AreEqual("red", head1.Value);
-            AreEqual("green", head2.Value);
-            AreEqual(1, tail.ToList().Count);
-        }
-
         private static IEnumerable<string> EnumerationWithNotificationOfEnd(Action endReached)
         {
             yield return "red";

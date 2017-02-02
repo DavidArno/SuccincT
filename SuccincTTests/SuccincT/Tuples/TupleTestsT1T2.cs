@@ -17,26 +17,10 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void ValueTuple_CanBeMatchedViaOr()
-        {
-            var tuple = (1, "a");
-            var result = tuple.Match().To<bool>().With(2, "a").Or(1, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
         public void Tuple_CanBeMatchedUsingIntWildcard()
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(_, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void ValueTuple_CanBeMatchedUsingStringWildcard()
-        {
-            var tuple = (1, "a");
-            var result = tuple.Match().To<bool>().With(1, _).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 

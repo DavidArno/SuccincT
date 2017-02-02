@@ -17,9 +17,15 @@ namespace SuccincT.Options
         // ReSharper disable once UnusedParameter.Local - unit param used to 
         // prevent JSON serializer from using this constructor to create an invalid union.
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
-        private Option(Unit _) => _union = new Union<T, None>(none);
+        private Option(Unit _)
+        {
+            _union = new Union<T, None>(none);
+        }
 
-        private Option(T value) => _union = new Union<T, None>(value);
+        private Option(T value)
+        {
+            _union = new Union<T, None>(value);
+        }
 
         /// <summary>
         /// Creates an instance of an option with no value.
@@ -60,10 +66,11 @@ namespace SuccincT.Options
             }
         }
 
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         public override bool Equals(object obj)
         {
-            if (obj is Option<T> option) return EqualsOption(option);
-            if (obj is Maybe<T> maybe) return EqualsMaybe(maybe);
+            if (obj is Option<T>) return EqualsOption((Option<T>)obj);
+            if (obj is Maybe<T>) return EqualsMaybe((Maybe<T>)obj);
             return false;
         }
 
@@ -75,10 +82,9 @@ namespace SuccincT.Options
 
         public override int GetHashCode() => _union.GetHashCode();
 
-        // ReSharper disable once SimplifyConditionalTernaryExpression - do not "simplify" as 
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
-        public static bool operator ==(Option<T> a, Maybe<T> b) => 
-        (object)a != null ? a.EqualsMaybe(b) : false;
+        public static bool operator ==(Option<T> a, Maybe<T> b) =>
+            (object)a != null && a.EqualsMaybe(b);
 
         [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
         public static bool operator !=(Option<T> a, Maybe<T> b) =>

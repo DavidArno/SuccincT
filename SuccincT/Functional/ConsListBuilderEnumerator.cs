@@ -5,13 +5,16 @@ using static SuccincT.Functional.ConsNodeState;
 
 namespace SuccincT.Functional
 {
-    internal sealed class ConsListBuilderEnumerator<TConsNode, T> : IEnumerator<TConsNode> where 
+    internal sealed class ConsListBuilderEnumerator<TConsNode, T> : IEnumerator<TConsNode> where
         TConsNode : ConsNode<T>, new()
     {
         private readonly IEnumerator<T> _enumerator;
         private TConsNode _node;
 
-        internal ConsListBuilderEnumerator(TConsNode node) => _enumerator = node.Enumeration.GetEnumerator();
+        internal ConsListBuilderEnumerator(TConsNode node)
+        {
+            _enumerator = node.Enumeration.GetEnumerator();
+        }
 
         public bool MoveNext()
         {
@@ -26,7 +29,7 @@ namespace SuccincT.Functional
             return true;
         }
 
-        public void Reset() => throw new NotSupportedException();
+        public void Reset() { throw new NotSupportedException(); }
 
         public TConsNode Current => _node;
 
