@@ -19,8 +19,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenObjectIsNull_ToOptionReturnsNone()
         {
-            var obj = (object) null;
-            var opt = obj.ToOption();
+            var opt = ((object)null).ToOption();
             Assert.IsNotNull(opt);
             Assert.IsFalse(opt.HasValue);
         }
@@ -29,19 +28,18 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenNullableStructHasValue_ToOptionReturnsValue()
         {
             int? obj = 15;
-            var opt = obj.ToOption();
-            Assert.IsNotNull(opt);
-            Assert.IsTrue(opt.HasValue);
-            Assert.AreEqual(15, opt.Value);
+            var option = obj.ToOption();
+            Assert.IsNotNull(option);
+            Assert.IsTrue(option.HasValue);
+            Assert.AreEqual(15, option.Value);
         }
 
         [Test]
         public void WhenNullableStructHasNoValue_ToOptionReturnsNone()
         {
-            int? obj = null;
-            var opt = obj.ToOption();
-            Assert.IsNotNull(opt);
-            Assert.IsFalse(opt.HasValue);
+            var option = ((int?) null).ToOption();
+            Assert.IsNotNull(option);
+            Assert.IsFalse(option.HasValue);
         }
 
         [Test]
