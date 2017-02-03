@@ -59,6 +59,8 @@
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
     <Compile Include="Functional\ConsExtensionsForIEnumerable.cs" />
+    <Compile Include="Options\Success.cs" />
+    <Compile Include="Options\Success{T}.cs" />
     <Compile Include="Unions\Either.cs" />
     <Compile Include="Options\OptionExtensions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
