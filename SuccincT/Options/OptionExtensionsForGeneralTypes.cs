@@ -10,8 +10,8 @@ namespace SuccincT.Options
         public static T? AsNullable<T>(this Option<T> option) where T : struct =>
             option.HasValue ? option.Value : (T?) null;
 
-        public static Option<T> TryCast<T>(this object obj)
+        public static Option<T> TryCast<T>(this object value)
             where T : class =>
-            (obj as T).ToOption();
+            (value as T).ToOption();
     }
 }
