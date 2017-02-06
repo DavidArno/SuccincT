@@ -1,7 +1,7 @@
-﻿using SuccincT.Options;
-using System;
+﻿using System;
+using SuccincT.Options;
 
-namespace SuccincT.Functional
+namespace SuccincT.Unions
 {
     public struct Either<TLeft, TRight>
     {
@@ -31,9 +31,23 @@ namespace SuccincT.Functional
 
         public bool IsLeft => !_isRight;
 
-        public TLeft Left => IsLeft ? _left : throw new InvalidOperationException("Doesn't contain a left value");
+        public TLeft Left
+        {
+            get
+            {
+                if (!IsLeft) throw new InvalidOperationException("Doesn't contain a left value");
+                return _left;
+            }
+        }
 
-        public TRight Right => !IsLeft ? _right : throw new InvalidOperationException("Doesn't contain a right value");
+        public TRight Right
+        {
+            get
+            {
+                if (IsLeft) throw new InvalidOperationException("Doesn't contain a right value");
+                return _right;
+            }
+        }
 
         public Option<TLeft> TryLeft => _tryLeft ??
             (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());
@@ -59,5 +73,8 @@ namespace SuccincT.Functional
         }
 
         public static bool operator !=(Either<TLeft, TRight> x, Either<TLeft, TRight> y) => !(x == y);
+
+        public static implicit operator Either<TLeft, TRight>(TLeft value) => new Either<TLeft, TRight>(value);
+        public static implicit operator Either<TLeft, TRight>(TRight value) => new Either<TLeft, TRight>(value);
     }
 }

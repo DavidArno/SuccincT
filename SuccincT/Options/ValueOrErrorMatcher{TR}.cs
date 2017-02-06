@@ -21,7 +21,10 @@ namespace SuccincT.Options
 
         private Func<ValueOrError, TResult> _elseAction;
 
-        internal ValueOrErrorMatcher(ValueOrError valueOrError) => _valueOrError = valueOrError;
+        internal ValueOrErrorMatcher(ValueOrError valueOrError)
+        {
+            _valueOrError = valueOrError;
+        }
 
         IUnionFuncPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>
             IValueOrErrorFuncMatcher<TResult>.Value() =>
@@ -44,10 +47,12 @@ namespace SuccincT.Options
             return this;
         }
 
-        TResult IValueOrErrorFuncMatcher<TResult>.Result() => 
-            _valueOrError.HasValue
+        TResult IValueOrErrorFuncMatcher<TResult>.Result()
+        {
+            return _valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+        }
 
         IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> IValueOrErrorActionMatcher.Value() =>
                 new UnionPatternCaseHandler<IValueOrErrorActionMatcher, string, TResult>(RecordValueAction, this);
@@ -67,10 +72,12 @@ namespace SuccincT.Options
             return this;
         }
 
-        void IValueOrErrorActionMatcher.Exec() => 
+        void IValueOrErrorActionMatcher.Exec()
+        {
             Ignore(_valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error));
+        }
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
@@ -93,13 +100,17 @@ namespace SuccincT.Options
         private void RecordValueAction(Func<string, IList<string>, bool> withTest,
                                        Func<string, bool> whereTest,
                                        IList<string> withValues,
-                                       Func<string, TResult> action) => 
+                                       Func<string, TResult> action)
+        {
             _valueFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
+        }
 
         private void RecordErrorAction(Func<string, IList<string>, bool> withTest,
                                        Func<string, bool> whereTest,
                                        IList<string> withValues,
-                                       Func<string, TResult> action) => 
+                                       Func<string, TResult> action)
+        {
             _errorFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
+        }
     }
 }

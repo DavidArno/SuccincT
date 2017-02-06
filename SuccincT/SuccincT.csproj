@@ -61,13 +61,22 @@
   <ItemGroup>
     <Compile Include="CompilationTargetHandler.cs" />
     <Compile Include="Functional\ActionExtensions.cs" />
-    <Compile Include="Functional\Either.cs" />
-    <Compile Include="Functional\IEnumerableExtensions.cs" />
+    <Compile Include="Functional\ConsExtensionsForIEnumerable.cs" />
+    <Compile Include="Options\Success.cs" />
+    <Compile Include="Options\Success{T}.cs" />
+    <Compile Include="PatternMatchers\ITypeMatcher{T,TR}.cs" />
+    <Compile Include="PatternMatchers\ITypeMatcherCaseHandler.cs" />
+    <Compile Include="PatternMatchers\ITypeMatcherFuncPatternMatcherAfterElse.cs" />
+    <Compile Include="PatternMatchers\ITypeMatcher{T}.cs" />
+    <Compile Include="PatternMatchers\TypeMatcherCaseHandler.cs" />
+    <Compile Include="PatternMatchers\TypeMatcherCaseOfData.cs" />
+    <Compile Include="PatternMatchers\TypeMatcher{T}.cs" />
+    <Compile Include="PatternMatchers\TypeMatcher{T,TR}.cs" />
+    <Compile Include="Unions\Either.cs" />
     <Compile Include="Options\OptionExtensions.cs" />
     <Compile Include="Options\OptionExtensionsForDictionaryType.cs" />
     <Compile Include="Options\OptionExtensionsForGeneralTypes.cs" />
-    <Compile Include="Options\Success.cs" />
-    <Compile Include="Options\Success{T}.cs" />
+    <Compile Include="Parsers\ReflectionBasedParser.cs" />
     <Compile Include="PatternMatchers\Any.cs" />
     <Compile Include="Functional\ConsEnumerable.cs" />
     <Compile Include="Functional\ConsListBuilderEnumerator.cs" />
@@ -100,6 +109,7 @@
     <Compile Include="Options\ValueOrError.cs" />
     <Compile Include="Options\ValueOrErrorMatcher{TR}.cs" />
     <Compile Include="PatternMatchers\EitherTuple.cs" />
+    <Compile Include="PatternMatchers\EitherTuple{T1,T2,T3,T4}.cs" />
     <Compile Include="PatternMatchers\EitherTuple{T1,T2,T3}.cs" />
     <Compile Include="PatternMatchers\EitherTuple{T1,T2}.cs" />
     <Compile Include="PatternMatchers\GeneralMatcher\GeneralMatcherExtensions.cs" />

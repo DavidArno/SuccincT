@@ -1,4 +1,7 @@
-﻿using NUnit.Framework;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using NUnit.Framework;
 using SuccincT.Options;
 
 namespace SuccincTTests.SuccincT.Options
@@ -19,8 +22,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenObjectIsNull_ToOptionReturnsNone()
         {
-            var obj = (object) null;
-            var opt = obj.ToOption();
+            var opt = ((object)null).ToOption();
             Assert.IsNotNull(opt);
             Assert.IsFalse(opt.HasValue);
         }
@@ -29,19 +31,18 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenNullableStructHasValue_ToOptionReturnsValue()
         {
             int? obj = 15;
-            var opt = obj.ToOption();
-            Assert.IsNotNull(opt);
-            Assert.IsTrue(opt.HasValue);
-            Assert.AreEqual(15, opt.Value);
+            var option = obj.ToOption();
+            Assert.IsNotNull(option);
+            Assert.IsTrue(option.HasValue);
+            Assert.AreEqual(15, option.Value);
         }
 
         [Test]
         public void WhenNullableStructHasNoValue_ToOptionReturnsNone()
         {
-            int? obj = null;
-            var opt = obj.ToOption();
-            Assert.IsNotNull(opt);
-            Assert.IsFalse(opt.HasValue);
+            var option = ((int?) null).ToOption();
+            Assert.IsNotNull(option);
+            Assert.IsFalse(option.HasValue);
         }
 
         [Test]
@@ -59,6 +60,49 @@ namespace SuccincTTests.SuccincT.Options
             var opt = Option<bool>.None();
             var val = opt.AsNullable();
             Assert.IsNull(val);
+        }
+
+        [Test]
+        public void IfObjectTypeIsDerivedFromCastType_TryCastReturnsSome()
+        {
+            var obj = new MemoryStream();
+            var res = obj.TryCast<Stream>();
+            Assert.IsTrue(res.HasValue);
+            Assert.IsInstanceOf<Stream>(res.Value);
+        }
+
+        [Test]
+        public void IfObjectTypeIsTheSameAsCastType_TryCastReturnsSome()
+        {
+            var obj = new StringBuilder();
+            var res = obj.TryCast<StringBuilder>();
+            Assert.IsTrue(res.HasValue);
+            Assert.IsInstanceOf<StringBuilder>(res.Value);
+        }
+
+        [Test]
+        public void IfObjectTypeImplementsCastTypeInterface_TryCastReturnsSome()
+        {
+            var obj = new List<int>();
+            var res = obj.TryCast<IEnumerable<int>>();
+            Assert.IsTrue(res.HasValue);
+            Assert.IsInstanceOf<IEnumerable<int>>(res.Value);
+        }
+
+        [Test]
+        public void IfObjectTypeIsNotAssignableFromCastType_TryCastReturnsNone()
+        {
+            var obj = new MemoryStream();
+            var res = obj.TryCast<FileStream>();
+            Assert.IsFalse(res.HasValue);
+        }
+
+        [Test]
+        public void IfObjectTypeDoesNotImplementCastTypeInterface_TryCastReturnsNone()
+        {
+            var obj = new MemoryStream();
+            var res = obj.TryCast<IEnumerable<string>>();
+            Assert.IsFalse(res.HasValue);
         }
     }
 }

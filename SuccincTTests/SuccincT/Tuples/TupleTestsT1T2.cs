@@ -17,26 +17,10 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void ValueTuple_CanBeMatchedViaOr()
-        {
-            var tuple = (1, "a");
-            var result = tuple.Match().To<bool>().With(2, "a").Or(1, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
         public void Tuple_CanBeMatchedUsingIntWildcard()
         {
             var tuple = Tuple.Create(1, "a");
-            var result = tuple.Match().To<bool>().With(_, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
-        }
-
-        [Test]
-        public void ValueTuple_CanBeMatchedUsingStringWildcard()
-        {
-            var tuple = (1, "a");
-            var result = tuple.Match().To<bool>().With(1, _).Do((x, y) => true).Result();
+            var result = tuple.Match().To<bool>().With(any, "a").Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 
@@ -44,7 +28,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void Tuple_CanBeMatchedUsingAllWildcards()
         {
             var tuple = Tuple.Create(1, "a");
-            var result = tuple.Match().To<bool>().With(_, _).Do((x, y) => true).Result();
+            var result = tuple.Match().To<bool>().With(any, any).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 
@@ -52,7 +36,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void Tuple_CanBeMatchedUsingOrWithIntWildcard()
         {
             var tuple = Tuple.Create(1, "a");
-            var result = tuple.Match().To<bool>().With(2, "a").Or(_, "a").Do((x, y) => true).Result();
+            var result = tuple.Match().To<bool>().With(2, "a").Or(any, "a").Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 
@@ -60,7 +44,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void Tuple_CanBeMatchedUsingOrWIthStringWildcard()
         {
             var tuple = Tuple.Create(1, "a");
-            var result = tuple.Match().To<bool>().With(1, "b").Or(1, _).Do((x, y) => true).Result();
+            var result = tuple.Match().To<bool>().With(1, "b").Or(1, any).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 
@@ -68,7 +52,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void Tuple_CanBeMatchedUsingOrWithAllWildcards()
         {
             var tuple = Tuple.Create(1, "a");
-            var result = tuple.Match().To<bool>().With(2, "b").Or(_, _).Do((x, y) => true).Result();
+            var result = tuple.Match().To<bool>().With(2, "b").Or(any, any).Do((x, y) => true).Result();
             Assert.IsTrue(result);
         }
 

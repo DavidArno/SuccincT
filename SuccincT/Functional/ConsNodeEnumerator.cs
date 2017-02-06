@@ -9,7 +9,10 @@ namespace SuccincT.Functional
     {
         private ConsNode<T> _node;
 
-        public ConsNodeEnumerator(ConsNode<T> node) => _node = node;
+        public ConsNodeEnumerator(ConsNode<T> node)
+        {
+            _node = node;
+        }
 
         public bool MoveNext()
         {
@@ -17,7 +20,7 @@ namespace SuccincT.Functional
 
             if (_node.State == HasEnumeration)
             {
-                _node.Enumerating(new ConsListBuilderEnumerator<ConsNode<T>, T>(_node));
+                _node.Enumerating(new ConsListBuilderEnumerator<T>(_node));
             }
 
             if (_node.State == HasValue) return true;
@@ -57,7 +60,8 @@ namespace SuccincT.Functional
             return true;
         }
 
-        public void Reset() => throw new NotImplementedException();
+        public void Reset() { throw new NotImplementedException(); }
+
         public T Current => _node.Value;
 
         object IEnumerator.Current => Current;

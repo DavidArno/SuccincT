@@ -61,8 +61,6 @@
     <Compile Include="Examples\UnionMatcherExamples.cs" />
     <Compile Include="Examples\ValueOrErrorExamples.cs" />
     <Compile Include="ExampleTests\ColorMatcherTester.cs" />
-    <Compile Include="ExampleTests\DiscountTestsV2.cs" />
-    <Compile Include="ExampleTests\DiscountTests.cs" />
     <Compile Include="ExampleTests\FibonacciTests.cs" />
     <Compile Include="ExampleTests\LexicalAnalyserUsingUnionsTests.cs" />
     <Compile Include="ExampleTests\PatternWithOrAndElseMatcherTester.cs" />
@@ -91,7 +89,6 @@
     <Compile Include="SuccincT\JSON\SuccinctContractResolverTests.cs" />
     <Compile Include="SuccincT\JSON\OptionConverterTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf4ConverterTests.cs" />
-    <Compile Include="SuccincT\Functional\IEnumerableExtensionsTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf3ConverterTests.cs" />
     <Compile Include="SuccincT\JSON\UnionOf2ConverterTests.cs" />
     <Compile Include="SuccincT\Options\ElementAtOrNoneTests.cs" />
@@ -113,12 +110,19 @@
     <Compile Include="SuccincT\Options\SuccessTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorEqualityTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorExecTests.cs" />
+    <Compile Include="SuccincT\PatternMatchers\TypeMatcherTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchTests.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1.cs" />
+    <Compile Include="SuccincT\Tuples\TupleExecTestsUsingAnyT1T2T3T4.cs" />
+    <Compile Include="SuccincT\Tuples\TupleExecTestsUsingAnyT1T2T3.cs" />
+    <Compile Include="SuccincT\Tuples\TupleExecTestsUsingAnyT1T2.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1T2T3T4.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1T2T3.cs" />
     <Compile Include="SuccincT\Tuples\TupleIgnoreElseTests.cs" />
+    <Compile Include="SuccincT\Tuples\TupleMatchableTestsUsingAnyT1T2T3T4.cs" />
+    <Compile Include="SuccincT\Tuples\TupleMatchableTestsUsingAnyT1T2T3.cs" />
+    <Compile Include="SuccincT\Tuples\TupleMatchableTestsUsingAnyT1T2.cs" />
     <Compile Include="SuccincT\Tuples\TupleMatchableTestsT1T2.cs" />
     <Compile Include="SuccincT\Tuples\TupleTestsT1.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1T2.cs" />

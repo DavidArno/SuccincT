@@ -7,7 +7,7 @@ using static SuccincT.Functional.Unit;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    class SuccessTests
+    public class SuccessTests
     {
         [Test]
         public void CreatingSuccessValue_ResultsInNoFailure()
@@ -89,6 +89,13 @@ namespace SuccincTTests.SuccincT.Options
             AreNotEqual(failure1, failure2);
             IsFalse(failure1 == failure2);
             IsTrue(failure1 != failure2);
+        }
+
+        [Test]
+        public void AFailure_CanBeDirectlyCreatedFromTheFailureValue()
+        {
+            Success<int> failure = 1;
+            AreEqual(1, failure.Failure);
         }
     }
 }
