@@ -110,6 +110,7 @@
     <Compile Include="SuccincT\Options\SuccessTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorEqualityTests.cs" />
     <Compile Include="SuccincT\Options\ValueOrErrorExecTests.cs" />
+    <Compile Include="SuccincT\PatternMatchers\TypeMatcherTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchExecTests.cs" />
     <Compile Include="SuccincT\PatternMatchers\ValueMatchTests.cs" />
     <Compile Include="SuccincT\Tuples\TupleExecTestsT1.cs" />

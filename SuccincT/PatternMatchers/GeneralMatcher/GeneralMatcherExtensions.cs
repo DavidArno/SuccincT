@@ -10,5 +10,7 @@ namespace SuccincT.PatternMatchers.GeneralMatcher
     public static class GeneralMatcherExtensions
     {
         public static IMatcher<T> Match<T>(this T item) => new Matcher<T, Unit>(item);
+
+        public static ITypeMatcher<T> TypeMatch<T>(this T item) => new TypeMatcher<T>(item);
     }
 }
