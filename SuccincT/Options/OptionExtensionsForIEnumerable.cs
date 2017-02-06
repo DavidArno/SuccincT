@@ -15,11 +15,7 @@ namespace SuccincT.Options
         {
             if (collection == null) return Option<T>.None();
 
-            var list = collection as IList<T>;
-            if (list != null && list.Count > 0)
-            {
-                return Option<T>.Some(list[0]);
-            }
+            if (collection is IList<T> list && list.Count > 0) return Option<T>.Some(list[0]);
 
             using (var enumerator = collection.GetEnumerator())
             {
@@ -50,8 +46,7 @@ namespace SuccincT.Options
         {
             if (collection == null) return Option<T>.None();
 
-            var list = collection as IList<T>;
-            if (list != null && list.Count > 0)
+            if (collection is IList<T> list && list != null && list.Count > 0)
             {
                 return Option<T>.Some(list[list.Count - 1]);
             }
@@ -88,8 +83,7 @@ namespace SuccincT.Options
         {
             if (collection == null) return Option<T>.None();
 
-            var list = collection as IList<T>;
-            if (list != null)
+            if (collection is IList<T> list && list != null)
             {
                 return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
             }
@@ -126,8 +120,7 @@ namespace SuccincT.Options
         {
             if (collection == null || index < 0) return Option<T>.None();
 
-            var list = collection as IList<T>;
-            if (list != null)
+            if (collection is IList<T> list && list != null)
             {
                 return index < list.Count ? Option<T>.Some(list[index]) : Option<T>.None();
             }

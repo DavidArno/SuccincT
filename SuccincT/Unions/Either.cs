@@ -31,29 +31,15 @@ namespace SuccincT.Unions
 
         public bool IsLeft => !_isRight;
 
-        public TLeft Left
-        {
-            get
-            {
-                if (!IsLeft) throw new InvalidOperationException("Doesn't contain a left value");
-                return _left;
-            }
-        }
+        public TLeft Left => IsLeft ? _left : throw new InvalidOperationException("Doesn't contain a left value");
 
-        public TRight Right
-        {
-            get
-            {
-                if (IsLeft) throw new InvalidOperationException("Doesn't contain a right value");
-                return _right;
-            }
-        }
+        public TRight Right => !IsLeft ? _right :throw new InvalidOperationException("Doesn't contain a right value");
 
-        public Option<TLeft> TryLeft => _tryLeft ??
-            (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());
+        public Option<TLeft> TryLeft => 
+            _tryLeft ?? (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());
 
-        public Option<TRight> TryRight => _tryRight ?? 
-            (_tryRight = !IsLeft ? Option<TRight>.Some(_right) : Option<TRight>.None());
+        public Option<TRight> TryRight => 
+            _tryRight ?? (_tryRight = !IsLeft ? Option<TRight>.Some(_right) : Option<TRight>.None());
 
         public override bool Equals(object obj) => obj is Either<TLeft,TRight> && this == (Either<TLeft, TRight>)obj;
 

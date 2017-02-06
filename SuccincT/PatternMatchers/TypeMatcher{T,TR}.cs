@@ -3,7 +3,8 @@ using System.Collections.Generic;
 
 namespace SuccincT.PatternMatchers
 {
-    internal sealed class TypeMatcher<T, TResult> : ITypeMatcher<T, TResult>, ITypeMatcherFuncPatternMatcherAfterElse<TResult>
+    internal sealed class TypeMatcher<T, TResult> : ITypeMatcher<T, TResult>, 
+                                                    ITypeMatcherFuncPatternMatcherAfterElse<TResult>
     {
         private readonly T _item;
         private readonly List<TypeMatcherCaseOfData<T, TResult>> _matchList;

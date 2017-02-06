@@ -10,7 +10,7 @@ namespace SuccincT.PatternMatchers
 
         public override bool Equals(object obj) => obj is Any;
 
-        public override string ToString() => "_";
+        public override string ToString() => "*";
 
         [SuppressMessage("Microsoft.Performance", "CA1822:MarkMembersAsStatic")]
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "other")]

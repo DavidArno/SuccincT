@@ -8,9 +8,8 @@ namespace SuccincT.Functional
     {
         private readonly ConsNode<T> _node;
 
-        internal ConsEnumerable(IEnumerable<T> enumeration)
-        {
-            _node = _node = new ConsNode<T>
+        internal ConsEnumerable(IEnumerable<T> enumeration) =>
+            _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = new ConsNode<T>
@@ -19,10 +18,8 @@ namespace SuccincT.Functional
                     Enumeration = enumeration
                 }
             };
-        }
 
-        private ConsEnumerable(IEnumerable<T> enumeration, T head)
-        {
+        private ConsEnumerable(IEnumerable<T> enumeration, T head) =>
             _node = new ConsNode<T>
             {
                 State = StartNode,
@@ -37,10 +34,8 @@ namespace SuccincT.Functional
                     }
                 }
             };
-        }
 
-        private ConsEnumerable(IEnumerable<T> enumeration, IEnumerable<T> head)
-        {
+        private ConsEnumerable(IEnumerable<T> enumeration, IEnumerable<T> head) =>
             _node = new ConsNode<T>
             {
                 State = StartNode,
@@ -55,28 +50,23 @@ namespace SuccincT.Functional
                     }
                 }
             };
-        }
 
-        private ConsEnumerable(ConsNode<T> node)
-        {
+        private ConsEnumerable(ConsNode<T> node) =>
             _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = node
             };
-        }
 
-        private ConsEnumerable()
-        {
+        private ConsEnumerable() =>
             _node = new ConsNode<T>
             {
                 State = StartNode
             };
-        }
 
         public IEnumerator<T> GetEnumerator() => new ConsNodeEnumerator<T>(_node);
 
-        IEnumerator IEnumerable.GetEnumerator() { return GetEnumerator(); }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         ConsResult<T> IConsEnumerable<T>.Cons()
         {
@@ -87,6 +77,8 @@ namespace SuccincT.Functional
         }
 
         IConsEnumerable<T> IConsEnumerable<T>.Cons(T head) => new ConsEnumerable<T>(this, head);
-        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) => new ConsEnumerable<T>(this, head);
+
+        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) => 
+            new ConsEnumerable<T>(this, head);
     }
 }

@@ -16,14 +16,16 @@ namespace SuccincT.Functional
         /// <summary>
         /// Partially applies a(p1,p2,p3), via a.TailApply(v3), into a'(p1,p2)
         /// </summary>
-        public static Action<T1, T2> TailApply<T1, T2, T3>(this Action<T1, T2, T3> actionToApply, T3 p3) => 
-            (p1, p2) => actionToApply(p1, p2, p3);
+        public static Action<T1, T2> 
+            TailApply<T1, T2, T3>(this Action<T1, T2, T3> actionToApply, T3 p3) => 
+                (p1, p2) => actionToApply(p1, p2, p3);
 
         /// <summary>
         /// Partially applies a(p1,p2,p3,p4), via a.TailApply(v4), into a'(p1,p2,p3)
         /// </summary>
-        public static Action<T1, T2, T3> TailApply<T1, T2, T3, T4>(this Action<T1, T2, T3, T4> actionToApply, T4 p4) => 
-            (p1, p2, p3) => actionToApply(p1, p2, p3, p4);
+        public static Action<T1, T2, T3> 
+            TailApply<T1, T2, T3, T4>(this Action<T1, T2, T3, T4> actionToApply, T4 p4) => 
+                (p1, p2, p3) => actionToApply(p1, p2, p3, p4);
 
         /// <summary>
         /// Partially applies a(p1,p2,p3,p4), via a.TailApply(v4), into a'(p1,p2,p3)

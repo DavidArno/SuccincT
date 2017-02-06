@@ -34,8 +34,7 @@ namespace SuccincT.Options
             _option = option;
         }
 
-        IUnionFuncPatternCaseHandler<IOptionFuncMatcher<T, TResult>, T, TResult> IOptionFuncMatcher<T, TResult>.Some()
-            =>
+        IUnionFuncPatternCaseHandler<IOptionFuncMatcher<T, TResult>, T, TResult> IOptionFuncMatcher<T, TResult>.Some() =>
                 new UnionPatternCaseHandler<IOptionFuncMatcher<T, TResult>, T, TResult>(RecordAction, this);
 
         INoneFuncMatchHandler<T, TResult> IOptionFuncMatcher<T, TResult>.None() => this;

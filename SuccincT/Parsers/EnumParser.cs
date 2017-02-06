@@ -39,10 +39,7 @@ namespace SuccincT.Parsers
         {
             if (!typeof(T).IsEnum()) { throw new ArgumentException("T must be an enumerated type"); }
 
-            // ReSharper disable once RedundantAssignment - R# can't spot the use of it in Some() below
-            var value = default(T);
-            var success = Enum.TryParse(source, ignoreCase, out value);
-            return success ? Option<T>.Some(value) : Option<T>.None();
+            return Enum.TryParse(source, ignoreCase, out T value) ? Option<T>.Some(value) : Option<T>.None();
         }
     }
 }

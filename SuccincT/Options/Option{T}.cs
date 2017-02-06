@@ -17,15 +17,9 @@ namespace SuccincT.Options
         // ReSharper disable once UnusedParameter.Local - unit param used to 
         // prevent JSON serializer from using this constructor to create an invalid union.
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
-        private Option(Unit _)
-        {
-            _union = new Union<T, None>(none);
-        }
+        private Option(Unit _) => _union = new Union<T, None>(none);
 
-        private Option(T value)
-        {
-            _union = new Union<T, None>(value);
-        }
+        private Option(T value) => _union = new Union<T, None>(value);
 
         /// <summary>
         /// Creates an instance of an option with no value.
@@ -41,7 +35,8 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public IOptionFuncMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(_union, this);
+        public IOptionFuncMatcher<T, TResult> Match<TResult>() => 
+            new OptionMatcher<T, TResult>(_union, this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
@@ -57,20 +52,15 @@ namespace SuccincT.Options
         /// <summary>
         /// The value held (if created by Some()). Will throw an InvalidOperationException if created via None().
         /// </summary>
-        public T Value
-        {
-            get
-            {
-                if (!HasValue) { throw new InvalidOperationException("Option contains no value."); }
-                return _union.Case1;
-            }
-        }
+        public T Value => HasValue 
+            ? _union.Case1 
+            : throw new InvalidOperationException("Option contains no value.");
 
         [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         public override bool Equals(object obj)
         {
-            if (obj is Option<T>) return EqualsOption((Option<T>)obj);
-            if (obj is Maybe<T>) return EqualsMaybe((Maybe<T>)obj);
+            if (obj is Option<T> option) return EqualsOption(option);
+            if (obj is Maybe<T> maybe) return EqualsMaybe(maybe);
             return false;
         }
 

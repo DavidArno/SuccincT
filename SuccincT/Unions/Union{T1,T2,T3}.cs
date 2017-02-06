@@ -54,32 +54,9 @@ namespace SuccincT.Unions
             };
         }
 
-        public T1 Case1
-        {
-            get
-            {
-                if (Case != Variant.Case1) { throw new InvalidCaseException(Variant.Case1, Case); }
-                return _value1;
-            }
-        }
-
-        public T2 Case2
-        {
-            get
-            {
-                if (Case != Variant.Case2) { throw new InvalidCaseException(Variant.Case2, Case); }
-                return _value2;
-            }
-        }
-
-        public T3 Case3
-        {
-            get
-            {
-                if (Case != Variant.Case3) { throw new InvalidCaseException(Variant.Case3, Case); }
-                return _value3;
-            }
-        }
+        public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
+        public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
+        public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
 
         public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
             new UnionFuncPatternMatcher<T1, T2, T3, TResult>(this);
@@ -87,11 +64,7 @@ namespace SuccincT.Unions
         public IUnionActionPatternMatcher<T1, T2, T3> Match() => 
             new UnionFuncPatternMatcher<T1, T2, T3, Unit>(this);
 
-        public override bool Equals(object obj)
-        {
-            var testObject = obj as Union<T1, T2, T3>;
-            return testObject != null && UnionsEqual(testObject);
-        }
+        public override bool Equals(object obj) => obj is Union<T1, T2, T3> union && UnionsEqual(union);
 
         public override int GetHashCode() => _hashCodes[Case]();
 
@@ -106,6 +79,7 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2, T3> testObject) => 
             Case == testObject.Case && _unionsMatch[Case](testObject);
-        Unit IUnion<T1, T2, T3, Unit>.Case4 { get { throw new InvalidCaseException(Variant.Case4, Case); } }
+
+        Unit IUnion<T1, T2, T3, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
     }
 }

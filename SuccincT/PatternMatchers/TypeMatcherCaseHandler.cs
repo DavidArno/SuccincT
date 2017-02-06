@@ -2,7 +2,9 @@
 
 namespace SuccincT.PatternMatchers
 {
-    internal class TypeMatcherCaseHandler<T, TCaseType, TResult> : ITypeMatcherCaseHandler<ITypeMatcher<T, TResult>, TCaseType, TResult>, IFuncWhereHandler<ITypeMatcher<T, TResult>, TCaseType, TResult> where TCaseType : T
+    internal class TypeMatcherCaseHandler<T, TCaseType, TResult> :
+        ITypeMatcherCaseHandler<ITypeMatcher<T, TResult>, TCaseType, TResult>,
+        IFuncWhereHandler<ITypeMatcher<T, TResult>, TCaseType, TResult> where TCaseType : T
     {
         private readonly ITypeMatcher<T, TResult> _typeMatcher;
         private readonly Action<TypeMatcherCaseOfData<T, TResult>> _dataRecorder;
@@ -32,8 +34,8 @@ namespace SuccincT.PatternMatchers
         public ITypeMatcher<T, TResult> Do(Func<TCaseType, TResult> func)
         {
             _dataRecorder(new TypeMatcherCaseOfData<T, TResult>(typeof(TCaseType),
-                                                               _whereExpression,
-                                                               x => func((TCaseType) x)));
+                                                                _whereExpression,
+                                                                x => func((TCaseType)x)));
             return _typeMatcher;
         }
     }

@@ -15,24 +15,14 @@ namespace SuccincT.Options
 
         public bool IsFailure => _hasError;
 
-        public T Failure
-        {
-            get
-            {
-                if (!_hasError)
-                    throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
+        public T Failure => _hasError
+            ? _error
+            : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
 
-                return _error;
-            }
-        }
-
-        public override bool Equals(object obj)
-        {
-            var success = obj as Success<T>?;
-            return success.HasValue &&
-                   success.Value._hasError == _hasError &&
-                   (_hasError && _error.Equals(success.Value._error) || !_hasError);
-        }
+        public override bool Equals(object obj) => 
+            obj is Success<T> success && 
+            success._hasError == _hasError &&
+            (_hasError && _error.Equals(success._error) || !_hasError);
 
         public override int GetHashCode() => _hasError ? _error.GetHashCode() : 1;
 

@@ -44,20 +44,15 @@ namespace SuccincT.Unions
 
         public Variant Case { get; }
 
-        public T1 Case1 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case1, _value1);
-
-        public T2 Case2 => GetValueOrThrowExceptionIfInvalidCase(Variant.Case2, _value2);
+        public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
+        public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
 
         public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>() =>
             new UnionPatternMatcher<T1, T2, TResult>(this);
 
         public IUnionActionPatternMatcher<T1, T2> Match() => new UnionPatternMatcher<T1, T2, Unit>(this);
 
-        public override bool Equals(object obj)
-        {
-            var testObject = obj as Union<T1, T2>;
-            return testObject != null && UnionsEqual(testObject);
-        }
+        public override bool Equals(object obj) => obj is Union<T1, T2> union && UnionsEqual(union);
 
         public override int GetHashCode() => _hashCodes[Case]();
 
@@ -72,17 +67,7 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && _unionsMatch[Case](testObject);
 
-        private T GetValueOrThrowExceptionIfInvalidCase<T>(Variant requestedCase, T value)
-        {
-            if (Case == requestedCase)
-            {
-                return value;
-            }
-
-            throw new InvalidCaseException(requestedCase, Case);
-        }
-
-        Unit IUnion<T1, T2, Unit, Unit>.Case3 { get { throw new InvalidCaseException(Variant.Case3, Case); } }
-        Unit IUnion<T1, T2, Unit, Unit>.Case4 { get { throw new InvalidCaseException(Variant.Case4, Case); } }
+        Unit IUnion<T1, T2, Unit, Unit>.Case3 => throw new InvalidCaseException(Variant.Case3, Case);
+        Unit IUnion<T1, T2, Unit, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
     }
 }

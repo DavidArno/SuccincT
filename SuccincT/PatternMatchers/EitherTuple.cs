@@ -5,7 +5,7 @@ namespace SuccincT.PatternMatchers
     internal static class EitherTuple
     {
         public static EitherTuple<T1, T2> Create<T1, T2>(Either<T1, Any> value1,
-                                                                 Either<T2, Any> value2) =>
+                                                         Either<T2, Any> value2) =>
             new EitherTuple<T1, T2>(value1, value2);
 
 

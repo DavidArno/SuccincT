@@ -86,34 +86,23 @@ namespace SuccincT.Unions.PatternMatchers
 
         private MatchFunctionSelector<T, T, TResult> Selector<T>()
         {
-            if (typeof(T) == typeof(T1))
+            switch(typeof(T))
             {
-                return _case1Selector as MatchFunctionSelector<T, T, TResult>;
+                case var t when t == typeof(T1): return _case1Selector as MatchFunctionSelector<T, T, TResult>;
+                case var t when t == typeof(T2): return _case2Selector as MatchFunctionSelector<T, T, TResult>;
+                case var t when t == typeof(T3): return _case3Selector as MatchFunctionSelector<T, T, TResult>;
+                default: return _case4Selector as MatchFunctionSelector<T, T, TResult>;
             }
-            if (typeof(T) == typeof(T2))
-            {
-                return _case2Selector as MatchFunctionSelector<T, T, TResult>;
-            }
-            if (typeof(T) == typeof(T3))
-            {
-                return _case3Selector as MatchFunctionSelector<T, T, TResult>;
-            }
-
-            return _case4Selector as MatchFunctionSelector<T, T, TResult>;
         }
 
         private TResult DetermineResultUsingDefaultIfRequired(IUnion<T1, T2, T3, T4> union)
         {
             switch (union.Case)
             {
-                case Case1:
-                    return _case1Selector.DetermineResultUsingDefaultIfRequired(union.Case1);
-                case Case2:
-                    return _case2Selector.DetermineResultUsingDefaultIfRequired(union.Case2);
-                case Case3:
-                    return _case3Selector.DetermineResultUsingDefaultIfRequired(union.Case3);
-                default:
-                    return _case4Selector.DetermineResultUsingDefaultIfRequired(union.Case4);
+                case Case1: return _case1Selector.DetermineResultUsingDefaultIfRequired(union.Case1);
+                case Case2: return _case2Selector.DetermineResultUsingDefaultIfRequired(union.Case2);
+                case Case3: return _case3Selector.DetermineResultUsingDefaultIfRequired(union.Case3);
+                default: return _case4Selector.DetermineResultUsingDefaultIfRequired(union.Case4);
             }
         }
 
@@ -121,14 +110,10 @@ namespace SuccincT.Unions.PatternMatchers
         {
             switch (union.Case)
             {
-                case Case1:
-                    return _case1Selector.DetermineResult(union.Case1);
-                case Case2:
-                    return _case2Selector.DetermineResult(union.Case2);
-                case Case3:
-                    return _case3Selector.DetermineResult(union.Case3);
-                default:
-                    return _case4Selector.DetermineResult(union.Case4);
+                case Case1: return _case1Selector.DetermineResult(union.Case1);
+                case Case2: return _case2Selector.DetermineResult(union.Case2);
+                case Case3: return _case3Selector.DetermineResult(union.Case3);
+                default: return _case4Selector.DetermineResult(union.Case4);
             }
         }
 
@@ -139,10 +124,12 @@ namespace SuccincT.Unions.PatternMatchers
             {
                 return _u2ElseFunction(union as Union<T1, T2>);
             }
+
             if (union is Union<T1, T2, T3>)
             {
                 return _u3ElseFunction(union as Union<T1, T2, T3>);
             }
+
             return _u4ElseFunction(union as Union<T1, T2, T3, T4>);
         }
     }

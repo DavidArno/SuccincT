@@ -26,6 +26,6 @@ namespace SuccincT.Unions
         [SuppressMessage("Microsoft.Naming","CA1709:IdentifiersShouldBeCasedCorrectly")]
         public static None none { get; } = TheOnlyNone;
 
-        public override string ToString() => "!none!";
+        public override string ToString() => "none";
     }
 }

@@ -182,10 +182,8 @@ namespace SuccincT.PatternMatchers
 
         private void RecordFunction(Func<Tuple<T1, T2, T3>, IList<EitherTuple<T1, T2, T3>>, bool> test,
                                     IList<EitherTuple<T1, T2, T3>> values,
-                                    Func<Tuple<T1, T2, T3>, TResult> function)
-        {
+                                    Func<Tuple<T1, T2, T3>, TResult> function) => 
             _functionSelector.AddTestAndAction(test, values, null, function);
-        }
 
         private void RecordFunction(Func<Tuple<T1, T2, T3>, bool> test, Func<Tuple<T1, T2, T3>, TResult> function) =>
             _functionSelector.AddTestAndAction(null, null, test, function);

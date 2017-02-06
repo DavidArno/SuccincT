@@ -82,8 +82,8 @@ namespace SuccincT.PatternMatchers
             return this;
         }
 
-        IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult> IFuncMatcher<T1, T2, T3, T4, TResult>.
-            Where(Func<T1, T2, T3, T4, bool> expression)
+        IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult> 
+            IFuncMatcher<T1, T2, T3, T4, TResult>.Where(Func<T1, T2, T3, T4, bool> expression)
         {
             _whereExpression = x => expression(x.Item1, x.Item2, x.Item3, x.Item4);
             return this;
@@ -186,10 +186,8 @@ namespace SuccincT.PatternMatchers
 
         private void RecordFunction(Func<Tuple<T1, T2, T3, T4>, IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
                                     IList<EitherTuple<T1, T2, T3, T4>> values,
-                                    Func<Tuple<T1, T2, T3, T4>, TResult> function)
-        {
+                                    Func<Tuple<T1, T2, T3, T4>, TResult> function) => 
             _functionSelector.AddTestAndAction(test, values, null, function);
-        }
 
         private void RecordFunction(Func<Tuple<T1, T2, T3, T4>, bool> test, Func<Tuple<T1, T2, T3, T4>, TResult> function) =>
             _functionSelector.AddTestAndAction(null, null, test, function);

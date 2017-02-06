@@ -10,10 +10,8 @@ namespace SuccincT.Functional
         private readonly IEnumerator<T> _enumerator;
         private ConsNode<T> _node;
 
-        internal ConsListBuilderEnumerator(ConsNode<T> node)
-        {
+        internal ConsListBuilderEnumerator(ConsNode<T> node) => 
             _enumerator = node.Enumeration.GetEnumerator();
-        }
 
         public bool MoveNext()
         {
@@ -28,8 +26,7 @@ namespace SuccincT.Functional
             return true;
         }
 
-        public void Reset() { throw new NotSupportedException(); }
-
+        public void Reset() => throw new NotSupportedException();
         public ConsNode<T> Current => _node;
 
         object IEnumerator.Current => Current;

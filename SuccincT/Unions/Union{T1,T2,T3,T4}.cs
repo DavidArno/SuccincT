@@ -62,41 +62,10 @@ namespace SuccincT.Unions
             };
         }
 
-        public T1 Case1
-        {
-            get
-            {
-                if (Case == Variant.Case1) { return _value1; }
-                throw new InvalidCaseException(Variant.Case1, Case);
-            }
-        }
-
-        public T2 Case2
-        {
-            get
-            {
-                if (Case == Variant.Case2) { return _value2; }
-                throw new InvalidCaseException(Variant.Case2, Case);
-            }
-        }
-
-        public T3 Case3
-        {
-            get
-            {
-                if (Case == Variant.Case3) { return _value3; }
-                throw new InvalidCaseException(Variant.Case3, Case);
-            }
-        }
-
-        public T4 Case4
-        {
-            get
-            {
-                if (Case == Variant.Case4) { return _value4; }
-                throw new InvalidCaseException(Variant.Case4, Case);
-            }
-        }
+        public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
+        public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
+        public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
+        public T4 Case4 => Case == Variant.Case4 ? _value4 : throw new InvalidCaseException(Variant.Case4, Case);
 
         public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() => 
             new UnionPatternMatcher<T1, T2, T3, T4, TResult>(this);
@@ -104,14 +73,9 @@ namespace SuccincT.Unions
         public IUnionActionPatternMatcher<T1, T2, T3, T4> Match() => 
             new UnionPatternMatcher<T1, T2, T3, T4, Unit>(this);
 
-        public override bool Equals(object obj)
-        {
-            var testObject = obj as Union<T1, T2, T3, T4>;
-            return testObject != null && UnionsEqual(testObject);
-        }
+        public override bool Equals(object obj) => obj is Union < T1, T2, T3, T4> union && UnionsEqual(union);
 
-        public override int GetHashCode() => 
-            _hashCodes[Case]();
+        public override int GetHashCode() => _hashCodes[Case]();
 
         public static bool operator ==(Union<T1, T2, T3, T4> a, Union<T1, T2, T3, T4> b)
         {
