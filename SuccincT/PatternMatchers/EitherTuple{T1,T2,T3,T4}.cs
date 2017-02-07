@@ -22,7 +22,7 @@ namespace SuccincT.PatternMatchers
             _value4 = value4;
         }
 
-        public bool MatchesTuple(Tuple<T1, T2, T3, T4> tuple) =>
+        public bool MatchesTuple((T1, T2, T3, T4) tuple) =>
             (!_value1.IsLeft || EqualityComparer<T1>.Default.Equals(_value1.Left, tuple.Item1)) &&
             (!_value2.IsLeft || EqualityComparer<T2>.Default.Equals(_value2.Left, tuple.Item2)) &&
             (!_value3.IsLeft || EqualityComparer<T3>.Default.Equals(_value3.Left, tuple.Item3)) &&

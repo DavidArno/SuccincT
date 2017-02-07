@@ -12,7 +12,7 @@ namespace SuccincTTests.SuccincT.Tuples
             public int A;
             public string B;
 
-            public Tuple<int, string> PropertiesToMatch => Tuple.Create(A, B);
+            public (int, string) PropertiesToMatch => (A, B);
         }
 
         private class TestClassOf3 : ITupleMatchable<int, string, double>
@@ -21,7 +21,7 @@ namespace SuccincTTests.SuccincT.Tuples
             public string B;
             public double C;
 
-            public Tuple<int, string, double> PropertiesToMatch => Tuple.Create(A, B, C);
+            public (int, string, double) PropertiesToMatch => (A, B, C);
         }
 
         private class TestClassOf4 : ITupleMatchable<int, string, double, bool>
@@ -31,7 +31,7 @@ namespace SuccincTTests.SuccincT.Tuples
             public double C;
             public bool D;
 
-            public Tuple<int, string, double, bool> PropertiesToMatch => Tuple.Create(A, B, C, D);
+            public (int, string, double, bool) PropertiesToMatch => (A, B, C, D);
         }
 
         [Test]

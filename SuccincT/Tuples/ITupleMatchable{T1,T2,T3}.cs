@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SuccincT.Tuples
+﻿namespace SuccincT.Tuples
 {
     /// <summary>
     /// Defines a minimal interface to enable simple data objects/structs to be pattern matched as if they were tuples.
@@ -9,6 +7,6 @@ namespace SuccincT.Tuples
     /// </summary>
     public interface ITupleMatchable<T1, T2, T3>
     {
-        Tuple<T1, T2, T3> PropertiesToMatch { get; }
+        (T1, T2, T3) PropertiesToMatch { get; }
     }
 }

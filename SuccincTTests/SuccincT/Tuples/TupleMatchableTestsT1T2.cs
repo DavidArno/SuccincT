@@ -13,7 +13,7 @@ namespace SuccincTTests.SuccincT.Tuples
             public int A;
             public string B;
 
-            public Tuple<int, string> PropertiesToMatch => Tuple.Create(A, B);
+            public (int, string) PropertiesToMatch => (A, B);
         }
 
         [Test]

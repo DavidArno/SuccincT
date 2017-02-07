@@ -17,19 +17,19 @@ namespace SuccincT.PatternMatchers
         IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>,
         IFuncMatcherAfterElse<TResult>
     {
-        private readonly MatchFunctionSelector<Tuple<T1, T2, T3, T4>, EitherTuple<T1, T2, T3, T4>, TResult>
+        private readonly MatchFunctionSelector<(T1, T2, T3, T4), EitherTuple<T1, T2, T3, T4>, TResult>
             _functionSelector;
 
-        private readonly Tuple<T1, T2, T3, T4> _item;
+        private readonly (T1, T2, T3, T4) _item;
         private IList<EitherTuple<T1, T2, T3, T4>> _withValues;
-        private Func<Tuple<T1, T2, T3, T4>, bool> _whereExpression;
-        private Func<Tuple<T1, T2, T3, T4>, TResult> _elseFunction;
+        private Func<(T1, T2, T3, T4), bool> _whereExpression;
+        private Func<(T1, T2, T3, T4), TResult> _elseFunction;
 
-        internal Matcher(Tuple<T1, T2, T3, T4> item)
+        internal Matcher((T1, T2, T3, T4) item)
         {
             _item = item;
             _functionSelector =
-                new MatchFunctionSelector<Tuple<T1, T2, T3, T4>, EitherTuple<T1, T2, T3, T4>, TResult>(x =>
+                new MatchFunctionSelector<(T1, T2, T3, T4), EitherTuple<T1, T2, T3, T4>, TResult>(x =>
                 {
                     throw new NoMatchException("No match action exists for value of " +
                                                $"({_item.Item1}, {_item.Item2}, {_item.Item3}, {_item.Item4}");
@@ -184,15 +184,15 @@ namespace SuccincT.PatternMatchers
             return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
-        private void RecordFunction(Func<Tuple<T1, T2, T3, T4>, IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
+        private void RecordFunction(Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
                                     IList<EitherTuple<T1, T2, T3, T4>> values,
-                                    Func<Tuple<T1, T2, T3, T4>, TResult> function) => 
+                                    Func<(T1, T2, T3, T4), TResult> function) => 
             _functionSelector.AddTestAndAction(test, values, null, function);
 
-        private void RecordFunction(Func<Tuple<T1, T2, T3, T4>, bool> test, Func<Tuple<T1, T2, T3, T4>, TResult> function) =>
+        private void RecordFunction(Func<(T1, T2, T3, T4), bool> test, Func<(T1, T2, T3, T4), TResult> function) =>
             _functionSelector.AddTestAndAction(null, null, test, function);
 
-        private static Func<Tuple<T1, T2, T3, T4>, TResult> ActionToFunc(Action<T1, T2, T3, T4> action) =>
+        private static Func<(T1, T2, T3, T4), TResult> ActionToFunc(Action<T1, T2, T3, T4> action) =>
             x =>
             {
                 action(x.Item1, x.Item2, x.Item3, x.Item4);

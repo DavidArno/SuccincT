@@ -61,6 +61,8 @@
     <Compile Include="Examples\UnionMatcherExamples.cs" />
     <Compile Include="Examples\ValueOrErrorExamples.cs" />
     <Compile Include="ExampleTests\ColorMatcherTester.cs" />
+    <Compile Include="ExampleTests\DiscountTests.cs" />
+    <Compile Include="ExampleTests\DiscountTestsV2.cs" />
     <Compile Include="ExampleTests\FibonacciTests.cs" />
     <Compile Include="ExampleTests\LexicalAnalyserUsingUnionsTests.cs" />
     <Compile Include="ExampleTests\PatternWithOrAndElseMatcherTester.cs" />
@@ -79,6 +81,7 @@
     <Compile Include="SuccincT\Functional\ConsEnumerableTests.cs" />
     <Compile Include="SuccincT\Functional\EitherTests.cs" />
     <Compile Include="SuccincT\Functional\ForwardPipeTests.cs" />
+    <Compile Include="SuccincT\Functional\IndexedEnumerationTests.cs" />
     <Compile Include="SuccincT\Functional\RepeatingEnumerationsTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasActionTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasLambdaTests.cs" />
