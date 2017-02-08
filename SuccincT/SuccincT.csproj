@@ -158,6 +158,9 @@
     <Compile Include="Unions\InvalidCaseOfTypeException.cs" />
     <Compile Include="Unions\InvalidCaseException.cs" />
     <Compile Include="Unions\IUnion.cs" />
+    <Compile Include="Unions\IUnionCreator{T1,T2,T3,T4}.cs" />
+    <Compile Include="Unions\IUnionCreator{T1,T2,T3}.cs" />
+    <Compile Include="Unions\IUnionCreator{T1,T2}.cs" />
     <Compile Include="Unions\PatternMatchers\IUnionActionPatternMatcher{T1,T2,T3,T4}.cs" />
     <Compile Include="Unions\PatternMatchers\IUnionActionPatternMatcherAfterElse.cs" />
     <Compile Include="Unions\PatternMatchers\IUnionActionPatternCaseHandler.cs" />

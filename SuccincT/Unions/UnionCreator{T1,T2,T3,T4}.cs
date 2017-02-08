@@ -1,10 +1,9 @@
 ﻿namespace SuccincT.Unions
 {
     /// <summary>
-    /// Factory class created by Union{T1,T2,T3,T4}.Creator(). Whilst this is a public class (as the user needs access
-    /// to Create()), it has an internal constructor as it's intended for union creation internal usage only.
+    /// Factory class created by Union.UnionCreator{T1,T2,T3,T4}(). 
     /// </summary>
-    public sealed class UnionCreator<T1, T2, T3, T4>
+    internal sealed class UnionCreator<T1, T2, T3, T4> : IUnionCreator<T1, T2, T3, T4>
     {
         internal UnionCreator() { }
 
