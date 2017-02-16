@@ -1,7 +1,7 @@
-﻿using SuccincT.Options;
-using System;
+﻿using System;
+using SuccincT.Options;
 
-namespace SuccincT.Functional
+namespace SuccincT.Unions
 {
     public struct Either<TLeft, TRight>
     {
@@ -73,5 +73,8 @@ namespace SuccincT.Functional
         }
 
         public static bool operator !=(Either<TLeft, TRight> x, Either<TLeft, TRight> y) => !(x == y);
+
+        public static implicit operator Either<TLeft, TRight>(TLeft value) => new Either<TLeft, TRight>(value);
+        public static implicit operator Either<TLeft, TRight>(TRight value) => new Either<TLeft, TRight>(value);
     }
 }
