@@ -65,6 +65,16 @@ namespace SuccincTTests.SuccincT.Options
             IsTrue(null != a);
         }
 
+        [Test]
+        public void ComparingSomeOptionWithItsValue_ResultsInNotEqual()
+        {
+            var a = Option<int>.Some(1);
+            IsTrue(a != 1);
+            IsTrue(1 != a);
+            IsFalse(a == 1);
+            IsFalse(1 == a);
+        }
+
         [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
         public void OptionAndMaybe_AreEqualWithoutCasting()
         {
@@ -73,6 +83,10 @@ namespace SuccincTTests.SuccincT.Options
             IsTrue(a.Equals(b));
             IsTrue(a == b);
             AreEqual(a, b);
+            IsTrue(b != "1234");
+            IsTrue("1234" != b);
+            IsFalse(b == "1234");
+            IsFalse("1234" == b);
         }
 
         [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]

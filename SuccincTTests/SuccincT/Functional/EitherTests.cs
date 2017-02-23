@@ -85,5 +85,19 @@ namespace SuccincTTests.SuccincT.Functional
             AreNotEqual(either1, either2);
             IsTrue(either1 != either2);
         }
+
+        [Test]
+        public void LeftEitherHashCode_MatchesLeftValuesHashCode()
+        {
+            var either = new Either<int, string>(1);
+            AreEqual(either.GetHashCode(), 1.GetHashCode());
+        }
+
+        [Test]
+        public void RightEitherHashCode_MatchesLeftValuesHashCode()
+        {
+            var either = new Either<int, string>("yellow");
+            AreEqual(either.GetHashCode(), "yellow".GetHashCode());
+        }
     }
 }

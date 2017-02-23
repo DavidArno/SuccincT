@@ -82,6 +82,9 @@ namespace SuccincT.Unions
             throw new InvalidCaseException(requestedCase, Case);
         }
 
+        public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
+        public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
+
         Unit IUnion<T1, T2, Unit, Unit>.Case3 { get { throw new InvalidCaseException(Variant.Case3, Case); } }
         Unit IUnion<T1, T2, Unit, Unit>.Case4 { get { throw new InvalidCaseException(Variant.Case4, Case); } }
     }
