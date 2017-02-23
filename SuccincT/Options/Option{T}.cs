@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
@@ -12,9 +13,10 @@ namespace SuccincT.Options
     /// </summary>
     public sealed class Option<T>
     {
+        private static readonly ConcurrentDictionary<Type, Option<T>> OptionNoneCache = new ConcurrentDictionary<Type, Option<T>>();
         private readonly Union<T, None> _union;
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid union.
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Option(Unit _)
@@ -30,7 +32,7 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() => new Option<T>(unit);
+        public static Option<T> None() => OptionNoneCache.GetOrAdd(typeof(T), new Option<T>(unit));
 
         /// <summary>
         /// Creates an instance of option with the specified value.
