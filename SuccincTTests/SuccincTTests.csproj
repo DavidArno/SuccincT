@@ -49,9 +49,6 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.0\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Examples\ColorMatcher.cs" />
@@ -77,7 +74,10 @@
     <Compile Include="SuccincT\EnumParsers\EnumParserTests.cs" />
     <Compile Include="SuccincT\Functional\ActionExtensionsTests.cs" />
     <Compile Include="SuccincT\Functional\ConsEnumerableTests.cs" />
-    <Compile Include="SuccincT\Functional\EitherTests.cs" />
+    <Compile Include="SuccincT\Functional\UnitTests.cs" />
+    <Compile Include="SuccincT\JSON\SuccessConverterTests.cs" />
+    <Compile Include="SuccincT\JSON\EitherConverterTests.cs" />
+    <Compile Include="SuccincT\Unions\EitherTests.cs" />
     <Compile Include="SuccincT\Functional\ForwardPipeTests.cs" />
     <Compile Include="SuccincT\Functional\RepeatingEnumerationsTests.cs" />
     <Compile Include="SuccincT\Functional\TypedLambdasActionTests.cs" />
@@ -133,6 +133,7 @@
     <Compile Include="SuccincT\Tuples\TupleTestsT1T2.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="SuccincT\Unions\NoneTests.cs" />
     <Compile Include="SuccincT\Unions\UnionIgnoreElseTests.cs" />
     <Compile Include="SuccincT\Unions\UnionCreatorTests.cs" />
     <Compile Include="SuccincT\Unions\UnionT1T2T3T4CaseOfTests.cs" />

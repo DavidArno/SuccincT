@@ -2,9 +2,8 @@
 using NUnit.Framework;
 using SuccincT.Functional;
 using SuccincT.Unions;
-using static NUnit.Framework.Assert;
 
-namespace SuccincTTests.SuccincT.Functional
+namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
     public class EitherTests
@@ -13,24 +12,24 @@ namespace SuccincTTests.SuccincT.Functional
         public void CreatingEitherLeft_LetsLeftBeReadAndNotRight()
         {
             var left = new Either<int, string>(1);
-            AreEqual(1, left.Left);
-            IsTrue(left.IsLeft);
-            IsTrue(left.TryLeft.HasValue);
-            AreEqual(1, left.TryLeft.Value);
-            Throws<InvalidOperationException>(() => Unit.Ignore(left.Right));
-            IsFalse(left.TryRight.HasValue);
+            Assert.AreEqual(1, left.Left);
+            Assert.IsTrue(left.IsLeft);
+            Assert.IsTrue(left.TryLeft.HasValue);
+            Assert.AreEqual(1, left.TryLeft.Value);
+            Assert.Throws<InvalidOperationException>(() => Unit.Ignore(left.Right));
+            Assert.IsFalse(left.TryRight.HasValue);
         }
 
         [Test]
         public void CreatingEitherRight_LetsRightBeReadAndNotLeft()
         {
             var left = new Either<int, string>("2");
-            AreEqual("2", left.Right);
-            IsFalse(left.IsLeft);
-            IsTrue(left.TryRight.HasValue);
-            AreEqual("2", left.TryRight.Value);
-            Throws<InvalidOperationException>(() => Unit.Ignore(left.Left));
-            IsFalse(left.TryLeft.HasValue);
+            Assert.AreEqual("2", left.Right);
+            Assert.IsFalse(left.IsLeft);
+            Assert.IsTrue(left.TryRight.HasValue);
+            Assert.AreEqual("2", left.TryRight.Value);
+            Assert.Throws<InvalidOperationException>(() => Unit.Ignore(left.Left));
+            Assert.IsFalse(left.TryLeft.HasValue);
         }
 
         [Test]
@@ -38,8 +37,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>(1);
             var either2 = new Either<int, string>(1);
-            AreEqual(either1, either2);
-            IsTrue(either1 == either2);
+            Assert.AreEqual(either1, either2);
+            Assert.IsTrue(either1 == either2);
         }
 
         [Test]
@@ -47,8 +46,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>("2");
             var either2 = new Either<int, string>("2");
-            AreEqual(either1, either2);
-            IsTrue(either1 == either2);
+            Assert.AreEqual(either1, either2);
+            Assert.IsTrue(either1 == either2);
         }
 
         [Test]
@@ -56,7 +55,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>("2");
             var either2 = new Either<string,int>("2");
-            AreNotEqual(either1, either2);
+            Assert.AreNotEqual(either1, either2);
         }
 
         [Test]
@@ -64,8 +63,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>(1);
             var either2 = new Either<int, string>("2");
-            AreNotEqual(either1, either2);
-            IsTrue(either1 != either2);
+            Assert.AreNotEqual(either1, either2);
+            Assert.IsTrue(either1 != either2);
         }
 
         [Test]
@@ -73,8 +72,8 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>(null);
             var either2 = new Either<int, string>("");
-            AreNotEqual(either1, either2);
-            IsTrue(either1 != either2);
+            Assert.AreNotEqual(either1, either2);
+            Assert.IsTrue(either1 != either2);
         }
 
         [Test]
@@ -82,22 +81,29 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var either1 = new Either<int, string>("xxx");
             var either2 = new Either<int, string>(null);
-            AreNotEqual(either1, either2);
-            IsTrue(either1 != either2);
+            Assert.AreNotEqual(either1, either2);
+            Assert.IsTrue(either1 != either2);
         }
 
         [Test]
         public void LeftEitherHashCode_MatchesLeftValuesHashCode()
         {
             var either = new Either<int, string>(1);
-            AreEqual(either.GetHashCode(), 1.GetHashCode());
+            Assert.AreEqual(either.GetHashCode(), 1.GetHashCode());
         }
 
         [Test]
-        public void RightEitherHashCode_MatchesLeftValuesHashCode()
+        public void RightEitherHashCode_MatchesRightValuesHashCode()
         {
             var either = new Either<int, string>("yellow");
-            AreEqual(either.GetHashCode(), "yellow".GetHashCode());
+            Assert.AreEqual(either.GetHashCode(), "yellow".GetHashCode());
+        }
+
+        [Test]
+        public void NullRightEitherHashCode_GivesZeroHashCode()
+        {
+            var either = new Either<int, string>(null);
+            Assert.AreEqual(either.GetHashCode(), 0);
         }
     }
 }
