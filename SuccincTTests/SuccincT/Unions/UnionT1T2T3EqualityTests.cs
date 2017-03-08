@@ -143,5 +143,26 @@ namespace SuccincTTests.SuccincT.Unions
             var a = new Union<int, string, Colors>(Colors.Blue);
             AreEqual(a.GetHashCode(), Colors.Blue.GetHashCode());
         }
+
+        [Test]
+        public void UnionCanBeCorrectlyCreatedFromT1Type()
+        {
+            Union<int, string, Colors> union = 1;
+            AreEqual(1, union.Case1);
+        }
+
+        [Test]
+        public void UnionCanBeCorrectlyCreatedFromT2Type()
+        {
+            Union<int, string, Colors> union = "string";
+            AreEqual("string", union.Case2);
+        }
+
+        [Test]
+        public void UnionCanBeCorrectlyCreatedFromT3Type()
+        {
+            Union<int, string, Colors> union = Colors.Blue;
+            AreEqual(Colors.Blue, union.Case3);
+        }
     }
 }

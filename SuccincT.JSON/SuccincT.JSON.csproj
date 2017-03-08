@@ -35,6 +35,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="NoneAndUnitConverter.cs" />
+    <Compile Include="EitherConverter.cs" />
+    <Compile Include="SuccessConverter.cs" />
     <Compile Include="ValueOrErrorConverter.cs" />
     <Compile Include="SuccinctContractResolver.cs" />
     <Compile Include="OptionConverter.cs" />

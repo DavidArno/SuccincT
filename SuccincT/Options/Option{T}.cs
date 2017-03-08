@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Diagnostics.CodeAnalysis;
 using SuccincT.Functional;
 using SuccincT.Unions;
@@ -12,9 +13,10 @@ namespace SuccincT.Options
     /// </summary>
     public sealed class Option<T>
     {
+        private static readonly ConcurrentDictionary<Type, Option<T>> OptionNoneCache = new ConcurrentDictionary<Type, Option<T>>();
         private readonly Union<T, None> _union;
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid union.
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Option(Unit _) => _union = new Union<T, None>(none);
@@ -24,7 +26,7 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() => new Option<T>(unit);
+        public static Option<T> None() => OptionNoneCache.GetOrAdd(typeof(T), new Option<T>(unit));
 
         /// <summary>
         /// Creates an instance of option with the specified value.
@@ -80,6 +82,14 @@ namespace SuccincT.Options
         public static bool operator !=(Option<T> a, Maybe<T> b) =>
             (object)a == null || !a.EqualsMaybe(b);
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator ==(T a, Option<T> b) => false;
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator !=(T a, Option<T> b) => true;
+
         public static bool operator ==(Option<T> a, object b)
         {
             var aObj = (object)a;
@@ -87,5 +97,7 @@ namespace SuccincT.Options
         }
 
         public static bool operator !=(Option<T> a, object b) => !(a == b);
+
+        public static implicit operator Option<T>(T value) => new Option<T>(value);
     }
 }

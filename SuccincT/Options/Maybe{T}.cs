@@ -1,4 +1,5 @@
-﻿using SuccincT.Unions;
+﻿using System.Diagnostics.CodeAnalysis;
+using SuccincT.Unions;
 using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
@@ -13,7 +14,7 @@ namespace SuccincT.Options
         private readonly Option<T> _option;
         private readonly bool _correctlyCreated;
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         // ReSharper disable once UnusedParameter.Local - unused "_" parameter needed to satisfy "cannot declare 
         // constructor with no parameters in structs" C# language rule.
         private Maybe(None _)
@@ -78,9 +79,29 @@ namespace SuccincT.Options
 
         public override int GetHashCode() => _option.GetHashCode();
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
         public static bool operator ==(Maybe<T> a, Maybe<T> b) => a._option.EqualsOption(b._option);
 
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
         public static bool operator !=(Maybe<T> a, Maybe<T> b) => !a._option.EqualsOption(b._option);
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator ==(T a, Maybe<T> b) => false;
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator !=(T a, Maybe<T> b) => true;
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator ==(Maybe<T> a, T b) => false;
+
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
+        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
+        public static bool operator !=(Maybe<T> a, T b) => true;
 
         public static implicit operator Option<T>(Maybe<T> maybe) => maybe._option;
         public static implicit operator Maybe<T>(Option<T> option) => new Maybe<T>(option);

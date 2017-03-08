@@ -72,5 +72,19 @@ namespace SuccincTTests.SuccincT.Unions
             IsTrue(a != null);
             IsTrue(null != a);
         }
+
+        [Test]
+        public void UnionCanBeCorrectlyCreatedFromT1Type()
+        {
+            Union<int, string> union = 1;
+            AreEqual(1, union.Case1);
+        }
+
+        [Test]
+        public void UnionCanBeCorrectlyCreatedFromT2Type()
+        {
+            Union<int, string> union = "string";
+            AreEqual("string", union.Case2);
+        }
     }
 }

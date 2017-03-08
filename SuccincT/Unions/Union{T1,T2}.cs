@@ -67,6 +67,9 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && _unionsMatch[Case](testObject);
 
+        public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
+        public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
+
         Unit IUnion<T1, T2, Unit, Unit>.Case3 => throw new InvalidCaseException(Variant.Case3, Case);
         Unit IUnion<T1, T2, Unit, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
     }
