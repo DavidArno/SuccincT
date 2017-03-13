@@ -22,7 +22,12 @@ namespace SuccincT.PatternMatchers
         [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         public static bool operator !=(Any any1, Any any2) => false;
 
+        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "any")]
         [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
-        public static Any _ { get; } = AnAny;
+        // ReSharper disable once InconsistentNaming
+        public static Any any { get; } = AnAny;
+
+        [SuppressMessage("Microsoft.Naming", "CA1707:IdentifiersShouldNotContainUnderscores")]
+        public static Any __ { get; } = AnAny;
     }
 }

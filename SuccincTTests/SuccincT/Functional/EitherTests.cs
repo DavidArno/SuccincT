@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using SuccincT.Functional;
+using SuccincT.Unions;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional

@@ -2,7 +2,7 @@
 
 namespace SuccincT.Functional
 {
-    internal class ConsNode<T>
+    internal sealed class ConsNode<T>
     {
         internal ConsNodeState State { get; set; }
         internal IEnumerable<T> Enumeration { get; set; }

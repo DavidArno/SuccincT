@@ -20,7 +20,7 @@ namespace SuccincT.Functional
 
             if (_node.State == HasEnumeration)
             {
-                _node.Enumerating(new ConsListBuilderEnumerator<ConsNode<T>, T>(_node));
+                _node.Enumerating(new ConsListBuilderEnumerator<T>(_node));
             }
 
             if (_node.State == HasValue) return true;
