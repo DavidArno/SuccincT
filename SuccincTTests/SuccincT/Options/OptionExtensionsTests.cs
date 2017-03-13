@@ -123,5 +123,14 @@ namespace SuccincTTests.SuccincT.Options
             var chosenOpts = opts.Choose();
             CollectionAssert.IsEmpty(chosenOpts);
         }
+
+        [Test]
+        public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSomeWay()
+        {
+            var actual = 1.Some();
+            var expected = Option<int>.Some(1);
+
+            Assert.AreEqual(expected, actual);
+        }
     }
 }
