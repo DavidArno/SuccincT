@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{7ED21DAA-EE74-433A-B82F-1978B0DB8657}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,6 +17,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTExamples", "Examples\SuccincTExamples.csproj", "{337EE74A-9071-4007-A4F5-36C03E2ECEAE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincT.JSON", "SuccincT.JSON\SuccincT.JSON.csproj", "{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SuccincTPerformanceTests", "SuccincTPerformanceTests\SuccincTPerformanceTests.csproj", "{4A549E5F-EED5-408E-8DAA-14D4C851D075}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +42,10 @@ Global
 		{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A549E5F-EED5-408E-8DAA-14D4C851D075}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A549E5F-EED5-408E-8DAA-14D4C851D075}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A549E5F-EED5-408E-8DAA-14D4C851D075}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A549E5F-EED5-408E-8DAA-14D4C851D075}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
