@@ -101,34 +101,34 @@ namespace SuccincTTests.SuccincT.Functional
         public void SplittingEnumerationViaCons_DoesntFullyEnumerateEnumeration()
         {
             var enumRunCount = 0;
-            EnumerationWithNotificationOfEnd(() => enumRunCount++).Cons();
+            var (_, _) = EnumerationWithNotificationOfEnd(() => enumRunCount++);
             AreEqual(0, enumRunCount);
         }
 
         [Test]
         public void SplittingEnumerationViaCons_AllowsRemainingEnumerationToBeEnumeratedAndHeadCorrectValue()
         {
-            var consData = new List<int> { 1, 2, 3, 4 }.Cons();
-            var count = consData.Tail.Aggregate((x, y) => x + y);
-            AreEqual(1, consData.Head.Value);
+            var (head, tail) = new List<int> { 1, 2, 3, 4 };
+            var count = tail.Aggregate((x, y) => x + y);
+            AreEqual(1, head.Value);
             AreEqual(9, count);
         }
 
         [Test]
         public void SplittingOneElementEnumerationViaCons_GivesEmptyTail()
         {
-            var consData = new List<int> { 1 }.Cons();
-            var count = consData.Tail.Count();
-            AreEqual(1, consData.Head.Value);
+            var (head, tail) = new List<int> { 1 };
+            var count = tail.Count();
+            AreEqual(1, head.Value);
             AreEqual(0, count);
         }
 
         [Test]
         public void SplittingEmptyEnumerationViaCons_GivesEmptyTailAndNoneForHead()
         {
-            var consData = new List<int>().Cons();
-            var count = consData.Tail.Count();
-            IsFalse(consData.Head.HasValue);
+            var (head, tail) = new List<int>();
+            var count = tail.Count();
+            IsFalse(head.HasValue);
             AreEqual(0, count);
         }
 

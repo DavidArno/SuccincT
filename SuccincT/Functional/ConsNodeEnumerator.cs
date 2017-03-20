@@ -9,10 +9,7 @@ namespace SuccincT.Functional
     {
         private ConsNode<T> _node;
 
-        public ConsNodeEnumerator(ConsNode<T> node)
-        {
-            _node = node;
-        }
+        public ConsNodeEnumerator(ConsNode<T> node) => _node = node;
 
         public bool MoveNext()
         {

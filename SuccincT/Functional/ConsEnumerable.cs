@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using SuccincT.Options;
 using static SuccincT.Functional.ConsNodeState;
 
 namespace SuccincT.Functional
@@ -68,17 +69,21 @@ namespace SuccincT.Functional
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
-        ConsResult<T> IConsEnumerable<T>.Cons()
-        {
-            GetEnumerator().MoveNext();
-            return _node.Next == null || _node.Next.State == IgnoredNode && _node.Next.Next == null
-                ? new ConsResult<T>(new ConsEnumerable<T>())
-                : new ConsResult<T>(_node.Next.Value, new ConsEnumerable<T>(_node.Next.Next));
-        }
+        IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
 
         IConsEnumerable<T> IConsEnumerable<T>.Cons(T head) => new ConsEnumerable<T>(this, head);
 
         IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) => 
             new ConsEnumerable<T>(this, head);
+
+        ConsResult<T> IConsEnumerable<T>.Cons() => new ConsResult<T>(TupleCons());
+
+        internal (Option<T> head, IConsEnumerable<T> tail) TupleCons()
+        {
+            GetEnumerator().MoveNext();
+            return _node.Next == null || _node.Next.State == IgnoredNode && _node.Next.Next == null
+                ? (Option<T>.None(), new ConsEnumerable<T>())
+                : (_node.Next.Value, new ConsEnumerable<T>(_node.Next.Next));
+        }
     }
 }

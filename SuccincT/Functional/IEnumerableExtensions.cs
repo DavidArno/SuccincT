@@ -16,9 +16,6 @@ namespace SuccincT.Functional
                                                  IEnumerable<T> head) =>
             collection.ToConsEnumerable().Cons(head);
 
-        public static ConsResult<T> Cons<T>(this IEnumerable<T> collection) => 
-            collection.ToConsEnumerable().Cons();
-
         public static IEnumerable<(int index, T item)> Indexed<T>(this IEnumerable<T> enumeration)
         {
             var index = 0;
@@ -34,13 +31,11 @@ namespace SuccincT.Functional
                                           out Option<T> head, 
                                           out IConsEnumerable<T> tail)
         {
-            var consEnumeration = enumeration is IConsEnumerable<T> alreadyCons
+            var consEnumeration = enumeration is ConsEnumerable<T> alreadyCons
                 ? alreadyCons
-                : enumeration.ToConsEnumerable();
+                : new ConsEnumerable<T>(enumeration);
 
-            var splitResult = consEnumeration.Cons();
-            head = splitResult.Head;
-            tail = splitResult.Tail;
+            (head, tail) = consEnumeration.TupleCons();
         }
 
     }
