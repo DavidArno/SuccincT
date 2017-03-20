@@ -185,7 +185,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Code analysis rules as errors.ruleset" />
-    <None Include="post-build.bat" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />

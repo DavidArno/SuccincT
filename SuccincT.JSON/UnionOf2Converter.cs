@@ -7,7 +7,6 @@ using static SuccincT.Unions.Variant;
 
 namespace SuccincT.JSON
 {
-    // don't forget to document stuff from http://stackoverflow.com/questions/19510532/registering-a-custom-jsonconverter-globally-in-json-net
     public class UnionOf2Converter : JsonConverter
     {
         public override bool CanConvert(Type objectType) => 
