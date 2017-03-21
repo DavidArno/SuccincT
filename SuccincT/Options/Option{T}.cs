@@ -12,7 +12,7 @@ namespace SuccincT.Options
     /// </summary>
     public sealed class Option<T>
     {
-        private static readonly Option<T> _none = new Option<T>(unit);
+        private static readonly Option<T> NoneInstance = new Option<T>(unit);
         private readonly Union<T, None> _union;
 
         // ReSharper disable once UnusedParameter.Local - unit param used to
@@ -31,7 +31,7 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of an option with no value.
         /// </summary>
-        public static Option<T> None() => _none;
+        public static Option<T> None() => NoneInstance;
 
         /// <summary>
         /// Creates an instance of option with the specified value.
