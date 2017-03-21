@@ -15,7 +15,22 @@
 *.VisualState.xml
 TestResult.xml
 
-artifacts/
+artifacts/*.dll
+artifacts/*.nupkg
+
+*.nuspec
+
+SuccincT.Build.Core
+!SuccincT.Build.Core/*.csproj
+
+SuccincT.Build.JSON.Core
+!SuccincT.Build.JSON.Core/*.csproj
+
+SuccincT.Build.JSON.UWP
+!SuccincT.Build.JSON.UWP/*.csproj
+
+SuccincT.Build.UWP
+!SuccincT.Build.UWP/*.csproj
 
 # Visual Studio profiler
 *.psess

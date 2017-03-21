@@ -4,6 +4,6 @@ branches:
   - master
   - csharp7migration
 skip_tags: true
-image: Visual Studio 2017 RC
+image: Visual Studio 2017
 build:
   verbosity: minimal

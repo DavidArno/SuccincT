@@ -22,7 +22,7 @@ namespace SuccincT.Options
         public override bool Equals(object obj) => 
             obj is Success<T> success && 
             success._hasError == _hasError &&
-            (_hasError && _error.Equals(success._error) || !_hasError);
+            (_hasError && success.Failure.Equals(_error) || !_hasError);
 
         public override int GetHashCode() => _hasError ? _error.GetHashCode() : 1;
 

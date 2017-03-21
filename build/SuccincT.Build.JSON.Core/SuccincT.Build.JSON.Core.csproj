@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.1</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <Version>3.0.0</Version>
     <PackageId>SuccincT.JSON</PackageId>
     <Product>SuccincT.JSON</Product>
@@ -14,7 +14,14 @@
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <PostBuildEvent>copy succinct.json.dll "$(SolutionDir)Artifacts\succinct.json.1.1.dll</PostBuildEvent>
+    <PostBuildEvent>copy succinct.json.dll "$(SolutionDir)Artifacts\succinct.json.1.6.dll</PostBuildEvent>
+    <PreBuildEvent>if not [%MKLINK%] == [] goto mklinkset
+set MKLINK=mklink
+:mklinkset
+
+if not exist "$(SolutionDir)build\SuccincT.Build.JSON.Core\JSON" %MKLINK% /D "$(SolutionDir)build\SuccincT.Build.JSON.Core\JSON" "$(SolutionDir)src\SuccincT.JSON\JSON"
+</PreBuildEvent>
+
 
   </PropertyGroup>
 
@@ -23,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SuccincT\SuccincT.csproj" />
+    <ProjectReference Include="..\SuccincT.Build.Core\SuccincT.Build.Core.csproj" />
   </ItemGroup>
 
 </Project>
