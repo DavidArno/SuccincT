@@ -41,7 +41,7 @@
     <Compile Include="UserInputExamples.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SuccincT\SuccincT.csproj">
+    <ProjectReference Include="..\src\SuccincT\SuccincT.csproj">
       <Project>{23a68981-a42d-471d-ae34-3481d8551c1e}</Project>
       <Name>SuccincT</Name>
     </ProjectReference>

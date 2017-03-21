@@ -1,0 +1,12 @@
+﻿    <PreBuildEvent>if not [%MKLINK%] == [] goto mklinkset
+set MKLINK=mklink
+:mklinkset
+
+if not exist "$(SolutionDir)build\%Project%\Functional" %MKLINK% /D "$(SolutionDir)build\%Project%\Functional" "$(SolutionDir)src\SuccincT\Functional"
+if not exist "$(SolutionDir)build\%Project%\Options" %MKLINK% /D "$(SolutionDir)build\%Project%\Options" "$(SolutionDir)src\SuccincT\Options"
+if not exist "$(SolutionDir)build\%Project%\Parsers" %MKLINK% /D "$(SolutionDir)build\%Project%\Parsers" "$(SolutionDir)src\SuccincT\Parsers"
+if not exist "$(SolutionDir)build\%Project%\PatternMatchers" %MKLINK% /D "$(SolutionDir)build\%Project%\PatternMatchers" "$(SolutionDir)src\SuccincT\PatternMatchers"
+if not exist "$(SolutionDir)build\%Project%\Tuples" %MKLINK% /D "$(SolutionDir)build\%Project%\Tuples" "$(SolutionDir)src\SuccincT\Tuples"
+if not exist "$(SolutionDir)build\%Project%\Unions" %MKLINK% /D "$(SolutionDir)build\%Project%\Unions" "$(SolutionDir)src\SuccincT\Unions"
+</PreBuildEvent>
+

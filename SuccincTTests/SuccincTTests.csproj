@@ -172,11 +172,11 @@
       <Project>{337ee74a-9071-4007-a4f5-36c03e2eceae}</Project>
       <Name>SuccincTExamples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SuccincT.JSON\SuccincT.JSON.csproj">
+    <ProjectReference Include="..\src\SuccincT.JSON\SuccincT.JSON.csproj">
       <Project>{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}</Project>
       <Name>SuccincT.JSON</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SuccincT\SuccincT.csproj">
+    <ProjectReference Include="..\src\SuccincT\SuccincT.csproj">
       <Project>{23a68981-a42d-471d-ae34-3481d8551c1e}</Project>
       <Name>SuccincT</Name>
     </ProjectReference>

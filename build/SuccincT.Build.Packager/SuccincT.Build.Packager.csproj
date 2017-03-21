@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.4</TargetFramework>
+    <NuspecFile>SuccincT.nuspec</NuspecFile>
+    <PostBuildEvent>nuget pack "$(MSBuildProjectDirectory)\SuccincT.nuspec" -basepath "$(SolutionDir)artifacts" -outputdirectory "$(SolutionDir)artifacts" -symbols</PostBuildEvent>
+  </PropertyGroup>
+
+</Project>

@@ -6,7 +6,8 @@ using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional
 {
-    class IndexedEnumerationTests
+    [TestFixture]
+    public class IndexedEnumerationTests
     {
         [Test]
         public void ForEmptyEnumeration_EmptyIndexEnumerationReturned()

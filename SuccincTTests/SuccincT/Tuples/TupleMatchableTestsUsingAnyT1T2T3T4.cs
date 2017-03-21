@@ -1,5 +1,4 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using SuccincT.Tuples;
 using static SuccincT.PatternMatchers.Any;
