@@ -1,6 +1,6 @@
 ﻿using SuccincT.Unions;
 
-namespace SuccinctExamples
+namespace SuccincT.Examples
 {
     public class Node
     {

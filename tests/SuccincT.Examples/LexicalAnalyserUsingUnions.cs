@@ -3,7 +3,7 @@ using System.Linq;
 using SuccincT.Parsers;
 using SuccincT.Unions;
 
-namespace SuccinctExamples
+namespace SuccincT.Examples
 {
     /// <summary>
     /// An example that uses the Union class to provide tokens from a lexical analyser (lexer). By using the union,

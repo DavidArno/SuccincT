@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
-using SuccinctExamples;
+using SuccincT.Examples;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.ExampleTests

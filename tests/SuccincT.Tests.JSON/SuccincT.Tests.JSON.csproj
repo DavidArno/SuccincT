@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net45</TargetFramework>
+    <RootNamespace>SuccincTTests.SuccincT.JSON</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="NUnit" Version="3.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\SuccincT\SuccincT.csproj" />
+    <ProjectReference Include="..\..\src\SuccincT.JSON\SuccincT.JSON.csproj" />
+  </ItemGroup>
+
+</Project>

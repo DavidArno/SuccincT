@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using System.Linq;
-using static SuccinctExamples.TrafficLights;
+using static SuccincT.Examples.TrafficLights;
 
 namespace SuccincTTests.ExampleTests
 {

@@ -1,11 +1,10 @@
 ﻿using System;
+using SuccincT.Functional;
 using SuccincT.Options;
 using SuccincT.Parsers;
-using SuccincT.Functional;
 using SuccincT.PatternMatchers.GeneralMatcher;
-using static SuccincT.Functional.TypedLambdas;
 
-namespace SuccinctExamples
+namespace SuccincT.Examples
 {
     public static class UserInputExamples
     {
@@ -16,7 +15,7 @@ namespace SuccinctExamples
                                                     int maxValue,
                                                     int numberOfAttempts)
         {
-            var askAgain = Func<Action, Action, Func<string>, int, int, int, Option<int>>(GetNumberFromUser)
+            var askAgain = TypedLambdas.Func<Action, Action, Func<string>, int, int, int, Option<int>>(GetNumberFromUser)
                 .Apply(reAskMethod, reAskMethod, getValueMethod, minValue, maxValue);
 
             askMethod();

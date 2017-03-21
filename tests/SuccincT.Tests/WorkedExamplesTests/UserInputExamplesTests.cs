@@ -1,7 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
+using SuccincT.Examples;
 using SuccincT.Options;
-using SuccinctExamples;
 using SuccincT.Functional;
 using static NUnit.Framework.Assert;
 using static SuccincT.Functional.TypedLambdas;

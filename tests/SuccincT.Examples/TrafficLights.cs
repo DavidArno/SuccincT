@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using SuccincT.Functional;
 
-namespace SuccinctExamples
+namespace SuccincT.Examples
 {
     public static class TrafficLights
     {
