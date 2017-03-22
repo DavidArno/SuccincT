@@ -142,6 +142,43 @@ namespace SuccincTTests.SuccincT.JSON
             IsTrue(newValue.HasValue);
             AreEqual("a", newValue.Value);
         }
+
+        [Test]
+        public void ConvertingEitherToJsonAndBack_PreservesOptionState()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+
+            var either1 = new Either<int, string>(1);
+            var either2 = new Either<int, string>("2");
+            var list = new List<Either<int, string>> { either1, either2 };
+            var json = SerializeObject(list, settings);
+            var newValue = DeserializeObject<List<Either<int, string>>>(json, settings);
+
+            AreEqual(1, newValue[0].Left);
+            AreEqual("2", newValue[1].Right);
+        }
+
+        [Test]
+        public void ConvertingSuccessToJsonAndBack_PreservesOptionState()
+        {
+            var settings = new JsonSerializerSettings
+            {
+                ContractResolver = SuccinctContractResolver.Instance
+            };
+
+            var success = new Success<int>();
+            Success<int> failure = 1;
+            var list = new List<Success<int>> { success, failure };
+            var json = SerializeObject(list, settings);
+            var newValue = DeserializeObject<List<Success<int>>>(json, settings);
+
+            IsTrue(newValue[0]);
+            AreEqual(1, newValue[1].Failure);
+        }
+
         [Test]
         public void ConvertingNoneToJsonAndBack_CreatesANone()
         {

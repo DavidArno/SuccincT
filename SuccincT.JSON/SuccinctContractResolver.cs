@@ -20,7 +20,9 @@ namespace SuccincT.JSON
                 [typeof(Maybe<>)] = () => new OptionConverter(),
                 [typeof(ValueOrError)] = () => new ValueOrErrorConverter(),
                 [typeof(None)] = () => new NoneAndUnitConverter(),
-                [typeof(Unit)] = () => new NoneAndUnitConverter()
+                [typeof(Unit)] = () => new NoneAndUnitConverter(),
+                [typeof(Either<,>)] = () => new EitherConverter(),
+                [typeof(Success<>)] = () => new SuccessConverter()
             };
 
         public static readonly SuccinctContractResolver Instance = new SuccinctContractResolver();

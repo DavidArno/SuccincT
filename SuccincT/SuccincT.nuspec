@@ -22,7 +22,7 @@
 * Cycle() methods that endlessly repeat an enumeration, again without repeatedly enumerating that enumerable).
 * Replacements for IEnumerable&lt;T&gt;'s XXXOrDefault methods that return an Option&lt;T&gt; (or Maybe&lt;T&gt;, if you prefer), avoiding null and the "did it return a value, or the default?" problem,
 * And finally, basic parameter piping support.</description>
-    <releaseNotes>V2.2.0 introduces support for SuccincT.JSON, which in turn provides JSON serialization support for Succinc&lt;T&gt; types.</releaseNotes>
+    <releaseNotes>V2.3.0 introduces the Success&lt;T&gt; and Either&lt;TLeft,TRight&gt; types, a number of new features for options, wildcard matching on tuples and type-based matching for general types.</releaseNotes>
     <copyright>Copyright 2017, David Arno</copyright>
     <tags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</tags>
   </metadata>

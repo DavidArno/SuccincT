@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using SuccincT.Functional;
 using SuccincT.Options;
@@ -149,6 +149,14 @@ namespace SuccincTTests.SuccincT.Options
 
             var chosenOpts = items.Choose(x => x.Parent);
             CollectionAssert.IsEmpty(chosenOpts);
+        }
+
+        public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSomeWay()
+        {
+            var actual = 1.Some();
+            var expected = Option<int>.Some(1);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }
