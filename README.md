@@ -41,6 +41,6 @@ This release also includes SuccincT.Json v2.3.0, which is available as a separat
 The next release (barring bugs in v2.3.0, resulting in a bug-fix release) will be v3.0.0. This will include new features that take advantage of C#7 (hopefully in a backward compatible fashion).
  
 ### Forking and Contributing ###
-If you wish to fork this repo and build it on your own machine, please refer to the [Branches page](Documents/Branches.md) for details of the currently active branches.
+If you wish to fork this repo and build it on your own machine, please refer to the [Branches page](docs/Branches.md) for details of the currently active branches.
 
-If you wish to contribute in any way (from saying "hi" to submitting a PR), please refer to the [Contributing page](Documents/Contributing.md). 
+If you wish to contribute in any way (from saying "hi" to submitting a PR), please refer to the [Contributing page](docs/Contributing.md). 

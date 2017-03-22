@@ -1,0 +1,11 @@
+﻿Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#:
+* Discriminated unions,
+* Pattern matching,
+* Partial applications,
+* "Implicitly" typed lambdas,
+* The ability to treat void methods as Unit functions,
+* Replacements for TryParse methods that return an Option&lt;T&gt; (or Maybe&lt;T&gt;, if you prefer), rather than using the out parameter anti-pattern.
+* "cons" support for IEnumerable&lt;T&gt; (add elements to the head of an enumeration, or split an enumeration into its head element and an enumeration containing the remaining items, all without repeatedly enumerating that enumerable).
+* Cycle() methods that endlessly repeat an enumeration, again without repeatedly enumerating that enumerable).
+* Replacements for IEnumerable&lt;T&gt;'s XXXOrDefault methods that return an Option&lt;T&gt; (or Maybe&lt;T&gt;, if you prefer), avoiding null and the "did it return a value, or the default?" problem,
+* And finally, basic parameter piping support.

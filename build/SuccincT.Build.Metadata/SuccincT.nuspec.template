@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>%Template%</id>
+    <version>%Version%</version>
+    <title>%Title%</title>
+    <authors>%Authors%</authors>
+    <owners>%Company%</owners>
+    <licenseUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/DavidArno/SuccincT</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <summary>>%Summary%</summary>
+    <description>%Description%</description>
+    <releaseNotes>%ReleaseNotes%</releaseNotes>
+    <copyright>>%Copyright%</copyright>
+    <tags>%Tags%</tags>
+  </metadata>
+
+  <files>
+    <file src="%Template%.1.1.dll" target="lib\netstandard1.1\%Template%.dll" />
+    <file src="%Template%.1.4.dll" target="lib\netstandard1.4\%Template%.dll" />
+    <file src="%Template%.1.6.dll" target="lib\netstandard1.6\%Template%.dll" />
+  </files>
+</package>

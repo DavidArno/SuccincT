@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.1</TargetFramework>
+    <Version>3.0.0</Version>
+    <PackageId>SuccincT</PackageId>
+    <Product>SuccincT</Product>
+    <Authors>David Arno</Authors>
+    <Company>David Arno</Company>
+  	<Copyright>Copyright © David Arno, 2017</Copyright>
+    <Description>Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#</Description>
+    <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <AssemblyName>SuccincT</AssemblyName>
+    <RootNamespace>SuccincT</RootNamespace>
+
+    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+    <PostBuildEvent>copy succinct.dll "$(SolutionDir)Artifacts\succinct.1.1.dll</PostBuildEvent>
+
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+  </ItemGroup>
+</Project>
