@@ -28,6 +28,9 @@ namespace SuccincT.Options
         public static IEnumerable<T> Choose<T>(this IEnumerable<Option<T>> options) =>
             options.Where(x => x.HasValue).Select(x => x.Value);
 
+        public static IEnumerable<TU> Choose<T, TU>(this IEnumerable<T> items, Func<T, Option<TU>> optionSelector) =>
+            items.Select(optionSelector).Choose();
+
         public static Option<T> Some<T>(this T value) => value.Into(Option<T>.Some);
     }
 }
