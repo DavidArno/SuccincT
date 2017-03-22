@@ -7,3 +7,5 @@ skip_tags: true
 image: Visual Studio 2017
 build:
   verbosity: minimal
+before_build:
+  - nuget restore
