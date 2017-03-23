@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using NUnit.Framework;
 using SuccincT.Functional;
 using SuccincT.Options;
@@ -113,7 +113,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opts = new[] { Option<int>.None(), Option<int>.Some(10), Option<int>.Some(20), Option<int>.None(), Option<int>.Some(30), Option<int>.None() };
             var chosenOpts = opts.Choose();
-            CollectionAssert.AreEqual(new [] { 10, 20, 30 }, chosenOpts);
+            CollectionAssert.AreEqual(new[] { 10, 20, 30 }, chosenOpts);
         }
 
         [Test]
@@ -122,6 +122,41 @@ namespace SuccincTTests.SuccincT.Options
             var opts = new[] { Option<bool>.None(), Option<bool>.None() };
             var chosenOpts = opts.Choose();
             CollectionAssert.IsEmpty(chosenOpts);
+        }
+
+        [Test]
+        public void WhenThereAreAnyOptionsWithValuesInProjectedCollection_ChooseReturnsThoseValuesAsAnotherCollection()
+        {
+            var items = new[]
+            {
+                new { Parent = Option<int>.None() },
+                new { Parent = Option<int>.Some(1) },
+                new { Parent = Option<int>.None() }
+            };
+
+            var chosenOpts = items.Choose(x => x.Parent);
+            CollectionAssert.AreEqual(new[] { 1 }, chosenOpts);
+        }
+
+        [Test]
+        public void WhenThereAreNoOptionsWithValuesInProjectedCollection_ChooseReturnsEmptyCollection()
+        {
+            var items = new[]
+            {
+                new { Parent = Option<int>.None() },
+                new { Parent = Option<int>.None() }
+            };
+
+            var chosenOpts = items.Choose(x => x.Parent);
+            CollectionAssert.IsEmpty(chosenOpts);
+        }
+
+        public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSomeWay()
+        {
+            var actual = 1.Some();
+            var expected = Option<int>.Some(1);
+
+            Assert.AreEqual(expected, actual);
         }
     }
 }

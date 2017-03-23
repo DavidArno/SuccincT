@@ -121,5 +121,13 @@ namespace SuccincTTests.SuccincT.Options
             var b = Option<string>.None();
             AreSame(a, b);
         }
+
+        [Test]
+        public void EmptyOptionsOfDifferentTypes_AreNotReferentiallyEqual()
+        {
+            var a = Option<string>.None();
+            var b = Option<int>.None();
+            AreNotSame(a, b);
+        }
     }
 }
