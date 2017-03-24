@@ -106,41 +106,95 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
-        public void SplittingEnumerationViaCons_AllowsRemainingEnumerationToBeEnumeratedAndHeadCorrectValue()
+        public void SplittingEnumerationAsTuple_AllowsRemainingEnumerationToBeEnumeratedAndHeadCorrectValue()
         {
             var (head, tail) = new List<int> { 1, 2, 3, 4 };
             var count = tail.Aggregate((x, y) => x + y);
-            AreEqual(1, head.Value);
+            AreEqual(1, head);
             AreEqual(9, count);
+        }
+
+        [Test]
+        public void SplittingEnumerationViaCons_AllowsRemainingEnumerationToBeEnumeratedAndHeadCorrectValue()
+        {
+            var consData = new List<int> { 1, 2, 3, 4 }.ToConsEnumerable().Cons();
+            var count = consData.Tail.Aggregate((x, y) => x + y);
+            AreEqual(1, consData.Head.Value);
+            AreEqual(9, count);
+        }
+
+        [Test]
+        public void SplittingOneElementEnumerationToTuple_GivesEmptyTail()
+        {
+            var (head, tail) = new List<int> { 1 };
+            var count = tail.Count();
+            AreEqual(1, head);
+            AreEqual(0, count);
         }
 
         [Test]
         public void SplittingOneElementEnumerationViaCons_GivesEmptyTail()
         {
-            var (head, tail) = new List<int> { 1 };
-            var count = tail.Count();
-            AreEqual(1, head.Value);
+            var consData = new List<int> { 1 }.ToConsEnumerable().Cons();
+            var count = consData.Tail.Count();
+            AreEqual(1, consData.Head.Value);
             AreEqual(0, count);
         }
 
         [Test]
         public void SplittingEmptyEnumerationViaCons_GivesEmptyTailAndNoneForHead()
         {
-            var (head, tail) = new List<int>();
-            var count = tail.Count();
-            IsFalse(head.HasValue);
+            var consData = new List<int>().ToConsEnumerable().Cons();
+            var count = consData.Tail.Count();
+            IsFalse(consData.Head.HasValue);
             AreEqual(0, count);
         }
 
         [Test]
+        public void SplittingEmptyEnumerationIntoTuple_ThrowsException() =>
+            Throws<InvalidOperationException>(() => { var (_, _) = new List<int>(); });
+
+        [Test]
         public void SplittingEnumerationViaCons_AllowsAllowsOriginalEnumerationToBeEnumeratedCorrectly()
         {
-            var consList = new List<int> {1, 2, 3, 4}.ToConsEnumerable();
+            var consList = new List<int> { 1, 2, 3, 4 }.ToConsEnumerable();
             var consData = consList.Cons();
             var count1 = consData.Tail.Aggregate((x, y) => x + y);
             var count2 = consList.Aggregate((x, y) => x + y);
             AreEqual(9, count1);
             AreEqual(10, count2);
+        }
+
+        [Test]
+        public void MultipleEnumerationConsEnumerable_CanBeCorrectlyReadViaCons()
+        {
+            var consList1 = new List<int> { 3, 4 }.ToConsEnumerable();
+            var consList2 = consList1.Cons(new[] { 1, 2 });
+            var data1 = consList2.Cons();
+            var data2 = data1.Tail.Cons();
+            var data3 = data2.Tail.Cons();
+            var data4 = data3.Tail.Cons();
+            var data5 = data4.Tail.Cons();
+
+            AreEqual(1, data1.Head.Value);
+            AreEqual(2, data2.Head.Value);
+            AreEqual(3, data3.Head.Value);
+            AreEqual(4, data4.Head.Value);
+            IsFalse(data5.Head.HasValue);
+        }
+
+        [Test]
+        public void MultipleEnumerationConsEnumerable_CanBeCorrectlyReadViaDeconstruct()
+        {
+            var consList1 = new List<int> { 3, 4 }.ToConsEnumerable();
+            var consList2 = consList1.Cons(new[] { 1, 2 });
+            var (head1, (head2, (head3, (head4, tail)))) = consList2;
+
+            AreEqual(1, head1);
+            AreEqual(2, head2);
+            AreEqual(3, head3);
+            AreEqual(4, head4);
+            AreEqual(0, tail.Count());
         }
 
         [Test]
@@ -162,6 +216,16 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual(1, enumRunCount);
             AreEqual("rgbrgbrgbrgbrgbrgbrgbrgbrgbrgb", result);
         }
+
+        [Test]
+        public void Sum_WorksWithMultipleConsEnumerable()
+        {
+            var consList1 = new List<int> {3, 4}.ToConsEnumerable();
+            var consList2 = consList1.Cons(new[] {1, 2});
+            var result = consList2.Sum();
+            AreEqual(10, result);
+        }
+
 
         private static IEnumerable<string> EnumerationWithNotificationOfEnd(Action endReached)
         {

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using SuccincT.Options;
 using static SuccincT.Functional.ConsNodeState;
@@ -7,6 +8,7 @@ namespace SuccincT.Functional
 {
     internal sealed class ConsEnumerable<T> : IConsEnumerable<T>
     {
+        internal static readonly IConsEnumerable<T> EmptyEnumerable = new ConsEnumerable<T>();
         private readonly ConsNode<T> _node;
 
         internal ConsEnumerable(IEnumerable<T> enumeration) =>
@@ -65,7 +67,7 @@ namespace SuccincT.Functional
                 State = StartNode
             };
 
-        public IEnumerator<T> GetEnumerator() => new ConsNodeEnumerator<T>(_node);
+        private IEnumerator<T> GetEnumerator() => new ConsNodeEnumerator<T>(_node);
 
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
@@ -73,17 +75,27 @@ namespace SuccincT.Functional
 
         IConsEnumerable<T> IConsEnumerable<T>.Cons(T head) => new ConsEnumerable<T>(this, head);
 
-        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) => 
+        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) =>
             new ConsEnumerable<T>(this, head);
 
-        ConsResult<T> IConsEnumerable<T>.Cons() => new ConsResult<T>(TupleCons());
-
-        internal (Option<T> head, IConsEnumerable<T> tail) TupleCons()
+        ConsResult<T> IConsEnumerable<T>.Cons()
         {
-            GetEnumerator().MoveNext();
-            return _node.Next == null || _node.Next.State == IgnoredNode && _node.Next.Next == null
-                ? (Option<T>.None(), new ConsEnumerable<T>())
-                : (_node.Next.Value, new ConsEnumerable<T>(_node.Next.Next));
+            using (var enumerator = GetEnumerator() as ConsNodeEnumerator<T>)
+            {
+                return enumerator.MoveNext()
+                    ? new ConsResult<T>(enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))
+                    : new ConsResult<T>(Option<T>.None());
+            }
+        }
+
+        internal (T head, IConsEnumerable<T> tail) TupleCons()
+        {
+            using (var enumerator = GetEnumerator() as ConsNodeEnumerator<T>)
+            {
+                return enumerator.MoveNext()
+                    ? (enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))
+                    : throw new InvalidOperationException("Enumeration is empty and cannot be split into a head & tail");
+            }
         }
     }
 }

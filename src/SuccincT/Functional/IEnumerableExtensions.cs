@@ -1,6 +1,4 @@
-﻿using SuccincT.Options;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Collections.Generic;
 
 namespace SuccincT.Functional
 {
@@ -25,18 +23,11 @@ namespace SuccincT.Functional
             }
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "1#")]
-        [SuppressMessage("Microsoft.Design", "CA1021:AvoidOutParameters", MessageId = "2#")]
         public static void Deconstruct<T>(this IEnumerable<T> enumeration,
-                                          out Option<T> head,
-                                          out IConsEnumerable<T> tail)
-        {
-            var consEnumeration = enumeration is ConsEnumerable<T> alreadyCons
-                ? alreadyCons
-                : new ConsEnumerable<T>(enumeration);
-
-            (head, tail) = consEnumeration.TupleCons();
-        }
-
+                                          out T head,
+                                          out IConsEnumerable<T> tail) =>
+            (head, tail) = enumeration is ConsEnumerable<T> alreadyCons
+                ? alreadyCons.TupleCons()
+                : new ConsEnumerable<T>(enumeration).TupleCons();
     }
 }

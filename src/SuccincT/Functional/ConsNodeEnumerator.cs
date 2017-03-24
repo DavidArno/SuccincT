@@ -57,12 +57,13 @@ namespace SuccincT.Functional
             return true;
         }
 
-        public void Reset() { throw new NotImplementedException(); }
-
+        public void Reset() => throw new NotImplementedException();
         public T Current => _node.Value;
 
         object IEnumerator.Current => Current;
 
         public void Dispose() { }
+
+        internal ConsNode<T> Node => _node;
     }
 }
