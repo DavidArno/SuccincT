@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 using static SuccincT.Functional.Unit;
 
@@ -8,8 +6,6 @@ namespace SuccincT.Unions
 {
     public sealed class Union<T1, T2> : IUnion<T1, T2, Unit, Unit>
     {
-        private readonly Dictionary<Variant, Func<int>> _hashCodes;
-        private readonly Dictionary<Variant, Func<Union<T1, T2>, bool>> _unionsMatch;
         private readonly T1 _value1;
         private readonly T2 _value2;
 
@@ -25,21 +21,11 @@ namespace SuccincT.Unions
             Case = Variant.Case2;
         }
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid union.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Union(Unit _)
         {
-            _hashCodes = new Dictionary<Variant, Func<int>>
-            {
-                {Variant.Case1, () => _value1.GetHashCode()},
-                {Variant.Case2, () => _value2.GetHashCode()}
-            };
-            _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2>, bool>>
-            {
-                {Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1)},
-                {Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2)}
-            };
         }
 
         public Variant Case { get; }
@@ -54,18 +40,24 @@ namespace SuccincT.Unions
 
         public override bool Equals(object obj) => obj is Union<T1, T2> union && UnionsEqual(union);
 
-        public override int GetHashCode() => _hashCodes[Case]();
+        public override int GetHashCode() => GetValueHashCode();
 
         public static bool operator ==(Union<T1, T2> p1, Union<T1, T2> p2)
         {
-            var aObj = (object) p1;
-            var bObj = (object) p2;
+            var aObj = (object)p1;
+            var bObj = (object)p2;
             return aObj == null && bObj == null || aObj != null && p1.Equals(p2);
         }
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
 
-        private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && _unionsMatch[Case](testObject);
+        private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && ValuesEqual(testObject);
+
+        private int GetValueHashCode() =>
+            Case == Variant.Case1 ? _value1.GetHashCode() : _value2.GetHashCode();
+
+        private bool ValuesEqual(Union<T1, T2> testObject) =>
+            Case == Variant.Case1 ? _value1.Equals(testObject._value1) : _value2.Equals(testObject._value2);
 
         public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
         public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
