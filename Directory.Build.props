@@ -1,0 +1,14 @@
+<Project>
+    <PropertyGroup>
+        <Version>3.0.0</Version>
+        <Company>David Arno</Company>
+        <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
+        <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
+        <RepositoryType>git</RepositoryType>
+        <PackageLicenseUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</PackageLicenseUrl>
+        <PackageProjectUrl>https://github.com/DavidArno/SuccincT</PackageProjectUrl>
+        <PackageOutputPath>$(SolutionDir)artifacts\</PackageOutputPath>
+        <IncludeSymbols>True</IncludeSymbols>
+        <IncludeSource>True</IncludeSource>
+    </PropertyGroup>
+</Project>

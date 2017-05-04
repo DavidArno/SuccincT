@@ -1,7 +1,0 @@
-﻿    <PreBuildEvent>if not [%MKLINK%] == [] goto mklinkset
-set MKLINK=mklink
-:mklinkset
-
-if not exist "$(SolutionDir)build\%Project%\JSON" %MKLINK% /D "$(SolutionDir)build\%Project%\JSON" "$(SolutionDir)src\SuccincT.JSON\JSON"
-</PreBuildEvent>
-

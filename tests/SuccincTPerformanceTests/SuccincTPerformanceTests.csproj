@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\SuccincT\SuccincT.csproj" />
+    <ProjectReference Include="..\..\src\SuccincT\SuccincT.csproj" />
   </ItemGroup>
 
 </Project>

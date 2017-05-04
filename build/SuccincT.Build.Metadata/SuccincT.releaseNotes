@@ -1,1 +1,0 @@
-﻿V2.3.0 introduces the Success&lt;T&gt; and Either&lt;TLeft,TRight&gt; types, a number of new features for options, wildcard matching on tuples and type-based matching for general types.

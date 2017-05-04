@@ -41,9 +41,8 @@ namespace SuccincT.Unions
             Case = Variant.Case4;
         }
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid union.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Union(Unit _)
         {
             _hashCodes = new Dictionary<Variant, Func<int>>
@@ -67,10 +66,10 @@ namespace SuccincT.Unions
         public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
         public T4 Case4 => Case == Variant.Case4 ? _value4 : throw new InvalidCaseException(Variant.Case4, Case);
 
-        public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() => 
+        public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() =>
             new UnionPatternMatcher<T1, T2, T3, T4, TResult>(this);
 
-        public IUnionActionPatternMatcher<T1, T2, T3, T4> Match() => 
+        public IUnionActionPatternMatcher<T1, T2, T3, T4> Match() =>
             new UnionPatternMatcher<T1, T2, T3, T4, Unit>(this);
 
         public override bool Equals(object obj) => obj is Union < T1, T2, T3, T4> union && UnionsEqual(union);
@@ -91,7 +90,7 @@ namespace SuccincT.Unions
         public static implicit operator Union<T1, T2, T3, T4>(T3 value) => new Union<T1, T2, T3, T4>(value);
         public static implicit operator Union<T1, T2, T3, T4>(T4 value) => new Union<T1, T2, T3, T4>(value);
 
-        private bool UnionsEqual(Union<T1, T2, T3, T4> testObject) => 
+        private bool UnionsEqual(Union<T1, T2, T3, T4> testObject) =>
             Case == testObject.Case && _unionsMatch[Case](testObject);
     }
 }

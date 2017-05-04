@@ -35,10 +35,10 @@ namespace SuccincT.Unions
 
         public TRight Right => !IsLeft ? _right :throw new InvalidOperationException("Doesn't contain a right value");
 
-        public Option<TLeft> TryLeft => 
+        public Option<TLeft> TryLeft =>
             _tryLeft ?? (_tryLeft = IsLeft ? Option<TLeft>.Some(_left) : Option<TLeft>.None());
 
-        public Option<TRight> TryRight => 
+        public Option<TRight> TryRight =>
             _tryRight ?? (_tryRight = !IsLeft ? Option<TRight>.Some(_right) : Option<TRight>.None());
 
         public override bool Equals(object obj) => obj is Either<TLeft,TRight> && this == (Either<TLeft, TRight>)obj;

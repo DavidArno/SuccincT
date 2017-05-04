@@ -66,37 +66,18 @@ namespace SuccincT.Options
         }
 
         internal bool EqualsOption(Option<T> other) =>
-            other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue);
+            !ReferenceEquals(other, null) && (other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue));
 
         internal bool EqualsMaybe(Maybe<T> other) =>
             other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || !other.CorrectlyLoad || other.HasValue);
 
         public override int GetHashCode() => _union.GetHashCode();
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
-        public static bool operator ==(Option<T> a, Maybe<T> b) =>
-            (object)a != null && a.EqualsMaybe(b);
+        public static bool operator ==(Option<T> a, Option<T> b) => ReferenceEquals(a, null) ? ReferenceEquals(b, null) : a.EqualsOption(b);
 
-        [SuppressMessage("Microsoft.Design", "CA1062:Validate arguments of public methods", MessageId = "0")]
-        public static bool operator !=(Option<T> a, Maybe<T> b) =>
-            (object)a == null || !a.EqualsMaybe(b);
-
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
-        public static bool operator ==(T a, Option<T> b) => false;
-
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "a")]
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "b")]
-        public static bool operator !=(T a, Option<T> b) => true;
-
-        public static bool operator ==(Option<T> a, object b)
-        {
-            var aObj = (object)a;
-            return aObj == null && b == null || aObj != null && a.Equals(b);
-        }
-
-        public static bool operator !=(Option<T> a, object b) => !(a == b);
+        public static bool operator !=(Option<T> a, Option<T> b) => a == null ? b != null : !a.EqualsOption(b);
 
         public static implicit operator Option<T>(T value) => new Option<T>(value);
+        public static implicit operator Option<T>(Maybe<T> maybe) => maybe.Option;
     }
 }

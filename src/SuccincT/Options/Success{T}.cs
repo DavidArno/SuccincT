@@ -20,9 +20,9 @@ namespace SuccincT.Options
             : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
 
         public override bool Equals(object obj) => 
-            obj is Success<T> success && 
-            success._hasError == _hasError &&
-            (_hasError && success.Failure.Equals(_error) || !_hasError);
+            obj is Success<T> other && 
+            other._hasError == _hasError &&
+            (_hasError && other.Failure.Equals(_error) || !_hasError);
 
         public override int GetHashCode() => _hasError ? _error.GetHashCode() : 1;
 

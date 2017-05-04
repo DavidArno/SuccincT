@@ -1,21 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.1</TargetFramework>
-    <Version>3.0.0</Version>
+    <TargetFrameworks>netstandard1.1;netstandard1.4;netstandard1.6</TargetFrameworks>
     <PackageId>SuccincT.JSON</PackageId>
     <Product>SuccincT.JSON</Product>
     <Authors>David Arno</Authors>
-    <Company>David Arno</Company>
     <Copyright>Copyright © David Arno, 2017</Copyright>
-    <Description>Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#</Description>
-    <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
-    <RepositoryType>git</RepositoryType>
+    <Description>SuccincT.JSON adds JSON serialization support to Succinc&lt;T&gt;, a .NET library that adds a number of functional features to C#.</Description>
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
-    <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
-    <PostBuildEvent>copy succinct.json.dll "$(SolutionDir)Artifacts\succinct.json.1.1.dll</PostBuildEvent>
-
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

@@ -66,13 +66,13 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void ComparingSomeOptionWithItsValue_ResultsInNotEqual()
+        public void ComparingSomeOptionWithItsValue_ResultsInEqual()
         {
             var a = Option<int>.Some(1);
-            IsTrue(a != 1);
-            IsTrue(1 != a);
-            IsFalse(a == 1);
-            IsFalse(1 == a);
+            IsTrue(a == 1);
+            IsTrue(1 == a);
+            IsFalse(a != 1);
+            IsFalse(1 != a);
         }
 
         [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
@@ -83,10 +83,8 @@ namespace SuccincTTests.SuccincT.Options
             IsTrue(a.Equals(b));
             IsTrue(a == b);
             AreEqual(a, b);
-            IsTrue(b != "1234");
-            IsTrue("1234" != b);
-            IsFalse(b == "1234");
-            IsFalse("1234" == b);
+            IsTrue(b == "1234");
+            IsFalse(b != "1234");
         }
 
         [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
@@ -128,6 +126,15 @@ namespace SuccincTTests.SuccincT.Options
             var a = Option<string>.None();
             var b = Option<int>.None();
             AreNotSame(a, b);
+        }
+
+        [Test]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+        public void X()
+        {
+            Option<string> a = null;
+            var isNull = a == null;
+            IsTrue(isNull);
         }
     }
 }
