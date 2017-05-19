@@ -10,8 +10,7 @@ namespace SuccincT.Functional
         public static IConsEnumerable<T> Cons<T>(this IEnumerable<T> collection, T head) =>
             collection.ToConsEnumerable().Cons(head);
 
-        public static IConsEnumerable<T> Cons<T>(this IEnumerable<T> collection,
-                                                 IEnumerable<T> head) =>
+        public static IConsEnumerable<T> Cons<T>(this IEnumerable<T> collection, IEnumerable<T> head) =>
             collection.ToConsEnumerable().Cons(head);
 
         public static IEnumerable<(int index, T item)> Indexed<T>(this IEnumerable<T> enumeration)

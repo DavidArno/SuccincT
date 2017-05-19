@@ -15,11 +15,7 @@ namespace SuccincT.Functional
             _node = new ConsNode<T>
             {
                 State = StartNode,
-                Next = new ConsNode<T>
-                {
-                    State = HasEnumeration,
-                    Enumeration = enumeration
-                }
+                Next = EnumerationConsNode(enumeration)
             };
 
         private ConsEnumerable(IEnumerable<T> enumeration, T head) =>
@@ -30,11 +26,7 @@ namespace SuccincT.Functional
                 {
                     Value = head,
                     State = HasValue,
-                    Next = new ConsNode<T>
-                    {
-                        Enumeration = enumeration,
-                        State = HasEnumeration
-                    }
+                    Next = EnumerationConsNode(enumeration)
                 }
             };
 
@@ -46,11 +38,7 @@ namespace SuccincT.Functional
                 {
                     Enumeration = head,
                     State = HasEnumeration,
-                    Next = new ConsNode<T>
-                    {
-                        Enumeration = enumeration,
-                        State = HasEnumeration
-                    }
+                    Next = EnumerationConsNode(enumeration)
                 }
             };
 
@@ -97,5 +85,12 @@ namespace SuccincT.Functional
                     : throw new InvalidOperationException("Enumeration is empty and cannot be split into a head & tail");
             }
         }
+
+        private static ConsNode<T> EnumerationConsNode(IEnumerable<T> enumeration) =>
+            new ConsNode<T>
+            {
+                State = HasEnumeration,
+                Enumeration = enumeration
+            };
     }
 }
