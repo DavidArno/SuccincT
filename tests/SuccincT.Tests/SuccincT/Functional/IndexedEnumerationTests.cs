@@ -22,9 +22,9 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var list = new List<int> { 1, 2, 3 };
             var indexedList = list.Indexed();
-            foreach (var indexedItem in indexedList)
+            foreach (var (index, item) in indexedList)
             {
-                AreEqual(indexedItem.index + 1, indexedItem.item);
+                AreEqual(index + 1, item);
             }
         }
 
@@ -32,9 +32,9 @@ namespace SuccincTTests.SuccincT.Functional
         public void ForEnumeration_IndexedEnumerationReturned()
         {
             var indexedEnumeration = StringEnumeration().Indexed();
-            foreach (var indexedItem in indexedEnumeration)
+            foreach (var (index, item) in indexedEnumeration)
             {
-                AreEqual($"{indexedItem.index}", indexedItem.item);
+                AreEqual($"{index}", item);
             }
         }
 

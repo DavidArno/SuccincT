@@ -5,7 +5,6 @@
 | | Status |
 | ---: | :-: |
 |Master branch|[![Build Status (master)](https://ci.appveyor.com/api/projects/status/i294j7cukasq88ry/branch/master?svg=true)](https://ci.appveyor.com/project/DavidArno/succinct)
-|C# 7 branch|[![Build Status (C#7)](https://ci.appveyor.com/api/projects/status/i294j7cukasq88ry/branch/csharp7migration?svg=true)](https://ci.appveyor.com/project/DavidArno/succinct)|
 |Current release|[![NuGet](https://img.shields.io/nuget/v/SuccincT.svg)](http://www.nuget.org/packages/SuccincT)|
 
 ----------
@@ -31,14 +30,15 @@ V2.2.0 saw the introduction of of JSON.Net serialization support for Succinc\<T\
 For details, see the [Serializing to JSON](https://github.com/DavidArno/SuccincT/wiki/JsonSerialization) wiki page.
 
 ### Current Release ###
-The current release of Succinc\<T\> is 2.3.0, which is available as a [nuget package that supports .NET 4+ and Windows 8+ appstore apps](https://www.nuget.org/packages/SuccincT/). 
+The current release of Succinc\<T\> is v3.0.0, which is available as a [nuget package that supports .NET 4.5+, .NET Core v1.1+ and numerous other frameworks](https://www.nuget.org/packages/SuccincT/). 
 
-This release also includes SuccincT.Json v2.3.0, which is available as a separate [nuget package that supports .NET 4+ and Windows 8+ appstore apps](https://www.nuget.org/packages/SuccincT.Json/). SuccincT.Json is dependent on Succinc\<T\>, so will pull that package in as part of the install. Also, please note that this nuget package is also dependent on the Newtonsoft.JSON v4.0.30319 nuget package.
+This release also includes SuccincT.Json v3.0.0, which is available as a separate [nuget package that supports .NET 4.5+, .NET Core v1.1+ and numerous other frameworks](https://www.nuget.org/packages/SuccincT.Json/). SuccincT.Json is dependent on Succinc\<T\>, so will pull that package in as part of the install. Also, please note that this nuget package is also dependent on the Newtonsoft.JSON v9.0+ nuget package.
 
-**WARNING**: Support for .NET Core has been temporarily dropped. Previously, the Succinc\<T\> nuget package was incorrectly using the .NET Core version of the dll for framework projects, which could cause runtime failures as it tried to link to v4.1 of `System.Runtime`. Experiments with .NET Core suggest it didn't work reliably with that technology either. So with v2.2, support for .NET Core was temporarily dropped. Hopefully with the v1 tooling released alongside VS2017, this feature will return in the next release.
+**IMPORTANT**
+This release includes some breaking changes. Please see [Breaking changes in v3.0.0](https://github.com/DavidArno/SuccincT/issues/35) for details.
 
 ### What's planned? ###
-The next release (barring bugs in v2.3.0, resulting in a bug-fix release) will be v3.0.0. This will include new features that take advantage of C#7 (hopefully in a backward compatible fashion).
+The next release is expected to be v3.1.0. Currently planned for this release is "recursive" pattern-matching support for `IEnumerable<T>`. In addition, unless JSON.Net itself introduces it first, Succinct.JSON will include better serialization support for tuples, which preserves the element names.
  
 ### Forking and Contributing ###
 If you wish to fork this repo and build it on your own machine, please refer to the [Branches page](docs/Branches.md) for details of the currently active branches.

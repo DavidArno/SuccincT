@@ -10,6 +10,7 @@
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageReleaseNotes>V3.0.0 is now a .netstandard 1.0 library, which supports .net core, Framework 4.5+ and many other frameworks.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

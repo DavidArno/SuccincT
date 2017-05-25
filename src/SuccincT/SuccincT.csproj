@@ -6,7 +6,18 @@
     <Product>SuccincT</Product>
     <Authors>David Arno</Authors>
   	<Copyright>Copyright © David Arno, 2017</Copyright>
-    <Description>Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#</Description>
+    <Description>Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#:
+* Discriminated unions,
+* Pattern matching,
+* Partial applications,
+* "Implicitly" typed lambdas,
+* The ability to treat void methods as Unit functions,
+* Replacements for TryParse methods that return an Option&lt;T&gt; (or Maybe&lt;T&gt;, if you prefer), rather than using the out parameter anti-pattern.
+* "cons" support for IEnumerable&lt;T&gt; (add elements to the head of an enumeration, or split an enumeration into its head element and an enumeration containing the remaining items, all without repeatedly enumerating that enumerable).
+* Indexed enumerations,
+* Cycle() methods that endlessly repeat an enumeration, again without repeatedly enumerating that enumerable).
+* Replacements for IEnumerable&lt;T&gt;'s XXXOrDefault methods that return an Option&lt;T&gt; (or Maybe&lt;T&gt;, if you prefer), avoiding null and the "did it return a value, or the default?" problem,
+* And finally, basic parameter piping support.</Description>
     <AssemblyName>SuccincT</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
@@ -14,7 +25,7 @@
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>V2.3.0 introduces the Success&amp;lt;T&amp;gt; and Either&amp;lt;TLeft,TRight&amp;gt; types, a number of new features for options, wildcard matching on tuples and type-based matching for general types.</PackageReleaseNotes>
+    <PackageReleaseNotes>V3.0.0 re-introduces support for dotnet core, along with many other frameworks, by switching to being a .netstandard 1.0 library. In addition it brings C# 7 support with cons that now works via a deconstructor, pattern matching on value tuples and indexed enumerations. Please note it alos includes some breaking changes (thus the major version number increase). See the project site for details.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
