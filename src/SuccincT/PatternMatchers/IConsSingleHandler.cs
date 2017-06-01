@@ -4,8 +4,8 @@ namespace SuccincT.PatternMatchers
 {
     public interface IConsFuncSingleHandler<T, TResult>
     {
-        IConsFuncMatcher<T, TResult> Do(TResult value);
-
         IConsFuncSingleWhereHandler<T, TResult> Where(Func<T, bool> testFunc);
+        IConsFuncMatcher<T, TResult> Do(TResult value);
+        IConsFuncMatcher<T, TResult> Do(Func<T, TResult> doFunc);
     }
 }

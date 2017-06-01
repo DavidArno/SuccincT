@@ -6,6 +6,8 @@
 
         IConsFuncSingleHandler<T, TResult> Single();
 
+        IConsFuncConsHandler<T, TResult> Cons();
+
         TResult Result();
     }
 }
