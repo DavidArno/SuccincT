@@ -12,11 +12,11 @@ namespace SuccincT.PatternMatchers
                                                  IConsFuncConsHandler<T, TResult>,
                                                  IConsFuncConsWhereHandler<T, TResult>
     {
-        private TResult _emptyValue;
+        private (bool supplied, TResult value) _emptyValue;
         private Func<T, bool> _singleWhereFunc;
         private Func<T, IEnumerable<T>, bool> _consWhereFunc;
         private readonly List<(Func<T, bool> testFunc, Func<T, TResult> doFunc)> _singleTests;
-        private readonly List<(Func<T, IEnumerable<T>, bool> testFunc, 
+        private readonly List<(Func<T, IEnumerable<T>, bool> testFunc,
                                Func<T, IEnumerable<T>, TResult> doFunc)> _simpleConsTests;
         private readonly ConsNodeEnumerator<T> _enumerator;
 
@@ -31,16 +31,24 @@ namespace SuccincT.PatternMatchers
         IConsFuncSingleHandler<T, TResult> IConsFuncMatcher<T, TResult>.Single() => this;
         IConsFuncConsHandler<T, TResult> IConsFuncMatcher<T, TResult>.Cons() => this;
 
-        TResult IConsFuncMatcher<T, TResult>.Result() =>
-            TryCons(_enumerator).Match().To<TResult>()
-                                .Where((h, _) => !h.HasValue).Do(_emptyValue)
-                                .Where((_, t) => t == null).Do((h, _) => SingleMatch(h.Value))
-                                .Else((h, t) => ConsMatch(h.Value, t))
-                                .Result();
+        TResult IConsFuncMatcher<T, TResult>.Result()
+        {
+            var simpleMatchData = TryCons(_enumerator);
+            if (!simpleMatchData.head.HasValue)
+            {
+                return _emptyValue.supplied
+                    ? _emptyValue.value
+                    : throw new NoMatchException("No empty clause supplied");
+            }
+
+            return simpleMatchData.tail == null
+                ? SingleMatch(simpleMatchData.head.Value)
+                : ConsMatch(simpleMatchData.head.Value, simpleMatchData.tail);
+        }
 
         IConsFuncMatcher<T, TResult> IConsFuncNoneHandler<T, TResult>.Do(TResult value)
         {
-            _emptyValue = value;
+            _emptyValue = (true, value);
             return this;
         }
 
@@ -98,7 +106,7 @@ namespace SuccincT.PatternMatchers
             return this;
         }
 
-        IConsFuncConsWhereHandler<T, TResult> IConsFuncConsHandler<T, TResult>.Where(Func<T, IEnumerable<T>, 
+        IConsFuncConsWhereHandler<T, TResult> IConsFuncConsHandler<T, TResult>.Where(Func<T, IEnumerable<T>,
                                                                                      bool> testFunc)
         {
             _consWhereFunc = testFunc;
@@ -107,20 +115,26 @@ namespace SuccincT.PatternMatchers
 
         private TResult SingleMatch(T head)
         {
+            if (_singleTests.Count == 0) throw new NoMatchException("No single clause supplied.");
+
             foreach (var (testFunc, doFunc) in _singleTests)
             {
                 if (testFunc(head)) return doFunc(head);
             }
-            return default(TResult);
+
+            throw new NoMatchException("No single clause matches the supplied value.");
         }
 
         private TResult ConsMatch(T head, IConsEnumerable<T> tail)
         {
+            if (_simpleConsTests.Count == 0) throw new NoMatchException("No cons clause supplied.");
+
             foreach (var (testFunc, doFunc) in _simpleConsTests)
             {
                 if (testFunc(head, tail)) return doFunc(head, tail);
             }
-            return default(TResult);
+
+            throw new NoMatchException("No cons clause matches the supplied value.");
         }
 
         private static (Option<T> head, ConsEnumerable<T> tail) TryCons(ConsNodeEnumerator<T> enumerator)

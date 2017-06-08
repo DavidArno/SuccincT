@@ -21,6 +21,16 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
+        public void EmptyList_ThrowsExceptionWhenNoEmptyClauseSupplied()
+        {
+            var list = new List<int>();
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .Single().Do(0)
+                                               .Cons().Do(1)
+                                               .Result());
+        }
+
+        [Test]
         public void SingleItemList_CanBeMatchedWithSingle()
         {
             var list = new List<int> { 1 };
@@ -76,6 +86,25 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
+        public void SingleItemList_ThrowsExceptionWhenNoSingleClauseSupplied()
+        {
+            var list = new List<int> { 1 };
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .Empty().Do(0)
+                                               .Cons().Do(1)
+                                               .Result());
+        }
+
+        [Test]
+        public void SingleItemList_ThrowsExceptionWhenNoSingleClauseMatches()
+        {
+            var list = new List<int> { 1 };
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .Single().Where(x => x == 0).Do(0)
+                                               .Result());
+        }
+
+        [Test]
         public void TwoItemList_CanBeMatchedWithCons()
         {
             var list = new List<int> { 1, 2 };
@@ -117,6 +146,25 @@ namespace SuccincTTests.SuccincT.PatternMatchers
                              .Cons().Do(2)
                              .Result();
             AreEqual(1, result);
+        }
+
+        [Test]
+        public void MultiItemList_ThrowsExceptionWhenNoConsClauseSupplied()
+        {
+            var list = new List<int> { 1, 2, 3 };
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .Empty().Do(0)
+                                               .Single().Do(1)
+                                               .Result());
+        }
+
+        [Test]
+        public void MultiItemList_ThrowsExceptionWhenNoConsClauseMatches()
+        {
+            var list = new List<int> { 1, 2, 3 };
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .Cons().Where((x, y) => x == 0).Do(0)
+                                               .Result());
         }
     }
 }
