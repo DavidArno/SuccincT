@@ -42,7 +42,7 @@ namespace SuccincT.Functional
                 }
             };
 
-        internal ConsEnumerable(ConsNode<T> node) =>
+        private ConsEnumerable(ConsNode<T> node) =>
             _node = new ConsNode<T>
             {
                 State = StartNode,
@@ -57,8 +57,6 @@ namespace SuccincT.Functional
 
         private IEnumerator<T> GetEnumerator() => new ConsNodeEnumerator<T>(_node);
 
-        internal ConsNodeEnumerator<T> GetTypedEnumerator() => new ConsNodeEnumerator<T>(_node);
-
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
         IEnumerator<T> IEnumerable<T>.GetEnumerator() => GetEnumerator();
@@ -70,7 +68,7 @@ namespace SuccincT.Functional
 
         ConsResult<T> IConsEnumerable<T>.Cons()
         {
-            using (var enumerator = GetTypedEnumerator())
+            using (var enumerator = GetEnumerator() as ConsNodeEnumerator<T>)
             {
                 return enumerator.MoveNext()
                     ? new ConsResult<T>(enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))
@@ -80,7 +78,7 @@ namespace SuccincT.Functional
 
         internal (T head, IConsEnumerable<T> tail) TupleCons()
         {
-            using (var enumerator = GetTypedEnumerator())
+            using (var enumerator = GetEnumerator() as ConsNodeEnumerator<T>)
             {
                 return enumerator.MoveNext()
                     ? (enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))

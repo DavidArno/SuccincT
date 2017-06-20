@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SuccincT.Functional;
 using SuccincT.Tuples;
 
@@ -7,7 +6,7 @@ namespace SuccincT.PatternMatchers
 {
     /// <summary>
     /// Defines extension methods for supplying Match() to specific types. Due to the way extension methods are resolved
-    /// by the compiler, these are placed "closer" to the calling code (ie with a shorter namespace) than the general
+    /// by the compiler, these are placed "closer" to the calling code (ie with a shorter namespace) than the general 
     /// type extension method to ensure these are chosen in preference to the general one.
     /// </summary>
     public static class SpecificTypeMatcherExtensions
@@ -50,12 +49,9 @@ namespace SuccincT.PatternMatchers
             return new Matcher<T1, T2, T3, T4, Unit>(tuple);
         }
 
-        public static IConsActionMatcher<T> Match<T>(this IEnumerable<T> collection) => new ConsActionMatcher<T>(collection);
-
-
         private static (T1, T2) AsTuple<T1, T2>(this Tuple<T1, T2> value) => (value.Item1, value.Item2);
 
-        private static (T1, T2, T3) AsTuple<T1, T2, T3>(this Tuple<T1, T2, T3> value) =>
+        private static (T1, T2, T3) AsTuple<T1, T2, T3>(this Tuple<T1, T2, T3> value) => 
             (value.Item1, value.Item2, value.Item3);
 
         private static (T1, T2, T3, T4) AsTuple<T1, T2, T3, T4>(this Tuple<T1, T2, T3, T4> value) =>
