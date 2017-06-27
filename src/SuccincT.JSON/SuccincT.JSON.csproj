@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
     <PackageId>SuccincT.JSON</PackageId>
     <Product>SuccincT.JSON</Product>
     <Authors>David Arno</Authors>
@@ -10,7 +10,7 @@
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageReleaseNotes>V3.0.0 is now a .netstandard 1.0 library, which supports .net core, Framework 4.5+ and many other frameworks.</PackageReleaseNotes>
+    <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>

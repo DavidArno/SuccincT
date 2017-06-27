@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.0</TargetFramework>
+    <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
     <PackageId>SuccincT</PackageId>
     <Product>SuccincT</Product>
     <Authors>David Arno</Authors>
@@ -25,7 +25,7 @@
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>V3.0.0 re-introduces support for dotnet core, along with many other frameworks, by switching to being a .netstandard 1.0 library. In addition it brings C# 7 support with cons that now works via a deconstructor, pattern matching on value tuples and indexed enumerations. Please note it alos includes some breaking changes (thus the major version number increase). See the project site for details.</PackageReleaseNotes>
+    <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
