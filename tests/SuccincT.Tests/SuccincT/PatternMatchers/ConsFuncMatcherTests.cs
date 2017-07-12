@@ -166,5 +166,66 @@ namespace SuccincTTests.SuccincT.PatternMatchers
                                                .Cons().Where((x, y) => x == 0).Do(0)
                                                .Result());
         }
+
+        [Test]
+        public void MultiItemList_CanBeRecursivelyMatchedToCalculateLength()
+        {
+            var list = new List<int> { 1, 2, 3, 4 };
+            var result = list.Match().To<int>()
+                             .RecursiveCons().Do((_, count) => count + 1)
+                             .Result();
+            AreEqual(4, result);
+        }
+
+        [Test]
+        public void MultiItemList_CanBeRecursivelyMatchedWithSingle()
+        {
+            var list = new List<int> { 1, 2, 3, 4 };
+            var result = list.Match().To<int>()
+                             .Single().Do(x => x)
+                             .RecursiveCons().Do((item, soFar) => soFar + item)
+                             .Result();
+            AreEqual(10, result);
+        }
+
+        [Test]
+        public void MultiItemList_CanBeRecursivelyMatchedWithEmpty()
+        {
+            var list = new List<int> { 1, 2, 3, 4 };
+            var result = list.Match().To<int>()
+                             .Empty().Do(10)
+                             .RecursiveCons().Do((item, soFar) => soFar + item)
+                             .Result();
+            AreEqual(20, result);
+        }
+
+        [Test]
+        public void MultiItemList_CanBeRecursivelyMatchedUsingWhere()
+        {
+            var list = StringEnumeration();
+            var result = list.Match().To<string>()
+                             .Single().Do(x => x)
+                             .RecursiveCons().Where(x => x == "z").Do((item, soFar) => soFar + "a")
+                             .RecursiveCons().Where(x => x == "y").Do((item, soFar) => soFar + "b")
+                             .RecursiveCons().Where(x => x == "x").Do((item, soFar) => soFar + "c")
+                             .Result();
+            AreEqual("zbc", result);
+        }
+
+        [Test]
+        public void EmptyEnumeration_ThrowsWhenRecursivelyMatched()
+        {
+            var list = new List<int>();
+            Throws<NoMatchException>(() => list.Match().To<int>()
+                                               .RecursiveCons().Do((x, y) => 0)
+                                               .Result());
+        }
+
+        private static IEnumerable<string> StringEnumeration()
+        {
+            yield return "x";
+            yield return "y";
+            yield return "z";
+        }
     }
 }

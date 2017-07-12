@@ -26,10 +26,8 @@ namespace SuccincT.PatternMatchers
         internal Matcher((T1, T2) item)
         {
             _item = item;
-            _functionSelector = new MatchFunctionSelector<(T1, T2), EitherTuple<T1, T2>, TResult>(x =>
-            {
-                throw new NoMatchException($"No match action exists for value of ({_item.Item1}, {_item.Item2}");
-            });
+            _functionSelector = new MatchFunctionSelector<(T1, T2), EitherTuple<T1, T2>, TResult>(
+                x => throw new NoMatchException($"No match action exists for value of ({_item.Item1}, {_item.Item2}"));
         }
 
         IFuncMatcher<T1, T2, TR> IMatcher<T1, T2>.To<TR>() => new Matcher<T1, T2, TR>(_item);

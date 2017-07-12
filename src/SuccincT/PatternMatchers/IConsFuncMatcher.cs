@@ -8,6 +8,8 @@
 
         IConsFuncConsHandler<T, TResult> Cons();
 
+        IConsFuncRecursiveConsHandler<T, TResult> RecursiveCons();
+
         TResult Result();
     }
 }

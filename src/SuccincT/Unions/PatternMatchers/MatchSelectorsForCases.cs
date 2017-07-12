@@ -22,18 +22,18 @@ namespace SuccincT.Unions.PatternMatchers
         {
             _case1Selector =
                 new MatchFunctionSelector<T1, T1, TResult>(
-                    x => { throw new NoMatchException("No match action defined for union with Case1 value"); });
+                    x => throw new NoMatchException("No match action defined for union with Case1 value"));
             _case2Selector =
                 new MatchFunctionSelector<T2, T2, TResult>(
-                    x => { throw new NoMatchException("No match action defined for union with Case2 value"); });
+                    x => throw new NoMatchException("No match action defined for union with Case2 value"));
             _case3Selector = typeof(T3) == typeof(Unit)
                 ? null
                 : new MatchFunctionSelector<T3, T3, TResult>(
-                    x => { throw new NoMatchException("No match action defined for union with Case3 value"); });
+                    x => throw new NoMatchException("No match action defined for union with Case3 value"));
             _case4Selector = typeof(T4) == typeof(Unit)
                 ? null
                 : new MatchFunctionSelector<T4, T4, TResult>(
-                    x => { throw new NoMatchException("No match action defined for union with Case4 value"); });
+                    x => throw new NoMatchException("No match action defined for union with Case4 value"));
         }
 
         internal void RecordAction<T>(Func<T, IList<T>, bool> withTest,

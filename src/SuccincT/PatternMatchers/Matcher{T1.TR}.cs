@@ -24,7 +24,7 @@ namespace SuccincT.PatternMatchers
         {
             _item = item;
             _functionSelector = new MatchFunctionSelector<T1, T1, TResult>(
-                x => { throw new NoMatchException($"No match action exists for value of {_item}"); });
+                x => throw new NoMatchException($"No match action exists for value of {_item}"));
         }
 
         IFuncMatcher<T1, TR> IMatcher<T1>.To<TR>() => new Matcher<T1, TR>(_item);

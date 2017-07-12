@@ -13,11 +13,11 @@ namespace SuccincT.Options
 
         private readonly MatchFunctionSelector<string, string, TResult> _valueFunctionSelector =
             new MatchFunctionSelector<string, string, TResult>(
-                x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
+                x => throw new NoMatchException("No match action defined for ValueOrError with value"));
 
         private readonly MatchFunctionSelector<string, string, TResult> _errorFunctionSelector =
             new MatchFunctionSelector<string, string, TResult>(
-                x => { throw new NoMatchException("No match action defined for ValueOrError with value"); });
+                x => throw new NoMatchException("No match action defined for ValueOrError with value"));
 
         private Func<ValueOrError, TResult> _elseAction;
 
