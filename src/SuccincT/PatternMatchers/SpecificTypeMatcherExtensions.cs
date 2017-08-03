@@ -52,6 +52,9 @@ namespace SuccincT.PatternMatchers
 
         public static IConsActionMatcher<T> Match<T>(this IEnumerable<T> collection) => new ConsActionMatcher<T>(collection);
 
+        public static IConsActionMatcher<T> Match<T>(this IList<T> collection) => new ConsActionMatcher<T>(collection);
+
+        public static IConsActionMatcher<T> Match<T>(this List<T> collection) => new ConsActionMatcher<T>(collection);
 
         private static (T1, T2) AsTuple<T1, T2>(this Tuple<T1, T2> value) => (value.Item1, value.Item2);
 

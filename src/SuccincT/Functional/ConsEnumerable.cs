@@ -18,6 +18,17 @@ namespace SuccincT.Functional
                 Next = EnumerationConsNode(enumeration)
             };
 
+        internal ConsEnumerable(T element) =>
+            _node = new ConsNode<T>
+            {
+                State = StartNode,
+                Next = new ConsNode<T>
+                {
+                    Value = element,
+                    State = HasValue
+                }
+            };
+
         private ConsEnumerable(IEnumerable<T> enumeration, T head) =>
             _node = new ConsNode<T>
             {

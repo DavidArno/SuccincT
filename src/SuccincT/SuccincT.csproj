@@ -26,6 +26,7 @@
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>V3.0.0 re-introduces support for dotnet core, along with many other frameworks, by switching to being a .netstandard 1.0 library. In addition it brings C# 7 support with cons that now works via a deconstructor, pattern matching on value tuples and indexed enumerations. Please note it alos includes some breaking changes (thus the major version number increase). See the project site for details.</PackageReleaseNotes>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
