@@ -94,7 +94,7 @@ namespace SuccincT.PatternMatchers
 
         IActionMatcherAfterElse IActionMatcher<T1, T2, T3, T4>.IgnoreElse()
         {
-            _elseFunction = x => default(TResult);
+            _elseFunction = x => default;
             return this;
         }
 
@@ -193,7 +193,7 @@ namespace SuccincT.PatternMatchers
             x =>
             {
                 action(x.Item1, x.Item2, x.Item3, x.Item4);
-                return default(TResult);
+                return default;
             };
 
         IActionWithHandler<IActionMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>

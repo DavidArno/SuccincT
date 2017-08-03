@@ -62,7 +62,7 @@ namespace SuccincT.PatternMatchers
         {
             var list = _collection is IList<T> collectionList ? collectionList : _collection.ToList();
             var singleTestsSupplied = _singleTests.Count > 0;
-            var result = _emptyValue.supplied ? _emptyValue.value : default(TResult);
+            var result = _emptyValue.supplied ? _emptyValue.value : default;
             result = singleTestsSupplied ? SingleMatch(list[list.Count - 1]) : result;
 
             for (var i = list.Count - (singleTestsSupplied ? 2 : 1); i >= 0; i--)

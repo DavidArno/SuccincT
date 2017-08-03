@@ -63,7 +63,7 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.IgnoreElse()
         {
-            _elseAction = x => default(TResult);
+            _elseAction = x => default;
             return this;
         }
 

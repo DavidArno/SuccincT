@@ -14,7 +14,7 @@ namespace SuccincT.Unions
         public Either(TLeft left)
         {
             _left = left;
-            _right = default(TRight);
+            _right = default;
             _isRight = false;
             _tryLeft = null;
             _tryRight = null;
@@ -23,7 +23,7 @@ namespace SuccincT.Unions
         public Either(TRight right)
         {
             _right = right;
-            _left = default(TLeft);
+            _left = default;
             _isRight = true;
             _tryLeft = null;
             _tryRight = null;
