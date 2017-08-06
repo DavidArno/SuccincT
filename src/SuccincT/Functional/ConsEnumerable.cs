@@ -60,7 +60,7 @@ namespace SuccincT.Functional
                 Next = node
             };
 
-        private ConsEnumerable() =>
+        internal ConsEnumerable() =>
             _node = new ConsNode<T>
             {
                 State = StartNode
