@@ -28,5 +28,17 @@ namespace SuccincT.Functional
             (head, tail) = enumeration is ConsEnumerable<T> alreadyCons
                 ? alreadyCons.TupleCons()
                 : new ConsEnumerable<T>(enumeration).TupleCons();
+
+        public static T Head<T>(this IConsEnumerable<T> collection)
+        {
+            var (head, _) = collection;
+            return head;
+        }
+
+        public static IConsEnumerable<T> ReplaceHead<T>(this IConsEnumerable<T> collection, T newHead)
+        {
+            var (_, tail) = collection;
+            return tail.Cons(newHead);
+        }
     }
 }
