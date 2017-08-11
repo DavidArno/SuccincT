@@ -184,5 +184,37 @@ namespace SuccincTTests.SuccincT.Options
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
             AreEqual(2, result);
         }
+
+        [Test]
+        public void WhenSome_DecomposeReturnsTrueAndValue()
+        {
+            var option = Option<int>.Some(1);
+            var (hasValue, value) = option;
+            IsTrue(hasValue);
+            AreEqual(1, value);
+        }
+
+        [Test]
+        public void WhenNone_DecomposeReturnsFalseAndDefault()
+        {
+            var option = Option<int>.None();
+            var (hasValue, value) = option;
+            IsFalse(hasValue);
+            AreEqual(0, value);
+        }
+
+        [Test]
+        public void WhenSome_ValueOrDefaultReturnsValue()
+        {
+            var option = Option<int>.Some(1);
+            AreEqual(1, option.ValueOrDefault);
+        }
+
+        [Test]
+        public void WhenNone_ValueOrDefaultReturnsDefault()
+        {
+            var option = Option<int>.None();
+            AreEqual(0, option.ValueOrDefault);
+        }
     }
 }

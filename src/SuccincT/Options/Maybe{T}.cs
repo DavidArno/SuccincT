@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using SuccincT.Unions;
+﻿using SuccincT.Unions;
 using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
@@ -11,7 +10,8 @@ namespace SuccincT.Options
     /// </summary>
     public struct Maybe<T>
     {
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
+        // ReSharper disable once UnusedParameter.Local - unit param used to
+        // prevent JSON serializer from using this constructor to create an invalid maybe.
         private Maybe(None _)
         {
             Option = Option<T>.None();
@@ -64,6 +64,8 @@ namespace SuccincT.Options
         /// </summary>
         public T Value => Option.Value;
 
+        public T ValueOrDefault => HasValue ? Option.Value : default;
+
         // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
         public override bool Equals(object obj)
         {
@@ -81,5 +83,8 @@ namespace SuccincT.Options
         internal Option<T> Option { get; }
 
         public static implicit operator Maybe<T>(Option<T> option) => new Maybe<T>(option);
+
+        public void Deconstruct(out bool hasValue, out T value) =>
+            (hasValue, value) = (HasValue, HasValue ? Option.Value : default);
     }
 }

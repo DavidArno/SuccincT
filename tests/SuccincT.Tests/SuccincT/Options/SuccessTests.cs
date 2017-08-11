@@ -97,5 +97,22 @@ namespace SuccincTTests.SuccincT.Options
             Success<int> failure = 1;
             AreEqual(1, failure.Failure);
         }
+        [Test]
+        public void WhenFailure_DecomposeReturnsFalseAndError()
+        {
+            var failure = Success.CreateFailure(1);
+            var (isSuccess, error) = failure;
+            IsFalse(isSuccess);
+            AreEqual(1, error);
+        }
+
+        [Test]
+        public void WhenSuccess_DecomposeReturnsTrueAndDefault()
+        {
+            var success = new Success<int>();
+            var (isSuccess, error) = success;
+            IsTrue(isSuccess);
+            AreEqual(0, error);
+        }
     }
 }

@@ -32,5 +32,8 @@ namespace SuccincT.Options
 
         public static implicit operator bool(Success<T> success) => !success._hasError;
         public static implicit operator Success<T>(T value) => Success.CreateFailure(value);
+
+        public void Deconstruct(out bool hasError, out T error) =>
+            (hasError, error) = (!_hasError, _hasError ? _error : default);
     }
 }
