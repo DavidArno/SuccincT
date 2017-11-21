@@ -6,9 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BenchmarkDotNet" Version="0.10.3" />
-    <PackageReference Include="BenchmarkDotNet.Core" Version="0.10.3" />
-    <PackageReference Include="BenchmarkDotNet.Toolchains.Roslyn" Version="0.10.3" />
+    <PackageReference Include="BenchmarkDotNet" Version="0.10.9" />
+    <PackageReference Include="BenchmarkDotNet.Core" Version="0.10.9" />
+    <PackageReference Include="BenchmarkDotNet.Toolchains.Roslyn" Version="0.10.9" />
   </ItemGroup>
 
   <ItemGroup>

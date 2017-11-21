@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8' />
+<title>UnionT1T2Benchmarks</title>
+
+<style type="text/css">
+	table { border-collapse: collapse; display: block; width: 100%; overflow: auto; }
+	td, th { padding: 6px 13px; border: 1px solid #ddd; }
+	tr { background-color: #fff; border-top: 1px solid #ccc; }
+	tr:nth-child(even) { background: #f8f8f8; }
+</style>
+</head>
+<body>
+<pre><code>
+BenchmarkDotNet=v0.10.3.0, OS=Microsoft Windows NT 6.2.9200.0
+Processor=Intel(R) Core(TM) i7-5600U CPU 2.60GHz, ProcessorCount=4
+Frequency=2533201 Hz, Resolution=394.7575 ns, Timer=TSC
+  [Host]     : Clr 4.0.30319.42000, 64bit RyuJIT-v4.7.2098.0 [AttachedDebugger]
+  DefaultJob : Clr 4.0.30319.42000, 64bit RyuJIT-v4.7.2098.0
+</code></pre>
+<pre><code></code></pre>
+
+<table>
+<thead><tr><th>      Method</th><th>Mean</th><th>StdDev</th><th>Median</th><th>Gen 0</th><th>Allocated</th>
+</tr>
+</thead><tbody><tr><td>UnionT1T2Benchmark</td><td>14.3781 us</td><td>1.1071 us</td><td>13.9672 us</td><td>22.6312</td><td>48.61 kB</td>
+</tr></tbody></table>
+</body>
+</html>
