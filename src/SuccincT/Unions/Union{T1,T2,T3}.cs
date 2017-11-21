@@ -57,6 +57,23 @@ namespace SuccincT.Unions
         public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
         public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
+        public TResult Value<TResult>()
+        {
+            if (typeof(TResult) == typeof(T1))
+            {
+                return (TResult)(object)Case1;
+            }
+            if (typeof(TResult) == typeof(T2))
+            {
+                return (TResult)(object)Case2;
+            }
+            if (typeof(TResult) == typeof(T3))
+            {
+                return (TResult)(object)Case3;
+            }
+
+            throw new InvalidCaseOfTypeException(typeof(TResult));
+        }
 
         public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
             new UnionFuncPatternMatcher<T1, T2, T3, TResult>(this);
