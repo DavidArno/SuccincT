@@ -1,5 +1,4 @@
-﻿using System;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 using static SuccincT.Functional.Unit;
 
@@ -33,20 +32,6 @@ namespace SuccincT.Unions
 
         public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
-
-        public TResult Value<TResult>()
-        {
-            if (typeof(TResult) == typeof(T1))
-            {
-                return (TResult)(object)Case1;
-            }
-            if (typeof(TResult) == typeof(T2))
-            {
-                return (TResult)(object)Case2;
-            }
-
-            throw new InvalidCaseOfTypeException(typeof(TResult));
-        }
 
         public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>() =>
             new UnionPatternMatcher<T1, T2, TResult>(this);
