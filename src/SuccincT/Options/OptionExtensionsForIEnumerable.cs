@@ -81,11 +81,10 @@ namespace SuccincT.Options
 
         public static Option<T> TrySingle<T>(this IEnumerable<T> collection)
         {
-            if (collection == null) return Option<T>.None();
-
-            if (collection is IList<T> list)
+            switch (collection)
             {
-                return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
+                case null: return Option<T>.None();
+                case IList<T> list: return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
             }
 
             using (var enumerator = collection.GetEnumerator())

@@ -29,7 +29,7 @@ namespace SuccincT.PatternMatchers
         {
             _item = item;
             _functionSelector = new MatchFunctionSelector<(T1, T2, T3, T4), EitherTuple<T1, T2, T3, T4>, TResult>(
-                x => throw new NoMatchException("No match action exists for value of " +          
+                x => throw new NoMatchException("No match action exists for value of " +
                                                 $"({_item.Item1}, {_item.Item2}, {_item.Item3}, {_item.Item4}"));
         }
 
@@ -79,7 +79,7 @@ namespace SuccincT.PatternMatchers
             return this;
         }
 
-        IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult> 
+        IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>
             IFuncMatcher<T1, T2, T3, T4, TResult>.Where(Func<T1, T2, T3, T4, bool> expression)
         {
             _whereExpression = x => expression(x.Item1, x.Item2, x.Item3, x.Item4);
@@ -183,7 +183,7 @@ namespace SuccincT.PatternMatchers
 
         private void RecordFunction(Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
                                     IList<EitherTuple<T1, T2, T3, T4>> values,
-                                    Func<(T1, T2, T3, T4), TResult> function) => 
+                                    Func<(T1, T2, T3, T4), TResult> function) =>
             _functionSelector.AddTestAndAction(test, values, null, function);
 
         private void RecordFunction(Func<(T1, T2, T3, T4), bool> test, Func<(T1, T2, T3, T4), TResult> function) =>

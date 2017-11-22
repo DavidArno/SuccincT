@@ -3,7 +3,6 @@ using SuccincT.Functional;
 using SuccincT.PatternMatchers;
 using System.Collections.Generic;
 using System.Linq;
-using Shouldly;
 
 namespace SuccincTTests.SuccincT.PatternMatchers
 {
@@ -163,9 +162,6 @@ namespace SuccincTTests.SuccincT.PatternMatchers
             Assert.AreEqual((1, 1), result[3]);
             Assert.AreEqual((2, 4), result[4]);
             Assert.AreEqual(5, result.Count);
-
-
-            bool Foo(bool b1, bool b2, bool b3, bool b4, bool b5) => b1 == b2 == b3 == b4 == b5 == false;
         }
 
         [Test]

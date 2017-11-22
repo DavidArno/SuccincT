@@ -6,7 +6,7 @@ namespace SuccincTTests.SuccincT.Unions
 {
     public sealed class UnionT1T2T3DirectValueTests
     {
-        private enum Plants { Rose, Tree, Weed }
+        private enum Plants { Rose }
 
         [Test]
         public void UnionWithT1_ValueMatchesCorrectly()

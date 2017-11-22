@@ -6,8 +6,8 @@ namespace SuccincTTests.SuccincT.Unions
 {
     public sealed class UnionT1T2T3T4DirectValueTests
     {
-        private enum Plants { Rose, Tree, Weed }
-        private enum Foods { Cheese, Cake, Chocolate }
+        private enum Plants { Rose }
+        private enum Foods { Cake }
 
         [Test]
         public void UnionWithT1_ValueMatchesCorrectly()
@@ -44,7 +44,7 @@ namespace SuccincTTests.SuccincT.Unions
         [Test]
         public void UnionT1T2T3WithInvalidTypeValue_ThrowsException()
         {
-            var union = new Union<int, string, Plants>(2);
+            var union = new Union<int, string, Plants, Foods>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Value<float>());
         }
     }

@@ -1,5 +1,4 @@
-﻿using System;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 using static SuccincT.Functional.Unit;
 
@@ -36,16 +35,12 @@ namespace SuccincT.Unions
 
         public TResult Value<TResult>()
         {
-            if (typeof(TResult) == typeof(T1))
+            switch (typeof(TResult))
             {
-                return (TResult)(object)Case1;
+                case var t when t == typeof(T1): return (TResult)(object)Case1;
+                case var t when t == typeof(T2): return (TResult)(object)Case2;
+                default: throw new InvalidCaseOfTypeException(typeof(TResult));
             }
-            if (typeof(TResult) == typeof(T2))
-            {
-                return (TResult)(object)Case2;
-            }
-
-            throw new InvalidCaseOfTypeException(typeof(TResult));
         }
 
         public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>() =>

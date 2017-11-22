@@ -11,10 +11,10 @@ namespace SuccincTTests.ExampleTests
     {
         public enum Customer { Simple, Valuable, MostValuable }
 
-        public class Registered
+        private class Registered
         {
             public Customer CustomerType { get; }
-            public int Years { get; private set; }
+            public int Years { get; }
 
             public Registered(Customer customerType, int years)
             {
@@ -23,7 +23,7 @@ namespace SuccincTTests.ExampleTests
             }
         }
 
-        public class UnRegistered { }
+        private class UnRegistered { }
 
         private static int CustomerDiscount(Customer customer) =>
             customer.Match().To<int>()
@@ -49,7 +49,7 @@ namespace SuccincTTests.ExampleTests
         private static decimal ReducePriceBy(int discount, decimal price) =>
             price - price * AsPercent(discount);
 
-        public static decimal CalculateDicountPrice(Union<Registered, UnRegistered> account, decimal price)
+        private static decimal CalculateDicountPrice(Union<Registered, UnRegistered> account, decimal price)
         {
             var (customerDiscount, yearsDiscount) = AccountDiscount(account);
             var customerReducedPrice = ReducePriceBy(customerDiscount, price);

@@ -35,7 +35,7 @@ namespace SuccincT.Unions
             Case = Variant.Case3;
         }
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to 
+        // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid union.
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
         private Union(Unit _)
@@ -57,28 +57,22 @@ namespace SuccincT.Unions
         public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
         public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
+
         public TResult Value<TResult>()
         {
-            if (typeof(TResult) == typeof(T1))
+            switch (typeof(TResult))
             {
-                return (TResult)(object)Case1;
+                case var t when t == typeof(T1): return (TResult)(object)Case1;
+                case var t when t == typeof(T2): return (TResult)(object)Case2;
+                case var t when t == typeof(T3): return (TResult)(object)Case3;
+                default: throw new InvalidCaseOfTypeException(typeof(TResult));
             }
-            if (typeof(TResult) == typeof(T2))
-            {
-                return (TResult)(object)Case2;
-            }
-            if (typeof(TResult) == typeof(T3))
-            {
-                return (TResult)(object)Case3;
-            }
-
-            throw new InvalidCaseOfTypeException(typeof(TResult));
         }
 
-        public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() => 
+        public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() =>
             new UnionFuncPatternMatcher<T1, T2, T3, TResult>(this);
 
-        public IUnionActionPatternMatcher<T1, T2, T3> Match() => 
+        public IUnionActionPatternMatcher<T1, T2, T3> Match() =>
             new UnionFuncPatternMatcher<T1, T2, T3, Unit>(this);
 
         public override bool Equals(object obj) => obj is Union<T1, T2, T3> union && UnionsEqual(union);
@@ -94,7 +88,7 @@ namespace SuccincT.Unions
 
         public static bool operator !=(Union<T1, T2, T3> p1, Union<T1, T2, T3> p2) => !(p1 == p2);
 
-        private bool UnionsEqual(Union<T1, T2, T3> testObject) => 
+        private bool UnionsEqual(Union<T1, T2, T3> testObject) =>
             Case == testObject.Case && _unionsMatch[Case](testObject);
 
         public static implicit operator Union<T1, T2, T3>(T1 value) => new Union<T1, T2, T3>(value);

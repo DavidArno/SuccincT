@@ -35,8 +35,7 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public IOptionFuncMatcher<T, TResult> Match<TResult>() =>
-            new OptionMatcher<T, TResult>(CreateUnion(), this);
+        public IOptionFuncMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(CreateUnion(), this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action

@@ -21,7 +21,7 @@ namespace SuccincTTests.SuccincT.Tuples
         [Test]
         public void Tuple_CanBeMatchedViaOr()
         {
-            var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
+            var tuple = (1, "a", Colors.Red, Animals.Cow);
             var result = tuple.Match().To<bool>().With(1, "a", Colors.Blue, Animals.Goat)
                                                  .Or(1, "a", Colors.Red, Animals.Cow).Do((w, x, y, z) => true)
                                       .Result();
@@ -40,7 +40,7 @@ namespace SuccincTTests.SuccincT.Tuples
         [Test]
         public void TupleWhenNoMatch_ElseUsed()
         {
-            var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
+            var tuple = (1, "a", Colors.Red, Animals.Cow);
             var result = tuple.Match().To<bool>().With(1, "a", Colors.Red, Animals.Pig).Do(true).Else(false).Result();
             Assert.IsFalse(result);
         }
@@ -57,7 +57,7 @@ namespace SuccincTTests.SuccincT.Tuples
         [Test]
         public void TupleWhenNoMatchViaWhere_ElseLambdaUsed()
         {
-            var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
+            var tuple = (1, "a", Colors.Red, Animals.Cow);
             var result = tuple.Match().To<bool>().Where((w, x, y, z) => z == Animals.Goat).Do((w, x, y, z) => true)
                                                  .Else((w, x, y, z) => false).Result();
             Assert.IsFalse(result);
@@ -75,7 +75,7 @@ namespace SuccincTTests.SuccincT.Tuples
         [Test]
         public void TupleWithAndWhereDefined_WhereCorrectlyUsed()
         {
-            var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
+            var tuple = (1, "a", Colors.Red, Animals.Cow);
             var result =
                 tuple.Match().To<bool>().With(1, "a", Colors.Red, Animals.Goat)
                 .Or(2, "a", Colors.Green, Animals.Pig).Do((w, x, y, z) => false)

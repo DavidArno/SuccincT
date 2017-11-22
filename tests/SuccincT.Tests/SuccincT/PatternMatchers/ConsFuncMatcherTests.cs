@@ -200,7 +200,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void MultiItemList_CanBeRecursivelyMatchedUsingWhere()
+        public void MultiItemEnumeration_CanBeRecursivelyMatchedUsingWhere()
         {
             var list = StringEnumeration();
             var result = list.Match().To<string>()
@@ -210,6 +210,19 @@ namespace SuccincTTests.SuccincT.PatternMatchers
                              .RecursiveCons().Where(x => x == "x").Do((item, soFar) => soFar + "c")
                              .Result();
             AreEqual("zbc", result);
+        }
+
+        [Test]
+        public void MultiItemList_CanBeRecursivelyMatchedUsingWhere()
+        {
+            var list = new List<string> {"a", "b", "c"};
+            var result = list.Match().To<string>()
+                             .Single().Do(x => x)
+                             .RecursiveCons().Where(x => x == "a").Do((item, soFar) => soFar + "z")
+                             .RecursiveCons().Where(x => x == "b").Do("i")
+                             .RecursiveCons().Where(x => x == "c").Do((item, soFar) => soFar + "x")
+                             .Result();
+            AreEqual("iz", result);
         }
 
         [Test]

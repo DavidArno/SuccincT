@@ -38,7 +38,7 @@ namespace SuccincTTests.SuccincT.Functional
             }
         }
 
-        private IEnumerable<string> StringEnumeration()
+        private static IEnumerable<string> StringEnumeration()
         {
             yield return "0";
             yield return "1";

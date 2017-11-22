@@ -89,7 +89,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var list1 = new List<int> { 1, 2 };
             var list2 = new List<int> { 3, 4 };
-            var consList1 = list1.Cons(new List<int> { 5, 6, });
+            var consList1 = list1.Cons(new List<int> { 5, 6 });
             var consList2 = list2.Cons(7);
             var consList3 = consList2.Cons(new List<int> { 8, 9 });
             var consList4 = consList1.Cons(consList3);

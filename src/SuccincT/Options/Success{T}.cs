@@ -1,39 +1,47 @@
 ﻿using System;
+using SuccincT.Functional;
+using SuccincT.Unions;
 
 namespace SuccincT.Options
 {
     public struct Success<T>
     {
-        private readonly bool _hasError;
         private readonly T _error;
 
         internal Success(T error)
         {
-            _hasError = true;
+            IsFailure = true;
             _error = error;
         }
 
-        public bool IsFailure => _hasError;
+        public bool IsFailure { get; }
 
-        public T Failure => _hasError
+        public T Failure => IsFailure
             ? _error
             : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
 
-        public override bool Equals(object obj) => 
-            obj is Success<T> other && 
-            other._hasError == _hasError &&
-            (_hasError && other.Failure.Equals(_error) || !_hasError);
+        public ISuccessFuncMatcher<T, TResult> Match<TResult>() => new SuccessMatcher<T, TResult>(CreateUnion(), this);
 
-        public override int GetHashCode() => _hasError ? _error.GetHashCode() : 1;
+        public ISuccessActionMatcher<T> Match() => new SuccessMatcher<T, Unit>(CreateUnion(), this);
+
+        public override bool Equals(object obj) =>
+            obj is Success<T> other &&
+            other.IsFailure == IsFailure &&
+            (IsFailure && other.Failure.Equals(_error) || !IsFailure);
+
+        public override int GetHashCode() => IsFailure ? _error.GetHashCode() : 1;
 
         public static bool operator ==(Success<T> a, object b) => a.Equals(b);
 
         public static bool operator !=(Success<T> a, object b) => !a.Equals(b);
 
-        public static implicit operator bool(Success<T> success) => !success._hasError;
+        public static implicit operator bool(Success<T> success) => !success.IsFailure;
         public static implicit operator Success<T>(T value) => Success.CreateFailure(value);
 
         public void Deconstruct(out bool hasError, out T error) =>
-            (hasError, error) = (!_hasError, _hasError ? _error : default);
+            (hasError, error) = (!IsFailure, IsFailure ? _error : default);
+
+        private Union<T, bool> CreateUnion() => IsFailure ? new Union<T, bool>(_error) : new Union<T, bool>(true);
     }
+
 }

@@ -2,6 +2,7 @@ using System;
 using NUnit.Framework;
 using SuccincT.Functional;
 using SuccincT.Options;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -13,8 +14,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt = Option<int>.Some(50);
             var mappedOpt = opt.Map(x => x * x);
-            Assert.IsTrue(mappedOpt.HasValue);
-            Assert.AreEqual(2500, mappedOpt.Value);
+            IsTrue(mappedOpt.HasValue);
+            AreEqual(2500, mappedOpt.Value);
         }
 
         [Test]
@@ -22,7 +23,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt = Option<bool>.None();
             var mappedOpt = opt.Map(x => x ? 300 : 100);
-            Assert.IsFalse(mappedOpt.HasValue);
+            IsFalse(mappedOpt.HasValue);
         }
 
         [Test]
@@ -31,8 +32,8 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<int>.Some(10);
             var opt2 = Option<int>.Some(50);
             var res = opt1.Or(opt2);
-            Assert.IsTrue(res.HasValue);
-            Assert.AreEqual(10, res.Value);
+            IsTrue(res.HasValue);
+            AreEqual(10, res.Value);
         }
 
         [Test]
@@ -41,8 +42,8 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<int>.None();
             var opt2 = Option<int>.Some(50);
             var res = opt1.Or(opt2);
-            Assert.IsTrue(res.HasValue);
-            Assert.AreEqual(50, res.Value);
+            IsTrue(res.HasValue);
+            AreEqual(50, res.Value);
         }
 
         [Test]
@@ -51,7 +52,7 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<int>.None();
             var opt2 = Option<int>.None();
             var res = opt1.Or(opt2);
-            Assert.IsFalse(res.HasValue);
+            IsFalse(res.HasValue);
         }
 
         [Test]
@@ -60,8 +61,8 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<string>.Some("OK");
             Option<string> Opt2() => throw new InvalidOperationException();
             var res = opt1.Or(Opt2);
-            Assert.IsTrue(res.HasValue);
-            Assert.AreEqual("OK", res.Value);
+            IsTrue(res.HasValue);
+            AreEqual("OK", res.Value);
         }
 
         [Test]
@@ -70,8 +71,8 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<string>.None();
             Option<string> Opt2() => Option<string>.Some("OK too");
             var res = opt1.Or(Opt2);
-            Assert.IsTrue(res.HasValue);
-            Assert.AreEqual("OK too", res.Value);
+            IsTrue(res.HasValue);
+            AreEqual("OK too", res.Value);
         }
 
         [Test]
@@ -80,7 +81,7 @@ namespace SuccincTTests.SuccincT.Options
             var opt1 = Option<string>.None();
             Func<Option<string>> opt2 = Option<string>.None;
             var res = opt1.Or(opt2);
-            Assert.IsFalse(res.HasValue);
+            IsFalse(res.HasValue);
         }
 
         [Test]
@@ -88,8 +89,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt = Option<int>.Some(50).Into(Option<Option<int>>.Some);
             var flat = opt.Flatten();
-            Assert.IsTrue(flat.HasValue);
-            Assert.AreEqual(50, flat.Value);
+            IsTrue(flat.HasValue);
+            AreEqual(50, flat.Value);
         }
 
         [Test]
@@ -97,7 +98,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt = Option<Option<int>>.None();
             var flat = opt.Flatten();
-            Assert.IsFalse(flat.HasValue);
+            IsFalse(flat.HasValue);
         }
 
         [Test]
@@ -105,7 +106,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt = Option<int>.None().Into(Option<Option<int>>.Some);
             var flat = opt.Flatten();
-            Assert.IsFalse(flat.HasValue);
+            IsFalse(flat.HasValue);
         }
 
         [Test]
@@ -151,12 +152,20 @@ namespace SuccincTTests.SuccincT.Options
             CollectionAssert.IsEmpty(chosenOpts);
         }
 
+        [Test]
+        public void ValueCanBeConvertedToOptionUsingSome()
+        {
+            var option = "hello".Some();
+            AreEqual("hello", option.Value);
+        }
+
+        [Test]
         public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSomeWay()
         {
             var actual = 1.Some();
             var expected = Option<int>.Some(1);
 
-            Assert.AreEqual(expected, actual);
+            AreEqual(expected, actual);
         }
     }
 }

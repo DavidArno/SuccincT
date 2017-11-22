@@ -95,5 +95,12 @@ namespace SuccincTTests.SuccincT.Options
             AreNotEqual(a, b);
             IsTrue(a != b);
         }
+
+        [Test]
+        public void MaybeAndItsValue_AreNotEqual()
+        {
+            var a = Maybe<string>.Some("1234");
+            IsFalse(a.Equals("1234"));
+        }
     }
 }
