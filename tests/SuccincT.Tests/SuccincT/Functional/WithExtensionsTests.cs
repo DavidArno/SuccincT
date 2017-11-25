@@ -108,11 +108,36 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual(car.CreationDate, newCar.CreationDate);
         }
 
+        [Test]
+        public void UpdatingNotConstructorParameter_ShouldReturnImmutableObjectWithUpdatingProperty()
+        {
+            // Arrange
+            var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland");
+
+            // Act
+            var publishedBook = book.With(new { PublishDate = new DateTime(1865, 11, 26) });
+
+            // Assert
+            AreNotSame(book, publishedBook);
+            AreEqual(book.Author, publishedBook.Author);
+            AreEqual(book.Name, publishedBook.Name);
+            AreEqual(new DateTime(1865, 11, 26), publishedBook.PublishDate);
+        }
+
         private class Car
         {
             public string Constructor { get; set; }
             public string Color { get; set; }
             public DateTime? CreationDate { get; set; }
+        }
+
+        private class Book
+        {
+            public Book(string author, string name) => (Author, Name) = (author, name);
+
+            public string Author { get; }
+            public string Name { get; }
+            public DateTime? PublishDate { get; set; }
         }
     }
 }

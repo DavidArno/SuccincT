@@ -1,17 +1,36 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Reflection;
 
 namespace SuccincT.Functional
 {
     public static class WithExtensions
     {
-        public static T Copy<T>(this T @object) where T : new()
+        public static T Copy<T>(this T @object) where T : class
         {
-            var newObject = new T();
+            var constructors = typeof(T).GetTypeInfo().DeclaredConstructors
+                .Where(c => c.IsPublic && !c.IsStatic);
+
+            var constructorToUse = constructors
+                .OrderBy(c => c.GetParameters().Length)
+                .FirstOrDefault();
+
+            var constructorParameters = constructorToUse.GetParameters();
 
             var sourceProps = typeof(T).GetRuntimeProperties()
                 .Where(x => x.CanRead)
                 .ToList();
+
+            var @params = constructorParameters
+                .Select(p =>
+                {
+                    return sourceProps
+                        .FirstOrDefault(sp => string.Equals(sp.Name, p.Name, StringComparison.CurrentCultureIgnoreCase))
+                        .GetValue(@object, null);
+                })
+                .ToArray();
+
+            var newObject = Activator.CreateInstance(typeof(T), @params) as T;
 
             var destProps = typeof(T).GetRuntimeProperties()
                 .Where(x => x.CanWrite)
@@ -32,7 +51,7 @@ namespace SuccincT.Functional
             return newObject;
         }
 
-        public static T With<T, TProps>(this T @object, TProps propertiesToUpdate) where T : new() where TProps : class
+        public static T With<T, TProps>(this T @object, TProps propertiesToUpdate) where T : class where TProps : class
         {
             if (propertiesToUpdate == null)
                 return @object;
