@@ -109,7 +109,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
-        public void UpdatingNotConstructorParameter_ShouldReturnImmutableObjectWithUpdatingProperty()
+        public void UpdatingNotConstructorParameter_ShouldReturnImmutableObjectWithUpdatedProperties()
         {
             // Arrange
             var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland");
@@ -122,6 +122,22 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual(book.Author, publishedBook.Author);
             AreEqual(book.Name, publishedBook.Name);
             AreEqual(new DateTime(1865, 11, 26), publishedBook.PublishDate);
+        }
+
+        [Test]
+        public void UpdatingConstructorParameter_ShouldReturnImmutableObjectWithUpdatedProperties()
+        {
+            // Arrange
+            var book = new Book("J.R.R. Tolkien", "The Lord Of The Rings");
+
+            // Act
+            var newBook = book.With(new { Name = "The Hobbit" });
+
+            // Assert
+            AreNotSame(book, newBook);
+            AreEqual(book.Author, newBook.Author);
+            AreEqual("The Hobbit", newBook.Name);
+            AreEqual(book.PublishDate, newBook.PublishDate);
         }
 
         private class Car
