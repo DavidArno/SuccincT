@@ -15,10 +15,10 @@ namespace SuccincTTests.SuccincT.Functional
             var car = new Car();
 
             // Act
-            var newCar = car.With<Car, Car>(null);
+            var optionResult = car.With<Car, Car>(null);
 
             // Assert
-            AreSame(car, newCar);
+            IsFalse(optionResult.HasValue);
         }
 
         [Test]
@@ -28,7 +28,7 @@ namespace SuccincTTests.SuccincT.Functional
             var car = new Car();
 
             // Act
-            var newCar = car.With(new { });
+            var newCar = car.With(new { }).Value;
 
             // Assert
             AreNotSame(car, newCar);
@@ -44,7 +44,7 @@ namespace SuccincTTests.SuccincT.Functional
             var car = new Car();
 
             // Act
-            var newCar = car.With(new { Color = "Red" });
+            var newCar = car.With(new { Color = "Red" }).Value;
 
             // Assert
             AreNotSame(car, newCar);
@@ -60,9 +60,9 @@ namespace SuccincTTests.SuccincT.Functional
             var car = new Car();
 
             // Act
-            var newCar1 = car.With(new { Color = "Red" });
-            var newCar2 = newCar1.With(new { Color = "Blue" });
-            var newCar3 = newCar2.With(new { Color = "Green" });
+            var newCar1 = car.With(new { Color = "Red" }).Value;
+            var newCar2 = newCar1.With(new { Color = "Blue" }).Value;
+            var newCar3 = newCar2.With(new { Color = "Green" }).Value;
 
             // Assert
             AreNotSame(car, newCar3);
@@ -83,7 +83,7 @@ namespace SuccincTTests.SuccincT.Functional
                 Constructor = "BMW",
                 Color = "Red",
                 CreationDate = new DateTime(2017, 01, 01)
-            });
+            }).Value;
 
             // Assert
             AreNotSame(car, newCar);
@@ -99,7 +99,7 @@ namespace SuccincTTests.SuccincT.Functional
             var car = new Car { Color = "Blue" };
 
             // Act
-            var newCar = car.With(new { Cost = "1,000$" });
+            var newCar = car.With(new { Cost = "1,000$" }).Value;
 
             // Assert
             AreNotSame(car, newCar);
@@ -115,7 +115,7 @@ namespace SuccincTTests.SuccincT.Functional
             var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland");
 
             // Act
-            var publishedBook = book.With(new { PublishDate = new DateTime(1865, 11, 26) });
+            var publishedBook = book.With(new { PublishDate = new DateTime(1865, 11, 26) }).Value;
 
             // Assert
             AreNotSame(book, publishedBook);
@@ -131,7 +131,7 @@ namespace SuccincTTests.SuccincT.Functional
             var book = new Book("J.R.R. Tolkien", "The Lord Of The Rings");
 
             // Act
-            var newBook = book.With(new { Name = "The Hobbit" });
+            var newBook = book.With(new { Name = "The Hobbit" }).Value;
 
             // Assert
             AreNotSame(book, newBook);
