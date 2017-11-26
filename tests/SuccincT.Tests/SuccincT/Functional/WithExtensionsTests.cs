@@ -140,6 +140,25 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual(book.PublishDate, newBook.PublishDate);
         }
 
+        [Test]
+        public void ResetValues_ShouldReturnImmutableObjectWithResetValues()
+        {
+            // Arrange
+            var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland")
+            {
+                PublishDate = new DateTime(1865, 11, 26)
+            };
+
+            // Act
+            var emptyBook = book.With(new { Author = string.Empty, Name = string.Empty, PublishDate = default(DateTime?) }).Value;
+
+            // Assert
+            AreNotSame(book, emptyBook);
+            IsEmpty(emptyBook.Author);
+            IsEmpty(emptyBook.Name);
+            IsNull(emptyBook.PublishDate);
+        }
+
         private class Car
         {
             public string Constructor { get; set; }
