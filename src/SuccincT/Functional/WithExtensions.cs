@@ -8,19 +8,23 @@ namespace SuccincT.Functional
 {
     public static class WithExtensions
     {
+        private static readonly Dictionary<string, CachedTypeInfo> CachedTypeInfos = new Dictionary<string, CachedTypeInfo>();
+
         public static Option<T> Copy<T>(this T @object) where T : class
         {
+            var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
+
             // Create the new object using the most specialized constructor
-            var constructorToUse = GetListOfPublicContructorInfo(typeof(T))
-                .OrderByDescending(c => c.GetParameters().Length)
+            var constructorToUse = cachedTypeInfo.CachedPublicConstructors
+                .OrderByDescending(cc => cc.Parameters.Count)
                 .TryFirst();
 
             if (!constructorToUse.HasValue)
                 return Option<T>.None();
 
-            var sourceReadProperties = GetListOfReadPropertyInfo(typeof(T));
+            var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties);
 
-            var constructorParameters = constructorToUse.Value.GetParameters();
+            var constructorParameters = constructorToUse.Value.Parameters;
 
             var @params = constructorParameters
                 .Select(p =>
@@ -33,13 +37,13 @@ namespace SuccincT.Functional
                 .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
                 .ToArray();
 
-            if (@params.Length != constructorParameters.Length)
+            if (@params.Length != constructorParameters.Count)
                 return Option<T>.None();
 
             var newObject = Activator.CreateInstance(typeof(T), @params) as T;
 
             // Overwrite properties on the new created object
-            var destWriteProperties = GetListOfWritePropertyInfo(typeof(T));
+            var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
             var propertiesToOverwrite = sourceReadProperties
                 .Select(sourceProperty => destWriteProperties.TryFirst(destProperty => sourceProperty.Name == destProperty.Name))
@@ -60,18 +64,20 @@ namespace SuccincT.Functional
             if (propertiesToUpdate == null)
                 return Option<T>.None();
 
-            // Create the new object using the most specialized constructor based on props to update
-            var sourceReadProperties = GetListOfReadPropertyInfo(typeof(T));
-            var updateProperties = GetListOfReadPropertyInfo(typeof(TProps));
+            var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
-            var constructorToUse = GetListOfPublicContructorInfo(typeof(T))
-                .OrderByDescending(c => c.GetParameters().Count(p => updateProperties.Any(ptu => AreLinked(ptu, p))))
+            // Create the new object using the most specialized constructor based on props to update
+            var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
+            var updateProperties = typeof(TProps).GetRuntimeProperties().Where(x => x.CanRead).ToList();
+
+            var constructorToUse = cachedTypeInfo.CachedPublicConstructors
+                .OrderByDescending(cc => cc.Parameters.Count(p => updateProperties.Any(ptu => AreLinked(ptu, p))))
                 .TryFirst();
 
             if (!constructorToUse.HasValue)
                 return Option<T>.None();
 
-            var constructorParameters = constructorToUse.Value.GetParameters();
+            var constructorParameters = constructorToUse.Value.Parameters;
 
             var @params = constructorParameters
                 .Select(p =>
@@ -95,13 +101,13 @@ namespace SuccincT.Functional
                 .Select(x => x.Value)
                 .ToArray();
 
-            if (@params.Length != constructorParameters.Length)
+            if (@params.Length != constructorParameters.Count)
                 return Option<T>.None();
 
             var newObject = Activator.CreateInstance(typeof(T), @params) as T;
 
             // Overwrite properties from the previous/source object
-            var destWriteProperties = GetListOfWritePropertyInfo(typeof(T));
+            var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
             var propertiesToOverwrite = sourceReadProperties
                 .Select(sourceProperty => destWriteProperties.TryFirst(destProperty => sourceProperty.Name == destProperty.Name))
@@ -132,25 +138,23 @@ namespace SuccincT.Functional
             return Option<T>.Some(newObject);
         }
 
-        private static List<ConstructorInfo> GetListOfPublicContructorInfo(Type type)
+        private static CachedTypeInfo GetCachedTypeInfo(Type type)
         {
-            return type.GetTypeInfo().DeclaredConstructors
-                .Where(c => c.IsPublic && !c.IsStatic)
-                .ToList();
+            return CachedTypeInfos.GetOrAddValue(type.FullName, () => new CachedTypeInfo(type));
         }
 
-        private static List<PropertyInfo> GetListOfReadPropertyInfo(Type type)
+        private static T GetOrAddValue<T>(this Dictionary<string, T> dictionary, string key, Func<T> createValue)
         {
-            return type.GetRuntimeProperties()
-                .Where(x => x.CanRead)
-                .ToList();
-        }
-
-        private static List<PropertyInfo> GetListOfWritePropertyInfo(Type type)
-        {
-            return type.GetRuntimeProperties()
-                .Where(x => x.CanWrite)
-                .ToList();
+            return dictionary.TryGetValue(key)
+                .Match<T>()
+                .Some().Do(value => value)
+                .None().Do(() =>
+                {
+                    var value = createValue();
+                    dictionary.Add(key, value);
+                    return value;
+                })
+                .Result();
         }
 
         private static bool AreLinked(MemberInfo memberInfo, ParameterInfo parameterInfo)
@@ -165,6 +169,38 @@ namespace SuccincT.Functional
         private static void CopyPropertyValue<T1, T2>(T1 from, PropertyInfo fromProperty, T2 to, PropertyInfo toProperty) where T1 : class where T2 : class
         {
             toProperty.SetValue(to, fromProperty.GetValue(from, null));
+        }
+
+        private class CachedTypeInfo
+        {
+            public List<CachedConstructorInfo> CachedConstructors { get; }
+            public List<CachedConstructorInfo> CachedPublicConstructors { get; }
+            public List<PropertyInfo> Properties { get; }
+            public List<PropertyInfo> ReadOnlyProperties { get; }
+            public List<PropertyInfo> WriteOnlyProperties { get; }
+
+            public CachedTypeInfo(Type type)
+            {
+                var typeInfo = type.GetTypeInfo();
+
+                CachedConstructors = typeInfo.DeclaredConstructors.Select(c => new CachedConstructorInfo(c)).ToList();
+                CachedPublicConstructors = CachedConstructors.Where(cc => cc.Constructor.IsPublic && !cc.Constructor.IsStatic).ToList();
+                Properties = type.GetRuntimeProperties().ToList();
+                ReadOnlyProperties = Properties.Where(p => p.CanRead && !p.CanWrite).ToList();
+                WriteOnlyProperties = Properties.Where(p => !p.CanRead && p.CanWrite).ToList();
+            }
+        }
+
+        private class CachedConstructorInfo
+        {
+            public ConstructorInfo Constructor { get; }
+            public List<ParameterInfo> Parameters { get; }
+
+            public CachedConstructorInfo(ConstructorInfo constructorInfo)
+            {
+                Constructor = constructorInfo;
+                Parameters = constructorInfo.GetParameters().ToList();
+            }
         }
     }
 }
