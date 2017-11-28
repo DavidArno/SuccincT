@@ -128,7 +128,7 @@ namespace SuccincT.Functional
                     )
                 )
                 .Where(x => x.SourceProp.HasValue && x.SourceProp.Value.CanWrite)
-                .Select(x => (SourceProp: x.SourceProp.Value, PropToUpdate: x.PropToUpdate));
+                .Select(x => (x.SourceProp.Value, x.PropToUpdate));
 
             foreach (var (sourceProp, propToUpdate) in tuplePropertiesToUpdate)
             {

@@ -1,6 +1,6 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Functional;
+using System;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional
