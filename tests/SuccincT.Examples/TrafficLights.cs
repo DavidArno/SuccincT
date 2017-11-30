@@ -12,8 +12,7 @@ namespace SuccincT.Examples
         }
 
         public struct Lights
-        {
-            public LightState Red { get; }
+        {            public LightState Red { get; }
             public LightState Amber { get; }
             public LightState Green { get; }
 

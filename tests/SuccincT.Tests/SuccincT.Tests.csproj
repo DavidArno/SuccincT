@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net45</TargetFramework>
     <RootNamespace>SuccincTTests</RootNamespace>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

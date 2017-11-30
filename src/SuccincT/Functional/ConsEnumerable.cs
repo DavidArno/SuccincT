@@ -53,14 +53,7 @@ namespace SuccincT.Functional
                 }
             };
 
-        internal ConsEnumerable(ConsNode<T> node) =>
-            _node = new ConsNode<T>
-            {
-                State = StartNode,
-                Next = node
-            };
-
-        internal ConsEnumerable() =>
+        internal ConsEnumerable(ConsNode<T> node) =>            _node = new ConsNode<T>            {                State = StartNode,                Next = node            };        private ConsEnumerable() =>
             _node = new ConsNode<T>
             {
                 State = StartNode

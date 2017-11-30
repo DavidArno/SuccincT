@@ -26,12 +26,10 @@ namespace SuccincT.JSON
 
             var typedMethod = optionType.GetMethod(hasValue ? "Some" : "None");
 
-            if (hasValue)
-            {
-                var value = jsonObject["value"].ToObject(type, serializer);
-                return typedMethod.Invoke(null, new[] {value});
-            }
-            return typedMethod.Invoke(null, null);
+            if (!hasValue) return typedMethod.Invoke(null, null);
+
+            var value = jsonObject["value"].ToObject(type, serializer);
+            return typedMethod.Invoke(null, new[] {value});
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)

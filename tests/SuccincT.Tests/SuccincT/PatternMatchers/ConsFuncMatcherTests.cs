@@ -215,7 +215,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         [Test]
         public void MultiItemList_CanBeRecursivelyMatchedUsingWhere()
         {
-            var list = new List<string> {"a", "b", "c"};
+            var list = new List<string> { "a", "b", "c" };
             var result = list.Match().To<string>()
                              .Single().Do(x => x)
                              .RecursiveCons().Where(x => x == "a").Do((item, soFar) => soFar + "z")
@@ -223,6 +223,19 @@ namespace SuccincTTests.SuccincT.PatternMatchers
                              .RecursiveCons().Where(x => x == "c").Do((item, soFar) => soFar + "x")
                              .Result();
             AreEqual("iz", result);
+        }
+
+        [Test]
+        public void MultiItemIList_CanBeRecursivelyMatchedUsingWhere()
+        {
+            var list = StringList();
+            var result = list.Match().To<string>()
+                             .Single().Do(x => "w")
+                             .RecursiveCons().Where(x => x == "a").Do((item, soFar) => soFar + "z")
+                             .RecursiveCons().Where(x => x == "b").Do((item, soFar) => soFar + "y")
+                             .RecursiveCons().Where(x => x == "c").Do((item, soFar) => soFar + "x")
+                             .Result();
+            AreEqual("wxyz", result);
         }
 
         [Test]
@@ -240,5 +253,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
             yield return "y";
             yield return "z";
         }
+
+        private static IList<string> StringList() => new List<string> {"a", "b", "c", "d"};
     }
 }

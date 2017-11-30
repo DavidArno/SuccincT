@@ -53,7 +53,7 @@ namespace SuccincTTests.SuccincT.Unions
             AreEqual(Colors.Green, union.Case3);
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase2ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
@@ -76,7 +76,7 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
@@ -99,28 +99,28 @@ namespace SuccincTTests.SuccincT.Unions
             }
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
             Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase3ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
             Throws<InvalidCaseException>(() => Ignore(union.Case3));
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase1ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
             Throws<InvalidCaseException>(() => Ignore(union.Case1));
         }
 
-        [Test, ]
+        [Test]
         public void AccessingCase2ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Blue);

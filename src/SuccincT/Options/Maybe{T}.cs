@@ -69,9 +69,12 @@ namespace SuccincT.Options
         // ReSharper disable once CanBeReplacedWithTryCastAndCheckForNull
         public override bool Equals(object obj)
         {
-            if (obj is Maybe<T> maybe) return Option.EqualsMaybe(maybe);
-            if (obj is Option<T> option) return Option.EqualsOption(option);
-            return false;
+            switch (obj)
+            {
+                case Maybe<T> maybe: return Option.EqualsMaybe(maybe);
+                case Option<T> option: return Option.EqualsOption(option);
+                default: return false;
+            }
         }
 
         public override int GetHashCode() => Option.GetHashCode();

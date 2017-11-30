@@ -120,17 +120,12 @@ namespace SuccincT.Unions.PatternMatchers
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         private TResult ElseFunction(IUnion<T1, T2, T3, T4> union)
         {
-            if (union is Union<T1, T2>)
+            switch (union)
             {
-                return _u2ElseFunction(union as Union<T1, T2>);
+                case Union<T1, T2> _: return _u2ElseFunction(union as Union<T1, T2>);
+                case Union<T1, T2, T3> _: return _u3ElseFunction(union as Union<T1, T2, T3>);
+                default: return _u4ElseFunction(union as Union<T1, T2, T3, T4>);
             }
-
-            if (union is Union<T1, T2, T3>)
-            {
-                return _u3ElseFunction(union as Union<T1, T2, T3>);
-            }
-
-            return _u4ElseFunction(union as Union<T1, T2, T3, T4>);
         }
     }
 }

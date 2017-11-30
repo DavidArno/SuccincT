@@ -59,9 +59,12 @@ namespace SuccincT.Options
 
         public override bool Equals(object obj)
         {
-            if (obj is Option<T> option) return EqualsOption(option);
-            if (obj is Maybe<T> maybe) return EqualsMaybe(maybe);
-            return false;
+            switch (obj)
+            {
+                case Option<T> option: return EqualsOption(option);
+                case Maybe<T> maybe: return EqualsMaybe(maybe);
+                default: return false;
+            }
         }
 
         internal bool EqualsOption(Option<T> other) =>

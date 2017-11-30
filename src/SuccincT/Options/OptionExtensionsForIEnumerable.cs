@@ -13,9 +13,11 @@ namespace SuccincT.Options
     {
         public static Option<T> TryFirst<T>(this IEnumerable<T> collection)
         {
-            if (collection == null) return Option<T>.None();
-
-            if (collection is IList<T> list && list.Count > 0) return Option<T>.Some(list[0]);
+            switch (collection)
+            {
+                case null: return Option<T>.None();
+                case IList<T> list when list.Count > 0: return Option<T>.Some(list[0]);
+            }
 
             using (var enumerator = collection.GetEnumerator())
             {
@@ -44,14 +46,8 @@ namespace SuccincT.Options
 
         public static Option<T> TryLast<T>(this IEnumerable<T> collection)
         {
-            if (collection == null) return Option<T>.None();
-
-            if (collection is IList<T> list && list.Count > 0)
-            {
-                return Option<T>.Some(list[list.Count - 1]);
-            }
-
-            using (var e = collection.GetEnumerator())
+            switch (collection)
+            {                case null: return Option<T>.None();                case IList<T> list when list.Count > 0: return Option<T>.Some(list[list.Count - 1]);            }            using (var e = collection.GetEnumerator())
             {
                 if (!e.MoveNext()) return Option<T>.None();
 

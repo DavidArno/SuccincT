@@ -11,26 +11,19 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingWithNull_ShouldReturnSameObject()
         {
-            // Arrange
             var car = new Car();
-
-            // Act
             var optionResult = car.With<Car, Car>(null);
 
-            // Assert
             IsFalse(optionResult.HasValue);
         }
 
         [Test]
         public void UpdatingWithoutProperty_ShouldReturnImmutableObject()
         {
-            // Arrange
             var car = new Car();
 
-            // Act
             var newCar = car.With(new { }).Value;
 
-            // Assert
             AreNotSame(car, newCar);
             AreEqual(car.Constructor, newCar.Constructor);
             AreEqual(car.Color, newCar.Color);
@@ -40,13 +33,9 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingWithOneProperty_ShouldReturnImmutableObjectWithUpdatedProperties()
         {
-            // Arrange
             var car = new Car();
-
-            // Act
             var newCar = car.With(new { Color = "Red" }).Value;
 
-            // Assert
             AreNotSame(car, newCar);
             AreEqual(car.Constructor, newCar.Constructor);
             AreEqual("Red", newCar.Color);
@@ -56,15 +45,12 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingWithOnePropertyMultipleTimes_ShouldReturnImmutableObjectWithLastUpdatedProperties()
         {
-            // Arrange
             var car = new Car();
 
-            // Act
             var newCar1 = car.With(new { Color = "Red" }).Value;
             var newCar2 = newCar1.With(new { Color = "Blue" }).Value;
             var newCar3 = newCar2.With(new { Color = "Green" }).Value;
 
-            // Assert
             AreNotSame(car, newCar3);
             AreEqual(car.Constructor, newCar3.Constructor);
             AreEqual("Green", newCar3.Color);
@@ -74,10 +60,8 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingWithAllProperties_ShouldReturnImmutableObjectWithUpdatedProperties()
         {
-            // Arrange
-            var car = new Car();
+            var car = new Car {Constructor = "Ford", Color = "Black", CreationDate = new DateTime(1908, 10, 1)};
 
-            // Act
             var newCar = car.With(new
             {
                 Constructor = "BMW",
@@ -85,7 +69,6 @@ namespace SuccincTTests.SuccincT.Functional
                 CreationDate = new DateTime(2017, 01, 01)
             }).Value;
 
-            // Assert
             AreNotSame(car, newCar);
             AreEqual("BMW", newCar.Constructor);
             AreEqual("Red", newCar.Color);
@@ -95,13 +78,9 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingWithNoMatchingProperty_ShouldReturnImmutableObject()
         {
-            // Arrange
             var car = new Car { Color = "Blue" };
-
-            // Act
             var newCar = car.With(new { Cost = "1,000$" }).Value;
 
-            // Assert
             AreNotSame(car, newCar);
             AreEqual(car.Constructor, newCar.Constructor);
             AreEqual("Blue", newCar.Color);
@@ -111,13 +90,9 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingNotConstructorParameter_ShouldReturnImmutableObjectWithUpdatedProperties()
         {
-            // Arrange
             var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland");
-
-            // Act
             var publishedBook = book.With(new { PublishDate = new DateTime(1865, 11, 26) }).Value;
 
-            // Assert
             AreNotSame(book, publishedBook);
             AreEqual(book.Author, publishedBook.Author);
             AreEqual(book.Name, publishedBook.Name);
@@ -127,13 +102,9 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void UpdatingConstructorParameter_ShouldReturnImmutableObjectWithUpdatedProperties()
         {
-            // Arrange
             var book = new Book("J.R.R. Tolkien", "The Lord Of The Rings");
-
-            // Act
             var newBook = book.With(new { Name = "The Hobbit" }).Value;
 
-            // Assert
             AreNotSame(book, newBook);
             AreEqual(book.Author, newBook.Author);
             AreEqual("The Hobbit", newBook.Name);
@@ -143,16 +114,15 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void ResetValues_ShouldReturnImmutableObjectWithResetValues()
         {
-            // Arrange
             var book = new Book("Lewis Caroll", "Alice's Adventures In Wonderland")
             {
                 PublishDate = new DateTime(1865, 11, 26)
             };
 
-            // Act
-            var emptyBook = book.With(new { Author = string.Empty, Name = string.Empty, PublishDate = default(DateTime?) }).Value;
+            var emptyBook = book
+                            .With(new {Author = string.Empty, Name = string.Empty, PublishDate = default(DateTime?)})
+                            .Value;
 
-            // Assert
             AreNotSame(book, emptyBook);
             IsEmpty(emptyBook.Author);
             IsEmpty(emptyBook.Name);
