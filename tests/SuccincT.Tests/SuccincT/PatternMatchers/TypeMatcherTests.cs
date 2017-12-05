@@ -231,16 +231,19 @@ namespace SuccincTTests.SuccincT.PatternMatchers
 
         private class Test1 : ITest
         {
+            // ReSharper disable once MemberCanBeMadeStatic.Local
             public int F1() => 1;
         }
 
         private class Test2 : ITest
         {
+            // ReSharper disable once MemberCanBeMadeStatic.Local
             public int F2() => 2;
         }
 
         private class Test3 : ITest
         {
+            // ReSharper disable once MemberCanBeMadeStatic.Local
             public int F2() => 3;
         }
     }
