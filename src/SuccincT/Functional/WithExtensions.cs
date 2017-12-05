@@ -11,7 +11,12 @@ namespace SuccincT.Functional
         private static readonly Dictionary<string, CachedTypeInfo> CachedTypeInfos =
             new Dictionary<string, CachedTypeInfo>();
 
-        public static Option<T> Copy<T>(this T @object) where T : class
+        public static T Copy<T>(this T @object) where T : class
+        {
+            return TryCopy(@object).ValueOrDefault;
+        }
+
+        public static Option<T> TryCopy<T>(this T @object) where T : class
         {
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
@@ -53,7 +58,13 @@ namespace SuccincT.Functional
             return Option<T>.Some(newObject);
         }
 
-        public static Option<T> With<T, TProps>(this T @object, TProps propertiesToUpdate)
+        public static T With<T, TProps>(this T @object, TProps propertiesToUpdate)
+            where T : class where TProps : class
+        {
+            return TryWith(@object, propertiesToUpdate).ValueOrDefault;
+        }
+
+        public static Option<T> TryWith<T, TProps>(this T @object, TProps propertiesToUpdate)
             where T : class where TProps : class
         {
             // Do nothing if `propertiesToUpdate` is null
