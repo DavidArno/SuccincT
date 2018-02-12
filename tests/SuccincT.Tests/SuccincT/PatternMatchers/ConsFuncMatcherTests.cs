@@ -130,6 +130,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void MultiItemList_CanBeMatchedWithConsWithWhere()
         {
             var list = new List<int> { 1, 2, 3, 4 };
+
             var result = list.Match().To<int>()
                              .Cons().Where((h, t) => t.Count() == 3).Do((x, y) => 1)
                              .Cons().Do(2)

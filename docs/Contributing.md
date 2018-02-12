@@ -21,3 +21,24 @@ A few points to note regarding this:
 2. Please try to supply unit tests if you can. Well tested PR's are easier to approve and merge. If you aren't confident about writing your own tests, let me know and I'll add them, but that will delay things.
 3. Please try to follow my coding style. There's no hard and fast rules, but generally if your code looks like mine, things will be good. Again, code in very different styles to my own will be rewritten before being merged, so sticking to the same style speeds things up. 
 4. Before starting work, [please check on which branches are currently active](Documents/Branches.md) and only work against those (though PRs from your own branch to one of those active ones are fine).
+
+### Contributors ###
+The following folk have already contributed many useful additions to Succinc&lt;T&gt;:
+#### [Adam Guest](https://github.com/chamook) ####
+* Ability to directly compare `Option<T>` and `Maybe<T>` without casting.
+
+#### [Gregory Bell](https://github.com/Gregory-Bell) ####
+* Fix to how hashcodes are calculated in unions
+
+#### [Tony Sedniov](https://github.com/megafinz) ####
+* Added caching of Option.None() values
+* Union creation performance enhancements
+* `Option.Some`, `Option.Choose`, `x.ToOption`, `x.TryCast`, `Option.AsNullable`, `Option.Or`, `Option.Map` and `Option.Flattern` extensions
+* Piping into `Action<*>`
+* `TryGetValue` for `IDictionary<,>`
+
+#### [Peter Majeed](https://github.com/peter-majeed) ####
+* Accessing Union values directly
+
+#### [David Bottiau](https://github.com/Odonno) ####
+* `Copy`, `TryCopy`, `With` and `TryWith` methods (coming in v4.0)

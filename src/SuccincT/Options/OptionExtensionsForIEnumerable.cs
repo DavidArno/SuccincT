@@ -47,7 +47,12 @@ namespace SuccincT.Options
         public static Option<T> TryLast<T>(this IEnumerable<T> collection)
         {
             switch (collection)
-            {                case null: return Option<T>.None();                case IList<T> list when list.Count > 0: return Option<T>.Some(list[list.Count - 1]);            }            using (var e = collection.GetEnumerator())
+            {
+                case null: return Option<T>.None();
+                case IList<T> list when list.Count > 0: return Option<T>.Some(list[list.Count - 1]);
+            }
+
+            using (var e = collection.GetEnumerator())
             {
                 if (!e.MoveNext()) return Option<T>.None();
 

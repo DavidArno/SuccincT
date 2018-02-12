@@ -25,7 +25,7 @@
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
+    <PackageReleaseNotes>V3.1.0 adds Deconstructors for Option, Maybe and Success types; ValueOrDefault for Option and Maybe types; Pattern matching for Success type; Cons pattern matching; and Accessing Union values directly.</PackageReleaseNotes>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
