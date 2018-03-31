@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.Parsers;
 using SuccincT.PatternMatchers;
+using System;
+using System.Collections.Generic;
 using static NUnit.Framework.Assert;
 using static SuccincT.Functional.Unit;
 
@@ -200,7 +200,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void IEnumerableExtensions_CanBeUsedWithMaybe()
         {
-            var list = new List<int> {1, 2, 3, 4};
+            var list = new List<int> { 1, 2, 3, 4 };
             Maybe<int> match = list.TryFirst(item => item == 2);
             Maybe<int> noMatch = list.TryElementAt(5);
 
@@ -238,6 +238,13 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Maybe<int>.None();
             AreEqual(0, option.ValueOrDefault);
+        }
+
+        [Test]
+        public void WhenImplicitlyConverting_ValueEqualsProvidedParameter()
+        {
+            Maybe<int> maybe = 3;
+            AreEqual(3, maybe.Value);
         }
     }
 }

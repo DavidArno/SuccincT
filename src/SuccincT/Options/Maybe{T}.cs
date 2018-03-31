@@ -79,12 +79,13 @@ namespace SuccincT.Options
 
         public override int GetHashCode() => Option.GetHashCode();
 
-        public static bool operator ==(Maybe<T> a,Option<T> b) => a.Option == b;
+        public static bool operator ==(Maybe<T> a, Option<T> b) => a.Option == b;
 
         public static bool operator !=(Maybe<T> a, Option<T> b) => a.Option != b;
 
         internal Option<T> Option { get; }
 
+        public static implicit operator Maybe<T>(T value) => new Maybe<T>(value);
         public static implicit operator Maybe<T>(Option<T> option) => new Maybe<T>(option);
 
         public void Deconstruct(out bool hasValue, out T value) =>
