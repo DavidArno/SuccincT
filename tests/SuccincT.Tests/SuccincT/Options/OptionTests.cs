@@ -1,7 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
+using System;
 using static NUnit.Framework.Assert;
 using static SuccincT.Functional.Unit;
 
@@ -215,6 +215,13 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             AreEqual(0, option.ValueOrDefault);
+        }
+
+        [Test]
+        public void WhenImplicitlyConverting_ValueEqualsProvidedParameter()
+        {
+            Option<int> option = 3;
+            AreEqual(3, option.Value);
         }
     }
 }
