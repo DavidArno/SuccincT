@@ -68,6 +68,21 @@ namespace SuccincT.Unions
                 default: throw new InvalidCaseOfTypeException(typeof(TResult));
             }
         }
+        
+        public bool HasValue<TResult>()
+        {
+            switch (Case)
+            {
+                case Variant.Case1:
+                    return _value1.GetType() == typeof(TResult);
+                case Variant.Case2:
+                    return _value2.GetType() == typeof(TResult);
+                case Variant.Case3:
+                    return _value3.GetType() == typeof(TResult);
+            }
+
+            return false;
+        }
 
         public IUnionFuncPatternMatcher<T1, T2, T3, TResult> Match<TResult>() =>
             new UnionFuncPatternMatcher<T1, T2, T3, TResult>(this);

@@ -28,5 +28,29 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Value<float>());
         }
+
+        [Test]
+        public void UnionT1HasValueTest_ReturnsTrue()
+        {
+            var union = new Union<int, string>(2);
+            var hasInteger = union.HasValue<int>();
+            IsTrue(hasInteger);
+        }
+        
+        [Test]
+        public void UnionT1T2HasValueTest_ReturnsFalse()
+        {
+            var union = new Union<int, string>(2);
+            var hasInteger = union.HasValue<string>();
+            IsFalse(hasInteger);
+        }
+        
+        [Test]
+        public void UnionT1T2HasValueTest_ReturnsFalseAndDoesNotThrowExceptionTypeNotInUnion()
+        {
+            var union = new Union<int, string>(2);
+            var hasBool = union.HasValue<bool>();
+            IsFalse(hasBool);
+        }
     }
 }
