@@ -41,8 +41,8 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1T2HasValueTest_ReturnsFalse()
         {
             var union = new Union<int, string>(2);
-            var hasInteger = union.HasValue<string>();
-            IsFalse(hasInteger);
+            var hasString = union.HasValue<string>();
+            IsFalse(hasString);
         }
         
         [Test]
