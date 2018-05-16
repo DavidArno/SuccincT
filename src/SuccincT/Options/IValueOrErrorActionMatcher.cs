@@ -3,13 +3,13 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public interface IValueOrErrorActionMatcher
+    public interface IValueOrErrorActionMatcher<TValue, TError>
     {
-        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> Value();
+        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher<TValue, TError>, TValue> Value();
 
-        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> Error();
+        IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher<TValue, TError>, TError> Error();
 
-        IUnionActionPatternMatcherAfterElse Else(Action<ValueOrError> elseAction);
+        IUnionActionPatternMatcherAfterElse Else(Action<ValueOrError<TValue, TError>> elseAction);
 
         IUnionActionPatternMatcherAfterElse IgnoreElse();
 
