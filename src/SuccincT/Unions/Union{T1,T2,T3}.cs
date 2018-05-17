@@ -69,16 +69,16 @@ namespace SuccincT.Unions
             }
         }
         
-        public bool HasValue<TResult>()
+        public bool HasValueOf<T>()
         {
             switch (Case)
             {
                 case Variant.Case1:
-                    return _value1.GetType() == typeof(TResult);
+                    return _value1.GetType() == typeof(T);
                 case Variant.Case2:
-                    return _value2.GetType() == typeof(TResult);
+                    return _value2.GetType() == typeof(T);
                 case Variant.Case3:
-                    return _value3.GetType() == typeof(TResult);
+                    return _value3.GetType() == typeof(T);
             }
 
             return false;

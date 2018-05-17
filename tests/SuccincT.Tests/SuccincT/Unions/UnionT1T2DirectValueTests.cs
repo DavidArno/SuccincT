@@ -33,7 +33,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1HasValueTest_ReturnsTrue()
         {
             var union = new Union<int, string>(2);
-            var hasInteger = union.HasValue<int>();
+            var hasInteger = union.HasValueOf<int>();
             IsTrue(hasInteger);
         }
         
@@ -41,7 +41,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1T2HasValueTest_ReturnsFalse()
         {
             var union = new Union<int, string>(2);
-            var hasString = union.HasValue<string>();
+            var hasString = union.HasValueOf<string>();
             IsFalse(hasString);
         }
         
@@ -49,7 +49,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1T2HasValueTest_ReturnsFalseAndDoesNotThrowExceptionTypeNotInUnion()
         {
             var union = new Union<int, string>(2);
-            var hasBool = union.HasValue<bool>();
+            var hasBool = union.HasValueOf<bool>();
             IsFalse(hasBool);
         }
     }

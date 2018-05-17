@@ -200,7 +200,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void IEnumerableExtensions_CanBeUsedWithMaybe()
         {
-            var list = new List<int> { 1, 2, 3, 4 };
+            var list = new List<int> {1, 2, 3, 4};
             Maybe<int> match = list.TryFirst(item => item == 2);
             Maybe<int> noMatch = list.TryElementAt(5);
 
