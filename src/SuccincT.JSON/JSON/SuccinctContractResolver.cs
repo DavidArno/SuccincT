@@ -18,7 +18,7 @@ namespace SuccincT.JSON
                 [typeof(Union<,,,>)] = () => new UnionOf4Converter(),
                 [typeof(Option<>)] = () => new OptionConverter(),
                 [typeof(Maybe<>)] = () => new OptionConverter(),
-                [typeof(ValueOrError)] = () => new ValueOrErrorConverter(),
+                [typeof(ValueOrError<,>)] = () => new ValueOrErrorConverter(),
                 [typeof(None)] = () => new NoneAndUnitConverter(),
                 [typeof(Unit)] = () => new NoneAndUnitConverter(),
                 [typeof(Either<,>)] = () => new EitherConverter(),

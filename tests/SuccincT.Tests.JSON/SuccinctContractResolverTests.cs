@@ -137,7 +137,7 @@ namespace SuccincTTests.SuccincT.JSON
 
             var value = ValueOrError.WithValue("a");
             var json = SerializeObject(value, settings);
-            var newValue = DeserializeObject<ValueOrError>(json, settings);
+            var newValue = DeserializeObject<ValueOrError<string, string>>(json, settings);
 
             IsTrue(newValue.HasValue);
             AreEqual("a", newValue.Value);
