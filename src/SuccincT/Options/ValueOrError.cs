@@ -15,9 +15,7 @@ namespace SuccincT.Options
         /// Creates a new instance with a value (and no error)
         /// </summary>
         public static ValueOrError<string, string> WithValue(string value) =>
-            value != null
-                ? new ValueOrError<string, string>(value, default)
-                : throw new ArgumentNullException(nameof(value));
+            WithValue<string, string>(value);
 
         /// <summary>
         /// Creates a new instance with an error (and no value)
@@ -30,8 +28,6 @@ namespace SuccincT.Options
         /// Creates a new instance with an error (and no value)
         /// </summary>
         public static ValueOrError<string, string> WithError(string error) =>
-            error != null
-                ? new ValueOrError<string, string>(default, error)
-                : throw new ArgumentNullException(nameof(error));
+            WithError<string, string>(error);
     }
 }
