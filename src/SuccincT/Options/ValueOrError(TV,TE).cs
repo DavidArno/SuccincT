@@ -3,12 +3,12 @@ using SuccincT.Functional;
 
 namespace SuccincT.Options
 {
-    public class ValueOrError<TValue, TError>
+    public sealed class ValueOrError<TValue, TError>
     {
         private readonly TValue _value;
         private readonly TError _error;
 
-        protected internal ValueOrError(TValue value, TError error)
+        internal ValueOrError(TValue value, TError error)
         {
             _value = value;
             _error = error;

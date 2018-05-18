@@ -17,7 +17,7 @@ namespace SuccincTTests.SuccincT.JSON
             settings.Converters.Add(new ValueOrErrorConverter());
             var value = ValueOrError.WithValue("a");
             var json = SerializeObject(value, settings);
-            var newValue = DeserializeObject<ValueOrError>(json, settings);
+            var newValue = DeserializeObject<ValueOrError<string, string>>(json, settings);
 
             IsTrue(newValue.HasValue);
             AreEqual("a", newValue.Value);
@@ -30,7 +30,7 @@ namespace SuccincTTests.SuccincT.JSON
             settings.Converters.Add(new ValueOrErrorConverter());
             var value = ValueOrError.WithError("b");
             var json = SerializeObject(value, settings);
-            var newValue = DeserializeObject<ValueOrError>(json, settings);
+            var newValue = DeserializeObject<ValueOrError<string, string>>(json, settings);
 
             IsFalse(newValue.HasValue);
             AreEqual("b", newValue.Error);
@@ -39,7 +39,7 @@ namespace SuccincTTests.SuccincT.JSON
         [Test]
         public void ConvertingJsonToValueOrError_FailsCleanlyIfSuccinctConverterNotUsed()
         {
-            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{\"value\":\"a\"}"));
+            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError<string, string>>("{\"value\":\"a\"}"));
         }
 
         [Test]
@@ -47,7 +47,7 @@ namespace SuccincTTests.SuccincT.JSON
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ValueOrErrorConverter());
-            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{}", settings));
+            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError<string, string>>("{}", settings));
         }
     }
 }
