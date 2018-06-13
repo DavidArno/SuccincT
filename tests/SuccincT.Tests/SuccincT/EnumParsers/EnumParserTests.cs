@@ -43,13 +43,6 @@ namespace SuccincTTests.SuccincT.EnumParsers
             IsFalse(actual.HasValue);
         }
 
-        [Test]
-        public void ParsingNonEnum_ResultsInException() => Throws< ArgumentException>(() => "2".TryParseEnum<int>());
-
-        [Test]
-        public void ParsingWithCaseIgnoreNonEnum_ResultsInException() =>
-            Throws<ArgumentException>(() => "1".TryParseEnumIgnoringCase<int>());
-
         private enum TestEnum { Value1, Value2 }
     }
 }
