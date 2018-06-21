@@ -8,7 +8,7 @@ namespace SuccincT.Options
     /// one to the other. It is provided simply as an alternative for those who prefer "Maybe" as a type name, or prefer
     /// the use of a struct, to avoid null problems.
     /// </summary>
-    public struct Maybe<T>
+    public readonly struct Maybe<T>
     {
         // ReSharper disable once UnusedParameter.Local - unit param used to
         // prevent JSON serializer from using this constructor to create an invalid maybe.

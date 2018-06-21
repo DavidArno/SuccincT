@@ -97,24 +97,24 @@ namespace SuccincT.Options
             }
         }
 
-        public static Option<T> TrySingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
-        {
-            if (predicate == null) throw new ArgumentNullException(nameof(predicate));
+public static Option<T> TrySingle<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
+{
+    if (predicate == null) throw new ArgumentNullException(nameof(predicate));
 
-            var result = Option<T>.None();
-            var count = 0;
-            if (collection == null) return result;
+    var result = Option<T>.None();
+    var count = 0;
+    if (collection == null) return result;
 
-            foreach (var element in collection)
-            {
-                if (!predicate(element)) continue;
-                if (++count > 1) break;
+    foreach (var element in collection)
+    {
+        if (!predicate(element)) continue;
+        if (++count > 1) return Option<T>.None();
 
-                result = Option<T>.Some(element);
-            }
+        result = Option<T>.Some(element);
+    }
 
-            return count == 1 ? result : Option<T>.None();
-        }
+    return result;
+}
 
         public static Option<T> TryElementAt<T>(this IEnumerable<T> collection, int index)
         {

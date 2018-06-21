@@ -7,29 +7,21 @@ namespace SuccincT.Unions
     {
         private readonly TLeft _left;
         private readonly TRight _right;
-        private readonly bool _isRight;
         private Option<TLeft> _tryLeft;
         private Option<TRight> _tryRight;
 
-        public Either(TLeft left)
+        public Either(TLeft left) : this()
         {
             _left = left;
-            _right = default;
-            _isRight = false;
-            _tryLeft = null;
-            _tryRight = null;
+            IsLeft = true;
         }
 
-        public Either(TRight right)
+        public Either(TRight right) : this()
         {
             _right = right;
-            _left = default;
-            _isRight = true;
-            _tryLeft = null;
-            _tryRight = null;
         }
 
-        public bool IsLeft => !_isRight;
+        public bool IsLeft { get; }
 
         public TLeft Left => IsLeft ? _left : throw new InvalidOperationException("Doesn't contain a left value");
 

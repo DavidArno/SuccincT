@@ -9,9 +9,10 @@ namespace SuccincT.Parsers
     public static class BooleanParser
     {
         /// <summary>
-        /// Parses the current string for a true/false value and returns an Option{bool} of the result.
+        /// Parses the current string for a true/false value and returns success/
+        /// failure result as an Option instance.
         /// </summary>
-        public static Option<bool> TryParseBoolean(this string source) =>
-            bool.TryParse(source, out var result) ? result : Option<bool>.None();
+        public static Option<bool> TryParseBoolean(this string source)
+            => bool.TryParse(source, out var result) ? result : Option<bool>.None();
     }
 }

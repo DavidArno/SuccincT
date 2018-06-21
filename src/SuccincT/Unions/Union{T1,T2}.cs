@@ -21,12 +21,9 @@ namespace SuccincT.Unions
             Case = Variant.Case2;
         }
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to
-        // prevent JSON serializer from using this constructor to create an invalid union.
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters", MessageId = "_")]
-        private Union(Unit _)
-        {
-        }
+        // Unit param used to prevent JSON serializer from using this constructor to create an invalid union as I
+        // don't want SuccincT to have a dependency on Json.NET by using the [JsonConverter] attribute. 
+        private Union(Unit _) { }
 
         public Variant Case { get; }
 
@@ -37,8 +34,8 @@ namespace SuccincT.Unions
         {
             switch (typeof(TResult))
             {
-                case var t when t == typeof(T1): return (TResult)(object)Case1;
-                case var t when t == typeof(T2): return (TResult)(object)Case2;
+                case var t when t == typeof(T1) && Case1 is TResult value: return value;
+                case var t when t == typeof(T2) && Case2 is TResult value: return value;
                 default: throw new InvalidCaseOfTypeException(typeof(TResult));
             }
         }
@@ -71,6 +68,12 @@ namespace SuccincT.Unions
 
         public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
         public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
+
+        public void Deconstruct(out Variant validCase, object value)
+        {
+            validCase = Case;
+            value = Case == Variant.Case1 ? (object)_value1 : _value2;
+        }
 
         Unit IUnion<T1, T2, Unit, Unit>.Case3 => throw new InvalidCaseException(Variant.Case3, Case);
         Unit IUnion<T1, T2, Unit, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
