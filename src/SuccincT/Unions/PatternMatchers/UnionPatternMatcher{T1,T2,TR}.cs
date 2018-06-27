@@ -11,8 +11,8 @@ namespace SuccincT.Unions.PatternMatchers
     {
         private readonly Union<T1, T2> _union;
 
-        private readonly MatchSelectorsForCases<T1, T2, Unit, Unit, TResult> _selector =
-            MatchSelectorsCreator.CreateSelectors<T1, T2, TResult>();
+        private readonly MatchSelectorsForCases<T1, T2, TResult> _selector =
+            new MatchSelectorsForCases<T1, T2, TResult>();
 
         internal UnionPatternMatcher(Union<T1, T2> union) => _union = union;
 

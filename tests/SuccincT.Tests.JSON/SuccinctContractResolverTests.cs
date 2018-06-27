@@ -36,26 +36,6 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ContractResolver_CanConvertMaybeToJsonAndBack()
-        {
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = SuccinctContractResolver.Instance
-            };
-
-            var maybe1 = Maybe<string>.Some("a");
-            var maybe2 = Maybe<string>.None();
-            var list = new List<Maybe<string>> { maybe1, maybe2 };
-            var json = SerializeObject(list, settings);
-            var newList = DeserializeObject<List<Maybe<string>>>(json, settings);
-
-            AreEqual(2, newList.Count);
-            IsTrue(newList[0].HasValue);
-            IsFalse(newList[1].HasValue);
-            AreEqual("a", newList[0].Value);
-        }
-
-        [Test]
         public void ContractResolver_CanConvertUnion2ToJsonAndBack()
         {
             var settings = new JsonSerializerSettings

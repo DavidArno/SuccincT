@@ -9,17 +9,16 @@ namespace SuccincT.Options
     /// <summary>
     /// Provides an optional value of type T. Modelled on F# options. Either contains a T value, or None.
     /// </summary>
-    public sealed class Option<T>
+    public readonly struct Option<T>
     {
         private static readonly Option<T> NoneInstance = new Option<T>(unit);
-
         private readonly T _value;
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to
-        // prevent JSON serializer from using this constructor to create an invalid option.
-        private Option(Unit _) => HasValue = false;
+        private Option(Unit _) => (HasValue, _value) = (default, default);
 
-        private Option(T value) => (HasValue, _value) = (true, value);
+        private Option(T value) => (HasValue, _value) = value != null
+            ? (true, value)
+            : throw new ArgumentNullException(nameof(value));
 
         /// <summary>
         /// Creates an instance of an option with no value.
@@ -57,37 +56,18 @@ namespace SuccincT.Options
 
         public T ValueOrDefault => HasValue ? _value : default;
 
-        public override bool Equals(object obj)
-        {
-            switch (obj)
-            {
-                case Option<T> option: return EqualsOption(option);
-                case Maybe<T> maybe: return EqualsMaybe(maybe);
-                default: return false;
-            }
-        }
+        public override bool Equals(object obj) => obj is Option<T> option ? EqualsOption(option) : false;
 
-        internal bool EqualsOption(Option<T> other) =>
-            !ReferenceEquals(other, null) &&
-            (other.HasValue && HasValue && Value.Equals(other.Value) ||
-            !(HasValue || other.HasValue));
-
-        internal bool EqualsMaybe(Maybe<T> other) =>
-            other.HasValue && HasValue && Value.Equals(other.Value) ||
-            !(HasValue ||
-            !other.CorrectlyLoad ||
-            other.HasValue);
+        internal bool EqualsOption(Option<T> other)
+            => (other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue));
 
         public override int GetHashCode() => HasValue ? _value.GetHashCode() : 0;
 
-        public static bool operator ==(Option<T> a, Option<T> b) => ReferenceEquals(a, null)
-            ? ReferenceEquals(b, null)
-            : a.EqualsOption(b);
+        public static bool operator ==(Option<T> a, Option<T> b) => a.EqualsOption(b);
 
         public static bool operator !=(Option<T> a, Option<T> b) => a == null ? b != null : !a.EqualsOption(b);
 
-        public static implicit operator Option<T>(T value) => new Option<T>(value);
-        public static implicit operator Option<T>(Maybe<T> maybe) => maybe.Option;
+        public static implicit operator Option<T>(T value) => value  == null ? None() : Some(value);
 
         public void Deconstruct(out bool hasValue, out T value) =>
             (hasValue, value) = (HasValue, HasValue ? _value : default);

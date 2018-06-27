@@ -32,27 +32,6 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenOptionIsValueAndCastToMaybe_ResultIsStillValue()
-        {
-            Maybe<int> result = Option<int>.Some(1);
-            AreEqual(1, result.Value);
-        }
-
-        [Test]
-        public void WhenOptionIsValueAndCastToMaybe_MaybeHasValue()
-        {
-            Maybe<int> result = Option<int>.Some(1);
-            IsTrue(result.HasValue);
-        }
-
-        [Test]
-        public void WhenOptionNotValueAndCastToMaybe_ResultIsStillNone()
-        {
-            Maybe<int> result = Option<int>.None();
-            IsFalse(result.HasValue);
-        }
-
-        [Test]
         public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
             var result = Option<bool>.None();

@@ -6,7 +6,7 @@ using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2, T3> : IUnion<T1, T2, T3, Unit>
+    public sealed class Union<T1, T2, T3>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -94,7 +94,5 @@ namespace SuccincT.Unions
         public static implicit operator Union<T1, T2, T3>(T1 value) => new Union<T1, T2, T3>(value);
         public static implicit operator Union<T1, T2, T3>(T2 value) => new Union<T1, T2, T3>(value);
         public static implicit operator Union<T1, T2, T3>(T3 value) => new Union<T1, T2, T3>(value);
-
-        Unit IUnion<T1, T2, T3, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
     }
 }

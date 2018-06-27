@@ -4,7 +4,7 @@ using SuccincT.Unions;
 
 namespace SuccincT.Options
 {
-    public struct Success<T>
+    public readonly struct Success<T>
     {
         private readonly T _error;
 
@@ -24,10 +24,10 @@ namespace SuccincT.Options
 
         public ISuccessActionMatcher<T> Match() => new SuccessMatcher<T, Unit>(CreateUnion(), this);
 
-        public override bool Equals(object obj) =>
-            obj is Success<T> other &&
-            other.IsFailure == IsFailure &&
-            (IsFailure && other.Failure.Equals(_error) || !IsFailure);
+        public override bool Equals(object obj)
+            => obj is Success<T> other &&
+               other.IsFailure == IsFailure &&
+               (IsFailure && other.Failure.Equals(_error) || !IsFailure);
 
         public override int GetHashCode() => IsFailure ? _error.GetHashCode() : 1;
 
@@ -38,8 +38,8 @@ namespace SuccincT.Options
         public static implicit operator bool(Success<T> success) => !success.IsFailure;
         public static implicit operator Success<T>(T value) => Success.CreateFailure(value);
 
-        public void Deconstruct(out bool hasError, out T error) =>
-            (hasError, error) = (!IsFailure, IsFailure ? _error : default);
+        public void Deconstruct(out bool hasError, out T error) 
+            => (hasError, error) = (!IsFailure, IsFailure ? _error : default);
 
         private Union<T, bool> CreateUnion() => IsFailure ? new Union<T, bool>(_error) : new Union<T, bool>(true);
     }

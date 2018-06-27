@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Options;
 using static NUnit.Framework.Assert;
 
@@ -61,8 +60,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = Option<string>.None();
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
+            IsTrue(a == null);
+            IsFalse(null != a);
         }
 
         [Test]
@@ -75,51 +74,6 @@ namespace SuccincTTests.SuccincT.Options
             IsFalse(1 != a);
         }
 
-        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
-        public void OptionAndMaybe_AreEqualWithoutCasting()
-        {
-            var a = Option<string>.Some("1234");
-            var b = Maybe<string>.Some("1234");
-            IsTrue(a.Equals(b));
-            IsTrue(a == b);
-            AreEqual(a, b);
-            IsTrue(b == "1234");
-            IsFalse(b != "1234");
-        }
-
-        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
-        public void EmptyOptionAndMaybe_AreEqualWithoutCasting()
-        {
-            var a = Option<string>.None();
-            var b = Maybe<string>.None();
-            IsTrue(a.Equals(b));
-            IsTrue(a == b);
-            IsTrue(b == a);
-            AreEqual(a, b);
-        }
-
-        [Test, SuppressMessage("ReSharper", "SuspiciousTypeConversion.Global")]
-        public void DifferentOptionAndMaybe_AreNotEqualWithoutCasting()
-        {
-            var a = Option<string>.Some("1234");
-            var b = Maybe<string>.Some("5678");
-            IsFalse(a.Equals(b));
-            IsFalse(b.Equals(a));
-            IsFalse(a == b);
-            IsFalse(b == a);
-            AreNotEqual(a, b);
-            IsTrue(a != b);
-            IsTrue(b != a);
-        }
-
-        [Test]
-        public void EmptyOptionsOfSameType_AreReferentiallyEqual()
-        {
-            var a = Option<string>.None();
-            var b = Option<string>.None();
-            AreSame(a, b);
-        }
-
         [Test]
         public void EmptyOptionsOfDifferentTypes_AreNotReferentiallyEqual()
         {
@@ -129,7 +83,6 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
         public void X()
         {
             Option<string> a = null;

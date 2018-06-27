@@ -59,14 +59,6 @@ namespace SuccincTTests.SuccincT.Options
             Assert.Throws<ArgumentNullException>(() => collection.TryFirst(null));
         }
 
-        [Test]
-        public void TryFirst_CanBeAssignedToMaybe()
-        {
-            var collection = new List<int> { 1, 2, 3 };
-            Maybe<int> maybe = collection.TryFirst(x => x == 2);
-            Assert.AreEqual(2, maybe.Value);
-        }
-
         private static IEnumerable<int> IntCollection()
         {
             yield return 1;

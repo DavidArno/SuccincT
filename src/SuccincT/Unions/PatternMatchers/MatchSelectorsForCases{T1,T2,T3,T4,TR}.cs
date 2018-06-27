@@ -14,9 +14,7 @@ namespace SuccincT.Unions.PatternMatchers
         private readonly MatchFunctionSelector<T2, T2, TResult> _case2Selector;
         private readonly MatchFunctionSelector<T3, T3, TResult> _case3Selector;
         private readonly MatchFunctionSelector<T4, T4, TResult> _case4Selector;
-        private Func<Union<T1, T2>, TResult> _u2ElseFunction;
-        private Func<Union<T1, T2, T3>, TResult> _u3ElseFunction;
-        private Func<Union<T1, T2, T3, T4>, TResult> _u4ElseFunction;
+        private Func<Union<T1, T2, T3, T4>, TResult> _elseFunction;
 
         internal MatchSelectorsForCases()
         {
@@ -50,37 +48,24 @@ namespace SuccincT.Unions.PatternMatchers
                                       Func<T, Unit> action) => 
             Selector<T>().AddTestAndAction(withTest, withData, whereTest, action as Func<T, TResult>);
 
-        internal void RecordElseFunction(Func<Union<T1, T2>, TResult> elseFunction) =>
-            _u2ElseFunction = elseFunction;
+        internal void RecordElseFunction(Func<Union<T1, T2, T3, T4>, TResult> elseFunction)
+            => _elseFunction = elseFunction;
 
-        internal void RecordElseAction(Action<Union<T1, T2>> elseAction) =>
-            _u2ElseFunction = elseAction.ToUnitFunc() as Func<Union<T1, T2>, TResult>;
+        internal void RecordElseAction(Action<Union<T1, T2, T3, T4>> elseAction)
+            => _elseFunction = elseAction.ToUnitFunc() as Func<Union<T1, T2, T3, T4>, TResult>;
 
-        internal void RecordElseFunction(Func<Union<T1, T2, T3>, TResult> elseFunction) =>
-            _u3ElseFunction = elseFunction;
+        internal TResult ResultNoElse(Union<T1, T2, T3, T4> union) 
+            => DetermineResultUsingDefaultIfRequired(union);
 
-        internal void RecordElseAction(Action<Union<T1, T2, T3>> elseAction) =>
-            _u3ElseFunction = elseAction.ToUnitFunc() as Func<Union<T1, T2, T3>, TResult>;
-
-        internal void RecordElseFunction(Func<Union<T1, T2, T3, T4>, TResult> elseFunction) =>
-            _u4ElseFunction = elseFunction;
-
-        internal void RecordElseAction(Action<Union<T1, T2, T3, T4>> elseAction) =>
-            _u4ElseFunction = elseAction.ToUnitFunc() as Func<Union<T1, T2, T3, T4>, TResult>;
-
-        internal TResult ResultNoElse(IUnion<T1, T2, T3, T4> union) =>
-            DetermineResultUsingDefaultIfRequired(union);
-
-        internal TResult ResultUsingElse(IUnion<T1, T2, T3, T4> union)
+        internal TResult ResultUsingElse(Union<T1, T2, T3, T4> union)
         {
             var possibleResult = DetermineResult(union);
             return possibleResult.HasValue ? possibleResult.Value : ElseFunction(union);
         }
 
-        internal void ExecNoElse(IUnion<T1, T2, T3, T4> union) =>
-            DetermineResultUsingDefaultIfRequired(union);
+        internal void ExecNoElse(Union<T1, T2, T3, T4> union) => DetermineResultUsingDefaultIfRequired(union);
 
-        internal void ExecUsingElse(IUnion<T1, T2, T3, T4> union)
+        internal void ExecUsingElse(Union<T1, T2, T3, T4> union)
         {
             var possibleResult = DetermineResult(union);
             Ignore(possibleResult.HasValue ? possibleResult.Value : ElseFunction(union));
@@ -97,7 +82,7 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
-        private TResult DetermineResultUsingDefaultIfRequired(IUnion<T1, T2, T3, T4> union)
+        private TResult DetermineResultUsingDefaultIfRequired(Union<T1, T2, T3, T4> union)
         {
             switch (union.Case)
             {
@@ -108,7 +93,7 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
-        private Option<TResult> DetermineResult(IUnion<T1, T2, T3, T4> union)
+        private Option<TResult> DetermineResult(Union<T1, T2, T3, T4> union)
         {
             switch (union.Case)
             {
@@ -119,15 +104,6 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
-        private TResult ElseFunction(IUnion<T1, T2, T3, T4> union)
-        {
-            switch (union)
-            {
-                case Union<T1, T2> _: return _u2ElseFunction(union as Union<T1, T2>);
-                case Union<T1, T2, T3> _: return _u3ElseFunction(union as Union<T1, T2, T3>);
-                default: return _u4ElseFunction(union as Union<T1, T2, T3, T4>);
-            }
-        }
+        private TResult ElseFunction(Union<T1, T2, T3, T4> union) => _elseFunction(union as Union<T1, T2, T3, T4>);
     }
 }

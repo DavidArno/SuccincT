@@ -7,10 +7,8 @@ namespace SuccincT.JSON
 {
     public class OptionConverter : JsonConverter
     {
-        public override bool CanConvert(Type objectType) =>
-            objectType.IsGenericType() &&
-            (objectType.GetGenericTypeDefinition() == typeof(Option<>) ||
-             objectType.GetGenericTypeDefinition() == typeof(Maybe<>));
+        public override bool CanConvert(Type objectType)
+            => objectType.IsGenericType() && objectType.GetGenericTypeDefinition() == typeof(Option<>);
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
@@ -18,7 +16,7 @@ namespace SuccincT.JSON
                                         JsonSerializer serializer)
         {
             var type = objectType.GenericTypeArguments[0];
-            var rawOptionType = objectType.Name == "Maybe`1" ? typeof(Maybe<>) : typeof(Option<>);
+            var rawOptionType = typeof(Option<>);
             var optionType = rawOptionType.MakeGenericType(type);
 
             var jsonObject = JObject.Load(reader);

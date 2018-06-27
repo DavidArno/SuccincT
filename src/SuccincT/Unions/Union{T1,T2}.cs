@@ -4,7 +4,7 @@ using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2> : IUnion<T1, T2, Unit, Unit>
+    public sealed class Union<T1, T2>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -74,8 +74,5 @@ namespace SuccincT.Unions
             validCase = Case;
             value = Case == Variant.Case1 ? (object)_value1 : _value2;
         }
-
-        Unit IUnion<T1, T2, Unit, Unit>.Case3 => throw new InvalidCaseException(Variant.Case3, Case);
-        Unit IUnion<T1, T2, Unit, Unit>.Case4 => throw new InvalidCaseException(Variant.Case4, Case);
     }
 }
