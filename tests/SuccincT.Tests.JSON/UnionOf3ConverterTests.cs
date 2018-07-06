@@ -48,9 +48,11 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingJsonToUnion_FailsCleanlyIfSuccinctConverterNotUsed()
+        public void ConvertingJsonToUnion_ProducesCleanDefaultValue()
         {
-            Throws<JsonSerializationException>(() => DeserializeObject<Union<int, string, Variant>>("{\"case\":0,\"value\":1}"));
+            var result = DeserializeObject<Union<int, List<int>, string>>("{\"case\":0,\"value\":20}");
+            AreEqual(Variant.Case1, result.Case);
+            AreEqual(0, result.Case1);
         }
     }
 }

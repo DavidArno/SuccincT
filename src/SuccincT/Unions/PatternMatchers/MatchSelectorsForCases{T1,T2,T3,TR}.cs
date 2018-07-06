@@ -96,6 +96,6 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
-        private TResult ElseFunction(Union<T1, T2, T3> union) => _elseFunction(union as Union<T1, T2, T3>);
+        private TResult ElseFunction(Union<T1, T2, T3> union) => _elseFunction(union);
     }
 }

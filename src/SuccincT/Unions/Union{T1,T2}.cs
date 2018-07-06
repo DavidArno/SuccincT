@@ -4,7 +4,7 @@ using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2>
+    public readonly struct Union<T1, T2>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
@@ -23,7 +23,7 @@ namespace SuccincT.Unions
 
         // Unit param used to prevent JSON serializer from using this constructor to create an invalid union as I
         // don't want SuccincT to have a dependency on Json.NET by using the [JsonConverter] attribute. 
-        private Union(Unit _) { }
+        private Union(Unit _) : this() { }
 
         public Variant Case { get; }
 
@@ -45,7 +45,20 @@ namespace SuccincT.Unions
 
         public IUnionActionPatternMatcher<T1, T2> Match() => new UnionPatternMatcher<T1, T2, Unit>(this);
 
-        public override bool Equals(object obj) => obj is Union<T1, T2> union && UnionsEqual(union);
+        public override bool Equals(object obj)
+        {
+            if (obj is Union<T1, T2> union)
+            {
+                return UnionsEqual(union);
+            }
+
+            if (obj == null)
+            {
+                return Case == Variant.Case1 && _value1 == null || Case == Variant.Case2 && _value2 == null;
+            }
+
+            return false;
+        }
 
         public override int GetHashCode() => GetValueHashCode();
 
@@ -63,8 +76,10 @@ namespace SuccincT.Unions
         private int GetValueHashCode() =>
             Case == Variant.Case1 ? _value1.GetHashCode() : _value2.GetHashCode();
 
-        private bool ValuesEqual(Union<T1, T2> testObject) =>
-            Case == Variant.Case1 ? _value1.Equals(testObject._value1) : _value2.Equals(testObject._value2);
+        private bool ValuesEqual(Union<T1, T2> other)
+            => Case == Variant.Case1
+                ? _value1 == null && other._value1 == null || _value1 != null && _value1.Equals(other._value1)
+                : _value2 == null && other._value2 == null || _value2 != null && _value2.Equals(other._value2);
 
         public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
         public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);

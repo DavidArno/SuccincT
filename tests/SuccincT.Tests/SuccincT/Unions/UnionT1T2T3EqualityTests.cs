@@ -101,15 +101,41 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors>(2);
             IsFalse(a.Equals(null));
+            IsFalse(a == null);
+            IsFalse(null == a);
             IsTrue(a != null);
             IsTrue(null != a);
         }
 
         [Test]
-        public void ComparingT2ValueWithNull_ResultsInNotEqual()
+        public void ComparingNullT2ValueWithNull_ResultsInEqual()
         {
-            var a = new Union<int, string, Colors>("1234");
+            var a = new Union<int, string, Colors>(null);
+            IsTrue(a.Equals(null));
+            IsTrue(a == null);
+            IsTrue(null == a);
+            IsFalse(a != null);
+            IsFalse(null != a);
+        }
+
+        [Test]
+        public void ComparingNonNullT2ValueWithNull_ResultsInNotEqual()
+        {
+            var a = new Union<int, string, Colors>("123");
             IsFalse(a.Equals(null));
+            IsFalse(a == null);
+            IsFalse(null == a);
+            IsTrue(a != null);
+            IsTrue(null != a);
+        }
+
+        [Test]
+        public void ComparingValueT2ValueWithNull_ResultsInNotEqual()
+        {
+            var a = new Union<int, Colors, float>(Colors.Blue);
+            IsFalse(a.Equals(null));
+            IsFalse(a == null);
+            IsFalse(null == a);
             IsTrue(a != null);
             IsTrue(null != a);
         }
@@ -119,6 +145,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors>(Colors.Red);
             IsFalse(a.Equals(null));
+            IsFalse(a == null);
+            IsFalse(null == a);
             IsTrue(a != null);
             IsTrue(null != a);
         }

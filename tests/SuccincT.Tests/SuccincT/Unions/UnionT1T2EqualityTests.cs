@@ -67,10 +67,23 @@ namespace SuccincTTests.SuccincT.Unions
         [Test]
         public void ComparingT2ValueWithNull_ResultsInNotEqual()
         {
-            var a = new Union<int, string>(null);
+            var a = new Union<int, string>("1");
             IsFalse(a.Equals(null));
+            IsFalse(a == null);
+            IsFalse(null == a);
             IsTrue(a != null);
             IsTrue(null != a);
+        }
+
+        [Test]
+        public void ComparingT2NullValueWithNull_ResultsInEqual()
+        {
+            var a = new Union<int, string>(null);
+            IsTrue(a.Equals(null));
+            IsTrue(a == null);
+            IsTrue(null == a);
+            IsFalse(a != null);
+            IsFalse(null != a);
         }
 
         [Test]
