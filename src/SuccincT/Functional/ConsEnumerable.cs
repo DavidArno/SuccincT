@@ -11,15 +11,15 @@ namespace SuccincT.Functional
         internal static readonly IConsEnumerable<T> EmptyEnumerable = new ConsEnumerable<T>();
         private readonly ConsNode<T> _node;
 
-        internal ConsEnumerable(IEnumerable<T> enumeration) =>
-            _node = new ConsNode<T>
+        internal ConsEnumerable(IEnumerable<T> enumeration) 
+            => _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = EnumerationConsNode(enumeration)
             };
 
-        internal ConsEnumerable(T element) =>
-            _node = new ConsNode<T>
+        internal ConsEnumerable(T element) 
+            => _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = new ConsNode<T>
@@ -29,8 +29,8 @@ namespace SuccincT.Functional
                 }
             };
 
-        private ConsEnumerable(IEnumerable<T> enumeration, T head) =>
-            _node = new ConsNode<T>
+        private ConsEnumerable(IEnumerable<T> enumeration, T head) 
+            => _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = new ConsNode<T>
@@ -41,8 +41,8 @@ namespace SuccincT.Functional
                 }
             };
 
-        private ConsEnumerable(IEnumerable<T> enumeration, IEnumerable<T> head) =>
-            _node = new ConsNode<T>
+        private ConsEnumerable(IEnumerable<T> enumeration, IEnumerable<T> head) 
+            => _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = new ConsNode<T>
@@ -53,15 +53,15 @@ namespace SuccincT.Functional
                 }
             };
 
-        internal ConsEnumerable(ConsNode<T> node) =>
-            _node = new ConsNode<T>
+        internal ConsEnumerable(ConsNode<T> node) 
+            => _node = new ConsNode<T>
             {
                 State = StartNode,
                 Next = node
             };
 
-        private ConsEnumerable() =>
-            _node = new ConsNode<T>
+        private ConsEnumerable() 
+            => _node = new ConsNode<T>
             {
                 State = StartNode
             };
@@ -76,8 +76,7 @@ namespace SuccincT.Functional
 
         IConsEnumerable<T> IConsEnumerable<T>.Cons(T head) => new ConsEnumerable<T>(this, head);
 
-        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) =>
-            new ConsEnumerable<T>(this, head);
+        IConsEnumerable<T> IConsEnumerable<T>.Cons(IEnumerable<T> head) => new ConsEnumerable<T>(this, head);
 
         ConsResult<T> IConsEnumerable<T>.Cons()
         {
@@ -99,8 +98,8 @@ namespace SuccincT.Functional
             }
         }
 
-        private static ConsNode<T> EnumerationConsNode(IEnumerable<T> enumeration) =>
-            new ConsNode<T>
+        private static ConsNode<T> EnumerationConsNode(IEnumerable<T> enumeration) 
+            => new ConsNode<T>
             {
                 State = HasEnumeration,
                 Enumeration = enumeration

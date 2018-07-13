@@ -1,9 +1,8 @@
 ﻿using NUnit.Framework;
 using SuccincT.Options;
-using System;
 using SuccincT.PatternMatchers;
+using System;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -16,7 +15,7 @@ namespace SuccincTTests.SuccincT.Options
             var success = new Success<int>();
             IsTrue(success);
             IsFalse(success.IsFailure);
-            Throws<InvalidOperationException>(() => Ignore(success.Failure));
+            Throws<InvalidOperationException>(() => _ = success.Failure);
         }
 
         [Test]
@@ -179,14 +178,14 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenSuccessAndNoMatchDefined_ExceptionThrown()
         {
             var success = new Success<int>();
-            Throws<NoMatchException>(() => Ignore(success.Match<int>().Error().Do(x => 1).Result()));
+            Throws<NoMatchException>(() => _ = success.Match<int>().Error().Do(x => 1).Result());
         }
 
         [Test]
         public void WhenFailureAndNoMatchDefined_ExceptionThrown()
         {
             var success = Success.CreateFailure(1);
-            Throws<NoMatchException>(() => Ignore(success.Match<int>().Success().Do(() => 0).Result()));
+            Throws<NoMatchException>(() => _ = success.Match<int>().Success().Do(() => 0).Result());
         }
 
         [Test]

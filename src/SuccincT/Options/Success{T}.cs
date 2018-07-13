@@ -8,17 +8,14 @@ namespace SuccincT.Options
     {
         private readonly T _error;
 
-        internal Success(T error)
-        {
-            IsFailure = true;
-            _error = error;
-        }
+        internal Success(T error) => (IsFailure, _error) = (true, error);
 
         public bool IsFailure { get; }
 
-        public T Failure => IsFailure
-            ? _error
-            : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
+        public T Failure 
+            => IsFailure
+                ? _error
+                : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
 
         public ISuccessFuncMatcher<T, TResult> Match<TResult>() => new SuccessMatcher<T, TResult>(CreateUnion(), this);
 

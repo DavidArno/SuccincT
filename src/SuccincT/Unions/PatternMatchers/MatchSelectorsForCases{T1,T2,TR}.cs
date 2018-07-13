@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
-using static SuccincT.Functional.Unit;
+using System;
+using System.Collections.Generic;
 using static SuccincT.Unions.Variant;
 
 namespace SuccincT.Unions.PatternMatchers
@@ -54,9 +53,9 @@ namespace SuccincT.Unions.PatternMatchers
         internal void ExecNoElse(Union<T1, T2> union) => DetermineResultUsingDefaultIfRequired(union);
 
         internal void ExecUsingElse(Union<T1, T2> union) 
-            => Ignore(DetermineResult(union) is var possibleResult && possibleResult.HasValue
+            => _ = DetermineResult(union) is var possibleResult && possibleResult.HasValue
                 ? possibleResult.Value
-                : ElseFunction(union));
+                : ElseFunction(union);
 
         private MatchFunctionSelector<T, T, TResult> Selector<T>() => typeof(T) == typeof(T1)
             ? _case1Selector as MatchFunctionSelector<T, T, TResult>

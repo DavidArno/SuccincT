@@ -3,7 +3,7 @@ using SuccincT.Unions;
 
 namespace SuccincT.PatternMatchers
 {
-    internal struct EitherTuple<T1, T2, T3, T4>
+    internal readonly struct EitherTuple<T1, T2, T3, T4>
     {
         private readonly Either<T1, Any> _value1;
         private readonly Either<T2, Any> _value2;

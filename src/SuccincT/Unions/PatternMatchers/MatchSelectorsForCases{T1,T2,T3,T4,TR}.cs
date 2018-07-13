@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
-using static SuccincT.Functional.Unit;
+using System;
+using System.Collections.Generic;
 using static SuccincT.Unions.Variant;
 
 namespace SuccincT.Unions.PatternMatchers
@@ -68,7 +67,7 @@ namespace SuccincT.Unions.PatternMatchers
         internal void ExecUsingElse(Union<T1, T2, T3, T4> union)
         {
             var possibleResult = DetermineResult(union);
-            Ignore(possibleResult.HasValue ? possibleResult.Value : ElseFunction(union));
+            _ = possibleResult.HasValue ? possibleResult.Value : ElseFunction(union);
         }
 
         private MatchFunctionSelector<T, T, TResult> Selector<T>()
@@ -104,6 +103,6 @@ namespace SuccincT.Unions.PatternMatchers
             }
         }
 
-        private TResult ElseFunction(Union<T1, T2, T3, T4> union) => _elseFunction(union as Union<T1, T2, T3, T4>);
+        private TResult ElseFunction(Union<T1, T2, T3, T4> union) => _elseFunction(union);
     }
 }

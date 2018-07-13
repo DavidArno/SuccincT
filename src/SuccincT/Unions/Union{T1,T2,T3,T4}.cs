@@ -6,14 +6,12 @@ using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2, T3, T4>
+    public struct Union<T1, T2, T3, T4>
     {
         private readonly T1 _value1;
         private readonly T2 _value2;
         private readonly T3 _value3;
         private readonly T4 _value4;
-        private readonly Dictionary<Variant, Func<int>> _hashCodes;
-        private readonly Dictionary<Variant, Func<Union<T1, T2, T3, T4>, bool>> _unionsMatch;
 
         public Variant Case { get; }
 
@@ -43,23 +41,23 @@ namespace SuccincT.Unions
 
         // Unit param used to prevent JSON serializer from using this constructor to create an invalid union.
         // Todo: find out if there's a less "hacky" way of doing this.
-        private Union(Unit _)
-        {
-            _hashCodes = new Dictionary<Variant, Func<int>>
-            {
-                { Variant.Case1, () => _value1.GetHashCode() },
-                { Variant.Case2, () => _value2.GetHashCode() },
-                { Variant.Case3, () => _value3.GetHashCode() },
-                { Variant.Case4, () => _value4.GetHashCode() }
-            };
-            _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2, T3, T4>, bool>>
-            {
-                { Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1) },
-                { Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2) },
-                { Variant.Case3, other => EqualityComparer<T3>.Default.Equals(_value3, other._value3) },
-                { Variant.Case4, other => EqualityComparer<T4>.Default.Equals(_value4, other._value4) }
-            };
-        }
+        private Union(Unit _) : this() { }
+        //{
+        //    _hashCodes = new Dictionary<Variant, Func<int>>
+        //    {
+        //        {Variant.Case1, () => _value1.GetHashCode()},
+        //        {Variant.Case2, () => _value2.GetHashCode()},
+        //        {Variant.Case3, () => _value3.GetHashCode()},
+        //        {Variant.Case4, () => _value4.GetHashCode()}
+        //    };
+        //    _unionsMatch = new Dictionary<Variant, Func<Union<T1, T2, T3, T4>, bool>>
+        //    {
+        //        {Variant.Case1, other => EqualityComparer<T1>.Default.Equals(_value1, other._value1)},
+        //        {Variant.Case2, other => EqualityComparer<T2>.Default.Equals(_value2, other._value2)},
+        //        {Variant.Case3, other => EqualityComparer<T3>.Default.Equals(_value3, other._value3)},
+        //        {Variant.Case4, other => EqualityComparer<T4>.Default.Equals(_value4, other._value4)}
+        //    };
+        //}
 
         public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
@@ -78,15 +76,34 @@ namespace SuccincT.Unions
             }
         }
 
-        public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>() 
+        public IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult> Match<TResult>()
             => new UnionPatternMatcher<T1, T2, T3, T4, TResult>(this);
 
         public IUnionActionPatternMatcher<T1, T2, T3, T4> Match()
             => new UnionPatternMatcher<T1, T2, T3, T4, Unit>(this);
 
-        public override bool Equals(object obj) => obj is Union<T1, T2, T3, T4> union && UnionsEqual(union);
 
-        public override int GetHashCode() => _hashCodes[Case]();
+        public override bool Equals(object obj)
+        {
+            if (obj is Union<T1, T2, T3, T4> union)
+            {
+                return UnionsEqual(union);
+            }
+
+            if (obj == null)
+            {
+                switch (Case)
+                {
+                    case Variant.Case1: return _value1 == null;
+                    case Variant.Case2: return _value2 == null;
+                    case Variant.Case3: return _value3 == null;
+                    default: return _value4 == null;
+                }
+            }
+            return false;
+        }
+
+        public override int GetHashCode() => GetValueHashCode();
 
         public static bool operator ==(Union<T1, T2, T3, T4> a, Union<T1, T2, T3, T4> b)
         {
@@ -102,7 +119,33 @@ namespace SuccincT.Unions
         public static implicit operator Union<T1, T2, T3, T4>(T3 value) => new Union<T1, T2, T3, T4>(value);
         public static implicit operator Union<T1, T2, T3, T4>(T4 value) => new Union<T1, T2, T3, T4>(value);
 
-        private bool UnionsEqual(Union<T1, T2, T3, T4> testObject)
-            => Case == testObject.Case && _unionsMatch[Case](testObject);
+        private bool UnionsEqual(Union<T1, T2, T3, T4> testObject) 
+            => Case == testObject.Case && ValuesEqual(testObject);
+
+        private bool ValuesEqual(Union<T1, T2, T3, T4> other)
+        {
+            switch (Case)
+            {
+                case Variant.Case1:
+                    return _value1 == null && other._value1 == null || _value1 != null && _value1.Equals(other._value1);
+                case Variant.Case2:
+                    return _value2 == null && other._value2 == null || _value2 != null && _value2.Equals(other._value2);
+                case Variant.Case3:
+                    return _value3 == null && other._value3 == null || _value3 != null && _value3.Equals(other._value3);
+                default:
+                    return _value4 == null && other._value4 == null || _value4 != null && _value4.Equals(other._value4);
+            }
+        }
+
+        private int GetValueHashCode()
+        {
+            switch (Case)
+            {
+                case Variant.Case1: return _value1.GetHashCode();
+                case Variant.Case2: return _value2.GetHashCode();
+                case Variant.Case3: return _value3.GetHashCode();
+                default: return _value4.GetHashCode();
+            }
+        }
     }
 }

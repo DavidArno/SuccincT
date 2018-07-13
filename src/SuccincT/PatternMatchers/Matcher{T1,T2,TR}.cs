@@ -1,8 +1,7 @@
-﻿using System;
+﻿using SuccincT.Unions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using SuccincT.Unions;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincT.PatternMatchers
 {
@@ -164,7 +163,7 @@ namespace SuccincT.PatternMatchers
         void IActionMatcherAfterElse.Exec()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item));
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
         TResult IFuncMatcher<T1, T2, TResult>.Result() =>

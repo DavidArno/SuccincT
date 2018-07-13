@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿using System.Diagnostics.CodeAnalysis;
 
 //
 // This file is largely copied from https://github.com/247Entertainment/E247.Fun/blob/master/E247.Fun/Unit.cs & those
@@ -11,7 +10,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SuccincT.Functional
 {
-    public struct Unit : IEquatable<Unit>
+    public readonly struct Unit
     {
         public override int GetHashCode() => 0;
 
@@ -21,17 +20,11 @@ namespace SuccincT.Functional
 
         public bool Equals(Unit other) => true;
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         public static bool operator ==(Unit u1, Unit u2) => true;
 
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
         public static bool operator !=(Unit u1, Unit u2) => false;
 
-        [SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "unit")]
         [SuppressMessage("Style", "IDE1006:Naming Styles")]
         public static Unit unit { get; } = new Unit();
-
-        [SuppressMessage("Microsoft.Usage", "CA1801:ReviewUnusedParameters")]
-        public static void Ignore<T>(T anything) {}
     }
 }

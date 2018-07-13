@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
 using SuccincT.Functional;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions.PatternMatchers;
-using static SuccincT.Functional.Unit;
+using System;
+using System.Collections.Generic;
 
 namespace SuccincT.Options
 {
@@ -68,9 +67,9 @@ namespace SuccincT.Options
         }
 
         void IValueOrErrorActionMatcher.Exec() => 
-            Ignore(_valueOrError.HasValue
+            _ = _valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error));
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
@@ -87,7 +86,7 @@ namespace SuccincT.Options
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError));
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
         }
 
         private void RecordValueAction(Func<string, IList<string>, bool> withTest,

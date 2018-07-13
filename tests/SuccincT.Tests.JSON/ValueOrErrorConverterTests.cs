@@ -37,9 +37,11 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingJsonToValueOrError_FailsCleanlyIfSuccinctConverterNotUsed()
+        public void ConvertingJsonToValueOrError_ProducesCleanDefaultValue()
         {
-            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{\"value\":\"a\"}"));
+            var result = DeserializeObject<ValueOrError>("{\"value\":\"a\"}");
+            IsFalse(result.HasValue);
+            AreEqual(null, result.Error);
         }
 
         [Test]

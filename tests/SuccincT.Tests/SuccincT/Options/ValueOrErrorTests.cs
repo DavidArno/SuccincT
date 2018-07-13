@@ -1,8 +1,7 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
+using System;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 using static SuccincT.Options.ValueOrError;
 
 namespace SuccincTTests.SuccincT.Options
@@ -109,7 +108,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
         {
             var valueOrError = WithError("1");
-            Throws<NoMatchException>(() => Ignore(valueOrError.Match<int>().Value().Do(x => 2).Result()));
+            Throws<NoMatchException>(() => _ = valueOrError.Match<int>().Value().Do(x => 2).Result());
         }
 
         [Test]

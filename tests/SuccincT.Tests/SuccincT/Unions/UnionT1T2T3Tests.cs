@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
-using SuccincT.Functional;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -66,7 +64,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(2);
             try
             {
-                Unit.Ignore(union.Case2);
+                _ = union.Case2;
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)
@@ -80,7 +78,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors>(2);
-            Throws<InvalidCaseException>(() => Ignore(union.Case3));
+            Throws<InvalidCaseException>(() => _ = union.Case3);
         }
 
         [Test]
@@ -89,7 +87,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(2);
             try
             {
-                Ignore(union.Case3);
+                _ = union.Case3;
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)
@@ -103,28 +101,28 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
-            Throws<InvalidCaseException>(() => Ignore(union.Case1));
+            Throws<InvalidCaseException>(() => _ = union.Case1);
         }
 
         [Test]
         public void AccessingCase3ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors>("Test");
-            Throws<InvalidCaseException>(() => Ignore(union.Case3));
+            Throws<InvalidCaseException>(() => _ = union.Case3);
         }
 
         [Test]
         public void AccessingCase1ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            Throws<InvalidCaseException>(() => Ignore(union.Case1));
+            Throws<InvalidCaseException>(() => _ = union.Case1);
         }
 
         [Test]
         public void AccessingCase2ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Blue);
-            Throws<InvalidCaseException>(() => Ignore(union.Case2));
+            Throws<InvalidCaseException>(() => _ = union.Case2);
         }
 
         [Test]
@@ -133,7 +131,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Colors>(Colors.Blue);
             try
             {
-                Unit.Ignore(union.Case2);
+                _ = union.Case2;
                 Fail("Expected exception to be thrown");
             }
             catch (InvalidCaseException e)

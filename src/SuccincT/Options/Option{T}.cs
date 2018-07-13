@@ -56,10 +56,10 @@ namespace SuccincT.Options
 
         public T ValueOrDefault => HasValue ? _value : default;
 
-        public override bool Equals(object obj) => obj is Option<T> option ? EqualsOption(option) : false;
+        public override bool Equals(object obj) => obj is Option<T> option && EqualsOption(option);
 
         internal bool EqualsOption(Option<T> other)
-            => (other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue));
+            => other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue);
 
         public override int GetHashCode() => HasValue ? _value.GetHashCode() : 0;
 

@@ -1,6 +1,8 @@
-﻿namespace SuccincT.PatternMatchers
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace SuccincT.PatternMatchers
 {
-    public struct Any
+    public readonly struct Any
     {
         private static readonly Any AnyInstance = new Any();
 
@@ -14,7 +16,7 @@
 
         public static bool operator !=(Any any1, Any any2) => false;
 
-        // ReSharper disable once InconsistentNaming
+        [SuppressMessage("Style", "IDE1006:Naming Styles")]
         public static Any any { get; } = AnyInstance;
 
         public static Any __ { get; } = AnyInstance;
