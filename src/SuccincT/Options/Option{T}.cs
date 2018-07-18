@@ -1,24 +1,22 @@
 ﻿using SuccincT.Functional;
 using SuccincT.Unions;
 using System;
-using static SuccincT.Functional.Unit;
 using static SuccincT.Unions.None;
 
 namespace SuccincT.Options
 {
     /// <summary>
-    /// Provides an optional value of type T. Modelled on F# options. Either contains a T value, or None.
+    /// Provides an optional value of type T. Modeled on F# options. Either contains a T value, or None.
     /// </summary>
     public readonly struct Option<T>
     {
-        private static readonly Option<T> NoneInstance = new Option<T>(unit);
+        private static readonly Option<T> NoneInstance = new Option<T>();
         private readonly T _value;
 
-        private Option(Unit _) => (HasValue, _value) = (default, default);
-
-        private Option(T value) => (HasValue, _value) = value != null
-            ? (true, value)
-            : throw new ArgumentNullException(nameof(value));
+        private Option(T value) 
+            => (HasValue, _value) = value != null
+                ? (true, value)
+                : throw new ArgumentNullException(nameof(value));
 
         /// <summary>
         /// Creates an instance of an option with no value.
@@ -65,7 +63,7 @@ namespace SuccincT.Options
 
         public static bool operator ==(Option<T> a, Option<T> b) => a.EqualsOption(b);
 
-        public static bool operator !=(Option<T> a, Option<T> b) => a == null ? b != null : !a.EqualsOption(b);
+        public static bool operator !=(Option<T> a, Option<T> b) => !a.EqualsOption(b);
 
         public static implicit operator Option<T>(T value) => value  == null ? None() : Some(value);
 

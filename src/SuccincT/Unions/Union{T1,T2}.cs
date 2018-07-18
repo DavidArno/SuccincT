@@ -1,6 +1,5 @@
 ﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Unions
 {
@@ -9,21 +8,17 @@ namespace SuccincT.Unions
         private readonly T1 _value1;
         private readonly T2 _value2;
 
-        public Union(T1 value) : this(unit)
+        public Union(T1 value) : this()
         {
             _value1 = value;
             Case = Variant.Case1;
         }
 
-        public Union(T2 value) : this(unit)
+        public Union(T2 value) : this()
         {
             _value2 = value;
             Case = Variant.Case2;
         }
-
-        // Unit param used to prevent JSON serializer from using this constructor to create an invalid union as I
-        // don't want SuccincT to have a dependency on Json.NET by using the [JsonConverter] attribute. 
-        private Union(Unit _) : this() { }
 
         public Variant Case { get; }
 
@@ -47,14 +42,10 @@ namespace SuccincT.Unions
 
         public override bool Equals(object obj)
         {
-            if (obj is Union<T1, T2> union)
+            switch (obj)
             {
-                return UnionsEqual(union);
-            }
-
-            if (obj == null)
-            {
-                return Case == Variant.Case1 && _value1 == null || Case == Variant.Case2 && _value2 == null;
+                case Union<T1, T2> union: return UnionsEqual(union);
+                case null: return Case == Variant.Case1 && _value1 == null || Case == Variant.Case2 && _value2 == null;
             }
 
             return false;
@@ -62,12 +53,7 @@ namespace SuccincT.Unions
 
         public override int GetHashCode() => GetValueHashCode();
 
-        public static bool operator ==(Union<T1, T2> p1, Union<T1, T2> p2)
-        {
-            var aObj = (object)p1;
-            var bObj = (object)p2;
-            return aObj == null && bObj == null || aObj != null && p1.Equals(p2);
-        }
+        public static bool operator ==(Union<T1, T2> p1, Union<T1, T2> p2) => p1.Equals(p2);
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
 
@@ -83,11 +69,5 @@ namespace SuccincT.Unions
 
         public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
         public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
-
-        public void Deconstruct(out Variant validCase, object value)
-        {
-            validCase = Case;
-            value = Case == Variant.Case1 ? (object)_value1 : _value2;
-        }
     }
 }

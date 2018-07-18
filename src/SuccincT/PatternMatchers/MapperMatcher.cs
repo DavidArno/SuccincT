@@ -1,9 +1,9 @@
 ﻿using SuccincT.Functional;
+using SuccincT.Options;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using SuccincT.Options;
 
 namespace SuccincT.PatternMatchers
 {
@@ -104,6 +104,7 @@ namespace SuccincT.PatternMatchers
                 ? new ConsEnumerable<TResult>(_noneValue.Value)
                 : throw new NoMatchException("No empty clause supplied when handling an empty collection");
 
+        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
         private IEnumerable<TResult> MapCollection()
         {
             var reversedCollection = _collection is IList<T> list

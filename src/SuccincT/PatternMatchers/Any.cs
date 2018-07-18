@@ -17,6 +17,7 @@ namespace SuccincT.PatternMatchers
         public static bool operator !=(Any any1, Any any2) => false;
 
         [SuppressMessage("Style", "IDE1006:Naming Styles")]
+        // ReSharper disable once InconsistentNaming
         public static Any any { get; } = AnyInstance;
 
         public static Any __ { get; } = AnyInstance;

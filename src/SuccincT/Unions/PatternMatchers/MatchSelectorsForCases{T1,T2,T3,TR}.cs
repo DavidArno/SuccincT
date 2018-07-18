@@ -27,9 +27,6 @@ namespace SuccincT.Unions.PatternMatchers
                     x => throw new NoMatchException("No match action defined for union with Case3 value"));
         }
 
-        private static TResult NewMethod<T>(T _) 
-            => throw new NoMatchException("No match action defined for union with Case1 value");
-
         internal void RecordAction<T>(Func<T, IList<T>, bool> withTest,
                                       Func<T, bool> whereTest,
                                       IList<T> withData,
