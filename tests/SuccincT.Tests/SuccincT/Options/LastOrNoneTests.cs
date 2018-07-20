@@ -53,7 +53,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void LastOrNoneWithNullFunc_ThrowsExcpetion()
+        public void LastOrNoneWithNullFunc_ThrowsException()
         {
             var collection = new List<int> { 1, 2, 3 };
             Assert.Throws<ArgumentNullException>(() => collection.TryLast(null));

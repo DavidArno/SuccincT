@@ -32,7 +32,7 @@ namespace SuccincT.Unions
         public Option<TLeft> TryLeft { get; }
         public Option<TRight> TryRight { get; }
 
-        public override bool Equals(object obj) => obj is Either<TLeft,TRight> && this == (Either<TLeft, TRight>)obj;
+        public override bool Equals(object obj) => obj is Either<TLeft, TRight> either && this == either;
 
         public override int GetHashCode()
         {

@@ -11,27 +11,29 @@ namespace SuccincT.Functional
 
         public bool MoveNext()
         {
-            if (!AdvanceToNextNode()) return false;
-
-            if (Node.State == HasEnumeration)
+            while (true)
             {
-                Node.Enumerating(new ConsListBuilderEnumerator<T>(Node));
+                if (!AdvanceToNextNode()) return false;
+
+                if (Node.State == HasEnumeration)
+                {
+                    Node.Enumerating(new ConsListBuilderEnumerator<T>(Node));
+                }
+
+                if (Node.State == HasValue) return true;
+
+                if (Node.Enumerator.MoveNext())
+                {
+                    var newNode = new ConsNode<T> {Next = Node.Next};
+                    newNode.Enumerating(Node.Enumerator);
+
+                    Node.HasValue(Node.Enumerator.Current.Value);
+                    Node.Next = newNode;
+                    return true;
+                }
+
+                Node.IgnoredNode();
             }
-
-            if (Node.State == HasValue) return true;
-
-            if (Node.Enumerator.MoveNext())
-            {
-                var newNode = new ConsNode<T> { Next = Node.Next };
-                newNode.Enumerating(Node.Enumerator);
-
-                Node.HasValue(Node.Enumerator.Current.Value);
-                Node.Next = newNode;
-                return true;
-            }
-
-            Node.IgnoredNode();
-            return MoveNext();
         }
 
         private bool AdvanceToNextNode()
@@ -46,11 +48,10 @@ namespace SuccincT.Functional
             while (Node.State == IgnoredNode)
             {
                 Node = Node.Next;
-                if (Node == null)
-                {
-                    Dispose();
-                    return false;
-                }
+                if (Node != null) continue;
+
+                Dispose();
+                return false;
             }
             return true;
         }

@@ -35,8 +35,8 @@ namespace SuccincT.Unions
             }
         }
 
-        public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>() =>
-            new UnionPatternMatcher<T1, T2, TResult>(this);
+        public IUnionFuncPatternMatcher<T1, T2, TResult> Match<TResult>()
+            => new UnionPatternMatcher<T1, T2, TResult>(this);
 
         public IUnionActionPatternMatcher<T1, T2> Match() => new UnionPatternMatcher<T1, T2, Unit>(this);
 
@@ -59,13 +59,14 @@ namespace SuccincT.Unions
 
         private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && ValuesEqual(testObject);
 
-        private int GetValueHashCode() =>
-            Case == Variant.Case1 ? _value1.GetHashCode() : _value2.GetHashCode();
+        private int GetValueHashCode() => Case == Variant.Case1 ? _value1.GetHashCode() : _value2.GetHashCode();
 
         private bool ValuesEqual(Union<T1, T2> other)
-            => Case == Variant.Case1
+        {
+            return Case == Variant.Case1
                 ? _value1 == null && other._value1 == null || _value1 != null && _value1.Equals(other._value1)
                 : _value2 == null && other._value2 == null || _value2 != null && _value2.Equals(other._value2);
+        }
 
         public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
         public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);

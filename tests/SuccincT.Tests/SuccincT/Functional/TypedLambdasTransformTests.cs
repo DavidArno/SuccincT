@@ -15,7 +15,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
-        public void TwoParamTranform_CanBeTypedAndRun()
+        public void TwoParamTransform_CanBeTypedAndRun()
         {
             var func = Transform((int x, int y) => (x + y) * 0.5);
             var result = func(1, 2);

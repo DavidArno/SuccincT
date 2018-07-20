@@ -13,10 +13,8 @@ namespace SuccincT.Options
         private static readonly Option<T> NoneInstance = new Option<T>();
         private readonly T _value;
 
-        private Option(T value) 
-            => (HasValue, _value) = value != null
-                ? (true, value)
-                : throw new ArgumentNullException(nameof(value));
+        private Option(T value)
+            => (HasValue, _value) = value != null ? (true, value) : throw new ArgumentNullException(nameof(value));
 
         /// <summary>
         /// Creates an instance of an option with no value.
@@ -48,15 +46,13 @@ namespace SuccincT.Options
         /// <summary>
         /// The value held (if created by Some()). Will throw an InvalidOperationException if created via None().
         /// </summary>
-        public T Value => HasValue
-            ? _value
-            : throw new InvalidOperationException("Option contains no value.");
+        public T Value => HasValue ? _value : throw new InvalidOperationException("Option contains no value.");
 
         public T ValueOrDefault => HasValue ? _value : default;
 
         public override bool Equals(object obj) => obj is Option<T> option && EqualsOption(option);
 
-        internal bool EqualsOption(Option<T> other)
+        private bool EqualsOption(Option<T> other)
             => other.HasValue && HasValue && Value.Equals(other.Value) || !(HasValue || other.HasValue);
 
         public override int GetHashCode() => HasValue ? _value.GetHashCode() : 0;
@@ -65,10 +61,10 @@ namespace SuccincT.Options
 
         public static bool operator !=(Option<T> a, Option<T> b) => !a.EqualsOption(b);
 
-        public static implicit operator Option<T>(T value) => value  == null ? None() : Some(value);
+        public static implicit operator Option<T>(T value) => value == null ? None() : Some(value);
 
-        public void Deconstruct(out bool hasValue, out T value) =>
-            (hasValue, value) = (HasValue, HasValue ? _value : default);
+        public void Deconstruct(out bool hasValue, out T value)
+            => (hasValue, value) = (HasValue, HasValue ? _value : default);
 
         private Union<T, None> CreateUnion() => HasValue ? new Union<T, None>(_value) : new Union<T, None>(none);
     }

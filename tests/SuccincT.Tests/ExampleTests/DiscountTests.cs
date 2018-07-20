@@ -49,7 +49,7 @@ namespace SuccincTTests.ExampleTests
         private static decimal ReducePriceBy(int discount, decimal price) =>
             price - price * AsPercent(discount);
 
-        private static decimal CalculateDicountPrice(Union<Registered, UnRegistered> account, decimal price)
+        private static decimal CalculateDiscountPrice(Union<Registered, UnRegistered> account, decimal price)
         {
             var (customerDiscount, yearsDiscount) = AccountDiscount(account);
             var customerReducedPrice = ReducePriceBy(customerDiscount, price);
@@ -60,10 +60,10 @@ namespace SuccincTTests.ExampleTests
         public void Tests()
         {
             var creator = Union.UnionCreator<Registered, UnRegistered>();
-            AreEqual(94.05000m, CalculateDicountPrice(creator.Create(new Registered(MostValuable, 1)), 100.0m));
-            AreEqual(92.15000m, CalculateDicountPrice(creator.Create(new Registered(Valuable, 6)), 100.0m));
-            AreEqual(98.01000m, CalculateDicountPrice(creator.Create(new Registered(Simple, 1)), 100.0m));
-            AreEqual(100.0m, CalculateDicountPrice(creator.Create(new UnRegistered()), 100.0m));
+            AreEqual(94.05000m, CalculateDiscountPrice(creator.Create(new Registered(MostValuable, 1)), 100.0m));
+            AreEqual(92.15000m, CalculateDiscountPrice(creator.Create(new Registered(Valuable, 6)), 100.0m));
+            AreEqual(98.01000m, CalculateDiscountPrice(creator.Create(new Registered(Simple, 1)), 100.0m));
+            AreEqual(100.0m, CalculateDiscountPrice(creator.Create(new UnRegistered()), 100.0m));
         }
     }
 }
