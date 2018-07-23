@@ -8,7 +8,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
     public class AnyTests
     {
         [Test]
-        public void AnyTwoAnys_AreEqual()
+        public void AnyTwoAnyValues_AreEqual()
         {
             var x = any;
             var y = any;

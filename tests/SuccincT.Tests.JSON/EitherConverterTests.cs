@@ -40,7 +40,7 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingListOfEithersToJsonAndBack_PreservesUEitherState()
+        public void ConvertingListOfEitherValuesToJsonAndBack_PreservesUEitherState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new EitherConverter());

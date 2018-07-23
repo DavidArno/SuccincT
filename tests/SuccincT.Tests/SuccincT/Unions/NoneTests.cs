@@ -8,7 +8,7 @@ namespace SuccincTTests.SuccincT.Unions
     public class NoneTests
     {
         [Test]
-        public void NoneToString_GivesMeanfulResult()
+        public void NoneToString_GivesMeaningfulResult()
         {
             var value = none;
             AreEqual("!none!", value.ToString());

@@ -18,7 +18,7 @@ namespace SuccincTTests.Examples
                 .None().Do(() => { })
                 .Exec();
 
-        public static string NumberNamer(Option<int> data)
+        public static string NumberToNameMapper(Option<int> data)
         {
             var names = new[] { "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine" };
             return data.Match<string>()

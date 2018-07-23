@@ -7,7 +7,7 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public sealed class ValueOrErrorT1T2Tests
+    public sealed class ValueOrErrorTVTETests
     {
         [Test]
         public void WhenValueIsSet_ValueSuppliedToFunction()
@@ -94,7 +94,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenValueIsSetAndNoErrorMatch_ElseResultIsReturned()
         {
             var valueOrError = WithValue("1");
-            var result = valueOrError.Match<int>().Error().Do(x => 2).Else(x => 3).Result();
+            var result = valueOrError.Match<int>().Error().Do(x => 2).Else(3).Result();
             AreEqual(3, result);
         }
 

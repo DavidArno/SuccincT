@@ -98,7 +98,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOrWithFourAnys()
+        public void Tuple_CanBeMatchedViaOrWithFourAnyValues()
         {
             var tuple = new TestClass { A = 1, B = "a", C = Colors.Blue, D = Animals.Cow };
             var result = tuple.Match().To<bool>().With(1, "a", Colors.Green, Animals.Pig)

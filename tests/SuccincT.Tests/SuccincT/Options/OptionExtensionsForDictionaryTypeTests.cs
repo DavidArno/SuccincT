@@ -17,7 +17,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenKeyDoesntExists_TryGetValueReturnsNone()
+        public void WhenKeyDoesNotExist_TryGetValueReturnsNone()
         {
             var dict = new Dictionary<int, int> { [1] = 1 };
             Assert.IsFalse(dict.TryGetValue(2).HasValue);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NUnit.Framework;
 using SuccincT.Functional;
@@ -30,6 +31,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public void EnumerationConvertedToCons_CanBeEnumeratedManyTimesWithoutReRunningOriginalEnumeration()
         {
             var enumRunCount = 0;
@@ -72,6 +74,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public void EnumerationConvertedToConsAndItemsAdded_CanBeEnumeratedManyTimesWithoutReRunningOriginalEnumeration()
         {
             var enumRunCount = 0;
@@ -98,7 +101,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
-        public void SplittingEnumerationViaCons_DoesntFullyEnumerateEnumeration()
+        public void SplittingEnumerationViaCons_DoesNotFullyEnumerateEnumeration()
         {
             var enumRunCount = 0;
             var (_, _) = EnumerationWithNotificationOfEnd(() => enumRunCount++);
@@ -198,6 +201,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public void ForEach_WorksWithConsEnumerable()
         {
             var enumRunCount = 0;

@@ -32,7 +32,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void TwoLeftEithersWithSameValue_AreEqual()
+        public void TwoLeftEitherValuesWithSameValue_AreEqual()
         {
             var either1 = new Either<int, string>(1);
             var either2 = new Either<int, string>(1);
@@ -41,7 +41,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void TwoRightEithersWithSameValue_AreEqual()
+        public void TwoRightEitherValuesWithSameValue_AreEqual()
         {
             var either1 = new Either<int, string>("2");
             var either2 = new Either<int, string>("2");
@@ -50,7 +50,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void LeftAndRightEithersWithSameValue_AreNotEqual()
+        public void LeftAndRightEitherValuesWithSameValue_AreNotEqual()
         {
             var either1 = new Either<int, string>("2");
             var either2 = new Either<string,int>("2");
@@ -58,7 +58,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void TwoEithersWithDifferentValues_AreNotEqual()
+        public void TwoEitherValuesWithDifferentValues_AreNotEqual()
         {
             var either1 = new Either<int, string>(1);
             var either2 = new Either<int, string>("2");
@@ -67,7 +67,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void TwoEithersLeftWithNull_AreNotEqual()
+        public void TwoEitherValuesLeftWithNull_AreNotEqual()
         {
             var either1 = new Either<int, string>(null);
             var either2 = new Either<int, string>("");
@@ -76,7 +76,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void TwoEithersRightWithNull_AreNotEqual()
+        public void TwoEitherValuesRightWithNull_AreNotEqual()
         {
             var either1 = new Either<int, string>("xxx");
             var either2 = new Either<int, string>(null);

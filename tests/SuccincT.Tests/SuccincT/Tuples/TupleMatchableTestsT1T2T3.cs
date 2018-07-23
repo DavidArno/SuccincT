@@ -5,7 +5,7 @@ using SuccincT.Tuples;
 namespace SuccincTTests.SuccincT.Tuples
 {
     [TestFixture]
-    internal class TupleMatchebleTestsT1T2T3
+    internal class TupleMatchableTestsT1T2T3
     {
         private enum Colors { Red, Green, Blue }
 

@@ -33,7 +33,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedWithTwoAnys()
+        public void Tuple_CanBeMatchedWithTwoAnyValues()
         {
             var tuple = new TestClass { A = 1, B = "a" };
             var result = tuple.Match().To<bool>().With(__, __).Do((x, y) => true).Result();
@@ -57,7 +57,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOrWithTwoAnys()
+        public void Tuple_CanBeMatchedViaOrWithTwoAnyValues()
         {
             var tuple = new TestClass { A = 1, B = "a" };
             var result = tuple.Match().To<bool>().With(2, __).Or(any, any).Do((x, y) => true).Result();

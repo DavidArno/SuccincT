@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using static NUnit.Framework.Assert;
 
@@ -75,7 +76,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void SingleItemList_CanBeMatchedWhenWhereDoesntMatch()
+        public void SingleItemList_CanBeMatchedWhenWhereDoesNotMatch()
         {
             var list = new List<int> { 0 };
             var result = list.Match().To<bool>()
@@ -227,6 +228,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
+        [SuppressMessage("ReSharper", "StringLiteralTypo")]
         public void MultiItemIList_CanBeRecursivelyMatchedUsingWhere()
         {
             var list = StringList();

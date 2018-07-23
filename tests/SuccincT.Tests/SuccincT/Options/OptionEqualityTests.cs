@@ -18,7 +18,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TwoNones_AreEqualAndHaveSameHashCode()
+        public void TwoNoneValues_AreEqualAndHaveSameHashCode()
         {
             var a = Option<string>.None();
             var b = Option<string>.None();

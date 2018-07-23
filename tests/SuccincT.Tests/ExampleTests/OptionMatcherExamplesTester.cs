@@ -83,35 +83,35 @@ namespace SuccincTTests.ExampleTests
         }
 
         [Test]
-        public void NumberNamerReturnsCorrectNames()
+        public void NumberToNameMapperReturnsCorrectNames()
         {
-            var result = NumberNamer(Option<int>.Some(1)) +
-                         NumberNamer(Option<int>.Some(2)) +
-                         NumberNamer(Option<int>.Some(3)) +
-                         NumberNamer(Option<int>.Some(4)) +
-                         NumberNamer(Option<int>.Some(5)) +
-                         NumberNamer(Option<int>.Some(6)) +
-                         NumberNamer(Option<int>.Some(7)) +
-                         NumberNamer(Option<int>.Some(8)) +
-                         NumberNamer(Option<int>.Some(9));
+            var result = NumberToNameMapper(Option<int>.Some(1)) +
+                         NumberToNameMapper(Option<int>.Some(2)) +
+                         NumberToNameMapper(Option<int>.Some(3)) +
+                         NumberToNameMapper(Option<int>.Some(4)) +
+                         NumberToNameMapper(Option<int>.Some(5)) +
+                         NumberToNameMapper(Option<int>.Some(6)) +
+                         NumberToNameMapper(Option<int>.Some(7)) +
+                         NumberToNameMapper(Option<int>.Some(8)) +
+                         NumberToNameMapper(Option<int>.Some(9));
 
             AreEqual("OneTwoThreeFourFiveSixSevenEightNine", result);
         }
 
         [Test]
-        public void NumberNamerReturnsNumbersForValuesOutside1To4()
+        public void NumberToNameMapperReturnsNumbersForValuesOutside1To4()
         {
-            var result = NumberNamer(Option<int>.Some(-1)) +
-                         NumberNamer(Option<int>.Some(0)) +
-                         NumberNamer(Option<int>.Some(10));
+            var result = NumberToNameMapper(Option<int>.Some(-1)) +
+                         NumberToNameMapper(Option<int>.Some(0)) +
+                         NumberToNameMapper(Option<int>.Some(10));
 
             AreEqual("-1010", result);
         }
 
         [Test]
-        public void NumberNamerReturnsNoneForNone()
+        public void NumberToNameMapperReturnsNoneForNone()
         {
-            var result = NumberNamer(Option<int>.None());
+            var result = NumberToNameMapper(Option<int>.None());
             AreEqual("None", result);
         }
 

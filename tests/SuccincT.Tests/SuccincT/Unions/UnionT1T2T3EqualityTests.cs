@@ -20,7 +20,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT1Values_ArentEqual()
+        public void DifferentT1Values_AreNotEqual()
         {
             var a = new Union<int, string, Colors>(1);
             var b = new Union<int, string, Colors>(2);
@@ -39,7 +39,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT2Values_ArentEqual()
+        public void DifferentT2Values_AreNotEqual()
         {
             var a = new Union<int, string, Colors>("abc");
             var b = new Union<int, string, Colors>("def");
@@ -58,7 +58,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT3Values_ArentEqual()
+        public void DifferentT3Values_AreNotEqual()
         {
             var a = new Union<int, string, Colors>(Colors.Blue);
             var b = new Union<int, string, Colors>(Colors.Green);

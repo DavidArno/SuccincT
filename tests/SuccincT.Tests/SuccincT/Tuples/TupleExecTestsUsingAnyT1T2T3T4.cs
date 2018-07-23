@@ -48,7 +48,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedUsingFourAnysWithExec()
+        public void Tuple_CanBeMatchedUsingFourAnyValuesWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
             var result = false;
@@ -101,7 +101,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOrUsingFourAnysWithExec()
+        public void Tuple_CanBeMatchedViaOrUsingFourAnyValuesWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Green, Animals.Cow);
             var result = false;
@@ -165,7 +165,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void TupleWithAndWhereDefinedUsingFourAnys_WithCorrectlyUsedWithExec()
+        public void TupleWithAndWhereDefinedUsingFourAnyValues_WithCorrectlyUsedWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red, Animals.Cow);
             var result = false;

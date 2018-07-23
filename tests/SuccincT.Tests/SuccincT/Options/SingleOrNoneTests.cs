@@ -73,7 +73,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TrySingleWithNullFunc_ThrowsExcpetion()
+        public void TrySingleWithNullFunc_ThrowsException()
         {
             var collection = new List<int> { 1, 2, 3 };
             Assert.Throws<ArgumentNullException>(() => collection.TrySingle(null));

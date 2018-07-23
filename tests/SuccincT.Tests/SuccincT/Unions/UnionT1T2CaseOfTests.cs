@@ -29,7 +29,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void UnionWithT1WhenCaseOfDoesntMatch_ElseUsedCorrectly()
+        public void UnionWithT1WhenCaseOfDoesNotMatch_ElseUsedCorrectly()
         {
             var union = new Union<int, string>(99);
             var result = union.Match<int>()
@@ -41,7 +41,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void UnionWithT2WhenCaseOfDoesntMatch_ElseUsedCorrectly()
+        public void UnionWithT2WhenCaseOfDoesNotMatch_ElseUsedCorrectly()
         {
             var union = new Union<int, string>("blue");
             var result = union.Match<int>()
@@ -87,7 +87,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void UnionWithT1WhenExecCaseOfDoesntMatch_ElseUsedCorrectly()
+        public void UnionWithT1WhenExecCaseOfDoesNotMatch_ElseUsedCorrectly()
         {
             var union = new Union<int, string>(99);
             var result = -1;
@@ -100,7 +100,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void UnionWithT2WhenExecCaseOfDoesntMatch_ElseUsedCorrectly()
+        public void UnionWithT2WhenExecCaseOfDoesNotMatch_ElseUsedCorrectly()
         {
             var union = new Union<int, string>("cyan");
             var result = -1;

@@ -65,7 +65,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedUsingThreeAnysWithExec()
+        public void Tuple_CanBeMatchedUsingThreeAnyValueWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);
             var result = false;
@@ -128,7 +128,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOrUsingThreeAnysWithExec()
+        public void Tuple_CanBeMatchedViaOrUsingThreeAnyValuesWithExec()
         {
             var tuple = Tuple.Create(1, "a", Colors.Red);
             var result = false;

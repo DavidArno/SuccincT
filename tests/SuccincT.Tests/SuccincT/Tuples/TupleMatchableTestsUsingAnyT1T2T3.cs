@@ -6,7 +6,7 @@ using static SuccincT.PatternMatchers.Any;
 namespace SuccincTTests.SuccincT.Tuples
 {
     [TestFixture]
-    internal class TupleMatchebleTestsUsingAnyT1T2T3
+    internal class TupleMatchableTestsUsingAnyT1T2T3
     {
         private enum Colors { Red, Green, Blue }
 
@@ -67,7 +67,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedUsingThreeAnys()
+        public void Tuple_CanBeMatchedUsingThreeAnyValues()
         {
             var tuple = new TestClass { A = 1, B = "a", C = Colors.Red };
             var result = tuple.Match().To<bool>().With(__, __, __).Do((x, y, z) => true).Result();
@@ -129,7 +129,7 @@ namespace SuccincTTests.SuccincT.Tuples
         }
 
         [Test]
-        public void Tuple_CanBeMatchedViaOrUsingThreeAnys()
+        public void Tuple_CanBeMatchedViaOrUsingThreeAnyValues()
         {
             var tuple = new TestClass { A = 1, B = "a", C = Colors.Red };
             var result = tuple.Match().To<bool>().With(1, "a", Colors.Blue).Or(__, __, __).Do((x, y, z) => true)

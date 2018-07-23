@@ -96,7 +96,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenOptionIsSomeElseIsDefinedAndSomeDoesntMatch_ElseResultIsReturned()
+        public void WhenOptionIsSomeElseIsDefinedAndSomeDoesNotMatch_ElseResultIsReturned()
         {
             var option = Option<int>.Some(2);
             var result = option.Match<int>().Some().Of(1).Do(x => 1).None().Do(() => 0).Else(o => o.Value).Result();

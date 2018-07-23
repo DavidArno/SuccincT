@@ -19,7 +19,7 @@ namespace SuccincTTests.SuccincT.Functional
             AreEqual(unit1, unit3);
             AreEqual(unit2, unit3);
 
-            IsTrue(unit1.Equals((object)unit2));
+            IsTrue(unit1.Equals(unit2));
             IsTrue(unit1.Equals((object)unit3));
             IsTrue(unit2.Equals((object)unit3));
 

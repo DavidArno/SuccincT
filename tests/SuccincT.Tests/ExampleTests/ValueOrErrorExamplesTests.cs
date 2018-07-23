@@ -9,21 +9,21 @@ namespace SuccincTTests.ExampleTests
     public class ValueOrErrorExamplesTests
     {
         [Test]
-        public void IntPrefex_ReturnsInt()
+        public void IntPrefix_ReturnsInt()
         {
             var result = ValueOrErrorExamples.IntParser(ValueOrError.WithValue("Int:6"));
             AreEqual(6, result.Value);
         }
 
         [Test]
-        public void IntPrefexReturnsNone_IfFollowedByJunk()
+        public void IntPrefixReturnsNone_IfFollowedByJunk()
         {
             var result = ValueOrErrorExamples.IntParser(ValueOrError.WithValue("Int:no number here"));
             IsFalse(result.HasValue);
         }
 
         [Test]
-        public void ValueOtherThanIntPrefex_ReturnsNone()
+        public void ValueOtherThanIntPrefix_ReturnsNone()
         {
             var result = ValueOrErrorExamples.IntParser(ValueOrError.WithValue("xxx"));
             IsFalse(result.HasValue);

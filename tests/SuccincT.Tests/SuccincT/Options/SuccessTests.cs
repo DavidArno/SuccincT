@@ -141,7 +141,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseIsExecuted()
+        public void WhenFailureAndElseIsDefinedAndErrorDoesNotMatch_ElseIsExecuted()
         {
             var success = Success.CreateFailure(2);
             var result = 0;
@@ -163,7 +163,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseResultIsReturned()
+        public void WhenFailureAndElseIsDefinedAndErrorDoesNotMatch_ElseResultIsReturned()
         {
             var success = Success.CreateFailure(2);
             var result = success.Match<int>()

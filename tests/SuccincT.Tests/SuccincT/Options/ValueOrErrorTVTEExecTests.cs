@@ -7,7 +7,7 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public sealed class ValueOrErrorT1T2ExecTests
+    public sealed class ValueOrErrorTVTEExecTests
     {
         [Test]
         public void WhenValueIsSet_OnlyValueActionOccurs()
@@ -77,6 +77,24 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = WithError(new Exception("x"));
             Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => { }).Exec());
+        }
+
+        [Test]
+        public void WhenValueIsSetAndNoValueMatchDefinedForExecAndIgnoreElseUsed_NoActionTaken()
+        {
+            var result = "1";
+            var valueOrError = WithValue("2");
+            valueOrError.Match().Error().Do(x => result = "2").IgnoreElse().Exec();
+            AreEqual("1", result);
+        }
+
+        [Test]
+        public void WhenErrorIsSetAndNoErrorMatchDefinedForExecAndIgnoreElseUsed_NoActionTaken()
+        {
+            var result = 1;
+            var valueOrError = WithError(new Exception("x"));
+            valueOrError.Match().Value().Do(x => result = 2).IgnoreElse().Exec();
+            AreEqual(1, result);
         }
 
         private static ValueOrError<string, Exception> WithValue(string s)
