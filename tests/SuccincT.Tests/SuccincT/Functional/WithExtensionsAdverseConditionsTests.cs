@@ -159,8 +159,6 @@ namespace SuccincTTests.SuccincT.Functional
 
         private class TypeWithConstructorAndNoMatchingGetter
         {
-            // ReSharper disable once UnusedMember.Local
-            // ReSharper disable UnusedParameter.Local
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) { }
             public TypeWithConstructorAndNoMatchingGetter(int a) => B = a;
             public int B { get; }
@@ -169,10 +167,7 @@ namespace SuccincTTests.SuccincT.Functional
         private class TypeWithMultipleConstructors
         {
             public TypeWithMultipleConstructors(int a) => (A, B) = (a, 1);
-            // ReSharper disable once UnusedMember.Local
             public TypeWithMultipleConstructors(int a, int b) => (A, B) = (a, b);
-            // ReSharper disable once UnusedMember.Local
-            // ReSharper disable once UnusedParameter.Local
             public TypeWithMultipleConstructors(int a, int c, int b) => (A, B) = (a, b);
             public int A { get; }
             public int B { get; }

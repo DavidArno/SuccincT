@@ -11,13 +11,11 @@ namespace SuccincT.Functional
         private static readonly Dictionary<string, CachedTypeInfo> CachedTypeInfoDetails =
             new Dictionary<string, CachedTypeInfo>();
 
-        public static Option<T> Copy<T>(this T @object) where T : class
+        public static Option<T> TryCopy<T>(this T @object) where T : class
         {
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
-            // Create the new object using the most specialized constructor
-            var constructorToUse = cachedTypeInfo.CachedPublicConstructors
-                                                 .OrderByDescending(cc => cc.Parameters.Count)
+            var constructorToUse = cachedTypeInfo.CachedPublicConstructors.OrderByDescending(cc => cc.Parameters.Count)
                                                  .TryFirst();
 
             if (!constructorToUse.HasValue) return Option<T>.None();
@@ -34,9 +32,8 @@ namespace SuccincT.Functional
             var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
             var propertiesToOverwrite = sourceReadProperties
-                                        .Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
-                                        .Where(x => x.HasValue)
-                                        .Select(x => x.Value);
+                                       .Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
+                                       .Where(x => x.HasValue).Select(x => x.Value);
 
             foreach (var propertyToOverwrite in propertiesToOverwrite)
             {
@@ -48,14 +45,13 @@ namespace SuccincT.Functional
 
         private static object[] GetConstructorParameterValuesForCopy<T>(T @object,
                                                                         IEnumerable<PropertyInfo> sourceReadProperties,
-                                                                        IEnumerable<ParameterInfo> constructorParameters)
+                                                                        IEnumerable<ParameterInfo>
+                                                                            constructorParameters)
         {
-            return constructorParameters
-                   .Select(p => sourceReadProperties.TryFirst(x => AreLinked(x, p)))
-                   .Where(x => x.HasValue)
-                   .Select(x => x.Value)
-                   .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
-                   .ToArray();
+            return constructorParameters.Select(p => sourceReadProperties.TryFirst(x => AreLinked(x, p)))
+                                        .Where(x => x.HasValue).Select(x => x.Value)
+                                        .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
+                                        .ToArray();
         }
 
         public static Option<T> TryWith<T, TProps>(this T itemToCopy, TProps propertiesToUpdate)
