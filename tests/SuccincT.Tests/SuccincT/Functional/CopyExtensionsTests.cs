@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SuccincT.Functional;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional
@@ -90,6 +91,10 @@ namespace SuccincTTests.SuccincT.Functional
             public TypeWithConstructorAndNoGetters(int x) { }
         }
 
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithConstructorAndNoMatchingGetter
         {
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) { }
