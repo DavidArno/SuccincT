@@ -13,6 +13,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.JSON", "src\Succin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.Tests.JSON", "tests\SuccincT.Tests.JSON\SuccincT.Tests.JSON.csproj", "{F7ED3141-5359-4D89-856B-9195CAD168AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{68C57B92-EC8F-4791-92D4-23C5FA4BFF46}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{F19227E6-3488-4AED-8063-A806981DDCAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23A68981-A42D-471D-AE34-3481D8551C1E} = {68C57B92-EC8F-4791-92D4-23C5FA4BFF46}
+		{7295200E-9754-4F3C-B003-7C7766D8E5BE} = {F19227E6-3488-4AED-8063-A806981DDCAA}
+		{337EE74A-9071-4007-A4F5-36C03E2ECEAE} = {68C57B92-EC8F-4791-92D4-23C5FA4BFF46}
+		{04405AAE-24A0-4EF5-8F36-5F1B4E52D067} = {F19227E6-3488-4AED-8063-A806981DDCAA}
+		{F7ED3141-5359-4D89-856B-9195CAD168AE} = {F19227E6-3488-4AED-8063-A806981DDCAA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBD05F32-A8B7-4973-B218-0604C5F560B0}
