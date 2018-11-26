@@ -53,23 +53,6 @@ namespace SuccincT.Unions
                 default: throw new InvalidCaseOfTypeException(typeof(TResult));
             }
         }
-        
-        public bool HasValue<TResult>()
-        {
-            switch (Case)
-            {
-                case Variant.Case1:
-                    return _value1.GetType() == typeof(TResult);
-                case Variant.Case2:
-                    return _value2.GetType() == typeof(TResult);
-                case Variant.Case3:
-                    return _value3.GetType() == typeof(TResult);
-                case Variant.Case4:
-                    return _value4.GetType() == typeof(TResult);
-            }
-
-            return false;
-        }
 
         public Option<TResult> TryGetValue<TResult>()
         {
@@ -80,6 +63,18 @@ namespace SuccincT.Unions
                 case var t when t == typeof(T3) && Case3 is TResult value: return value;
                 case var t when t == typeof(T4) && Case4 is TResult value: return value;
                 default: return Option<TResult>.None();
+            }
+        }
+
+        public bool HasValue<TResult>()
+        {
+            switch (Case)
+            {
+                case Variant.Case1: return _value1.GetType() == typeof(TResult);
+                case Variant.Case2: return _value2.GetType() == typeof(TResult);
+                case Variant.Case3: return _value3.GetType() == typeof(TResult);
+                case Variant.Case4: return _value4.GetType() == typeof(TResult);
+                default: return false;
             }
         }
 

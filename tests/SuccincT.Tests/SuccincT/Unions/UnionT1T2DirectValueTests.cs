@@ -52,5 +52,29 @@ namespace SuccincTTests.SuccincT.Unions
             var result = union.TryGetValue<float>();
             IsFalse(result.HasValue);
         }
+
+        [Test]
+        public void UnionT1HasValueTest_ReturnsTrue()
+        {
+            var union = new Union<int, string>(2);
+            var hasInteger = union.HasValue<int>();
+            IsTrue(hasInteger);
+        }
+
+        [Test]
+        public void UnionT1T2HasValueTest_ReturnsFalse()
+        {
+            var union = new Union<int, string>(2);
+            var hasString = union.HasValue<string>();
+            IsFalse(hasString);
+        }
+
+        [Test]
+        public void UnionT1T2HasValueTest_ReturnsFalseAndDoesNotThrowExceptionTypeNotInUnion()
+        {
+            var union = new Union<int, string>(2);
+            var hasBool = union.HasValue<bool>();
+            IsFalse(hasBool);
+        }
     }
 }
