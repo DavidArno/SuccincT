@@ -15,6 +15,14 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
+        public void UnionWithT1_TryGetValueMatchesCorrectly()
+        {
+            var union = new Union<int, string>(1);
+            var result = union.TryGetValue<int>();
+            AreEqual(1, result.Value);
+        }
+
+        [Test]
         public void UnionWithT2_ValueMatchesCorrectly()
         {
             var union = new Union<int, string>("string");
@@ -23,10 +31,26 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
+        public void UnionWithT2_TryGetValueMatchesCorrectly()
+        {
+            var union = new Union<int, string>("string");
+            var result = union.TryGetValue<string>();
+            AreEqual("string", result.Value);
+        }
+
+        [Test]
         public void UnionT1T2WithInvalidTypeValue_ThrowsException()
         {
             var union = new Union<int, string>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Value<float>());
+        }
+
+        [Test]
+        public void UnionT1T2WithInvalidTypeTryGetValue_ReturnNone()
+        {
+            var union = new Union<int, string>(2);
+            var result = union.TryGetValue<float>();
+            IsFalse(result.HasValue);
         }
     }
 }

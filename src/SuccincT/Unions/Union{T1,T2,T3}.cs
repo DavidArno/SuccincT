@@ -1,4 +1,5 @@
 ﻿using SuccincT.Functional;
+using SuccincT.Options;
 using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
@@ -37,10 +38,21 @@ namespace SuccincT.Unions
         {
             switch (typeof(TResult))
             {
-                case var t when t == typeof(T1): return (TResult)(object)Case1;
-                case var t when t == typeof(T2): return (TResult)(object)Case2;
-                case var t when t == typeof(T3): return (TResult)(object)Case3;
+                case var t when t == typeof(T1) && Case1 is TResult value: return value;
+                case var t when t == typeof(T2) && Case2 is TResult value: return value;
+                case var t when t == typeof(T3) && Case3 is TResult value: return value;
                 default: throw new InvalidCaseOfTypeException(typeof(TResult));
+            }
+        }
+
+        public Option<TResult> TryGetValue<TResult>()
+        {
+            switch (typeof(TResult))
+            {
+                case var t when t == typeof(T1) && Case1 is TResult value: return value;
+                case var t when t == typeof(T2) && Case2 is TResult value: return value;
+                case var t when t == typeof(T3) && Case3 is TResult value: return value;
+                default: return Option<TResult>.None();
             }
         }
 
