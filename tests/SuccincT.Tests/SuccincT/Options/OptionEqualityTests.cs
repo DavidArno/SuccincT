@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using SuccincT.Options;
 using static NUnit.Framework.Assert;
 
@@ -56,7 +57,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void ComparingNoneWithNull_ResultsInNotEqual()
+        public void ComparingNoneWithNull_ResultsInEqual()
         {
             var a = Option<string>.None();
             IsFalse(a.Equals(null));
@@ -83,11 +84,20 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void X()
+        public void CreatingAnOptionFromNull_ResultIsTrueWhenComparedToNone()
         {
             Option<string> a = null;
-            var isNull = a == null;
-            IsTrue(isNull);
+            IsTrue(a == Option<string>.None());
         }
+
+        [Test]
+        public void CreatingAnOptionFromNull_ResultIsTrueWhenComparedToNull()
+        {
+            Option<string> a = null;
+            IsTrue(a == null);
+        }
+
+        [Test]
+        public void CreatingASomeFromNull_Throws() => Throws<ArgumentNullException>(() => Option<string>.Some(null));
     }
 }
