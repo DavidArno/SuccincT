@@ -35,8 +35,8 @@ namespace SuccincT.Options
         public static implicit operator bool(Success<T> success) => !success.IsFailure;
         public static implicit operator Success<T>(T value) => Success.CreateFailure(value);
 
-        public void Deconstruct(out bool hasError, out T error) 
-            => (hasError, error) = (!IsFailure, IsFailure ? _error : default);
+        public void Deconstruct(out bool isSuccess, out T error) 
+            => (isSuccess, error) = (!IsFailure, IsFailure ? _error : default);
 
         private Union<T, bool> CreateUnion() => IsFailure ? new Union<T, bool>(_error) : new Union<T, bool>(true);
     }

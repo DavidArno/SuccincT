@@ -15,13 +15,14 @@ namespace SuccincT.Functional
         {
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
-            var constructorToUse = cachedTypeInfo.CachedPublicConstructors.OrderByDescending(cc => cc.Parameters.Count)
-                                                 .TryFirst();
+            var (hasValue, value) = cachedTypeInfo.CachedPublicConstructors
+                                                  .OrderByDescending(cc => cc.Parameters.Count)
+                                                  .TryFirst();
 
-            if (!constructorToUse.HasValue) return Option<T>.None();
+            if (!hasValue) return Option<T>.None();
 
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
-            var constructorParameters = constructorToUse.Value.Parameters;
+            var constructorParameters = value.Parameters;
 
             var constructorParameterValues =
                 GetConstructorParameterValuesForCopy(@object, sourceReadProperties, constructorParameters);
@@ -33,7 +34,8 @@ namespace SuccincT.Functional
 
             var propertiesToOverwrite = sourceReadProperties
                                        .Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
-                                       .Where(x => x.HasValue).Select(x => x.Value);
+                                       .Where(x => x.HasValue)
+                                       .Select(x => x.Value);
 
             foreach (var propertyToOverwrite in propertiesToOverwrite)
             {
@@ -43,15 +45,47 @@ namespace SuccincT.Functional
             return Option<T>.Some(newObject);
         }
 
-        private static object[] GetConstructorParameterValuesForCopy<T>(T @object,
-                                                                        IEnumerable<PropertyInfo> sourceReadProperties,
-                                                                        IEnumerable<ParameterInfo>
-                                                                            constructorParameters)
+        public static T Copy<T>(this T @object) where T : class
         {
-            return constructorParameters.Select(p => sourceReadProperties.TryFirst(x => AreLinked(x, p)))
-                                        .Where(x => x.HasValue).Select(x => x.Value)
-                                        .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
-                                        .ToArray();
+            var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
+
+            var (hasValue, value) = cachedTypeInfo.CachedPublicConstructors
+                                                  .OrderByDescending(cc => cc.Parameters.Count)
+                                                  .TryFirst();
+
+            if (!hasValue)
+            {
+                throw new CopyException(
+                    $"Type {typeof(T).Name} does not supply a public constructor for use with Copy.");
+            }
+
+            var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
+            var constructorParameters = value.Parameters;
+
+            var constructorParameterValues =
+                GetConstructorParameterValuesForCopy(@object, sourceReadProperties, constructorParameters);
+
+            if (constructorParameterValues.Length != constructorParameters.Count)
+            {
+                throw new CopyException(
+                    $"Type {typeof(T).Name} does not supply a suitable constructor for use with Copy, which allows all " +
+                    "non-writable properties to be set via that constructor.");
+            }
+
+            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues) as T;
+            var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
+
+            var propertiesToOverwrite = sourceReadProperties
+                                       .Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
+                                       .Where(x => x.HasValue)
+                                       .Select(x => x.Value);
+
+            foreach (var propertyToOverwrite in propertiesToOverwrite)
+            {
+                CopyPropertyValue(@object, propertyToOverwrite, newObject);
+            }
+
+            return newObject;
         }
 
         public static Option<T> TryWith<T, TProps>(this T itemToCopy, TProps propertiesToUpdate)
@@ -62,11 +96,11 @@ namespace SuccincT.Functional
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
             var updateProperties = typeof(TProps).GetRuntimeProperties().Where(x => x.CanRead).ToList();
-            var constructorToUse = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
+            var (hasValue, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
 
-            if (!constructorToUse.HasValue) return Option<T>.None();
+            if (!hasValue) return Option<T>.None();
 
-            var constructorParameters = constructorToUse.Value.Parameters;
+            var constructorParameters = value.Parameters;
             var constructorParameterValues = MapUpdateValuesToConstructorParameters(itemToCopy,
                                                                                     propertiesToUpdate,
                                                                                     constructorParameters,
@@ -105,13 +139,16 @@ namespace SuccincT.Functional
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
             var updateProperties = typeof(TProps).GetRuntimeProperties().Where(x => x.CanRead).ToList();
-            var constructorToUse = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
+            var (hasValue, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
 
-            if (!constructorToUse.HasValue) throw new CopyException(
-                $"Type {typeof(T).Name} does not supply a suitable constructor for use with With, which allows all " +
-                "non-writable properties to be set via that constructor.");
+            if (!hasValue)
+            {
+                throw new CopyException(
+                    $"Type {typeof(T).Name} does not supply a suitable constructor for use with With, which allows all " +
+                    "non-writable properties to be set via that constructor.");
+            }
 
-            var constructorParameters = constructorToUse.Value.Parameters;
+            var constructorParameters = value.Parameters;
             var constructorParameterValues = MapUpdateValuesToConstructorParameters(itemToCopy,
                                                                                     propertiesToUpdate,
                                                                                     constructorParameters,
@@ -144,11 +181,24 @@ namespace SuccincT.Functional
             }
         }
 
-        private static T CreateNewObjectApplyingUpdates<T, TProps>(T itemToCopy,
-                                                                   TProps propertiesToUpdate,
-                                                                   object[] constructorParameterValues,
-                                                                   IEnumerable<PropertyInfo> propsToSetFromSourceObject,
-                                                                   IEnumerable<(PropertyInfo Value, PropertyInfo PropToUpdate)> propsToSetFromUpdateData)
+        private static object[] GetConstructorParameterValuesForCopy<T>(
+            T @object,
+            IEnumerable<PropertyInfo> sourceReadProperties,
+            IEnumerable<ParameterInfo>
+            constructorParameters)
+        {
+            return constructorParameters.Select(p => sourceReadProperties.TryFirst(x => AreLinked(x, p)))
+                                        .Where(x => x.HasValue).Select(x => x.Value)
+                                        .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
+                                        .ToArray();
+        }
+
+        private static T CreateNewObjectApplyingUpdates<T, TProps>(
+            T itemToCopy,
+            TProps propertiesToUpdate,
+            object[] constructorParameterValues,
+            IEnumerable<PropertyInfo> propsToSetFromSourceObject,
+            IEnumerable<(PropertyInfo Value, PropertyInfo PropToUpdate)> propsToSetFromUpdateData)
             where T : class where TProps : class
         {
             var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues) as T;
@@ -244,10 +294,8 @@ namespace SuccincT.Functional
                     select constructor).TryFirst();
         }
 
-        private static CachedTypeInfo GetCachedTypeInfo(Type type)
-        {
-            return CachedTypeInfoDetails.GetOrAddValue(type.FullName, () => new CachedTypeInfo(type));
-        }
+        private static CachedTypeInfo GetCachedTypeInfo(Type type) 
+            => CachedTypeInfoDetails.GetOrAddValue(type.FullName, () => new CachedTypeInfo(type));
 
         private static T GetOrAddValue<T>(this Dictionary<string, T> dictionary, string key, Func<T> createValue)
         {
@@ -272,10 +320,8 @@ namespace SuccincT.Functional
         private static bool AreLinked(ParameterInfo parameterInfo, PropertyInfo propertyInfo) =>
             string.Equals(parameterInfo.Name, propertyInfo.Name, StringComparison.CurrentCultureIgnoreCase);
 
-        private static void CopyPropertyValue<T>(T from, PropertyInfo property, T to) where T : class
-        {
-            property.SetValue(to, property.GetValue(from, null));
-        }
+        private static void CopyPropertyValue<T>(T from, PropertyInfo property, T to) where T : class 
+            => property.SetValue(to, property.GetValue(from, null));
 
         private static void CopyPropertyValue<T1, T2>(T1 from,
                                                       PropertyInfo fromProperty,

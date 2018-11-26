@@ -13,9 +13,9 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionHasValue_MapAppliesFuncToThatValueAndReturnsNewOptionWithThatValue()
         {
             var opt = Option<int>.Some(50);
-            var mappedOpt = opt.Map(x => x * x);
-            IsTrue(mappedOpt.HasValue);
-            AreEqual(2500, mappedOpt.Value);
+            var (hasValue, value) = opt.Map(x => x * x);
+            IsTrue(hasValue);
+            AreEqual(2500, value);
         }
 
         [Test]
@@ -31,9 +31,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt1 = Option<int>.Some(10);
             var opt2 = Option<int>.Some(50);
-            var res = opt1.Or(opt2);
-            IsTrue(res.HasValue);
-            AreEqual(10, res.Value);
+            var (hasValue, value) = opt1.Or(opt2);
+            IsTrue(hasValue);
+            AreEqual(10, value);
         }
 
         [Test]
@@ -41,9 +41,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt1 = Option<int>.None();
             var opt2 = Option<int>.Some(50);
-            var res = opt1.Or(opt2);
-            IsTrue(res.HasValue);
-            AreEqual(50, res.Value);
+            var (hasValue, value) = opt1.Or(opt2);
+            IsTrue(hasValue);
+            AreEqual(50, value);
         }
 
         [Test]
@@ -60,9 +60,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt1 = Option<string>.Some("OK");
             Option<string> Opt2() => throw new InvalidOperationException();
-            var res = opt1.Or(Opt2);
-            IsTrue(res.HasValue);
-            AreEqual("OK", res.Value);
+            var (hasValue, value) = opt1.Or(Opt2);
+            IsTrue(hasValue);
+            AreEqual("OK", value);
         }
 
         [Test]
@@ -70,9 +70,9 @@ namespace SuccincTTests.SuccincT.Options
         {
             var opt1 = Option<string>.None();
             Option<string> Opt2() => Option<string>.Some("OK too");
-            var res = opt1.Or(Opt2);
-            IsTrue(res.HasValue);
-            AreEqual("OK too", res.Value);
+            var (hasValue, value) = opt1.Or(Opt2);
+            IsTrue(hasValue);
+            AreEqual("OK too", value);
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionHasValue_FlattenReturnsUnderlyingOption()
         {
             var opt = Option<int>.Some(50).Into(Option<Option<int>>.Some);
-            var flat = opt.Flatten();
-            IsTrue(flat.HasValue);
-            AreEqual(50, flat.Value);
+            var (hasValue, value) = opt.Flatten();
+            IsTrue(hasValue);
+            AreEqual(50, value);
         }
 
         [Test]

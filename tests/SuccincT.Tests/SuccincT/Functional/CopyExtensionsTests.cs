@@ -12,7 +12,7 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void TryCopyForTypeWithNoConstructor_ShouldReturnCopyOfOriginalObjectUsingProperties()
         {
-            var car = new Car { Color = "red", Constructor = "Ford", CreationDate = DateTime.Now };
+            var car = new Car {Color = "red", Constructor = "Ford", CreationDate = DateTime.Now};
 
             var newCar = car.TryCopy().Value;
 
@@ -25,7 +25,7 @@ namespace SuccincTTests.SuccincT.Functional
         [Test]
         public void TryCopyForTypeWithConstructor_ShouldReturnCopyOfOriginalObject()
         {
-            var book = new Book("John Smith", "Common English Names") { PublishDate = DateTime.Now };
+            var book = new Book("John Smith", "Common English Names") {PublishDate = DateTime.Now};
 
             var newBook = book.TryCopy().Value;
 
@@ -55,19 +55,68 @@ namespace SuccincTTests.SuccincT.Functional
             IsFalse(newObject.HasValue);
         }
 
+        [Test]
+        public void CopyForTypeWithNoConstructor_ShouldReturnCopyOfOriginalObjectUsingProperties()
+        {
+            var car = new Car {Color = "red", Constructor = "Ford", CreationDate = DateTime.Now};
 
-        //[Test]
-        //public void CopyWithoutProperties_ShouldReturnCopyOfOriginalObject()
-        //{
-        //    var car = new Car();
+            var newCar = car.Copy();
 
-        //    var newCar = car.Copy();
+            AreNotSame(car, newCar);
+            AreEqual(car.Constructor, newCar.Constructor);
+            AreEqual(car.Color, newCar.Color);
+            AreEqual(car.CreationDate, newCar.CreationDate);
+        }
 
-        //    AreNotSame(car, newCar);
-        //    AreEqual(car.Constructor, newCar.Constructor);
-        //    AreEqual(car.Color, newCar.Color);
-        //    AreEqual(car.CreationDate, newCar.CreationDate);
-        //}
+
+        [Test]
+        public void CopyForTypeWithConstructor_ShouldReturnCopyOfOriginalObject()
+        {
+            var book = new Book("John Smith", "Common English Names") {PublishDate = DateTime.Now};
+
+            var newBook = book.Copy();
+
+            AreNotSame(book, newBook);
+            AreEqual(book.Author, newBook.Author);
+            AreEqual(book.Name, newBook.Name);
+            AreEqual(book.PublishDate, newBook.PublishDate);
+        }
+
+        [Test]
+        public void CopyWithoutProperties_ShouldReturnCopyOfOriginalObject()
+        {
+            var car = new Car();
+            var newCar = car.Copy();
+
+            AreNotSame(car, newCar);
+            AreEqual(car.Constructor, newCar.Constructor);
+            AreEqual(car.Color, newCar.Color);
+            AreEqual(car.CreationDate, newCar.CreationDate);
+        }
+
+        [Test]
+        public void CopyForTypeWithConstructorAndNoGetters_ShouldThrow()
+        {
+            var testObject = new TypeWithConstructorAndNoGetters(1);
+
+            Throws<CopyException>(() => testObject.Copy());
+        }
+
+        [Test]
+        public void CopyForTypeWithNoPublicConstructor_ShouldThrow()
+        {
+            var testObject = new TypeWithNoPublicConstructor(1);
+
+            Throws<CopyException>(() => testObject.Copy());
+        }
+
+        [Test]
+        public void CopyForTypeWithConstructorAndNoMatchingGetter_ShouldReturnNone()
+        {
+            var testObject = new TypeWithConstructorAndNoMatchingGetter(1);
+
+            Throws<CopyException>(() => testObject.Copy());
+        }
 
         private class Car
         {
@@ -100,6 +149,14 @@ namespace SuccincTTests.SuccincT.Functional
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) { }
             public TypeWithConstructorAndNoMatchingGetter(int a) => B = a;
             public int B { get; }
+        }
+
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
+        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
+        private class TypeWithNoPublicConstructor
+        {
+            internal TypeWithNoPublicConstructor(int a) => A = a;
+            public int A { get; }
         }
     }
 }

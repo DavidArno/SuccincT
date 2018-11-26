@@ -11,9 +11,9 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenKeyExists_TryGetValueReturnsValue()
         {
             var dict = new Dictionary<int, int> { [1] = 1 };
-            var value = dict.TryGetValue(1);
-            Assert.IsTrue(value.HasValue);
-            Assert.AreEqual(1, value.Value);
+            var (hasValue, value) = dict.TryGetValue(1);
+            Assert.IsTrue(hasValue);
+            Assert.AreEqual(1, value);
         }
 
         [Test]

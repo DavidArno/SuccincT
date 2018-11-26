@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System.Diagnostics.CodeAnalysis;
+using NUnit.Framework;
 using SuccincT.Functional;
 using static NUnit.Framework.Assert;
 
@@ -94,10 +95,10 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithMultipleConstructors(1);
 
-            var y = x.TryWith(new { B = 3 });
+            var (_, value) = x.TryWith(new { B = 3 });
 
-            AreEqual(1, y.Value.A);
-            AreEqual(3, y.Value.B);
+            AreEqual(1, value.A);
+            AreEqual(3, value.B);
         }
 
         [Test]
@@ -157,6 +158,8 @@ namespace SuccincTTests.SuccincT.Functional
             public TypeWithConstructorAndNoGetters(int x) { }
         }
 
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithConstructorAndNoMatchingGetter
         {
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) { }
@@ -164,6 +167,8 @@ namespace SuccincTTests.SuccincT.Functional
             public int B { get; }
         }
 
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithMultipleConstructors
         {
             public TypeWithMultipleConstructors(int a) => (A, B) = (a, 1);

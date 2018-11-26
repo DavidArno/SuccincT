@@ -12,11 +12,11 @@ namespace SuccincTTests.ExampleTests
         {
             var pairs = SequenceTrafficLightDeclarative().Zip(SequenceTrafficLightImperative(), (x, y) => (x, y));
             var count = 10;
-            foreach(var pair in pairs)
+            foreach(var (x, y) in pairs)
             {
-                Assert.AreEqual(pair.x.Red, pair.y.Red);
-                Assert.AreEqual(pair.x.Amber, pair.y.Amber);
-                Assert.AreEqual(pair.x.Green, pair.y.Green);
+                Assert.AreEqual(x.Red, y.Red);
+                Assert.AreEqual(x.Amber, y.Amber);
+                Assert.AreEqual(x.Green, y.Green);
                 count--;
                 if (count == 0) break;
             }

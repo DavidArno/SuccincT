@@ -73,20 +73,20 @@ namespace SuccincT.Options
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
-            var possibleResult = _valueOrError.HasValue
+            var (hasValue, value) = _valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
+            return hasValue ? value : _elseAction(_valueOrError);
         }
 
         void IUnionActionPatternMatcherAfterElse.Exec()
         {
-            var possibleResult = _valueOrError.HasValue
+            var (hasValue, value) = _valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
+            _ = hasValue ? value : _elseAction(_valueOrError);
         }
 
         private void RecordValueAction(Func<string, IList<string>, bool> withTest,

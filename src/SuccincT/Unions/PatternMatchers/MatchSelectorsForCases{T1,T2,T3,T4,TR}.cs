@@ -56,16 +56,16 @@ namespace SuccincT.Unions.PatternMatchers
 
         internal TResult ResultUsingElse(Union<T1, T2, T3, T4> union)
         {
-            var possibleResult = DetermineResult(union);
-            return possibleResult.HasValue ? possibleResult.Value : ElseFunction(union);
+            var (hasValue, value) = DetermineResult(union);
+            return hasValue ? value : ElseFunction(union);
         }
 
         internal void ExecNoElse(Union<T1, T2, T3, T4> union) => DetermineResultUsingDefaultIfRequired(union);
 
         internal void ExecUsingElse(Union<T1, T2, T3, T4> union)
         {
-            var possibleResult = DetermineResult(union);
-            _ = possibleResult.HasValue ? possibleResult.Value : ElseFunction(union);
+            var (hasValue, value) = DetermineResult(union);
+            _ = hasValue ? value : ElseFunction(union);
         }
 
         private MatchFunctionSelector<T, T, TResult> Selector<T>()

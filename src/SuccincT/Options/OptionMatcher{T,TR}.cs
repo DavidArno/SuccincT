@@ -79,20 +79,20 @@ namespace SuccincT.Options
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
-            var possibleResult = _union.Case == Variant.Case1
+            var (hasValue, value) = _union.Case == Variant.Case1
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_option);
+            return hasValue ? value : _elseAction(_option);
         }
 
         void IUnionActionPatternMatcherAfterElse.Exec()
         {
-            var possibleResult = _union.Case == Variant.Case1
+            var (hasValue, value) = _union.Case == Variant.Case1
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_option);
+            _ = hasValue ? value : _elseAction(_option);
         }
 
         IOptionFuncMatcher<T, TResult> INoneFuncMatchHandler<T, TResult>.Do(Func<TResult> action)

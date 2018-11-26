@@ -66,27 +66,27 @@ namespace SuccincTTests.SuccincT.Options
         public void IfObjectTypeIsDerivedFromCastType_TryCastReturnsSome()
         {
             var obj = new MemoryStream();
-            var res = obj.TryCast<Stream>();
-            Assert.IsTrue(res.HasValue);
-            Assert.IsInstanceOf<Stream>(res.Value);
+            var (hasValue, value) = obj.TryCast<Stream>();
+            Assert.IsTrue(hasValue);
+            Assert.IsInstanceOf<Stream>(value);
         }
 
         [Test]
         public void IfObjectTypeIsTheSameAsCastType_TryCastReturnsSome()
         {
             var obj = new StringBuilder();
-            var res = obj.TryCast<StringBuilder>();
-            Assert.IsTrue(res.HasValue);
-            Assert.IsInstanceOf<StringBuilder>(res.Value);
+            var (hasValue, value) = obj.TryCast<StringBuilder>();
+            Assert.IsTrue(hasValue);
+            Assert.IsInstanceOf<StringBuilder>(value);
         }
 
         [Test]
         public void IfObjectTypeImplementsCastTypeInterface_TryCastReturnsSome()
         {
             var obj = new List<int>();
-            var res = obj.TryCast<IEnumerable<int>>();
-            Assert.IsTrue(res.HasValue);
-            Assert.IsInstanceOf<IEnumerable<int>>(res.Value);
+            var (hasValue, value) = obj.TryCast<IEnumerable<int>>();
+            Assert.IsTrue(hasValue);
+            Assert.IsInstanceOf<IEnumerable<int>>(value);
         }
 
         [Test]

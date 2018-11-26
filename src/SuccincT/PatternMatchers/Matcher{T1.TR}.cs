@@ -158,8 +158,8 @@ namespace SuccincT.PatternMatchers
 
         TResult IFuncMatcherAfterElse<TResult>.Result()
         {
-            var possibleResult = _functionSelector.DetermineResult(_item);
-            return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            var (hasValue, value) = _functionSelector.DetermineResult(_item);
+            return hasValue ? value : _elseFunction(_item);
         }
 
         private void RecordFunction(IList<T1> values, Func<T1, TResult> function) =>

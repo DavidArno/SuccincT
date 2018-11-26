@@ -167,8 +167,8 @@ namespace SuccincT.PatternMatchers
 
         void IActionMatcherAfterElse.Exec()
         {
-            var possibleResult = _functionSelector.DetermineResult(_item);
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            var (hasValue, value) = _functionSelector.DetermineResult(_item);
+            _ = hasValue ? value : _elseFunction(_item);
         }
 
         TResult IFuncMatcher<T1, T2, T3, T4, TResult>.Result() =>
@@ -176,8 +176,8 @@ namespace SuccincT.PatternMatchers
 
         TResult IFuncMatcherAfterElse<TResult>.Result()
         {
-            var possibleResult = _functionSelector.DetermineResult(_item);
-            return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            var (hasValue, value) = _functionSelector.DetermineResult(_item);
+            return hasValue ? value : _elseFunction(_item);
         }
 
         private void RecordFunction(Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,

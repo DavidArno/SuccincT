@@ -16,17 +16,17 @@ namespace SuccincT.JSON
                                         JsonSerializer serializer)
         {
             var jsonObject = JObject.Load(reader);
-            var possibleValue = jsonObject.Properties().TryFirst(p => p.Name == "value");
-            var possibleError = jsonObject.Properties().TryFirst(p => p.Name == "error");
+            var (hasValue, value) = jsonObject.Properties().TryFirst(p => p.Name == "value");
+            var (hasError, error) = jsonObject.Properties().TryFirst(p => p.Name == "error");
 
-            if (possibleValue.HasValue)
+            if (hasValue)
             {
-                return ValueOrError.WithValue(possibleValue.Value.ToObject<string>());
+                return ValueOrError.WithValue(value.ToObject<string>());
             }
 
-            if (possibleError.HasValue)
+            if (hasError)
             {
-                return ValueOrError.WithError(possibleError.Value.ToObject<string>());
+                return ValueOrError.WithError(error.ToObject<string>());
             }
 
             throw new JsonSerializationException(

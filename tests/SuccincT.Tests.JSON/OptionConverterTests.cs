@@ -17,10 +17,10 @@ namespace SuccincTTests.SuccincT.JSON
             settings.Converters.Add(new OptionConverter());
             var option = Option<int>.Some(1);
             var json = SerializeObject(option, settings);
-            var newOption = DeserializeObject<Option<int>>(json, settings);
+            var (hasValue, value) = DeserializeObject<Option<int>>(json, settings);
 
-            IsTrue(newOption.HasValue);
-            AreEqual(1, newOption.Value);
+            IsTrue(hasValue);
+            AreEqual(1, value);
         }
 
         [Test]

@@ -17,10 +17,10 @@ namespace SuccincTTests.SuccincT.JSON
             settings.Converters.Add(new SuccessConverter());
             var failure = Success.CreateFailure("a");
             var json = SerializeObject(failure, settings);
-            var newFailure = DeserializeObject<Success<string>>(json, settings);
+            var (isSuccess, error) = DeserializeObject<Success<string>>(json, settings);
 
-            IsTrue(newFailure.IsFailure);
-            AreEqual("a", newFailure.Failure);
+            IsFalse(isSuccess);
+            AreEqual("a", error);
         }
 
         [Test]
