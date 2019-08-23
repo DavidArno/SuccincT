@@ -14,23 +14,23 @@ namespace SuccincT.PatternMatchers
     {
         public static IMatcher<T> Match<T>(this Tuple<T> item) => new Matcher<T, Unit>(item.Item1);
 
-        public static IMatcher<T1, T2> Match<T1, T2>(this Tuple<T1, T2> item) =>
-            new Matcher<T1, T2, Unit>(item.AsTuple());
+        public static IMatcher<T1, T2> Match<T1, T2>(this Tuple<T1, T2> item)
+            => new Matcher<T1, T2, Unit>(item.AsTuple());
 
-        public static IMatcher<T1, T2, T3> Match<T1, T2, T3>(this Tuple<T1, T2, T3> item) =>
-            new Matcher<T1, T2, T3, Unit>(item.AsTuple());
+        public static IMatcher<T1, T2, T3> Match<T1, T2, T3>(this Tuple<T1, T2, T3> item)
+            => new Matcher<T1, T2, T3, Unit>(item.AsTuple());
 
-        public static IMatcher<T1, T2, T3, T4> Match<T1, T2, T3, T4>(this Tuple<T1, T2, T3, T4> item) =>
-            new Matcher<T1, T2, T3, T4, Unit>(item.AsTuple());
+        public static IMatcher<T1, T2, T3, T4> Match<T1, T2, T3, T4>(this Tuple<T1, T2, T3, T4> item)
+            => new Matcher<T1, T2, T3, T4, Unit>(item.AsTuple());
 
-        public static IMatcher<T1, T2> Match<T1, T2>(this (T1, T2) item) =>
-            new Matcher<T1, T2, Unit>(item);
+        public static IMatcher<T1, T2> Match<T1, T2>(this (T1, T2) item)
+            => new Matcher<T1, T2, Unit>(item);
 
-        public static IMatcher<T1, T2, T3> Match<T1, T2, T3>(this (T1, T2, T3) item) =>
-            new Matcher<T1, T2, T3, Unit>(item);
+        public static IMatcher<T1, T2, T3> Match<T1, T2, T3>(this (T1, T2, T3) item)
+            => new Matcher<T1, T2, T3, Unit>(item);
 
-        public static IMatcher<T1, T2, T3, T4> Match<T1, T2, T3, T4>(this (T1, T2, T3, T4) item) =>
-            new Matcher<T1, T2, T3, T4, Unit>(item);
+        public static IMatcher<T1, T2, T3, T4> Match<T1, T2, T3, T4>(this (T1, T2, T3, T4) item)
+            => new Matcher<T1, T2, T3, T4, Unit>(item);
 
         public static IMatcher<T1, T2> Match<T1, T2>(this ITupleMatchable<T1, T2> item)
         {
@@ -50,11 +50,14 @@ namespace SuccincT.PatternMatchers
             return new Matcher<T1, T2, T3, T4, Unit>(tuple);
         }
 
-        public static IConsActionMatcher<T> Match<T>(this IEnumerable<T> collection) => new ConsActionMatcher<T>(collection);
+        public static IConsActionMatcher<T> Match<T>(this IEnumerable<T> collection)
+            => new ConsActionMatcher<T>(collection);
 
-        public static IConsActionMatcher<T> Match<T>(this IList<T> collection) => new ConsActionMatcher<T>(collection);
+        public static IConsActionMatcher<T> Match<T>(this IList<T> collection)
+            => new ConsActionMatcher<T>(collection);
 
-        public static IConsActionMatcher<T> Match<T>(this List<T> collection) => new ConsActionMatcher<T>(collection);
+        public static IConsActionMatcher<T> Match<T>(this List<T> collection)
+            => new ConsActionMatcher<T>(collection);
 
         private static (T1, T2) AsTuple<T1, T2>(this Tuple<T1, T2> value) => (value.Item1, value.Item2);
 

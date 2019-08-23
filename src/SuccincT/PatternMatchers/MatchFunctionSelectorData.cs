@@ -6,8 +6,8 @@ namespace SuccincT.PatternMatchers
     internal sealed class MatchFunctionSelectorData<T1, T2, TR>
     {
         public MatchFunctionSelectorData(Func<T1, IList<T2>, bool> withTestFunc,
-                                         Func<T1, bool> whereTestFunc,
-                                         IList<T2> withList,
+                                         Func<T1, bool>? whereTestFunc,
+                                         IList<T2>? withList,
                                          Func<T1, TR> actionFunc)
         {
             WithTestFunc = withTestFunc;
@@ -17,8 +17,8 @@ namespace SuccincT.PatternMatchers
         }
 
         internal Func<T1, IList<T2>, bool> WithTestFunc { get; }
-        internal IList<T2> WithList { get; }
-        internal Func<T1, bool> WhereTestFunc { get; }
+        internal IList<T2>? WithList { get; }
+        internal Func<T1, bool>? WhereTestFunc { get; }
         internal Func<T1, TR> ActionFunc { get; }
     }
 }

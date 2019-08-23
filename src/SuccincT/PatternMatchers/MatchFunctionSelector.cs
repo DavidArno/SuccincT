@@ -14,8 +14,8 @@ namespace SuccincT.PatternMatchers
         public MatchFunctionSelector(Func<T1, TResult> defaultFunction) => _defaultFunction = defaultFunction;
 
         public void AddTestAndAction(Func<T1, IList<T2>, bool> withFunc,
-                                     IList<T2> withData,
-                                     Func<T1, bool> whereFunc,
+                                     IList<T2>? withData,
+                                     Func<T1, bool>? whereFunc,
                                      Func<T1, TResult> action) =>
             _testsAndFunctions.Add(new MatchFunctionSelectorData<T1, T2, TResult>(withFunc,
                                                                                   whereFunc,
@@ -49,6 +49,6 @@ namespace SuccincT.PatternMatchers
         }
 
         private static bool InvokeCorrectTestMethod(MatchFunctionSelectorData<T1, T2, TResult> data, T1 value) =>
-            data.WithTestFunc?.Invoke(value, data.WithList) ?? data.WhereTestFunc(value);
+            data.WithTestFunc?.Invoke(value, data.WithList!) ?? data.WhereTestFunc!(value);
     }
 }

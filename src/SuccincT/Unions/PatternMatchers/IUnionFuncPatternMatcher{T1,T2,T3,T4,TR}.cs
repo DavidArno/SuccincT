@@ -3,6 +3,7 @@
 namespace SuccincT.Unions.PatternMatchers
 {
     public interface IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>
+
     {
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult> Case1();
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T2, TResult> Case2();

@@ -19,7 +19,7 @@ namespace SuccincT.PatternMatchers
 
         public IFuncWhereHandler<ITypeMatcher<T, TResult>, TCaseType, TResult> Where(Func<TCaseType, bool> expression)
         {
-            _whereExpression = x => expression((TCaseType)x);
+            _whereExpression = x => expression((TCaseType)x!);
             return this;
         }
 
@@ -35,7 +35,7 @@ namespace SuccincT.PatternMatchers
         {
             _dataRecorder(new TypeMatcherCaseOfData<T, TResult>(typeof(TCaseType),
                                                                 _whereExpression,
-                                                                x => func((TCaseType)x)));
+                                                                x => func((TCaseType)x!)));
             return _typeMatcher;
         }
     }

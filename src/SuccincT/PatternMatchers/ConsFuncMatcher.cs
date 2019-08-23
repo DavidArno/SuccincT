@@ -14,6 +14,7 @@ namespace SuccincT.PatternMatchers
                                                  IConsFuncConsWhereHandler<T, TResult>,
                                                  IConsFuncRecursiveConsHandler<T, TResult>,
                                                  IConsFuncRecursiveConsWhereHandler<T, TResult>
+       
     {
         private (bool supplied, TResult value) _emptyValue;
         private Func<T, bool> _singleWhereFunc;
@@ -33,6 +34,10 @@ namespace SuccincT.PatternMatchers
 
         internal ConsFuncMatcher(IEnumerable<T> collection)
         {
+            _consWhereFunc = null!;
+            _singleWhereFunc = null!;
+            _recursiveConsWhereFunc = null!;
+
             _collection = collection;
             _enumerator = new ConsEnumerable<T>(_collection).GetTypedEnumerator();
             _singleTests = new List<(Func<T, bool>, Func<T, TResult>)>();
@@ -203,11 +208,11 @@ namespace SuccincT.PatternMatchers
 
         private static (Option<T> head, ConsEnumerable<T> tail) TryCons(ConsNodeEnumerator<T> enumerator)
         {
-            if (!enumerator.MoveNext()) return (Option<T>.None(), null);
+            if (!enumerator.MoveNext()) return (Option<T>.None(), null!);
 
             var head = enumerator.Current;
             var tailNode = enumerator.Node.Next;
-            return enumerator.MoveNext() ? (head, new ConsEnumerable<T>(tailNode)) : (head, null);
+            return (enumerator!.MoveNext() ? (head!, new ConsEnumerable<T>(tailNode!)) : (head!, null!))!;
         }
     }
 }

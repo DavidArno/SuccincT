@@ -152,6 +152,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var a = new Union<int, string, Colors, Animals>(2);
             IsFalse(a.Equals(null));
+            IsFalse((Union<int, string, Colors, Animals>)null == null);
+            IsFalse(a == null);
             IsTrue(a != null);
             IsTrue(null != a);
         }

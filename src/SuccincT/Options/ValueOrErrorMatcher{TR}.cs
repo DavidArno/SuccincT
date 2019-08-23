@@ -7,7 +7,12 @@ using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Options
 {
-    internal sealed class ValueOrErrorMatcher<TResult> : IUnionFuncPatternMatcherAfterElse<TResult>, IValueOrErrorFuncMatcher<TResult>, IValueOrErrorActionMatcher, IUnionActionPatternMatcherAfterElse
+    internal sealed class ValueOrErrorMatcher<TResult> : 
+        IUnionFuncPatternMatcherAfterElse<TResult>, 
+        IValueOrErrorFuncMatcher<TResult>, 
+        IValueOrErrorActionMatcher, 
+        IUnionActionPatternMatcherAfterElse
+       
     {
         private readonly ValueOrError _valueOrError;
 
@@ -21,7 +26,11 @@ namespace SuccincT.Options
 
         private Func<ValueOrError, TResult> _elseAction;
 
-        internal ValueOrErrorMatcher(ValueOrError valueOrError) => _valueOrError = valueOrError;
+        internal ValueOrErrorMatcher(ValueOrError valueOrError)
+        {
+            _elseAction = _ => default!;
+            _valueOrError = valueOrError;
+        }
 
         IUnionFuncPatternCaseHandler<IValueOrErrorFuncMatcher<TResult>, string, TResult>
             IValueOrErrorFuncMatcher<TResult>.Value() =>
@@ -57,20 +66,20 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.Else(Action<ValueOrError> elseAction)
         {
-            _elseAction = elseAction.ToUnitFunc() as Func<ValueOrError, TResult>;
+            _elseAction = (elseAction.ToUnitFunc() as Func<ValueOrError, TResult>)!;
             return this;
         }
 
         IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.IgnoreElse()
         {
-            _elseAction = x => default;
+            _elseAction = x => default!;
             return this;
         }
 
         void IValueOrErrorActionMatcher.Exec() => 
-            Ignore(_valueOrError.HasValue
+            _ = _valueOrError.HasValue
                 ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error));
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
@@ -87,7 +96,7 @@ namespace SuccincT.Options
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError));
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
         }
 
         private void RecordValueAction(Func<string, IList<string>, bool> withTest,

@@ -20,7 +20,7 @@ namespace SuccincT.Functional
 
             if (Node.State == HasValue) return true;
 
-            if (Node.Enumerator.MoveNext())
+            if (Node.Enumerator!.MoveNext())
             {
                 var newNode = new ConsNode<T> { Next = Node.Next };
                 newNode.Enumerating(Node.Enumerator);
@@ -36,29 +36,29 @@ namespace SuccincT.Functional
 
         private bool AdvanceToNextNode()
         {
-            Node = Node.Next;
-            if (Node == null)
+            if (Node.Next == null)
             {
                 Dispose();
                 return false;
             }
+            Node = Node.Next;
 
             while (Node.State == IgnoredNode)
             {
-                Node = Node.Next;
-                if (Node == null)
+                if (Node.Next == null)
                 {
                     Dispose();
                     return false;
                 }
+                Node = Node.Next;
             }
             return true;
         }
 
         public void Reset() => throw new NotImplementedException();
-        public T Current => Node.Value;
+        public T Current => Node!.Value;
 
-        object IEnumerator.Current => Current;
+        object? IEnumerator.Current => Current;
 
         public void Dispose() { }
 

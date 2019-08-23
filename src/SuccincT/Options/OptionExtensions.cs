@@ -7,11 +7,11 @@ namespace SuccincT.Options
 {
     public static class OptionExtensions
     {
-        public static Option<TOutput> Map<TInput, TOutput>(this Option<TInput> input, Func<TInput, TOutput> f) =>
-            input.Match<Option<TOutput>>()
-                 .Some().Do(x => f(x).Into(Option<TOutput>.Some))
-                 .None().Do(Option<TOutput>.None())
-                 .Result();
+        public static Option<TOutput> Map<TInput, TOutput>(this Option<TInput> input, Func<TInput, TOutput> f)
+            => input.Match<Option<TOutput>>()
+                    .Some().Do(x => f(x).Into(Option<TOutput>.Some))
+                    .None().Do(Option<TOutput>.None())
+                    .Result();
 
         public static Option<T> Or<T>(this Option<T> option, Option<T> anotherOption) =>
             option.HasValue ? option : anotherOption;
@@ -28,8 +28,8 @@ namespace SuccincT.Options
         public static IEnumerable<T> Choose<T>(this IEnumerable<Option<T>> options) =>
             options.Where(x => x.HasValue).Select(x => x.Value);
 
-        public static IEnumerable<TU> Choose<T, TU>(this IEnumerable<T> items, Func<T, Option<TU>> optionSelector) =>
-            items.Select(optionSelector).Choose();
+        public static IEnumerable<TU> Choose<T, TU>(this IEnumerable<T> items, Func<T, Option<TU>> optionSelector)
+            => items.Select(optionSelector).Choose();
 
         public static Option<T> Some<T>(this T value) => value.Into(Option<T>.Some);
     }

@@ -13,6 +13,8 @@ namespace SuccincT.Options
                                                       IOptionActionMatcher<T>,
                                                       INoneActionMatchHandler<T>,
                                                       IUnionActionPatternMatcherAfterElse
+                                                      
+       
     {
         private readonly Union<T, None> _union;
         private readonly Option<T> _option;
@@ -25,7 +27,7 @@ namespace SuccincT.Options
             new MatchFunctionSelector<None, None, TResult>(
                 x => throw new NoMatchException("No match action defined for Option with no value"));
 
-        private Func<Option<T>, TResult> _elseAction;
+        private Func<Option<T>, TResult>? _elseAction;
 
         internal OptionMatcher(Union<T, None> union, Option<T> option)
         {
@@ -68,7 +70,7 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse IOptionActionMatcher<T>.IgnoreElse()
         {
-            _elseAction = x => default;
+            _elseAction = x => default!;
             return this;
         }
 
@@ -83,7 +85,7 @@ namespace SuccincT.Options
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_option);
+            return possibleResult.HasValue ? possibleResult.Value : _elseAction!(_option);
         }
 
         void IUnionActionPatternMatcherAfterElse.Exec()
@@ -92,7 +94,7 @@ namespace SuccincT.Options
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_option);
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction!(_option);
         }
 
         IOptionFuncMatcher<T, TResult> INoneFuncMatchHandler<T, TResult>.Do(Func<TResult> action)
@@ -109,7 +111,7 @@ namespace SuccincT.Options
 
         IOptionActionMatcher<T> INoneActionMatchHandler<T>.Do(Action action)
         {
-            RecordAction(action.ToUnitFunc() as Func<TResult>);
+            RecordAction((action.ToUnitFunc() as Func<TResult>)!);
             return this;
         }
 

@@ -12,11 +12,11 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public void WhenObjectIsNotNull_ToOptionReturnsValue()
         {
-            var obj = 10;
+            var obj = "10";
             var opt = obj.ToOption();
             Assert.IsNotNull(opt);
             Assert.IsTrue(opt.HasValue);
-            Assert.AreEqual(10, opt.Value);
+            Assert.AreEqual("10", opt.Value);
         }
 
         [Test]

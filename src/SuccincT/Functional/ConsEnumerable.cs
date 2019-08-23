@@ -81,22 +81,18 @@ namespace SuccincT.Functional
 
         ConsResult<T> IConsEnumerable<T>.Cons()
         {
-            using (var enumerator = GetTypedEnumerator())
-            {
-                return enumerator.MoveNext()
-                    ? new ConsResult<T>(enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))
-                    : new ConsResult<T>(Option<T>.None());
-            }
+            using var enumerator = GetTypedEnumerator();
+            return enumerator.MoveNext()
+                ? new ConsResult<T>(enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next!))
+                : new ConsResult<T>(Option<T>.None());
         }
 
         internal (T head, IConsEnumerable<T> tail) TupleCons()
         {
-            using (var enumerator = GetTypedEnumerator())
-            {
-                return enumerator.MoveNext()
-                    ? (enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next))
-                    : throw new InvalidOperationException("Enumeration is empty and cannot be split into a head & tail");
-            }
+            using var enumerator = GetTypedEnumerator();
+            return enumerator.MoveNext()
+                ? (enumerator.Current, new ConsEnumerable<T>(enumerator.Node.Next!))
+                : throw new InvalidOperationException("Enumeration is empty and cannot be split into a head & tail");
         }
 
         private static ConsNode<T> EnumerationConsNode(IEnumerable<T> enumeration) =>

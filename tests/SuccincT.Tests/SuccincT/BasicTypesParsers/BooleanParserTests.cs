@@ -43,7 +43,7 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         public void InvalidBooleanString_ResultsInExceptionIfValueRead()
         {
             var result = "maybe".TryParseBoolean();
-            Assert.Throws<InvalidOperationException>(() => Ignore(result.Value));
+            Assert.Throws<InvalidOperationException>(() => _ = result.Value);
         }
     }
 }

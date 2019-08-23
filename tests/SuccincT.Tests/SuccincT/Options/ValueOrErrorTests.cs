@@ -58,14 +58,14 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenValueIsSet_AccessingErrorCausesException()
         {
             var valueOrError = WithValue("2");
-            Throws<InvalidOperationException>(() => Ignore(valueOrError.Error));
+            Throws<InvalidOperationException>(() => _ = valueOrError.Error);
         }
 
         [Test]
         public void WhenErrorIsSet_AccessingValueCausesAnException()
         {
             var valueOrError = WithError("2");
-            Throws<InvalidOperationException>(() => Ignore(valueOrError.Value));
+            Throws<InvalidOperationException>(() => _ = valueOrError.Value);
         }
 
         [Test]
@@ -109,7 +109,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
         {
             var valueOrError = WithError("1");
-            Throws<NoMatchException>(() => Ignore(valueOrError.Match<int>().Value().Do(x => 2).Result()));
+            Throws<NoMatchException>(() => _ = valueOrError.Match<int>().Value().Do(x => 2).Result());
         }
 
         [Test]

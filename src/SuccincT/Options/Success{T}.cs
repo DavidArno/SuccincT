@@ -20,16 +20,17 @@ namespace SuccincT.Options
             ? _error
             : throw new InvalidOperationException("Cannot fetch a Failure for an error-free Success<T> value.");
 
-        public ISuccessFuncMatcher<T, TResult> Match<TResult>() => new SuccessMatcher<T, TResult>(CreateUnion(), this);
+        public ISuccessFuncMatcher<T, TResult> Match<TResult>() 
+            => new SuccessMatcher<T, TResult>(CreateUnion(), this);
 
         public ISuccessActionMatcher<T> Match() => new SuccessMatcher<T, Unit>(CreateUnion(), this);
 
         public override bool Equals(object obj) =>
             obj is Success<T> other &&
             other.IsFailure == IsFailure &&
-            (IsFailure && other.Failure.Equals(_error) || !IsFailure);
+            (IsFailure && other.Failure!.Equals(_error) || !IsFailure);
 
-        public override int GetHashCode() => IsFailure ? _error.GetHashCode() : 1;
+        public override int GetHashCode() => IsFailure ? _error!.GetHashCode() : 1;
 
         public static bool operator ==(Success<T> a, object b) => a.Equals(b);
 

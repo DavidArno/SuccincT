@@ -32,19 +32,19 @@ namespace SuccincT.Unions.PatternMatchers
             if (typeof(T) == typeof(T1))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T1, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T1, TResult>(
                         _selector.RecordAction,
                         this)
-                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>;
+                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>)!;
             }
 
             if (typeof(T) == typeof(T2))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T2, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T2, TResult>(
                         _selector.RecordAction,
                         this)
-                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>;
+                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>)!;
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));
@@ -80,17 +80,17 @@ namespace SuccincT.Unions.PatternMatchers
             if (typeof(T) == typeof(T1))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1, Unit>(_selector.RecordAction,
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1, Unit>(_selector.RecordAction,
                                                                                               this)
-                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>;
+                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>)!;
             }
 
             if (typeof(T) == typeof(T2))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction,
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction,
                                                                                               this)
-                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>;
+                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>)!;
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));

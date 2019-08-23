@@ -23,7 +23,7 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithValue(string value) => 
             value != null
-                ? new ValueOrError(value, null)
+                ? new ValueOrError(value, null!)
                 : throw new ArgumentNullException(nameof (value));
 
         /// <summary>
@@ -31,14 +31,15 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithError(string error) =>
             error != null
-                ? new ValueOrError(null, error)
+                ? new ValueOrError(null!, error)
                 : throw new ArgumentNullException(nameof (error));
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public IValueOrErrorFuncMatcher<TResult> Match<TResult>() => new ValueOrErrorMatcher<TResult>(this);
+        public IValueOrErrorFuncMatcher<TResult> Match<TResult>()
+            => new ValueOrErrorMatcher<TResult>(this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action

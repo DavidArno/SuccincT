@@ -13,6 +13,8 @@ namespace SuccincT.Unions.PatternMatchers
                                                                          IUnionActionPatternMatcher<T1, T2, T3, T4>,
                                                                          IUnionActionPatternMatcherAfterElse,
                                                                          IUnionFuncPatternMatcherAfterElse<TResult>
+        
+       
     {
         private readonly Union<T1, T2, T3, T4> _union;
 
@@ -51,37 +53,37 @@ namespace SuccincT.Unions.PatternMatchers
             if (typeof(T) == typeof(T1))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T1, TResult>(
                         _selector.RecordAction,
                         this)
-                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>;
+                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>)!;
             }
 
             if (typeof(T) == typeof(T2))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T2, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T2, TResult>(
                         _selector.RecordAction,
                         this)
-                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>;
+                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>)!;
             }
 
             if (typeof(T) == typeof(T3))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T3, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T3, TResult>(
                         _selector.RecordAction,
                         this)
-                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>;
+                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>)!;
             }
 
             if (typeof(T) == typeof(T4))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T4, TResult>(
+                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T4, TResult>(
                         _selector.RecordAction,
                         this)
-                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>;
+                        as IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, T4, TResult>, T, TResult>)!;
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));
@@ -130,37 +132,37 @@ namespace SuccincT.Unions.PatternMatchers
             if (typeof(T) == typeof(T1))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T1, Unit>(
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T1, Unit>(
                         _selector.RecordAction,
                         this)
-                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>;
+                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>)!;
             }
 
             if (typeof(T) == typeof(T2))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T2, Unit>(
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T2, Unit>(
                         _selector.RecordAction,
                         this)
-                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>;
+                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>)!;
             }
 
             if (typeof(T) == typeof(T3))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T3, Unit>(
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T3, Unit>(
                         _selector.RecordAction,
                         this)
-                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>;
+                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>)!;
             }
 
             if (typeof(T) == typeof(T4))
             {
                 return
-                    new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T4, Unit>(
+                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T4, Unit>(
                         _selector.RecordAction,
                         this)
-                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>;
+                        as IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3, T4>, T>)!;
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));

@@ -25,6 +25,10 @@ namespace SuccincT.PatternMatchers
 
         internal Matcher((T1, T2) item)
         {
+            _withValues = null!;
+            _whereExpression = null!;
+            _elseFunction = null!;
+
             _item = item;
             _functionSelector = new MatchFunctionSelector<(T1, T2), EitherTuple<T1, T2>, TResult>(
                 x => throw new NoMatchException($"No match action exists for value of ({_item.Item1}, {_item.Item2}"));
@@ -81,7 +85,7 @@ namespace SuccincT.PatternMatchers
 
         IActionMatcherAfterElse IActionMatcher<T1, T2>.IgnoreElse()
         {
-            _elseFunction = x => default;
+            _elseFunction = x => default!;
             return this;
         }
 
@@ -164,7 +168,7 @@ namespace SuccincT.PatternMatchers
         void IActionMatcherAfterElse.Exec()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item));
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
         TResult IFuncMatcher<T1, T2, TResult>.Result() =>
@@ -179,16 +183,16 @@ namespace SuccincT.PatternMatchers
         private void RecordFunction(Func<(T1, T2), IList<EitherTuple<T1, T2>>, bool> test,
                                     IList<EitherTuple<T1, T2>> values,
                                     Func<(T1, T2), TResult> function) => 
-            _functionSelector.AddTestAndAction(test, values, null, function);
+            _functionSelector.AddTestAndAction(test, values, null!, function);
 
         private void RecordFunction(Func<(T1, T2), bool> test, Func<(T1, T2), TResult> function) =>
-            _functionSelector.AddTestAndAction(null, null, test, function);
+            _functionSelector.AddTestAndAction(null!, null!, test, function);
 
         private static Func<(T1, T2), TResult> ActionToFunc(Action<T1, T2> action) =>
             x =>
             {
                 action(x.Item1, x.Item2);
-                return default;
+                return default!;
             };
     }
 }

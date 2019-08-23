@@ -3,7 +3,8 @@ using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Options
 {
-    public interface IOptionFuncMatcher<T, TResult>
+    public interface IOptionFuncMatcher<T, TResult> 
+        
     {
         IUnionFuncPatternCaseHandler<IOptionFuncMatcher<T, TResult>, T, TResult> Some();
         INoneFuncMatchHandler<T, TResult> None();

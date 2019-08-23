@@ -56,7 +56,7 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
             var result = Option<bool>.None();
-            Throws<InvalidOperationException>(() => Ignore(result.Value));
+            Throws<InvalidOperationException>(() => _ = result.Value);
         }
 
         [Test]
@@ -129,14 +129,14 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.None();
-            Throws<NoMatchException>(() => Ignore(option.Match<int>().Some().Do(x => 1).Result()));
+            Throws<NoMatchException>(() => _ = option.Match<int>().Some().Do(x => 1).Result());
         }
 
         [Test]
         public void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            Throws<NoMatchException>(() => Ignore(option.Match<int>().None().Do(() => 0).Result()));
+            Throws<NoMatchException>(() => _ = option.Match<int>().None().Do(() => 0).Result());
         }
 
         [Test]

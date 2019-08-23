@@ -3,6 +3,7 @@
 namespace SuccincT.PatternMatchers
 {
     public interface IMapperMatcher<T, TResult>
+
     {
         IMapperNoneHandler<T, TResult> Empty();
 

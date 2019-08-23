@@ -1,5 +1,5 @@
-﻿using SuccincT.Unions;
-using static SuccincT.Unions.None;
+﻿using SuccincT.Functional;
+using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Options
 {
@@ -10,9 +10,7 @@ namespace SuccincT.Options
     /// </summary>
     public struct Maybe<T>
     {
-        // ReSharper disable once UnusedParameter.Local - unit param used to
-        // prevent JSON serializer from using this constructor to create an invalid maybe.
-        private Maybe(None _)
+        private Maybe(Unit _)
         {
             Option = Option<T>.None();
             CorrectlyLoad = true;
@@ -33,7 +31,7 @@ namespace SuccincT.Options
         /// <summary>
         /// Creates an instance of a maybe with no value.
         /// </summary>
-        public static Maybe<T> None() => new Maybe<T>(none);
+        public static Maybe<T> None() => new Maybe<T>(unit);
 
         /// <summary>
         /// Creates an instance of a maybe with the specified value.

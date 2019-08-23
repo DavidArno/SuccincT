@@ -47,7 +47,7 @@ namespace SuccincTTests.SuccincT.Unions
             var union = new Union<int, string, Plants, Foods>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Value<float>());
         }
-        
+
         [Test]
         public void UnionT1HasValueTest_ReturnsTrue()
         {
@@ -55,7 +55,31 @@ namespace SuccincTTests.SuccincT.Unions
             var hasInteger = union.HasValueOf<int>();
             IsTrue(hasInteger);
         }
-        
+        [Test]
+        public void UnionT2HasValueTest_ReturnsTrue()
+        {
+            var union = new Union<int, string, Plants, Foods>("1");
+            var hasString = union.HasValueOf<string>();
+            IsTrue(hasString);
+        }
+
+        [Test]
+        public void UnionT3HasValueTest_ReturnsTrue()
+        {
+            var union = new Union<int, string, Plants, Foods>(Plants.Rose);
+            var hasPlants = union.HasValueOf<Plants>();
+            IsTrue(hasPlants);
+        }
+
+        [Test]
+        public void UnionT4HasValueTest_ReturnsTrue()
+        {
+            var union = new Union<int, string, Plants, Foods>(Foods.Cake);
+            var hasFood = union.HasValueOf<Foods>();
+            IsTrue(hasFood);
+        }
+
+
         [Test]
         public void UnionT1T2T3T4HasValueTest_ReturnsFalse()
         {

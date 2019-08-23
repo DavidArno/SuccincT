@@ -13,6 +13,8 @@ namespace SuccincT.PatternMatchers
                                                IMapperRecursiveConsHandler<T, TResult>,
                                                IMapperSingleWhereHandler<T, TResult>,
                                                IMapperRecursiveConsWhereHandler<T, TResult>
+                    
+       
     {
         private readonly IEnumerable<T> _collection;
         private Option<TResult> _noneValue;
@@ -26,6 +28,8 @@ namespace SuccincT.PatternMatchers
 
         public MapperMatcher(IEnumerable<T> collection)
         {
+            _consWhereTest = null!;
+            _singleWhereTest = null!;
             _noneValue = Option<TResult>.None();
             _collection = collection;
             _singleTestAndDos = new List<(Func<T, bool> whereTest, Func<T, TResult> doFunc)>();
@@ -97,14 +101,14 @@ namespace SuccincT.PatternMatchers
         }
 
         IEnumerable<TResult> IMapperMatcher<T, TResult>.Result() =>
-            !_collection.Any() ? HandleEmptyCollection() : MapCollection();
+            (!_collection.Any() ? HandleEmptyCollection() : MapCollection())!;
 
         private IEnumerable<TResult> HandleEmptyCollection() => _noneValue.HasValue
             ? new ConsEnumerable<TResult>(_noneValue.Value)
             : throw new NoMatchException("No empty clause supplied when handling an empty collection");
 
         [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        private IEnumerable<TResult> MapCollection()
+        private IEnumerable<TResult>? MapCollection()
         {
             var reversedCollection = _collection is IList<T> list
                 ? YieldReversedList(list)
@@ -134,7 +138,7 @@ namespace SuccincT.PatternMatchers
             return resultCollection;
         }
 
-        private (IConsEnumerable<TResult> result, bool successfullMatch) HandleFirstElement(T firstElement)
+        private (IConsEnumerable<TResult>? result, bool successfullMatch) HandleFirstElement(T firstElement)
         {
             foreach (var (testFunc, doFunc) in _singleTestAndDos)
             {
@@ -144,14 +148,14 @@ namespace SuccincT.PatternMatchers
             return (null, false);
         }
 
-        private (IConsEnumerable<TResult> result, bool successfullMatch) HandleConsElement(
+        private (IConsEnumerable<TResult>? result, bool successfullMatch) HandleConsElement(
             T element,
             T last,
-            IConsEnumerable<TResult> mappedCollection)
+            IConsEnumerable<TResult>? mappedCollection)
         {
             foreach (var (testFunc, doFunc) in _consTestAndDos)
             {
-                if (testFunc(element, last)) return (doFunc(element, last, mappedCollection), true);
+                if (testFunc(element, last)) return (doFunc(element, last, mappedCollection!), true);
             }
 
             return (null, false);

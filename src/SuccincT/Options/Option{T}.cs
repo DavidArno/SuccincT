@@ -15,9 +15,7 @@ namespace SuccincT.Options
 
         private readonly T _value;
 
-        // ReSharper disable once UnusedParameter.Local - unit param used to
-        // prevent JSON serializer from using this constructor to create an invalid option.
-        private Option(Unit _) => HasValue = false;
+        private Option(Unit _) => (HasValue, _value) = (false, default!);
 
         private Option(T value) => (HasValue, _value) = (true, value);
 
@@ -35,7 +33,8 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public IOptionFuncMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(CreateUnion(), this);
+        public IOptionFuncMatcher<T, TResult> Match<TResult>() 
+            => new OptionMatcher<T, TResult>(CreateUnion(), this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
@@ -69,22 +68,22 @@ namespace SuccincT.Options
 
         internal bool EqualsOption(Option<T> other) =>
             !ReferenceEquals(other, null) &&
-            (other.HasValue && HasValue && Value.Equals(other.Value) ||
+            (other.HasValue && HasValue && Value!.Equals(other.Value) ||
             !(HasValue || other.HasValue));
 
         internal bool EqualsMaybe(Maybe<T> other) =>
-            other.HasValue && HasValue && Value.Equals(other.Value) ||
+            other.HasValue && HasValue && Value!.Equals(other.Value) ||
             !(HasValue ||
             !other.CorrectlyLoad ||
             other.HasValue);
 
-        public override int GetHashCode() => HasValue ? _value.GetHashCode() : 0;
+        public override int GetHashCode() => HasValue ? _value!.GetHashCode() : 0;
 
         public static bool operator ==(Option<T> a, Option<T> b) => ReferenceEquals(a, null)
             ? ReferenceEquals(b, null)
             : a.EqualsOption(b);
 
-        public static bool operator !=(Option<T> a, Option<T> b) => a == null ? b != null : !a.EqualsOption(b);
+        public static bool operator !=(Option<T> a, Option<T> b) => a == null! ? b != null! : !a.EqualsOption(b);
 
         public static implicit operator Option<T>(T value) => new Option<T>(value);
         public static implicit operator Option<T>(Maybe<T> maybe) => maybe.Option;

@@ -1,7 +1,6 @@
 ﻿using SuccincT.Functional;
 using static SuccincT.Functional.Unit;
 
-// ReSharper disable InconsistentNaming - "none" seems a better fit name than "Value".
 namespace SuccincT.Unions
 {
     /// <summary>
@@ -11,8 +10,6 @@ namespace SuccincT.Unions
     {
         private static readonly None TheOnlyNone = new None(unit);
 
-        // ReSharper disable once UnusedParameter.Local
-        // Parameter used to prevent eg JSON.Net using this to deserialize a None
         private None(Unit _) { }
 
         /// <summary>

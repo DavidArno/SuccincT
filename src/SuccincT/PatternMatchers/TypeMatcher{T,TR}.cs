@@ -13,6 +13,8 @@ namespace SuccincT.PatternMatchers
 
         internal TypeMatcher(T item)
         {
+            _elseFunction = null!;
+
             _item = item;
             _matchList = new List<TypeMatcherCaseOfData<T, TResult>>();
         }
@@ -37,7 +39,7 @@ namespace SuccincT.PatternMatchers
         {
             foreach (var match in _matchList)
             {
-                if (_item.GetType() == match.CaseType && match.WhereExpression(_item))
+                if (_item!.GetType() == match.CaseType && match.WhereExpression(_item))
                 {
                     return match.DoFunc(_item);
                 }

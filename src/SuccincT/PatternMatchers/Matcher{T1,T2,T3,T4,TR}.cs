@@ -27,10 +27,15 @@ namespace SuccincT.PatternMatchers
 
         internal Matcher((T1, T2, T3, T4) item)
         {
+            _withValues = null!;
+            _whereExpression = null!;
+            _elseFunction = null!;
+
             _item = item;
             _functionSelector = new MatchFunctionSelector<(T1, T2, T3, T4), EitherTuple<T1, T2, T3, T4>, TResult>(
-                x => throw new NoMatchException("No match action exists for value of " +
-                                                $"({_item.Item1}, {_item.Item2}, {_item.Item3}, {_item.Item4}"));
+                x => throw new NoMatchException(
+                    "No match action exists for value of " +
+                    $"({_item.Item1}, {_item.Item2}, {_item.Item3}, {_item.Item4}"));
         }
 
         IFuncMatcher<T1, T2, T3, T4, TR> IMatcher<T1, T2, T3, T4>.To<TR>() => new Matcher<T1, T2, T3, T4, TR>(_item);
@@ -51,15 +56,16 @@ namespace SuccincT.PatternMatchers
             Either<T3, Any> value3,
             Either<T4, Any> value4)
         {
-            _withValues = new List<EitherTuple<T1, T2, T3, T4>> { EitherTuple.Create(value1, value2, value3, value4) };
+            _withValues = new List<EitherTuple<T1, T2, T3, T4>> {EitherTuple.Create(value1, value2, value3, value4)};
             return this;
         }
 
         IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>
-            IFuncMatcher<T1, T2, T3, T4, TResult>.With(Either<T1, Any> value1,
-                                                       Either<T2, Any> value2,
-                                                       Either<T3, Any> value3,
-                                                       Either<T4, Any> value4)
+            IFuncMatcher<T1, T2, T3, T4, TResult>.With(
+                Either<T1, Any> value1,
+                Either<T2, Any> value2,
+                Either<T3, Any> value3,
+                Either<T4, Any> value4)
         {
             _withValues = new List<EitherTuple<T1, T2, T3, T4>> {EitherTuple.Create(value1, value2, value3, value4)};
             return this;
@@ -94,11 +100,12 @@ namespace SuccincT.PatternMatchers
 
         IActionMatcherAfterElse IActionMatcher<T1, T2, T3, T4>.IgnoreElse()
         {
-            _elseFunction = x => default;
+            _elseFunction = x => default!;
             return this;
         }
 
-        IFuncMatcherAfterElse<TResult> IFuncMatcher<T1, T2, T3, T4, TResult>.Else(Func<T1, T2, T3, T4, TResult> function)
+        IFuncMatcherAfterElse<TResult> IFuncMatcher<T1, T2, T3, T4, TResult>.Else(
+            Func<T1, T2, T3, T4, TResult> function)
         {
             _elseFunction = x => function(x.Item1, x.Item2, x.Item3, x.Item4);
             return this;
@@ -111,10 +118,11 @@ namespace SuccincT.PatternMatchers
         }
 
         IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>
-            IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Or(Either<T1, Any> value1,
-                                                                                                Either<T2, Any> value2,
-                                                                                                Either<T3, Any> value3,
-                                                                                                Either<T4, Any> value4)
+            IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Or(
+                Either<T1, Any> value1,
+                Either<T2, Any> value2,
+                Either<T3, Any> value3,
+                Either<T4, Any> value4)
         {
             _withValues.Add(EitherTuple.Create(value1, value2, value3, value4));
             return this;
@@ -134,31 +142,36 @@ namespace SuccincT.PatternMatchers
             return this;
         }
 
-        IFuncMatcher<T1, T2, T3, T4, TResult> IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
-            Func<T1, T2, T3, T4, TResult> function)
+        IFuncMatcher<T1, T2, T3, T4, TResult>
+            IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
+                Func<T1, T2, T3, T4, TResult> function)
         {
-            RecordFunction((x, y) => y.Any(v => v.MatchesTuple(x)),
-                           _withValues,
-                           x => function(x.Item1, x.Item2, x.Item3, x.Item4));
+            RecordFunction(
+                (x, y) => y.Any(v => v.MatchesTuple(x)),
+                _withValues,
+                x => function(x.Item1, x.Item2, x.Item3, x.Item4));
             return this;
         }
 
-        IFuncMatcher<T1, T2, T3, T4, TResult> IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
-            TResult value)
+        IFuncMatcher<T1, T2, T3, T4, TResult>
+            IFuncWithHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
+                TResult value)
         {
             RecordFunction((x, y) => y.Any(v => v.MatchesTuple(x)), _withValues, x => value);
             return this;
         }
 
-        IFuncMatcher<T1, T2, T3, T4, TResult> IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
-            Func<T1, T2, T3, T4, TResult> function)
+        IFuncMatcher<T1, T2, T3, T4, TResult>
+            IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
+                Func<T1, T2, T3, T4, TResult> function)
         {
             RecordFunction(_whereExpression, x => function(x.Item1, x.Item2, x.Item3, x.Item4));
             return this;
         }
 
-        IFuncMatcher<T1, T2, T3, T4, TResult> IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
-            TResult value)
+        IFuncMatcher<T1, T2, T3, T4, TResult>
+            IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
+                TResult value)
         {
             RecordFunction(_whereExpression, x => value);
             return this;
@@ -169,7 +182,7 @@ namespace SuccincT.PatternMatchers
         void IActionMatcherAfterElse.Exec()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            Ignore(possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item));
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
         TResult IFuncMatcher<T1, T2, T3, T4, TResult>.Result() =>
@@ -181,26 +194,28 @@ namespace SuccincT.PatternMatchers
             return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
         }
 
-        private void RecordFunction(Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
-                                    IList<EitherTuple<T1, T2, T3, T4>> values,
-                                    Func<(T1, T2, T3, T4), TResult> function) =>
-            _functionSelector.AddTestAndAction(test, values, null, function);
+        private void RecordFunction(
+            Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
+            IList<EitherTuple<T1, T2, T3, T4>> values,
+            Func<(T1, T2, T3, T4), TResult> function) =>
+            _functionSelector.AddTestAndAction(test, values, null!, function);
 
         private void RecordFunction(Func<(T1, T2, T3, T4), bool> test, Func<(T1, T2, T3, T4), TResult> function) =>
-            _functionSelector.AddTestAndAction(null, null, test, function);
+            _functionSelector.AddTestAndAction(null!, null!, test, function);
 
         private static Func<(T1, T2, T3, T4), TResult> ActionToFunc(Action<T1, T2, T3, T4> action) =>
             x =>
             {
                 action(x.Item1, x.Item2, x.Item3, x.Item4);
-                return default;
+                return default!;
             };
 
         IActionWithHandler<IActionMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>
-            IActionWithHandler<IActionMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>.Or(Either<T1, Any> value1,
-                                                                                  Either<T2, Any> value2,
-                                                                                  Either<T3, Any> value3,
-                                                                                  Either<T4, Any> value4)
+            IActionWithHandler<IActionMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>.Or(
+                Either<T1, Any> value1,
+                Either<T2, Any> value2,
+                Either<T3, Any> value3,
+                Either<T4, Any> value4)
         {
             _withValues.Add(EitherTuple.Create(value1, value2, value3, value4));
             return this;

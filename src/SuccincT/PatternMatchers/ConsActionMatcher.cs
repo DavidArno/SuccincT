@@ -10,6 +10,6 @@ namespace SuccincT.PatternMatchers
 
         public IConsFuncMatcher<T, TResult> To<TResult>() => new ConsFuncMatcher<T, TResult>(_collection);
 
-        public IMapperMatcher<T, TResult> MapTo<TResult>() => new MapperMatcher<T, TResult>(_collection);
+        public IMapperMatcher<T, TResult> MapTo<TResult>()  => new MapperMatcher<T, TResult>(_collection);
     }
 }

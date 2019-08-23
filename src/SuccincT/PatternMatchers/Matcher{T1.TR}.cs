@@ -13,6 +13,7 @@ namespace SuccincT.PatternMatchers
                                                  IFuncWithHandler<IFuncMatcher<T1, TResult>, T1, TResult>,
                                                  IFuncWhereHandler<IFuncMatcher<T1, TResult>, T1, TResult>,
                                                  IFuncMatcherAfterElse<TResult>
+       
     {
         private readonly MatchFunctionSelector<T1, T1, TResult> _functionSelector;
         private readonly T1 _item;
@@ -22,6 +23,10 @@ namespace SuccincT.PatternMatchers
 
         internal Matcher(T1 item)
         {
+            _withValues = null!;
+            _whereExpression = null!;
+            _elseFunction = null!;
+
             _item = item;
             _functionSelector = new MatchFunctionSelector<T1, T1, TResult>(
                 x => throw new NoMatchException($"No match action exists for value of {_item}"));
@@ -87,7 +92,7 @@ namespace SuccincT.PatternMatchers
 
         IActionMatcherAfterElse IActionMatcher<T1>.IgnoreElse()
         {
-            _elseFunction = x => default;
+            _elseFunction = x => default!;
             return this;
         }
 
@@ -165,17 +170,17 @@ namespace SuccincT.PatternMatchers
         private void RecordFunction(IList<T1> values, Func<T1, TResult> function) =>
             _functionSelector.AddTestAndAction((x, y) => y.Any(v => EqualityComparer<T1>.Default.Equals(x, v)),
                                                values,
-                                               null,
+                                               null!,
                                                function);
 
         private void RecordFunction(Func<T1, bool> test, Func<T1, TResult> function) =>
-            _functionSelector.AddTestAndAction(null, null, test, function);
+            _functionSelector.AddTestAndAction(null!, null!, test, function);
 
         private static Func<T1, TResult> ActionToFunc(Action<T1> action) =>
             x =>
             {
                 action(x);
-                return default;
+                return default!;
             };
     }
 }

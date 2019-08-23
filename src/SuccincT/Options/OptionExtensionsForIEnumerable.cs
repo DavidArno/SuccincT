@@ -6,8 +6,6 @@ namespace SuccincT.Options
     //
     // These methods are all based on the XxxOrDefault methods in
     // http://referencesource.microsoft.com/#System.Core/System/Linq/Enumerable.cs
-    // I have followed the logic structure of each method there, on the assumption that it gives the fastest possible
-    // result in each case, rather than write more readable/functional code.
     //
     public static class OptionExtensionsForIEnumerable
     {
@@ -19,7 +17,7 @@ namespace SuccincT.Options
                 case IList<T> list when list.Count > 0: return Option<T>.Some(list[0]);
             }
 
-            using (var enumerator = collection.GetEnumerator())
+            using (var enumerator = collection!.GetEnumerator())
             {
                 if (enumerator.MoveNext())
                 {
@@ -46,14 +44,16 @@ namespace SuccincT.Options
 
         public static Option<T> TryLast<T>(this IEnumerable<T> collection)
         {
-            switch (collection)
+            return collection switch
             {
-                case null: return Option<T>.None();
-                case IList<T> list when list.Count > 0: return Option<T>.Some(list[list.Count - 1]);
-            }
+                null => Option<T>.None(),
+                IList<T> list when list.Count > 0 => Option<T>.Some(list[list.Count - 1]),
+                var c => GetLast(collection)
+            };
 
-            using (var e = collection.GetEnumerator())
+            static Option<T> GetLast(IEnumerable<T> collection)
             {
+                using var e = collection.GetEnumerator();
                 if (!e.MoveNext()) return Option<T>.None();
 
                 T result;
@@ -82,18 +82,21 @@ namespace SuccincT.Options
 
         public static Option<T> TrySingle<T>(this IEnumerable<T> collection)
         {
-            switch (collection)
+            return collection switch
             {
-                case null: return Option<T>.None();
-                case IList<T> list: return list.Count == 1 ? Option<T>.Some(list[0]) : Option<T>.None();
-            }
+                null => Option<T>.None(),
+                IList<T> list when list.Count == 1 => Option<T>.Some(list[list.Count - 1]),
+                var c => GetSingle(collection)
+            };
 
-            using (var enumerator = collection.GetEnumerator())
+            static Option<T> GetSingle(IEnumerable<T> collection)
             {
+                using var enumerator = collection.GetEnumerator();
+
                 if (!enumerator.MoveNext()) return Option<T>.None();
 
                 var result = enumerator.Current;
-                return !enumerator.MoveNext() ? Option<T>.Some(result) : Option<T>.None();
+                return enumerator.MoveNext() ? Option<T>.None() : Option<T>.Some(result);
             }
         }
 
@@ -125,13 +128,12 @@ namespace SuccincT.Options
                 return index < list.Count ? Option<T>.Some(list[index]) : Option<T>.None();
             }
 
-            using (var enumerator = collection.GetEnumerator())
+            using var enumerator = collection.GetEnumerator();
+
+            while (true)
             {
-                while (true)
-                {
-                    if (!enumerator.MoveNext()) break;
-                    if (index-- == 0) { return Option<T>.Some(enumerator.Current); }
-                }
+                if (!enumerator.MoveNext()) break;
+                if (index-- == 0) return Option<T>.Some(enumerator.Current); 
             }
 
             return Option<T>.None();

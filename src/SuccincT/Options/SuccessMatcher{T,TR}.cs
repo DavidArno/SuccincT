@@ -13,6 +13,8 @@ namespace SuccincT.Options
                                                       ISuccessActionMatcher<T>,
                                                       ISuccessActionMatchHandler<T>,
                                                       IUnionActionPatternMatcherAfterElse
+       
+        
     {
         private readonly Union<T, bool> _union;
         private readonly Success<T> _success;
@@ -31,6 +33,7 @@ namespace SuccincT.Options
         {
             _union = union;
             _success = option;
+            _elseAction = null!;
         }
 
         IUnionFuncPatternCaseHandler<ISuccessFuncMatcher<T, TResult>, T, TResult> 
@@ -63,13 +66,13 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse ISuccessActionMatcher<T>.Else(Action<Success<T>> elseAction)
         {
-            _elseAction = elseAction.ToUnitFunc() as Func<Success<T>, TResult>;
+            _elseAction = (elseAction.ToUnitFunc() as Func<Success<T>, TResult>)!;
             return this;
         }
 
         IUnionActionPatternMatcherAfterElse ISuccessActionMatcher<T>.IgnoreElse()
         {
-            _elseAction = x => default;
+            _elseAction = x => default!;
             return this;
         }
 
@@ -110,7 +113,7 @@ namespace SuccincT.Options
 
         ISuccessActionMatcher<T> ISuccessActionMatchHandler<T>.Do(Action action)
         {
-            RecordAction(action.ToUnitFunc() as Func<TResult>);
+            RecordAction((action.ToUnitFunc() as Func<TResult>)!);
             return this;
         }
 
@@ -121,6 +124,6 @@ namespace SuccincT.Options
             _case1FunctionSelector.AddTestAndAction(withTest, withData, whereTest, action);
 
         private void RecordAction(Func<TResult> action) =>
-            _case2FunctionSelector.AddTestAndAction((x, y) => true, null, null, x => action());
+            _case2FunctionSelector.AddTestAndAction((x, y) => true, null!, null!, x => action());
     }
 }
