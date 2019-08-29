@@ -27,13 +27,13 @@ namespace SuccincT.Options
             new MatchFunctionSelector<bool, bool, TResult>(
                 x => throw new NoMatchException("No match action defined for Success with no failure"));
 
-        private Func<Success<T>, TResult> _elseAction;
+        private Func<Success<T>, TResult>? _elseAction;
 
         internal SuccessMatcher(Union<T, bool> union, Success<T> option)
         {
             _union = union;
             _success = option;
-            _elseAction = null!;
+            _elseAction = null;
         }
 
         IUnionFuncPatternCaseHandler<ISuccessFuncMatcher<T, TResult>, T, TResult> 
@@ -66,7 +66,7 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse ISuccessActionMatcher<T>.Else(Action<Success<T>> elseAction)
         {
-            _elseAction = (elseAction.ToUnitFunc() as Func<Success<T>, TResult>)!;
+            _elseAction = elseAction.ToUnitFunc() as Func<Success<T>, TResult>;
             return this;
         }
 
@@ -87,7 +87,7 @@ namespace SuccincT.Options
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_success);
+            return possibleResult.HasValue ? possibleResult.Value : _elseAction!(_success);
         }
 
         void IUnionActionPatternMatcherAfterElse.Exec()
@@ -96,7 +96,7 @@ namespace SuccincT.Options
                 ? _case1FunctionSelector.DetermineResult(_union.Case1)
                 : _case2FunctionSelector.DetermineResult(_union.Case2);
 
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_success);
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction!(_success);
         }
 
         ISuccessFuncMatcher<T, TResult> ISuccessFuncMatchHandler<T, TResult>.Do(Func<TResult> action)
@@ -113,17 +113,17 @@ namespace SuccincT.Options
 
         ISuccessActionMatcher<T> ISuccessActionMatchHandler<T>.Do(Action action)
         {
-            RecordAction((action.ToUnitFunc() as Func<TResult>)!);
+            RecordAction(action.ToUnitFuncCastAs<TResult>());
             return this;
         }
 
-        private void RecordAction(Func<T, IList<T>, bool> withTest,
-                                  Func<T, bool> whereTest,
-                                  IList<T> withData,
+        private void RecordAction(Func<T, IList<T>, bool>? withTest,
+                                  Func<T, bool>? whereTest,
+                                  IList<T>? withData,
                                   Func<T, TResult> action) =>
             _case1FunctionSelector.AddTestAndAction(withTest, withData, whereTest, action);
 
         private void RecordAction(Func<TResult> action) =>
-            _case2FunctionSelector.AddTestAndAction((x, y) => true, null!, null!, x => action());
+            _case2FunctionSelector.AddTestAndAction((x, y) => true, null, null, x => action());
     }
 }

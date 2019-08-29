@@ -7,3 +7,6 @@ csharp_style_var_elsewhere = true:silent
 
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = silent
+
+# IDE0005: Using directive is unnecessary.
+dotnet_diagnostic.IDE0005.severity = error

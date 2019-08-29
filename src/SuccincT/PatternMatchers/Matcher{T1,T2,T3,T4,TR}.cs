@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using SuccincT.Unions;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincT.PatternMatchers
 {
@@ -21,15 +20,15 @@ namespace SuccincT.PatternMatchers
             _functionSelector;
 
         private readonly (T1, T2, T3, T4) _item;
-        private IList<EitherTuple<T1, T2, T3, T4>> _withValues;
-        private Func<(T1, T2, T3, T4), bool> _whereExpression;
-        private Func<(T1, T2, T3, T4), TResult> _elseFunction;
+        private IList<EitherTuple<T1, T2, T3, T4>>? _withValues;
+        private Func<(T1, T2, T3, T4), bool>? _whereExpression;
+        private Func<(T1, T2, T3, T4), TResult>? _elseFunction;
 
         internal Matcher((T1, T2, T3, T4) item)
         {
-            _withValues = null!;
-            _whereExpression = null!;
-            _elseFunction = null!;
+            _withValues = null;
+            _whereExpression = null;
+            _elseFunction = null;
 
             _item = item;
             _functionSelector = new MatchFunctionSelector<(T1, T2, T3, T4), EitherTuple<T1, T2, T3, T4>, TResult>(
@@ -124,7 +123,7 @@ namespace SuccincT.PatternMatchers
                 Either<T3, Any> value3,
                 Either<T4, Any> value4)
         {
-            _withValues.Add(EitherTuple.Create(value1, value2, value3, value4));
+            _withValues!.Add(EitherTuple.Create(value1, value2, value3, value4));
             return this;
         }
 
@@ -138,7 +137,7 @@ namespace SuccincT.PatternMatchers
         IActionMatcher<T1, T2, T3, T4> IActionWhereHandler<IActionMatcher<T1, T2, T3, T4>, T1, T2, T3, T4>.Do(
             Action<T1, T2, T3, T4> action)
         {
-            RecordFunction(_whereExpression, ActionToFunc(action));
+            RecordFunction(_whereExpression!, ActionToFunc(action));
             return this;
         }
 
@@ -165,7 +164,7 @@ namespace SuccincT.PatternMatchers
             IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
                 Func<T1, T2, T3, T4, TResult> function)
         {
-            RecordFunction(_whereExpression, x => function(x.Item1, x.Item2, x.Item3, x.Item4));
+            RecordFunction(_whereExpression!, x => function(x.Item1, x.Item2, x.Item3, x.Item4));
             return this;
         }
 
@@ -173,7 +172,7 @@ namespace SuccincT.PatternMatchers
             IFuncWhereHandler<IFuncMatcher<T1, T2, T3, T4, TResult>, T1, T2, T3, T4, TResult>.Do(
                 TResult value)
         {
-            RecordFunction(_whereExpression, x => value);
+            RecordFunction(_whereExpression!, x => value);
             return this;
         }
 
@@ -182,7 +181,7 @@ namespace SuccincT.PatternMatchers
         void IActionMatcherAfterElse.Exec()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseFunction!(_item);
         }
 
         TResult IFuncMatcher<T1, T2, T3, T4, TResult>.Result() =>
@@ -191,17 +190,17 @@ namespace SuccincT.PatternMatchers
         TResult IFuncMatcherAfterElse<TResult>.Result()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            return possibleResult.HasValue ? possibleResult.Value : _elseFunction!(_item);
         }
 
         private void RecordFunction(
             Func<(T1, T2, T3, T4), IList<EitherTuple<T1, T2, T3, T4>>, bool> test,
-            IList<EitherTuple<T1, T2, T3, T4>> values,
+            IList<EitherTuple<T1, T2, T3, T4>>? values,
             Func<(T1, T2, T3, T4), TResult> function) =>
-            _functionSelector.AddTestAndAction(test, values, null!, function);
+            _functionSelector.AddTestAndAction(test, values, null, function);
 
         private void RecordFunction(Func<(T1, T2, T3, T4), bool> test, Func<(T1, T2, T3, T4), TResult> function) =>
-            _functionSelector.AddTestAndAction(null!, null!, test, function);
+            _functionSelector.AddTestAndAction(null, null, test, function);
 
         private static Func<(T1, T2, T3, T4), TResult> ActionToFunc(Action<T1, T2, T3, T4> action) =>
             x =>
@@ -217,7 +216,7 @@ namespace SuccincT.PatternMatchers
                 Either<T3, Any> value3,
                 Either<T4, Any> value4)
         {
-            _withValues.Add(EitherTuple.Create(value1, value2, value3, value4));
+            _withValues!.Add(EitherTuple.Create(value1, value2, value3, value4));
             return this;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using System;
 using SuccincT.Functional;
 using static SuccincT.Functional.TypedLambdas;
+using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -29,22 +30,11 @@ namespace SuccincT.Unions.PatternMatchers
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>
             IUnionFuncPatternMatcher<T1, T2, TResult>.CaseOf<T>()
         {
-            if (typeof(T) == typeof(T1))
+            if (SameType<T, T1>() || SameType<T, T2>())
             {
-                return
-                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T1, TResult>(
-                        _selector.RecordAction,
-                        this)
-                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>)!;
-            }
-
-            if (typeof(T) == typeof(T2))
-            {
-                return
-                    (new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T2, TResult>(
-                        _selector.RecordAction,
-                        this)
-                        as UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>)!;
+                return new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, TResult>, T, TResult>(
+                    _selector.RecordAction,
+                    this);
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));
@@ -74,23 +64,14 @@ namespace SuccincT.Unions.PatternMatchers
         IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2> IUnionActionPatternMatcher<T1, T2>.Case2() => 
             new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction, this);
 
-        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T> IUnionActionPatternMatcher<T1, T2>.CaseOf
-            <T>()
+        IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T>
+            IUnionActionPatternMatcher<T1, T2>.CaseOf<T>()
         {
-            if (typeof(T) == typeof(T1))
+            if (SameType<T, T1>() || SameType<T, T2>())
             {
-                return
-                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T1, Unit>(_selector.RecordAction,
-                                                                                              this)
-                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>)!;
-            }
-
-            if (typeof(T) == typeof(T2))
-            {
-                return
-                    (new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T2, Unit>(_selector.RecordAction,
-                                                                                              this)
-                        as UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>)!;
+                return new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2>, T, Unit>(
+                    _selector.RecordAction,
+                    this);
             }
 
             throw new InvalidCaseOfTypeException(typeof(T));

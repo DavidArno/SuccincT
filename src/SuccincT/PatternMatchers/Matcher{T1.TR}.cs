@@ -17,15 +17,15 @@ namespace SuccincT.PatternMatchers
     {
         private readonly MatchFunctionSelector<T1, T1, TResult> _functionSelector;
         private readonly T1 _item;
-        private List<T1> _withValues;
-        private Func<T1, bool> _whereExpression;
-        private Func<T1, TResult> _elseFunction;
+        private List<T1>? _withValues;
+        private Func<T1, bool>? _whereExpression;
+        private Func<T1, TResult>? _elseFunction;
 
         internal Matcher(T1 item)
         {
-            _withValues = null!;
-            _whereExpression = null!;
-            _elseFunction = null!;
+            _withValues = null;
+            _whereExpression = null;
+            _elseFunction = null;
 
             _item = item;
             _functionSelector = new MatchFunctionSelector<T1, T1, TResult>(
@@ -73,14 +73,14 @@ namespace SuccincT.PatternMatchers
 
         IActionWithHandler<IActionMatcher<T1>, T1> IActionWithHandler<IActionMatcher<T1>, T1>.Or(T1 value)
         {
-            _withValues.Add(value);
+            _withValues!.Add(value);
             return this;
         }
 
         IFuncWithHandler<IFuncMatcher<T1, TResult>, T1, TResult>
             IFuncWithHandler<IFuncMatcher<T1, TResult>, T1, TResult>.Or(T1 value)
         {
-            _withValues.Add(value);
+            _withValues!.Add(value);
             return this;
         }
 
@@ -116,8 +116,7 @@ namespace SuccincT.PatternMatchers
 
         IActionMatcher<T1> IActionWhereHandler<IActionMatcher<T1>, T1>.Do(Action<T1> action)
         {
-            var expression = _whereExpression;
-            RecordFunction(expression, ActionToFunc(action));
+            RecordFunction(_whereExpression!, ActionToFunc(action));
             return this;
         }
 
@@ -138,13 +137,13 @@ namespace SuccincT.PatternMatchers
         IFuncMatcher<T1, TResult> IFuncWhereHandler<IFuncMatcher<T1, TResult>, T1, TResult>.Do(
             Func<T1, TResult> action)
         {
-            RecordFunction(_whereExpression, action);
+            RecordFunction(_whereExpression!, action);
             return this;
         }
 
         IFuncMatcher<T1, TResult> IFuncWhereHandler<IFuncMatcher<T1, TResult>, T1, TResult>.Do(TResult value)
         {
-            RecordFunction(_whereExpression, x => value);
+            RecordFunction(_whereExpression!, x => value);
             return this;
         }
 
@@ -154,7 +153,7 @@ namespace SuccincT.PatternMatchers
         {
             if (!_functionSelector.DetermineResult(_item).HasValue)
             {
-                _elseFunction(_item);
+                _elseFunction!(_item);
             }
         }
 
@@ -164,17 +163,17 @@ namespace SuccincT.PatternMatchers
         TResult IFuncMatcherAfterElse<TResult>.Result()
         {
             var possibleResult = _functionSelector.DetermineResult(_item);
-            return possibleResult.HasValue ? possibleResult.Value : _elseFunction(_item);
+            return possibleResult.HasValue ? possibleResult.Value : _elseFunction!(_item);
         }
 
-        private void RecordFunction(IList<T1> values, Func<T1, TResult> function) =>
+        private void RecordFunction(IList<T1>? values, Func<T1, TResult> function) =>
             _functionSelector.AddTestAndAction((x, y) => y.Any(v => EqualityComparer<T1>.Default.Equals(x, v)),
                                                values,
-                                               null!,
+                                               null,
                                                function);
 
         private void RecordFunction(Func<T1, bool> test, Func<T1, TResult> function) =>
-            _functionSelector.AddTestAndAction(null!, null!, test, function);
+            _functionSelector.AddTestAndAction(null, null, test, function);
 
         private static Func<T1, TResult> ActionToFunc(Action<T1> action) =>
             x =>

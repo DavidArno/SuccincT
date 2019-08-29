@@ -1,7 +1,6 @@
 ﻿using SuccincT.Functional;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using SuccincT.Options;
 
@@ -23,13 +22,13 @@ namespace SuccincT.PatternMatchers
         private readonly List<(Func<T, T, bool> whereTest, 
                                Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)> _consTestAndDos;
 
-        private Func<T, bool> _singleWhereTest;
-        private Func<T, T, bool> _consWhereTest;
+        private Func<T, bool>? _singleWhereTest;
+        private Func<T, T, bool>? _consWhereTest;
 
         public MapperMatcher(IEnumerable<T> collection)
         {
-            _consWhereTest = null!;
-            _singleWhereTest = null!;
+            _consWhereTest = null;
+            _singleWhereTest = null;
             _noneValue = Option<TResult>.None();
             _collection = collection;
             _singleTestAndDos = new List<(Func<T, bool> whereTest, Func<T, TResult> doFunc)>();
@@ -76,13 +75,13 @@ namespace SuccincT.PatternMatchers
 
         IMapperMatcher<T, TResult> IMapperSingleWhereHandler<T, TResult>.Do(TResult doValue)
         {
-            _singleTestAndDos.Add((_singleWhereTest, _ => doValue));
+            _singleTestAndDos.Add((_singleWhereTest!, _ => doValue));
             return this;
         }
 
         IMapperMatcher<T, TResult> IMapperSingleWhereHandler<T, TResult>.Do(Func<T, TResult> doFunc)
         {
-            _singleTestAndDos.Add((_singleWhereTest, doFunc));
+            _singleTestAndDos.Add((_singleWhereTest!, doFunc));
             return this;
         }
 
@@ -96,28 +95,27 @@ namespace SuccincT.PatternMatchers
         IMapperMatcher<T, TResult> IMapperRecursiveConsWhereHandler<T, TResult>.Do(
             Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)
         {
-            _consTestAndDos.Add((_consWhereTest, doFunc));
+            _consTestAndDos.Add((_consWhereTest!, doFunc));
             return this;
         }
 
         IEnumerable<TResult> IMapperMatcher<T, TResult>.Result() =>
-            (!_collection.Any() ? HandleEmptyCollection() : MapCollection())!;
+            !_collection.Any() ? HandleEmptyCollection() : MapCollection();
 
         private IEnumerable<TResult> HandleEmptyCollection() => _noneValue.HasValue
             ? new ConsEnumerable<TResult>(_noneValue.Value)
             : throw new NoMatchException("No empty clause supplied when handling an empty collection");
 
-        [SuppressMessage("ReSharper", "PossibleMultipleEnumeration")]
-        private IEnumerable<TResult>? MapCollection()
+        private IEnumerable<TResult> MapCollection()
         {
             var reversedCollection = _collection is IList<T> list
                 ? YieldReversedList(list)
                 : _collection.Reverse();
 
             var firstElement = reversedCollection.First();
-            var (resultCollection, successfulMatch) = HandleFirstElement(firstElement);
+            var resultCollection = HandleFirstElement(firstElement);
 
-            if (!successfulMatch)
+            if (resultCollection is null)
             {
                 throw new NoMatchException("No matching Single clause found for multiple element collection");
             }
@@ -127,8 +125,8 @@ namespace SuccincT.PatternMatchers
 
             foreach (var item in consElements)
             {
-                (resultCollection, successfulMatch) = HandleConsElement(item, last, resultCollection);
-                if (!successfulMatch)
+                resultCollection = HandleConsElement(item, last, resultCollection);
+                if (resultCollection is null)
                 {
                     throw new NoMatchException("No matching RecursiveCons clause found for multiple element collection");
                 }
@@ -138,27 +136,27 @@ namespace SuccincT.PatternMatchers
             return resultCollection;
         }
 
-        private (IConsEnumerable<TResult>? result, bool successfullMatch) HandleFirstElement(T firstElement)
+        private IConsEnumerable<TResult>? HandleFirstElement(T firstElement)
         {
             foreach (var (testFunc, doFunc) in _singleTestAndDos)
             {
-                if (testFunc(firstElement)) return (new ConsEnumerable<TResult>(doFunc(firstElement)), true);
+                if (testFunc(firstElement)) return new ConsEnumerable<TResult>(doFunc(firstElement));
             }
 
-            return (null, false);
+            return null;
         }
 
-        private (IConsEnumerable<TResult>? result, bool successfullMatch) HandleConsElement(
+        private IConsEnumerable<TResult>? HandleConsElement(
             T element,
             T last,
-            IConsEnumerable<TResult>? mappedCollection)
+            IConsEnumerable<TResult> mappedCollection)
         {
             foreach (var (testFunc, doFunc) in _consTestAndDos)
             {
-                if (testFunc(element, last)) return (doFunc(element, last, mappedCollection!), true);
+                if (testFunc(element, last)) return doFunc(element, last, mappedCollection);
             }
 
-            return (null, false);
+            return null;
         }
 
         private static IEnumerable<T> YieldReversedList(IList<T> list)

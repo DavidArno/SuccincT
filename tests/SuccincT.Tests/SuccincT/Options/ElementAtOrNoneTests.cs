@@ -48,13 +48,6 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TryElementAtResult_CanBeAssignedToMaybe()
-        {
-            Maybe<int> maybe = IntCollection().TryElementAt(1);
-            Assert.AreEqual(2, maybe.Value);
-        }
-
-        [Test]
         public void TryElementAtWithTooSmallNoListCollection_ReturnsNone()
         {
             Assert.IsFalse(IntCollection().TryElementAt(3).HasValue);

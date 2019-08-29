@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using SuccincT.Functional;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions.PatternMatchers;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincT.Options
 {
@@ -24,7 +23,7 @@ namespace SuccincT.Options
             new MatchFunctionSelector<string, string, TResult>(
                 x => throw new NoMatchException("No match action defined for ValueOrError with value"));
 
-        private Func<ValueOrError, TResult> _elseAction;
+        private Func<ValueOrError, TResult>? _elseAction;
 
         internal ValueOrErrorMatcher(ValueOrError valueOrError)
         {
@@ -66,7 +65,7 @@ namespace SuccincT.Options
 
         IUnionActionPatternMatcherAfterElse IValueOrErrorActionMatcher.Else(Action<ValueOrError> elseAction)
         {
-            _elseAction = (elseAction.ToUnitFunc() as Func<ValueOrError, TResult>)!;
+            _elseAction = elseAction.ToUnitFunc() as Func<ValueOrError, TResult>;
             return this;
         }
 
@@ -87,7 +86,7 @@ namespace SuccincT.Options
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            return possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
+            return possibleResult.HasValue ? possibleResult.Value : _elseAction!(_valueOrError);
         }
 
         void IUnionActionPatternMatcherAfterElse.Exec()
@@ -96,18 +95,18 @@ namespace SuccincT.Options
                 ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
                 : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
 
-            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction(_valueOrError);
+            _ = possibleResult.HasValue ? possibleResult.Value : _elseAction!(_valueOrError);
         }
 
-        private void RecordValueAction(Func<string, IList<string>, bool> withTest,
-                                       Func<string, bool> whereTest,
-                                       IList<string> withValues,
+        private void RecordValueAction(Func<string, IList<string>, bool>? withTest,
+                                       Func<string, bool>? whereTest,
+                                       IList<string>? withValues,
                                        Func<string, TResult> action) => 
             _valueFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
 
-        private void RecordErrorAction(Func<string, IList<string>, bool> withTest,
-                                       Func<string, bool> whereTest,
-                                       IList<string> withValues,
+        private void RecordErrorAction(Func<string, IList<string>, bool>? withTest,
+                                       Func<string, bool>? whereTest,
+                                       IList<string>? withValues,
                                        Func<string, TResult> action) => 
             _errorFunctionSelector.AddTestAndAction(withTest, withValues, whereTest, action);
     }

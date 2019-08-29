@@ -7,16 +7,8 @@ namespace SuccincT.Functional
         public Option<T> Head { get; }
         public IConsEnumerable<T> Tail { get; }
 
-        internal ConsResult(Option<T> head, IConsEnumerable<T> tail)
-        {
-            Head = head;
-            Tail = tail;
-        }
+        internal ConsResult(Option<T> head, IConsEnumerable<T> tail) => (Head, Tail) = (head, tail);
 
-        internal ConsResult(Option<T> head)
-        {
-            Head = head;
-            Tail = ConsEnumerable<T>.EmptyEnumerable;
-        }
+        internal ConsResult(Option<T> head) => (Head, Tail) = (head, ConsEnumerable<T>.EmptyEnumerable);
     }
 }

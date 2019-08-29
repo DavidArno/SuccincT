@@ -17,15 +17,15 @@ namespace SuccincT.PatternMatchers
        
     {
         private (bool supplied, TResult value) _emptyValue;
-        private Func<T, bool> _singleWhereFunc;
-        private Func<T, IEnumerable<T>, bool> _consWhereFunc;
+        private Func<T, bool>? _singleWhereFunc;
+        private Func<T, IEnumerable<T>, bool>? _consWhereFunc;
 
         private readonly List<(Func<T, bool> testFunc, Func<T, TResult> doFunc)> _singleTests;
 
         private readonly List<(Func<T, IEnumerable<T>, bool> testFunc,
                                Func<T, IEnumerable<T>, TResult> doFunc)> _simpleConsTests;
 
-        private Func<T, bool> _recursiveConsWhereFunc;
+        private Func<T, bool>? _recursiveConsWhereFunc;
         private readonly List<(Func<T, bool> testFunc,
                                Func<T, TResult, TResult> doFunc)> _recursiveConsTests;
 
@@ -34,9 +34,9 @@ namespace SuccincT.PatternMatchers
 
         internal ConsFuncMatcher(IEnumerable<T> collection)
         {
-            _consWhereFunc = null!;
-            _singleWhereFunc = null!;
-            _recursiveConsWhereFunc = null!;
+            _consWhereFunc = null;
+            _singleWhereFunc = null;
+            _recursiveConsWhereFunc = null;
 
             _collection = collection;
             _enumerator = new ConsEnumerable<T>(_collection).GetTypedEnumerator();
@@ -84,7 +84,7 @@ namespace SuccincT.PatternMatchers
             return result;
         }
 
-        private TResult CalculateSimpleResult((Option<T> head, ConsEnumerable<T> tail) simpleMatchData) =>
+        private TResult CalculateSimpleResult((Option<T> head, ConsEnumerable<T>? tail) simpleMatchData) =>
             simpleMatchData.tail == null
                 ? SingleMatchWithEmptyCheck(simpleMatchData.head.Value)
                 : ConsMatch(simpleMatchData.head.Value, simpleMatchData.tail);
@@ -104,13 +104,13 @@ namespace SuccincT.PatternMatchers
 
         IConsFuncMatcher<T, TResult> IConsFuncRecursiveConsWhereHandler<T, TResult>.Do(TResult value)
         {
-            _recursiveConsTests.Add((_recursiveConsWhereFunc, (x, y) => value));
+            _recursiveConsTests.Add((_recursiveConsWhereFunc!, (x, y) => value));
             return this;
         }
 
         IConsFuncMatcher<T, TResult> IConsFuncRecursiveConsWhereHandler<T, TResult>.Do(Func<T, TResult, TResult> doFunc)
         {
-            _recursiveConsTests.Add((_recursiveConsWhereFunc, doFunc));
+            _recursiveConsTests.Add((_recursiveConsWhereFunc!, doFunc));
             return this;
         }
 
@@ -134,13 +134,13 @@ namespace SuccincT.PatternMatchers
 
         IConsFuncMatcher<T, TResult> IConsFuncSingleWhereHandler<T, TResult>.Do(TResult value)
         {
-            _singleTests.Add((_singleWhereFunc, _ => value));
+            _singleTests.Add((_singleWhereFunc!, _ => value));
             return this;
         }
 
         IConsFuncMatcher<T, TResult> IConsFuncSingleWhereHandler<T, TResult>.Do(Func<T, TResult> doFunc)
         {
-            _singleTests.Add((_singleWhereFunc, doFunc));
+            _singleTests.Add((_singleWhereFunc!, doFunc));
             return this;
         }
 
@@ -158,13 +158,13 @@ namespace SuccincT.PatternMatchers
 
         IConsFuncMatcher<T, TResult> IConsFuncConsWhereHandler<T, TResult>.Do(Func<T, IEnumerable<T>, TResult> doFunc)
         {
-            _simpleConsTests.Add((_consWhereFunc, doFunc));
+            _simpleConsTests.Add((_consWhereFunc!, doFunc));
             return this;
         }
 
         IConsFuncMatcher<T, TResult> IConsFuncConsWhereHandler<T, TResult>.Do(TResult value)
         {
-            _simpleConsTests.Add((_consWhereFunc, (x, y) => value));
+            _simpleConsTests.Add((_consWhereFunc!, (x, y) => value));
             return this;
         }
 
@@ -206,13 +206,13 @@ namespace SuccincT.PatternMatchers
             throw new NoMatchException("No cons clause matches the supplied value.");
         }
 
-        private static (Option<T> head, ConsEnumerable<T> tail) TryCons(ConsNodeEnumerator<T> enumerator)
+        private static (Option<T> head, ConsEnumerable<T>? tail) TryCons(ConsNodeEnumerator<T> enumerator)
         {
-            if (!enumerator.MoveNext()) return (Option<T>.None(), null!);
+            if (!enumerator.MoveNext()) return (Option<T>.None(), null);
 
-            var head = enumerator.Current;
+            var head = new Option<T>(enumerator.Current);
             var tailNode = enumerator.Node.Next;
-            return (enumerator!.MoveNext() ? (head!, new ConsEnumerable<T>(tailNode!)) : (head!, null!))!;
+            return enumerator.MoveNext() ? (head, new ConsEnumerable<T>(tailNode!)) : (head, null);
         }
     }
 }

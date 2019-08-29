@@ -1,8 +1,6 @@
 ﻿using NUnit.Framework;
-using SuccincT.Functional;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Unions
 {

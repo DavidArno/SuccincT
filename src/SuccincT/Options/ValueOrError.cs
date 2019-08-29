@@ -1,5 +1,6 @@
 ﻿using System;
 using SuccincT.Functional;
+using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Options
 {
@@ -7,12 +8,12 @@ namespace SuccincT.Options
     /// Provides a special-case union of two string values: one representing a value; the other an error. For
     /// use in situations where a string return type is needed, by throwing exceptions isn't desirable.
     /// </summary>
-    public sealed class ValueOrError
+    public readonly struct ValueOrError
     {
-        private readonly string _value;
-        private readonly string _error;
+        private readonly string? _value;
+        private readonly string? _error;
 
-        private ValueOrError(string value, string error)
+        private ValueOrError(string? value, string? error)
         {
             _value = value;
             _error = error;
@@ -23,7 +24,7 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithValue(string value) => 
             value != null
-                ? new ValueOrError(value, null!)
+                ? new ValueOrError(value, null)
                 : throw new ArgumentNullException(nameof (value));
 
         /// <summary>
@@ -31,7 +32,7 @@ namespace SuccincT.Options
         /// </summary>
         public static ValueOrError WithError(string error) =>
             error != null
-                ? new ValueOrError(null!, error)
+                ? new ValueOrError(null, error)
                 : throw new ArgumentNullException(nameof (error));
 
         /// <summary>
@@ -56,23 +57,22 @@ namespace SuccincT.Options
         /// The value held (if created by WithValue()). Will throw an InvalidOperationException if created via
         /// WithError().
         /// </summary>
-        public string Value =>
+        public string? Value =>
             HasValue ? _value : throw new InvalidOperationException("ValueOrError doesn't contain a value");
 
         /// <summary>
         /// The error held (if created by WithError()). Will throw an InvalidOperationException if created via
         /// WithValue().
         /// </summary>
-        public string Error =>
+        public string? Error =>
             !HasValue ? _error : throw new InvalidOperationException("ValueOrError doesn't contain an error");
 
         public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily")]
         public override bool Equals(object obj) => 
             obj is ValueOrError testObject && testObject._error == _error && testObject._value == _value;
 
-        public override int GetHashCode() => HasValue ? _value.GetHashCode() : _error.GetHashCode();
+        public override int GetHashCode() => HasValue ? GetItemHashCode(_value) : GetItemHashCode(_error);
 
         public static bool operator ==(ValueOrError a, ValueOrError b)
         {

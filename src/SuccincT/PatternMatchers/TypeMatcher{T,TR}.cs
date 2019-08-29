@@ -9,11 +9,11 @@ namespace SuccincT.PatternMatchers
         private readonly T _item;
         private readonly List<TypeMatcherCaseOfData<T, TResult>> _matchList;
 
-        private Func<T, TResult> _elseFunction;
+        private Func<T, TResult>? _elseFunction;
 
         internal TypeMatcher(T item)
         {
-            _elseFunction = null!;
+            _elseFunction = null;
 
             _item = item;
             _matchList = new List<TypeMatcherCaseOfData<T, TResult>>();

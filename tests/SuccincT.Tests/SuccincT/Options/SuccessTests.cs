@@ -3,7 +3,6 @@ using SuccincT.Options;
 using System;
 using SuccincT.PatternMatchers;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 
 namespace SuccincTTests.SuccincT.Options
 {

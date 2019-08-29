@@ -111,13 +111,13 @@ namespace SuccincT.Options
 
         IOptionActionMatcher<T> INoneActionMatchHandler<T>.Do(Action action)
         {
-            RecordAction((action.ToUnitFunc() as Func<TResult>)!);
+            RecordAction(action.ToUnitFuncCastAs<TResult>());
             return this;
         }
 
-        private void RecordAction(Func<T, IList<T>, bool> withTest,
-                                  Func<T, bool> whereTest,
-                                  IList<T> withData,
+        private void RecordAction(Func<T, IList<T>, bool>? withTest,
+                                  Func<T, bool>? whereTest,
+                                  IList<T>? withData,
                                   Func<T, TResult> action) =>
             _case1FunctionSelector.AddTestAndAction(withTest, withData, whereTest, action);
 

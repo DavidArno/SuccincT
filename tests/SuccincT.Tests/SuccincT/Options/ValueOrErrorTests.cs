@@ -2,7 +2,6 @@
 using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using static NUnit.Framework.Assert;
-using static SuccincT.Functional.Unit;
 using static SuccincT.Options.ValueOrError;
 
 namespace SuccincTTests.SuccincT.Options

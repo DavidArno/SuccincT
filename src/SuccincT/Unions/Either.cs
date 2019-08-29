@@ -68,7 +68,7 @@ namespace SuccincT.Unions
             private Option<T>? _option;
 
             public Option<T> GetValue(bool hasValue, T value)
-                => _option ?? (_option = hasValue ? Option<T>.Some(value) : Option<T>.None());
+                => (Option <T>)(_option ?? (_option = hasValue ? Option<T>.Some(value) : Option<T>.None()));
         }
     }
 }

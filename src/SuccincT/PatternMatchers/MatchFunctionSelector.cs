@@ -13,7 +13,7 @@ namespace SuccincT.PatternMatchers
 
         public MatchFunctionSelector(Func<T1, TResult> defaultFunction) => _defaultFunction = defaultFunction;
 
-        public void AddTestAndAction(Func<T1, IList<T2>, bool> withFunc,
+        public void AddTestAndAction(Func<T1, IList<T2>, bool>? withFunc,
                                      IList<T2>? withData,
                                      Func<T1, bool>? whereFunc,
                                      Func<T1, TResult> action) =>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SuccincT.Functional;
+using System;
 
 namespace SuccincT.Utilities
 {
@@ -13,5 +14,10 @@ namespace SuccincT.Utilities
 
         internal static bool ComparePossibleNullValues<T>(T a, T b)
             => a is { } value ? value.Equals(b) : b is null;
+
+        public static Func<T, TResult> ToFuncOf<T, TResult>(this Func<T, Unit> func)
+            => x => func(x) is TResult result
+                ? result
+                : throw new InvalidCastException($"Cannot convert Unit to type {typeof(TResult)}");
     }
 }
