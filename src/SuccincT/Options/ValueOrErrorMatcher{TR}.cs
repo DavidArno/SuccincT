@@ -54,8 +54,8 @@ namespace SuccincT.Options
 
         TResult IValueOrErrorFuncMatcher<TResult>.Result() => 
             _valueOrError.HasValue
-                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value!)
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error!);
 
         IUnionActionPatternCaseHandler<IValueOrErrorActionMatcher, string> IValueOrErrorActionMatcher.Value() =>
                 new UnionPatternCaseHandler<IValueOrErrorActionMatcher, string, TResult>(RecordValueAction, this);
@@ -77,14 +77,14 @@ namespace SuccincT.Options
 
         void IValueOrErrorActionMatcher.Exec() => 
             _ = _valueOrError.HasValue
-                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error);
+                ? _valueFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Value!)
+                : _errorFunctionSelector.DetermineResultUsingDefaultIfRequired(_valueOrError.Error!);
 
         TResult IUnionFuncPatternMatcherAfterElse<TResult>.Result()
         {
             var possibleResult = _valueOrError.HasValue
-                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
+                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value!)
+                : _errorFunctionSelector.DetermineResult(_valueOrError.Error!);
 
             return possibleResult.HasValue ? possibleResult.Value : _elseAction!(_valueOrError);
         }
@@ -92,8 +92,8 @@ namespace SuccincT.Options
         void IUnionActionPatternMatcherAfterElse.Exec()
         {
             var possibleResult = _valueOrError.HasValue
-                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value)
-                : _errorFunctionSelector.DetermineResult(_valueOrError.Error);
+                ? _valueFunctionSelector.DetermineResult(_valueOrError.Value!)
+                : _errorFunctionSelector.DetermineResult(_valueOrError.Error!);
 
             _ = possibleResult.HasValue ? possibleResult.Value : _elseAction!(_valueOrError);
         }

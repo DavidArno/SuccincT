@@ -37,12 +37,6 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingJsonToValueOrError_FailsCleanlyIfSuccinctConverterNotUsed()
-        {
-            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{\"value\":\"a\"}"));
-        }
-
-        [Test]
         public void ConvertingInvalidJsonToValueOrError_FailsCleanlyIfSuccinctConverterUsed()
         {
             var settings = new JsonSerializerSettings();

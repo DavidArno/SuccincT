@@ -91,9 +91,9 @@ namespace SuccincT.Unions.PatternMatchers
         private MatchFunctionSelector<T, T, TResult> Selector<T>()
             => typeof(T) switch
             {
-                var _ when SameType<T, T1>() => (_case1Selector as MatchFunctionSelector<T, T, TResult>)!,
-                var _ when SameType<T, T2>() => (_case2Selector as MatchFunctionSelector<T, T, TResult>)!,
-                var _ when SameType<T, T3>() => (_case3Selector as MatchFunctionSelector<T, T, TResult>)!,
+                var _ when TypesAreSame<T, T1>() => (_case1Selector as MatchFunctionSelector<T, T, TResult>)!,
+                var _ when TypesAreSame<T, T2>() => (_case2Selector as MatchFunctionSelector<T, T, TResult>)!,
+                var _ when TypesAreSame<T, T3>() => (_case3Selector as MatchFunctionSelector<T, T, TResult>)!,
                 _ => (_case4Selector as MatchFunctionSelector<T, T, TResult>)!
             };
 

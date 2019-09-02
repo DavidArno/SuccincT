@@ -24,21 +24,37 @@ namespace SuccincT.Unions
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
         public T3 Case3 => Case == Variant.Case3 ? _value3 : throw new InvalidCaseException(Variant.Case3, Case);
 
-        public TResult Value<TResult>()
-            => typeof(TResult) switch
+        public bool HasCase(Variant variant) => variant == Case;
+
+        public T CaseOf<T>()
+            => typeof(T) switch
             {
-                _ when SameType<TResult, T1>() => ItemAs<TResult>(Case1),
-                _ when SameType<TResult, T2>() => ItemAs<TResult>(Case2),
-                _ when SameType<TResult, T3>() => ItemAs<TResult>(Case3),
-                _ => throw new InvalidCaseOfTypeException(typeof(TResult))
+                var t when t == typeof(T1) => Case1.As<T>(),
+                var t when t == typeof(T2) => Case2.As<T>(),
+                var t when t == typeof(T3) => Case3.As<T>(),
+                _ => throw new InvalidCaseOfTypeException(typeof(T))
             };
 
-        public bool HasValueOf<T>()
+        public bool TryCaseOf<T>(out T value)
+        {
+            var (result, valueTemp) = typeof(T) switch
+            {
+                var t when t == typeof(T1) && Case == Variant.Case1 => (true, Case1.As<T>()),
+                var t when t == typeof(T2) && Case == Variant.Case2 => (true, Case2.As<T>()),
+                var t when t == typeof(T3) && Case == Variant.Case3 => (true, Case3.As<T>()),
+                _ => (false, default)
+            };
+
+            value = valueTemp;
+            return result;
+        }
+
+        public bool HasCaseOf<T>()
             => Case switch
             {
-                Variant.Case1 => SameType<T, T1>(),
-                Variant.Case2 => SameType<T, T2>(),
-                Variant.Case3 => SameType<T, T3>(),
+                Variant.Case1 => TypesAreSame<T, T1>(),
+                Variant.Case2 => TypesAreSame<T, T2>(),
+                Variant.Case3 => TypesAreSame<T, T3>(),
                 _ => false,
             };
 
@@ -50,8 +66,8 @@ namespace SuccincT.Unions
 
         public override bool Equals(object obj) => obj is Union<T1, T2, T3> union && UnionsEqual(union);
 
-        public override int GetHashCode() =>
-            Case switch
+        public override int GetHashCode() 
+            => Case switch
             {
                 Variant.Case1 => GetItemHashCode(_value1),
                 Variant.Case2 => GetItemHashCode(_value2),
@@ -60,7 +76,7 @@ namespace SuccincT.Unions
             };
 
         public static bool operator ==(Union<T1, T2, T3> a, Union<T1, T2, T3> b)
-            => a is { } aObj && aObj.Equals(b);
+            => a is {} aObj && aObj.Equals(b);
 
         public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) => !(a == b);
 

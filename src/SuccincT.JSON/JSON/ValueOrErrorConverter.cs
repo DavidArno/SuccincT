@@ -35,7 +35,7 @@ namespace SuccincT.JSON
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var valueOrError = value as ValueOrError;
+            var valueOrError = (ValueOrError)value;
 
             writer.WriteStartObject();
 

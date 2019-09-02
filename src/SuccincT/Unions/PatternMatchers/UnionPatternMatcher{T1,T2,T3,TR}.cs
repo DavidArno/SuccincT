@@ -38,7 +38,7 @@ namespace SuccincT.Unions.PatternMatchers
         IUnionFuncPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, TResult>, T, TResult>
             IUnionFuncPatternMatcher<T1, T2, T3, TResult>.CaseOf<T>()
         {
-            if (SameType<T, T1>() || SameType<T, T2>() || SameType<T, T3>())
+            if (TypesAreSame<T, T1>() || TypesAreSame<T, T2>() || TypesAreSame<T, T3>())
             {
                 return new UnionPatternCaseHandler<IUnionFuncPatternMatcher<T1, T2, T3, TResult>, T, TResult>(
                     _selector.RecordAction,
@@ -83,7 +83,7 @@ namespace SuccincT.Unions.PatternMatchers
         IUnionActionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3>, T>
             IUnionActionPatternMatcher<T1, T2, T3>.CaseOf<T>()
         {
-            if (SameType<T, T1>() || SameType<T, T2>() || SameType<T, T3>())
+            if (TypesAreSame<T, T1>() || TypesAreSame<T, T2>() || TypesAreSame<T, T3>())
             {
                 return new UnionPatternCaseHandler<IUnionActionPatternMatcher<T1, T2, T3>, T, Unit>(
                     _selector.RecordAction,
