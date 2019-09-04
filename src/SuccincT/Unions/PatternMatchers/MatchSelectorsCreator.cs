@@ -12,5 +12,8 @@ namespace SuccincT.Unions.PatternMatchers
 
         internal static MatchSelectorsForCases<T1, T2, T3, T4, TResult> CreateSelectors<T1, T2, T3, T4, TResult>()
             => new MatchSelectorsForCases<T1, T2, T3, T4, TResult>();
+
+        internal static MatchSelectorsForEither<TLeft, TRight, TResult> CreateEitherSelectors<TLeft, TRight, TResult>()
+            => new MatchSelectorsForEither<TLeft, TRight, TResult>();
     }
 }

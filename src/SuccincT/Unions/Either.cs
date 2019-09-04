@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SuccincT.Functional;
+using System;
 using SuccincT.Options;
+using SuccincT.Unions.PatternMatchers;
 
 namespace SuccincT.Unions
 {
@@ -39,6 +41,11 @@ namespace SuccincT.Unions
         public Option<TLeft> TryLeft => _tryLeft.GetValue(IsLeft, _left);
 
         public Option<TRight> TryRight => _tryRight.GetValue(_isRight, _right);
+
+        public IEitherFuncPatternMatcher<TLeft, TRight, TResult> Match<TResult>()
+            => new EitherPatternMatcher<TLeft, TRight, TResult>(this);
+
+        public IEitherActionPatternMatcher<TLeft, TRight> Match() => new EitherPatternMatcher<TLeft, TRight, Unit>(this);
 
         public override bool Equals(object obj) => obj is Either<TLeft,TRight> either && EithersEqual(this, either);
 
