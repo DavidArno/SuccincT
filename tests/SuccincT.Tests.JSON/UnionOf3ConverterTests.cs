@@ -9,10 +9,10 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.JSON
 {
     [TestFixture]
-    public class UnionOf3ConverterTests
+    public static class UnionOf3ConverterTests
     {
         [Test]
-        public void ConvertingUnionToJsonAndBack_PreservesUnionState()
+        public static void ConvertingUnionToJsonAndBack_PreservesUnionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new UnionOf3Converter());
@@ -27,7 +27,7 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingListOfUnionsToJsonAndBack_PreservesUnionState()
+        public static void ConvertingListOfUnionsToJsonAndBack_PreservesUnionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new UnionOf3Converter());
@@ -45,12 +45,6 @@ namespace SuccincTTests.SuccincT.JSON
             AreEqual(1, newList[0].Case1);
             AreEqual("a", newList[1].Case2);
             AreEqual(Variant.Case4, newList[2].Case3);
-        }
-
-        [Test]
-        public void ConvertingJsonToUnion_FailsCleanlyIfSuccinctConverterNotUsed()
-        {
-            Throws<JsonSerializationException>(() => DeserializeObject<Union<int, string, Variant>>("{\"case\":0,\"value\":1}"));
         }
     }
 }

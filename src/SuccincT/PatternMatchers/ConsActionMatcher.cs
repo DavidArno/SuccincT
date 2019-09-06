@@ -2,7 +2,7 @@
 
 namespace SuccincT.PatternMatchers
 {
-    internal class ConsActionMatcher<T> : IConsActionMatcher<T>
+    internal sealed class ConsActionMatcher<T> : IConsActionMatcher<T>
     {
         private readonly IEnumerable<T> _collection;
 

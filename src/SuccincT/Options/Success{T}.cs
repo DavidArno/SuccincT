@@ -4,7 +4,7 @@ using SuccincT.Unions;
 
 namespace SuccincT.Options
 {
-    public struct Success<T>
+    public readonly struct Success<T>
     {
         private readonly T _error;
 

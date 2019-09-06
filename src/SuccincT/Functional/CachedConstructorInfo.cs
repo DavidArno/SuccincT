@@ -4,7 +4,7 @@ using System.Reflection;
 
 namespace SuccincT.Functional
 {
-    internal class CachedConstructorInfo
+    internal sealed class CachedConstructorInfo
     {
         public ConstructorInfo Constructor { get; }
         public List<ParameterInfo> Parameters { get; }

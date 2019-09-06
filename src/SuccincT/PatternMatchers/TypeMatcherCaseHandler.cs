@@ -2,7 +2,7 @@
 
 namespace SuccincT.PatternMatchers
 {
-    internal class TypeMatcherCaseHandler<T, TCaseType, TResult> :
+    internal sealed class TypeMatcherCaseHandler<T, TCaseType, TResult> :
         ITypeMatcherCaseHandler<ITypeMatcher<T, TResult>, TCaseType, TResult>,
         IFuncWhereHandler<ITypeMatcher<T, TResult>, TCaseType, TResult> where TCaseType : T
     {

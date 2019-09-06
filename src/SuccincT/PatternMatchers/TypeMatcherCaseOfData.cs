@@ -2,7 +2,7 @@ using System;
 
 namespace SuccincT.PatternMatchers
 {
-    public class TypeMatcherCaseOfData<T, TResult>
+    public sealed class TypeMatcherCaseOfData<T, TResult>
     {
         public TypeMatcherCaseOfData(Type caseType, Func<T, bool> whereExpression, Func<T, TResult> doFunc)
         {

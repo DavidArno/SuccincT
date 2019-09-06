@@ -1,14 +1,15 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
+using System;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
-    public class UnionT1T2EqualityTests
+    public static class UnionT1T2EqualityTests
     {
         [Test]
-        public void SameT1Values_AreEqualAndHaveSameHashCode()
+        public static void SameT1Values_AreEqualAndHaveSameHashCode()
         {
             var a = new Union<int, string>(2);
             var b = new Union<int, string>(2);
@@ -18,7 +19,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT1Values_ArentEqual()
+        public static void DifferentT1Values_ArentEqual()
         {
             var a = new Union<int, string>(1);
             var b = new Union<int, string>(2);
@@ -27,7 +28,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void SameT2Values_AreEqualAndHaveSameHashCode()
+        public static void SameT2Values_AreEqualAndHaveSameHashCode()
         {
             var a = new Union<int, string>("1234");
             var b = new Union<int, string>("1234");
@@ -37,7 +38,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT2Values_ArentEqual()
+        public static void DifferentT2Values_ArentEqual()
         {
             var a = new Union<int, string>("a");
             var b = new Union<int, string>("b");
@@ -46,7 +47,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentValues_AreNotEqualAndHaveDifferentHashCodes()
+        public static void DifferentValues_AreNotEqualAndHaveDifferentHashCodes()
         {
             var a = new Union<int, string>(0);
             var b = new Union<int, string>("1234");
@@ -56,32 +57,31 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void ComparingT1ValueWithNull_ResultsInNotEqual()
+        public static void ComparingT1OrT2ValueWithNull_ResultsInNotEqualAndExceptionOnImplcitCastOfNull()
         {
-            var a = new Union<int, string>(1);
-            IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
+            var union1 = new Union<int, string>(null);
+            var union2 = new Union<string, int>(null);
+            Multiple(
+                () => {
+                    IsFalse(union1.Equals(null));
+                    IsFalse(union2.Equals(null));
+
+                    Throws<InvalidCastException>(() => _ = union1 != null);
+                    Throws<InvalidCastException>(() => _ = null != union1);
+                    Throws<InvalidCastException>(() => _ = union2 != null);
+                    Throws<InvalidCastException>(() => _ = null != union2);
+                });
         }
 
         [Test]
-        public void ComparingT2ValueWithNull_ResultsInNotEqual()
-        {
-            var a = new Union<int, string>(null);
-            IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
-        }
-
-        [Test]
-        public void UnionCanBeCorrectlyCreatedFromT1Type()
+        public static void UnionCanBeCorrectlyCreatedFromT1Type()
         {
             Union<int, string> union = 1;
             AreEqual(1, union.Case1);
         }
 
         [Test]
-        public void UnionCanBeCorrectlyCreatedFromT2Type()
+        public static void UnionCanBeCorrectlyCreatedFromT2Type()
         {
             Union<int, string> union = "string";
             AreEqual("string", union.Case2);

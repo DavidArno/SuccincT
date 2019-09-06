@@ -6,21 +6,22 @@ using SuccincT.Options;
 
 namespace SuccincT.PatternMatchers
 {
-    internal class MapperMatcher<T, TResult> : IMapperMatcher<T, TResult>,
-                                               IMapperNoneHandler<T, TResult>,
-                                               IMapperSingleHandler<T, TResult>,
-                                               IMapperRecursiveConsHandler<T, TResult>,
-                                               IMapperSingleWhereHandler<T, TResult>,
-                                               IMapperRecursiveConsWhereHandler<T, TResult>
-                    
-       
+    internal sealed class MapperMatcher<T, TResult> :
+        IMapperMatcher<T, TResult>,
+        IMapperNoneHandler<T, TResult>,
+        IMapperSingleHandler<T, TResult>,
+        IMapperRecursiveConsHandler<T, TResult>,
+        IMapperSingleWhereHandler<T, TResult>,
+        IMapperRecursiveConsWhereHandler<T, TResult>
+
+
     {
         private readonly IEnumerable<T> _collection;
         private Option<TResult> _noneValue;
         private readonly List<(Func<T, bool> whereTest, Func<T, TResult> doFunc)> _singleTestAndDos;
 
-        private readonly List<(Func<T, T, bool> whereTest, 
-                               Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)> _consTestAndDos;
+        private readonly List<(Func<T, T, bool> whereTest,
+            Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)> _consTestAndDos;
 
         private Func<T, bool>? _singleWhereTest;
         private Func<T, T, bool>? _consWhereTest;
@@ -32,8 +33,8 @@ namespace SuccincT.PatternMatchers
             _noneValue = Option<TResult>.None();
             _collection = collection;
             _singleTestAndDos = new List<(Func<T, bool> whereTest, Func<T, TResult> doFunc)>();
-            _consTestAndDos = new List<(Func<T, T, bool> whereTest, 
-                                        Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)>();
+            _consTestAndDos = new List<(Func<T, T, bool> whereTest,
+                Func<T, T, IConsEnumerable<TResult>, IConsEnumerable<TResult>> doFunc)>();
         }
 
         IMapperNoneHandler<T, TResult> IMapperMatcher<T, TResult>.Empty() => this;
@@ -128,8 +129,10 @@ namespace SuccincT.PatternMatchers
                 resultCollection = HandleConsElement(item, last, resultCollection);
                 if (resultCollection is null)
                 {
-                    throw new NoMatchException("No matching RecursiveCons clause found for multiple element collection");
+                    throw new NoMatchException(
+                        "No matching RecursiveCons clause found for multiple element collection");
                 }
+
                 last = item;
             }
 

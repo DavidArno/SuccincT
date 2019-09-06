@@ -11,7 +11,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace SuccincT.Functional
 {
-    public struct Unit : IEquatable<Unit>
+    public readonly struct Unit : IEquatable<Unit>
     {
         public override int GetHashCode() => 0;
 

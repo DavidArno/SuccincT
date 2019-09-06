@@ -36,12 +36,6 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingJsonNone_WorksEvenIfSuccinctConverterNotUsed()
-        {
-            Throws<JsonSerializationException>(() => DeserializeObject<None>("{}"));
-        }
-
-        [Test]
         public void ConvertingJsonUnit_WorksEvenIfIfSuccinctConverterNotUsed()
         {
             // Unit is a struct, so we can't prevent new copies being made so can't prevent the serializer

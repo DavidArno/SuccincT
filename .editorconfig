@@ -1,11 +1,14 @@
 [*.cs]
 indent_style = space
 indent_size = 4
+csharp_style_unused_value_expression_statement_preference = discard_variable:warning
+csharp_style_unused_value_assignment_preference = discard_variable:warning
 
 # IDE0008: Use explicit type
-csharp_style_var_elsewhere = true:silent
+csharp_style_var_elsewhere = true:warning
 
 # IDE1006: Naming Styles
+# disabled as the names none and unit make sense but do not meet the C# naming style conventions
 dotnet_diagnostic.IDE1006.severity = silent
 
 # IDE0005: Using directive is unnecessary.

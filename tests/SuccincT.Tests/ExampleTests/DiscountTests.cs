@@ -7,7 +7,7 @@ using static SuccincTTests.ExampleTests.DiscountTests.Customer;
 namespace SuccincTTests.ExampleTests
 {
     [TestFixture]
-    public class DiscountTests
+    public static class DiscountTests
     {
         public enum Customer { Simple, Valuable, MostValuable }
 
@@ -57,7 +57,7 @@ namespace SuccincTTests.ExampleTests
         }
 
         [Test]
-        public void Tests()
+        public static void Tests()
         {
             var creator = Union.UnionCreator<Registered, UnRegistered>();
             AreEqual(94.05000m, CalculateDicountPrice(creator.Create(new Registered(MostValuable, 1)), 100.0m));

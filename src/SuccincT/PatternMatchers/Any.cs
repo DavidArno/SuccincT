@@ -1,6 +1,6 @@
 ﻿namespace SuccincT.PatternMatchers
 {
-    public struct Any
+    public readonly struct Any
     {
         private static readonly Any AnyInstance = new Any();
 

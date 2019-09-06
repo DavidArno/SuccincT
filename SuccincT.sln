@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29230.61
 MinimumVisualStudioVersion = 15.0.26228.9
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT", "src\SuccincT\SuccincT.csproj", "{23A68981-A42D-471D-AE34-3481D8551C1E}"
 EndProject
@@ -12,6 +12,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.JSON", "src\SuccincT.JSON\SuccincT.JSON.csproj", "{04405AAE-24A0-4EF5-8F36-5F1B4E52D067}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.Tests.JSON", "tests\SuccincT.Tests.JSON\SuccincT.Tests.JSON.csproj", "{F7ED3141-5359-4D89-856B-9195CAD168AE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F70B33F7-F42B-4DCC-8B5C-47B4A4577EFA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B55F5C81-4B73-4DA7-A2A6-1D7E79124467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -42,6 +46,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23A68981-A42D-471D-AE34-3481D8551C1E} = {F70B33F7-F42B-4DCC-8B5C-47B4A4577EFA}
+		{7295200E-9754-4F3C-B003-7C7766D8E5BE} = {B55F5C81-4B73-4DA7-A2A6-1D7E79124467}
+		{337EE74A-9071-4007-A4F5-36C03E2ECEAE} = {B55F5C81-4B73-4DA7-A2A6-1D7E79124467}
+		{04405AAE-24A0-4EF5-8F36-5F1B4E52D067} = {F70B33F7-F42B-4DCC-8B5C-47B4A4577EFA}
+		{F7ED3141-5359-4D89-856B-9195CAD168AE} = {B55F5C81-4B73-4DA7-A2A6-1D7E79124467}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BBD05F32-A8B7-4973-B218-0604C5F560B0}

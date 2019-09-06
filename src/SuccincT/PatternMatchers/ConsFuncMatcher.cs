@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace SuccincT.PatternMatchers
 {
-    internal class ConsFuncMatcher<T, TResult> : IConsFuncMatcher<T, TResult>,
+    internal sealed class ConsFuncMatcher<T, TResult> : IConsFuncMatcher<T, TResult>,
                                                  IConsFuncNoneHandler<T, TResult>,
                                                  IConsFuncSingleHandler<T, TResult>,
                                                  IConsFuncSingleWhereHandler<T, TResult>,

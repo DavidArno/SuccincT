@@ -1,16 +1,17 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
+using System;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
 {
     [TestFixture]
-    public class UnionT1T2T3EqualityTests
+    public static class UnionT1T2T3EqualityTests
     {
         private enum Colors { Red, Green, Blue }
 
         [Test]
-        public void SameT1Values_AreEqualAndHaveSameHashCode()
+        public static void voidSameT1Values_AreEqualAndHaveSameHashCode()
         {
             var a = new Union<int, string, Colors>(2);
             var b = new Union<int, string, Colors>(2);
@@ -20,7 +21,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT1Values_ArentEqual()
+        public static void voidDifferentT1Values_ArentEqual()
         {
             var a = new Union<int, string, Colors>(1);
             var b = new Union<int, string, Colors>(2);
@@ -29,7 +30,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void SameT2Values_AreEqualAndHaveSameHashCode()
+        public static void voidSameT2Values_AreEqualAndHaveSameHashCode()
         {
             var a = new Union<int, string, Colors>("1234");
             var b = new Union<int, string, Colors>("1234");
@@ -39,7 +40,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT2Values_ArentEqual()
+        public static void voidDifferentT2Values_ArentEqual()
         {
             var a = new Union<int, string, Colors>("abc");
             var b = new Union<int, string, Colors>("def");
@@ -48,7 +49,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void SameT3Values_AreEqualAndHaveSameHashCode()
+        public static void voidSameT3Values_AreEqualAndHaveSameHashCode()
         {
             var a = new Union<int, string, Colors>(Colors.Blue);
             var b = new Union<int, string, Colors>(Colors.Blue);
@@ -58,7 +59,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT3Values_ArentEqual()
+        public static void voidDifferentT3Values_ArentEqual()
         {
             var a = new Union<int, string, Colors>(Colors.Blue);
             var b = new Union<int, string, Colors>(Colors.Green);
@@ -67,7 +68,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT1T2Values_AreNotEqualAndHaveDifferentHashCodes()
+        public static void voidDifferentT1T2Values_AreNotEqualAndHaveDifferentHashCodes()
         {
             var a = new Union<int, string, Colors>(2);
             var b = new Union<int, string, Colors>("1234");
@@ -77,7 +78,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT1T3Values_AreNotEqualAndHaveDifferentHashCodes()
+        public static void voidDifferentT1T3Values_AreNotEqualAndHaveDifferentHashCodes()
         {
             var a = new Union<int, string, Colors>(0);
             var b = new Union<int, string, Colors>(Colors.Green);
@@ -87,7 +88,7 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void DifferentT2T3Values_AreNotEqualAndHaveDifferentHashCodes()
+        public static void voidDifferentT2T3Values_AreNotEqualAndHaveDifferentHashCodes()
         {
             var a = new Union<int, string, Colors>("xyz");
             var b = new Union<int, string, Colors>(Colors.Green);
@@ -97,69 +98,93 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public void ComparingT1ValueWithNull_ResultsInNotEqual()
+        public static void voidComparingT1T2OrT3ValueWithNull_ResultsInNotEqualAndExceptionOnImplcitCastOfNull()
         {
-            var a = new Union<int, string, Colors>(2);
-            IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
+            var union1 = new Union<string, Colors>(null);
+            var union2 = new Union<int, string, Colors>(null);
+            var union3 = new Union<Colors, int, string>(null);
+
+            Multiple(
+                () => {
+                    IsFalse(union1.Equals(null));
+                    IsFalse(union2.Equals(null));
+                    IsFalse(union3.Equals(null));
+
+                    _ = Throws<InvalidCastException>(() => _ = union1 != null);
+                    _ = Throws<InvalidCastException>(() => _ = null != union1);
+
+                    _ = Throws<InvalidCastException>(() => _ = union2 != null);
+                    _ = Throws<InvalidCastException>(() => _ = null != union2);
+
+                    _ = Throws<InvalidCastException>(() => _ = union3 != null);
+                    _ = Throws<InvalidCastException>(() => _ = null != union3);
+                });
         }
 
         [Test]
-        public void ComparingT2ValueWithNull_ResultsInNotEqual()
+        public static void voidComparingT1ValueWithNull_ResultsInNotEqual()
+        {
+            var a = new Union<int, string, Colors>(2);
+
+            IsFalse(a.Equals(null));
+        }
+
+        [Test]
+        public static void voidComparingT2ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors>("1234");
+            
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
         }
 
         [Test]
-        public void ComparingT3ValueWithNull_ResultsInNotEqual()
+        public static void voidComparingT3ValueWithNull_ResultsInNotEqual()
         {
             var a = new Union<int, string, Colors>(Colors.Red);
+            
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
         }
 
         [Test]
-        public void T1HashCode_IsBasedOnT1Value()
+        public static void voidT1HashCode_IsBasedOnT1Value()
         {
             var a = new Union<int, string, Colors>(2);
+            
             AreEqual(a.GetHashCode(), 2.GetHashCode());
         }
 
         [Test]
-        public void T2HashCode_IsBasedOnT2Value()
+        public static void voidT2HashCode_IsBasedOnT2Value()
         {
             var a = new Union<int, string, Colors>("cow");
+            
             AreEqual(a.GetHashCode(), "cow".GetHashCode());
         }
 
         [Test]
-        public void T3HashCode_IsBasedOnT3Value()
+        public static void voidT3HashCode_IsBasedOnT3Value()
         {
             var a = new Union<int, string, Colors>(Colors.Blue);
+            
             AreEqual(a.GetHashCode(), Colors.Blue.GetHashCode());
         }
 
         [Test]
-        public void UnionCanBeCorrectlyCreatedFromT1Type()
+        public static void voidUnionCanBeCorrectlyCreatedFromT1Type()
         {
             Union<int, string, Colors> union = 1;
             AreEqual(1, union.Case1);
         }
 
         [Test]
-        public void UnionCanBeCorrectlyCreatedFromT2Type()
+        public static void voidUnionCanBeCorrectlyCreatedFromT2Type()
         {
             Union<int, string, Colors> union = "string";
             AreEqual("string", union.Case2);
         }
 
         [Test]
-        public void UnionCanBeCorrectlyCreatedFromT3Type()
+        public static void voidUnionCanBeCorrectlyCreatedFromT3Type()
         {
             Union<int, string, Colors> union = Colors.Blue;
             AreEqual(Colors.Blue, union.Case3);

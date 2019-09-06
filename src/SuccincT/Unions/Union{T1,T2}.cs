@@ -1,22 +1,19 @@
 ﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
-using static SuccincT.Functional.Unit;
+using System;
 using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Unions
 {
-    public sealed class Union<T1, T2> : IUnion<T1, T2, Unit, Unit>
+    public readonly struct Union<T1, T2> : IUnion<T1, T2, Unit, Unit>
     {
-        private readonly T1 _value1 = default!;
-        private readonly T2 _value2 = default!;
+        private readonly T1 _value1;
+        private readonly T2 _value2;
 
         public Variant Case { get; }
 
-        public Union(T1 value) : this(unit) => (_value1, Case) = (value, Variant.Case1);
-        public Union(T2 value) : this(unit) => (_value2, Case) = (value, Variant.Case2);
-
-        // prevent JSON serializer from using this constructor to create an invalid union.
-        private Union(Unit _) { }
+        public Union(T1 value) => (_value1, _value2, Case) = (value, default!, Variant.Case1);
+        public Union(T2 value) => (_value1, _value2, Case) = (default!, value, Variant.Case2);
 
         public T1 Case1 => Case == Variant.Case1 ? _value1 : throw new InvalidCaseException(Variant.Case1, Case);
         public T2 Case2 => Case == Variant.Case2 ? _value2 : throw new InvalidCaseException(Variant.Case2, Case);
@@ -68,12 +65,20 @@ namespace SuccincT.Unions
             };
 
         public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
-            => a is { } aObj && aObj.Equals(b);
+            => a is {} aObj && aObj.Equals(b);
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
 
-        public static implicit operator Union<T1, T2>(T1 value) => new Union<T1, T2>(value);
-        public static implicit operator Union<T1, T2>(T2 value) => new Union<T1, T2>(value);
+        public static implicit operator Union<T1, T2>(T1 value)
+            => value is {}
+                ? new Union<T1, T2>(value)
+                : throw new InvalidCastException("Cannot cast null to a Union<T1,T2>.");
+
+        public static implicit operator Union<T1, T2>(T2 value)
+            => value is { }
+                ? new Union<T1, T2>(value)
+                : throw new InvalidCastException("Cannot cast null to a Union<T1,T2>.");
+
 
         private bool UnionsEqual(Union<T1, T2> testObject) => Case == testObject.Case && ValuesEqual(testObject);
 

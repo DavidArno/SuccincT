@@ -40,7 +40,7 @@ namespace SuccincTTests.SuccincT.Functional
             var removeFromList1 = Action<int>(x => list1.Remove(x));
 
             2.Into(removeFromList1);
-            list2.Remove(2);
+            _ = list2.Remove(2);
 
             CollectionAssert.AreEqual(list1, list2);
         }
@@ -51,8 +51,8 @@ namespace SuccincTTests.SuccincT.Functional
             var list1 = new List<int> { 1, 2, 3 };
             var list2 = new List<int> { 1, 2, 3 };
 
-            2.Into(list1.Remove);
-            list2.Remove(2);
+            _ = 2.Into(list1.Remove);
+            _ = list2.Remove(2);
 
             CollectionAssert.AreEqual(list1, list2);
         }

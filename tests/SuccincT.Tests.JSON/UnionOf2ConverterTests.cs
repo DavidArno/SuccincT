@@ -43,11 +43,5 @@ namespace SuccincTTests.SuccincT.JSON
             AreEqual(1, newList[0].Case1);
             AreEqual("a", newList[1].Case2);
         }
-
-        [Test]
-        public void ConvertingJsonToUnion_FailsCleanlyIfSuccinctConverterNotUsed()
-        {
-            Throws<JsonSerializationException>(() => DeserializeObject<Union<List<int>, string>>("{\"case\":0,\"value\":[1,2]}"));
-        }
     }
 }
