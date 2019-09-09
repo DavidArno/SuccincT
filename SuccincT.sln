@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SuccincT.Tests.JSON", "test
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F70B33F7-F42B-4DCC-8B5C-47B4A4577EFA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B55F5C81-4B73-4DA7-A2A6-1D7E79124467}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B55F5C81-4B73-4DA7-A2A6-1D7E79124467}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
