@@ -21,7 +21,7 @@ namespace SuccincT.Parsers
         /// compiler throws an error if one tries to. An ArgumentException will be thrown if T is
         /// not an enum.
         /// </typeparam>
-        public static Option<T> TryParseEnum<T>(this string source) where T : struct =>
+        public static Option<T> TryParseEnum<T>(this string source) where T : struct, Enum =>
             Parse<T>(source, false);
 
         /// <summary>
@@ -33,13 +33,11 @@ namespace SuccincT.Parsers
         /// compiler throws an error if one tries to. An ArgumentException will be thrown if T is
         /// not an enum.
         /// </typeparam>
-        public static Option<T> TryParseEnumIgnoringCase<T>(this string source) where T : struct =>
+        public static Option<T> TryParseEnumIgnoringCase<T>(this string source) where T : struct, Enum =>
             Parse<T>(source, true);
 
-        private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct
+        private static Option<T> Parse<T>(string source, bool ignoreCase) where T : struct, Enum
         {
-            if (!typeof(T).GetTypeInfo().IsEnum) { throw new ArgumentException("T must be an enumerated type"); }
-
             return Enum.TryParse(source, ignoreCase, out T value) ? Option<T>.Some(value) : Option<T>.None();
         }
     }
