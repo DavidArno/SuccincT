@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SuccincT.JSON</PackageId>
     <Product>SuccincT.JSON</Product>
     <Authors>David Arno</Authors>
@@ -10,6 +10,7 @@
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageIcon>SuccincT.JSON.png</PackageIcon>
     <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
   </PropertyGroup>
 
@@ -19,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuccincT\SuccincT.csproj" />
+    <None Include="..\..\SuccincT.JSON.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
 </Project>

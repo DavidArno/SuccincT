@@ -70,8 +70,8 @@ namespace SuccincT.Options
 
         public static implicit operator Option<T>(T value) => new Option<T>(value);
 
-        public void Deconstruct(out bool hasValue, out T value) =>
-            (hasValue, value) = (HasValue, HasValue ? _value : default);
+        public void Deconstruct(out Option state, out T value) => 
+            (state, value) = (HasValue ? Option.Some : Option.None, _value);
 
         private Union<T, None> CreateUnion() => HasValue ? new Union<T, None>(_value) : new Union<T, None>(none);
     }

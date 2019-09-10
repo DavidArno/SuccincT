@@ -3,6 +3,7 @@ using SuccincT.Options;
 using SuccincT.PatternMatchers;
 using System;
 using static NUnit.Framework.Assert;
+using static SuccincT.Options.Option;
 
 namespace SuccincTTests.SuccincT.Options
 {
@@ -34,7 +35,7 @@ namespace SuccincTTests.SuccincT.Options
         public static void WhenOptionNotValue_ResultsInExceptionIfValueRead()
         {
             var result = Option<bool>.None();
-            Throws<InvalidOperationException>(() => _ = result.Value);
+            _ = Throws<InvalidOperationException>(() => _ = result.Value);
         }
 
         [Test]
@@ -60,7 +61,13 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Do(x => x).None().Do(() => 0).Result();
+            var result2 = option switch {
+                (None, _) => 0,
+                (_, var x) => x
+            };
+
             AreEqual(1, result);
+            AreEqual(1, result2);
         }
 
         [Test]
@@ -107,28 +114,28 @@ namespace SuccincTTests.SuccincT.Options
         public static void WhenOptionIsNoneAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.None();
-            Throws<NoMatchException>(() => _ = option.Match<int>().Some().Do(x => 1).Result());
+            _ = Throws<NoMatchException>(() => _ = option.Match<int>().Some().Do(x => 1).Result());
         }
 
         [Test]
         public static void WhenOptionIsSomeValueAndNoMatchDefined_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            Throws<NoMatchException>(() => _ = option.Match<int>().None().Do(() => 0).Result());
+            _ = Throws<NoMatchException>(() => _ = option.Match<int>().None().Do(() => 0).Result());
         }
 
         [Test]
         public static void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.None();
-            Throws<NoMatchException>(() => option.Match().Some().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => option.Match().Some().Do(x => { }).Exec());
         }
 
         [Test]
         public static void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            Throws<NoMatchException>(() => option.Match().None().Do(() => { }).Exec());
+            _ = Throws<NoMatchException>(() => option.Match().None().Do(() => { }).Exec());
         }
 
         [Test]
@@ -144,15 +151,34 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.Some(1);
             var result = option.Match<int>().Some().Of(1).Do(1).Some().Do(2).None().Do(3).Result();
+            var result2 = option switch {
+                (Some, 1) => 1,
+                (Some, _) => 2,
+                _ => 3
+            };
+
             AreEqual(1, result);
+            AreEqual(1, result2);
         }
 
         [Test]
         public static void WhenSome_SomeWhereDoWithExpressionSupported()
         {
             var option = Option<int>.Some(1);
-            var result = option.Match<int>().Some().Where(x => x < 2).Do(0).Some().Do(2).None().Do(3).Result();
+            var result = option.Match<int>()
+                               .Some().Where(x => x < 2).Do(0)
+                               .Some().Do(2)
+                               .None().Do(3)
+                               .Result();
+            
+            var result2 = option switch {
+                (Some, var x) when x < 2 => 0,
+                (Some, var x) => 2,
+                _ => 3
+            };
+            
             AreEqual(0, result);
+            AreEqual(0, result2);
         }
 
         [Test]
@@ -160,15 +186,21 @@ namespace SuccincTTests.SuccincT.Options
         {
             var option = Option<int>.None();
             var result = option.Match<int>().Some().Do(1).None().Do(2).Result();
+            var result2 = option switch
+            {
+                (None, _) => 2,
+                (_, var x) => x
+            };
             AreEqual(2, result);
+            AreEqual(2, result2);
         }
 
         [Test]
         public static void WhenSome_DecomposeReturnsTrueAndValue()
         {
             var option = Option<int>.Some(1);
-            var (hasValue, value) = option;
-            IsTrue(hasValue);
+            var (state, value) = option;
+            AreEqual(Some, state);
             AreEqual(1, value);
         }
 
@@ -176,8 +208,8 @@ namespace SuccincTTests.SuccincT.Options
         public static void WhenNone_DecomposeReturnsFalseAndDefault()
         {
             var option = Option<int>.None();
-            var (hasValue, value) = option;
-            IsFalse(hasValue);
+            var (state, value) = option;
+            AreEqual(None, state);
             AreEqual(0, value);
         }
 
@@ -205,7 +237,7 @@ namespace SuccincTTests.SuccincT.Options
         [Test]
         public static void Null_CannotBeUsedWithSomeAndThrowsException()
         {
-            Throws<ArgumentNullException>(() => _ = Option<string>.Some(null));
+            _ = Throws<ArgumentNullException>(() => _ = Option<string>.Some(null));
         }
     }
 }

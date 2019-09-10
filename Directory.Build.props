@@ -5,8 +5,8 @@
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
         <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageLicenseUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</PackageLicenseUrl>
-        <PackageProjectUrl>https://github.com/DavidArno/SuccincT</PackageProjectUrl>
+        <PackageLicense>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</PackageLicense>
+        <PackageProject>https://github.com/DavidArno/SuccincT</PackageProject>
         <PackageOutputPath>$(SolutionDir)artifacts\</PackageOutputPath>
         <IncludeSymbols>True</IncludeSymbols>
         <IncludeSource>True</IncludeSource>

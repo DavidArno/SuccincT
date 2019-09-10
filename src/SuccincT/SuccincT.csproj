@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;net45</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <PackageId>SuccincT</PackageId>
     <Product>SuccincT</Product>
     <Authors>David Arno</Authors>
@@ -21,7 +21,7 @@
     <AssemblyName>SuccincT</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageIconUrl>https://raw.githubusercontent.com/DavidArno/SuccincT/master/SuccincT.png</PackageIconUrl>
+    <PackageIcon>SuccincT.png</PackageIcon>
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -32,5 +32,6 @@
 
   <ItemGroup>
     <PackageReference Include="System.ValueTuple" Version="4.3.0" />
+    <None Include="..\..\SuccincT.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 </Project>

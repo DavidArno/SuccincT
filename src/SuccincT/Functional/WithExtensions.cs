@@ -15,11 +15,11 @@ namespace SuccincT.Functional
         {
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
-            var (hasValue, value) = cachedTypeInfo.CachedPublicConstructors
+            var (state, value) = cachedTypeInfo.CachedPublicConstructors
                                                   .OrderByDescending(cc => cc.Parameters.Count)
                                                   .TryFirst();
 
-            if (!hasValue) return Option<T>.None();
+            if (state == Option.None) return Option<T>.None();
 
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
             var constructorParameters = value.Parameters;
@@ -49,11 +49,11 @@ namespace SuccincT.Functional
         {
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
-            var (hasValue, value) = cachedTypeInfo.CachedPublicConstructors
+            var (state, value) = cachedTypeInfo.CachedPublicConstructors
                                                   .OrderByDescending(cc => cc.Parameters.Count)
                                                   .TryFirst();
 
-            if (!hasValue)
+            if (state == Option.None)
             {
                 throw new CopyException(
                     $"Type {typeof(T).Name} does not supply a public constructor for use with Copy.");
@@ -96,36 +96,41 @@ namespace SuccincT.Functional
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
             var updateProperties = typeof(TProps).GetRuntimeProperties().Where(x => x.CanRead).ToList();
-            var (hasValue, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
+            var (state, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
 
-            if (!hasValue) return Option<T>.None();
+            if (state == Option.None) return Option<T>.None();
 
             var constructorParameters = value.Parameters;
-            var constructorParameterValues = MapUpdateValuesToConstructorParameters(itemToCopy,
-                                                                                    propertiesToUpdate,
-                                                                                    constructorParameters,
-                                                                                    updateProperties,
-                                                                                    sourceReadProperties);
+            var constructorParameterValues = MapUpdateValuesToConstructorParameters(
+                itemToCopy,
+                propertiesToUpdate,
+                constructorParameters,
+                updateProperties,
+                sourceReadProperties);
 
             var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
-            var propsToSetFromUpdateData = GetPropertiesToSetFromUpdateData(updateProperties,
-                                                                            constructorParameters,
-                                                                            sourceReadProperties);
+            var propsToSetFromUpdateData = GetPropertiesToSetFromUpdateData(
+                updateProperties,
+                constructorParameters,
+                sourceReadProperties);
 
-            var propsToSetFromSourceObject = GetPropertiesToSetFromSourceObject(sourceReadProperties,
-                                                                                constructorParameters,
-                                                                                propsToSetFromUpdateData,
-                                                                                destWriteProperties);
+            var propsToSetFromSourceObject = GetPropertiesToSetFromSourceObject(
+                sourceReadProperties,
+                constructorParameters,
+                propsToSetFromUpdateData,
+                destWriteProperties);
 
             try
             {
-                return Option<T>.Some(CreateNewObjectApplyingUpdates(itemToCopy,
-                                                                     propertiesToUpdate,
-                                                                     constructorParameterValues,
-                                                                     propsToSetFromSourceObject,
-                                                                     propsToSetFromUpdateData));
+                return Option<T>.Some(
+                    CreateNewObjectApplyingUpdates(
+                        itemToCopy,
+                        propertiesToUpdate,
+                        constructorParameterValues,
+                        propsToSetFromSourceObject,
+                        propsToSetFromUpdateData));
             }
-            catch (Exception)
+            catch
             {
                 return Option<T>.None();
             }
@@ -139,9 +144,9 @@ namespace SuccincT.Functional
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
             var sourceReadProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.WriteOnlyProperties).ToList();
             var updateProperties = typeof(TProps).GetRuntimeProperties().Where(x => x.CanRead).ToList();
-            var (hasValue, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
+            var (state, value) = ConstructorToUseForWith(cachedTypeInfo, updateProperties, sourceReadProperties);
 
-            if (!hasValue)
+            if (state == Option.None)
             {
                 throw new CopyException(
                     $"Type {typeof(T).Name} does not supply a suitable constructor for use with With, which allows all " +
