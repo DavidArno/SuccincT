@@ -1,5 +1,5 @@
-﻿using System;
-using SuccincT.Functional;
+﻿using SuccincT.Functional;
+using System;
 using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Options
@@ -59,6 +59,10 @@ namespace SuccincT.Options
         /// </summary>
         public string? Value =>
             HasValue ? _value : throw new InvalidOperationException("ValueOrError doesn't contain a value");
+
+        public void Deconstruct(out ValueOrErrorState valueOrError, out string? value, out string? error)
+            => (valueOrError, value, error) =
+                (HasValue ? ValueOrErrorState.Value : ValueOrErrorState.Error, _value, _error);
 
         /// <summary>
         /// The error held (if created by WithError()). Will throw an InvalidOperationException if created via

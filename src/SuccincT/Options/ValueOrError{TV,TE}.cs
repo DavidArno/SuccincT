@@ -1,5 +1,6 @@
 ﻿using System;
 using SuccincT.Functional;
+using System.Runtime.InteropServices.ComTypes;
 using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Options
@@ -56,6 +57,10 @@ namespace SuccincT.Options
         /// </summary>
         public TError Error
             => !HasValue ? _error : throw new InvalidOperationException("ValueOrError doesn't contain an error");
+
+        public void Deconstruct(out ValueOrErrorState valueOrError, out TValue value, out TError error)
+            => (valueOrError, value, error) =
+                (HasValue ? ValueOrErrorState.Value : ValueOrErrorState.Error, _value, _error);
 
         public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 

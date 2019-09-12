@@ -3,87 +3,103 @@ using SuccincT.PatternMatchers;
 using System;
 using SuccincT.Options;
 using static NUnit.Framework.Assert;
+using static SuccincT.Options.ValueOrErrorState;
 
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public sealed class ValueOrErrorT1T2Tests
+    public static class ValueOrErrorT1T2Tests
     {
         [Test]
-        public void WhenValueIsSet_ValueSuppliedToFunction()
+        public static void WhenValueIsSet_ValueSuppliedToFunction()
         {
             var valueOrError = WithValue("1");
             var result = valueOrError.Match<string>().Value().Do(s => "v" + s).Error().Do(s => "e" + s).Result();
+            var result2 = valueOrError switch {
+                (Value, var v, _) => $"vv{v}",
+                (_, _, var e) => $"ee{e}"
+            };
+            
             AreEqual("v1", result);
+            AreEqual("vv1", result2);
         }
 
         [Test]
-        public void WhenErrorIsSet_ErrorSuppliedToFunction()
+        public static void WhenErrorIsSet_ErrorSuppliedToFunction()
         {
             var valueOrError = WithError(new Exception("2"));
-            var result = valueOrError.Match<string>().Value().Do(s => "v" + s).Error().Do(e => "e" + e.Message)
+            var result = valueOrError.Match<string>()
+                                     .Value().Do(s => "v" + s)
+                                     .Error().Do(e => "e" + e.Message)
                                      .Result();
+
+            var result2 = valueOrError switch {
+                (Error, _, var e) => $"ee{e.Message}",
+                (_, var v, _) => $"vv{v}"
+            };
+
             AreEqual("e2", result);
+            AreEqual("ee2", result2);
         }
 
         [Test]
-        public void WhenValueIsSet_HasValueIsTrue()
+        public static void WhenValueIsSet_HasValueIsTrue()
         {
             var valueOrError = WithValue("1");
             IsTrue(valueOrError.HasValue);
         }
 
         [Test]
-        public void WhenErrorIsSet_HasValueIsFalse()
+        public static void WhenErrorIsSet_HasValueIsFalse()
         {
             var valueOrError = WithError(new Exception("error"));
             IsFalse(valueOrError.HasValue);
         }
 
         [Test]
-        public void WhenValueIsSet_ValueCanBeAccessed()
+        public static void WhenValueIsSet_ValueCanBeAccessed()
         {
             var valueOrError = WithValue("1");
             AreEqual("1", valueOrError.Value);
         }
 
         [Test]
-        public void WhenErrorIsSet_ErrorCanBeAccessed()
+        public static void WhenErrorIsSet_ErrorCanBeAccessed()
         {
             var valueOrError = WithError(new Exception("error"));
             AreEqual("error", valueOrError.Error.Message);
         }
 
         [Test]
-        public void WhenValueIsSet_AccessingErrorCausesException()
+        public static void WhenValueIsSet_AccessingErrorCausesException()
         {
             var valueOrError = WithValue("2");
-            Throws<InvalidOperationException>(() => _ = valueOrError.Error);
+            _ = Throws<InvalidOperationException>(() => _ = valueOrError.Error);
         }
 
         [Test]
-        public void WhenErrorIsSet_AccessingValueCausesAnException()
+        public static void WhenErrorIsSet_AccessingValueCausesAnException()
         {
             var valueOrError = WithError(new Exception("error"));
-            Throws<InvalidOperationException>(() => _ = valueOrError.Value);
+            _ = Throws<InvalidOperationException>(() => _ = valueOrError.Value);
         }
 
         [Test]
-        public void WhenValueIsSet_PrintStringYieldsValue()
+        public static void WhenValueIsSet_PrintStringYieldsValue()
         {
             var valueOrError = WithValue("42");
             AreEqual("Value of 42", valueOrError.ToString());
         }
 
         [Test]
-        public void WhenErrorIsSet_PrintStringYieldsError()
+        public static void WhenErrorIsSet_PrintStringYieldsError()
         {
             var valueOrError = WithError(new Exception("error"));
             AreEqual("Error of System.Exception: error", valueOrError.ToString());
         }
 
         [Test]
-        public void WhenErrorIsSetAndNoErrorMatch_ElseResultIsReturned()
+        public static void WhenErrorIsSetAndNoErrorMatch_ElseResultIsReturned()
         {
             var valueOrError = WithError(new Exception("error"));
             var result = valueOrError.Match<int>().Value().Do(x => 0).Else(x => 3).Result();
@@ -91,7 +107,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenValueIsSetAndNoErrorMatch_ElseResultIsReturned()
+        public static void WhenValueIsSetAndNoErrorMatch_ElseResultIsReturned()
         {
             var valueOrError = WithValue("1");
             var result = valueOrError.Match<int>().Error().Do(x => 2).Else(x => 3).Result();
@@ -99,21 +115,21 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenValueIsSetAndNoValueMatchDefined_ExceptionThrown()
+        public static void WhenValueIsSetAndNoValueMatchDefined_ExceptionThrown()
         {
             var valueOrError = WithValue("1");
-            Throws<NoMatchException>(() => valueOrError.Match<int>().Error().Do(x => 2).Result());
+            _ = Throws<NoMatchException>(() => valueOrError.Match<int>().Error().Do(x => 2).Result());
         }
 
         [Test]
-        public void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
+        public static void WhenErrorIsSetAndNoErrorMatchDefined_ExceptionThrown()
         {
             var valueOrError = WithError(new Exception("error"));
-            Throws<NoMatchException>(() => _ = valueOrError.Match<int>().Value().Do(x => 2).Result());
+            _ = Throws<NoMatchException>(() => _ = valueOrError.Match<int>().Value().Do(x => 2).Result());
         }
 
         [Test]
-        public void WhenValue_SimpleValueDoWithExpressionSupported()
+        public static void WhenValue_SimpleValueDoWithExpressionSupported()
         {
             var valueOrError = WithValue("1");
             var result = valueOrError.Match<int>().Value().Do(1).Error().Do(2).Result();
@@ -121,7 +137,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSome_SomeOfDoWithExpressionSupported()
+        public static void WhenSome_SomeOfDoWithExpressionSupported()
         {
             var valueOrError = WithValue("1");
             var result = valueOrError.Match<int>().Value().Of("1").Do(1).Value().Do(2).Error().Do(3).Result();
@@ -129,7 +145,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSome_SomeWhereDoWithExpressionSupported()
+        public static void WhenSome_SomeWhereDoWithExpressionSupported()
         {
             var valueOrError = WithValue("1");
             var result = valueOrError.Match<int>()
@@ -138,7 +154,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenError_SimpleErrorDoWithExpressionSupported()
+        public static void WhenError_SimpleErrorDoWithExpressionSupported()
         {
             var valueOrError = WithError(new Exception("error"));
             var result = valueOrError.Match<int>().Value().Do(1).Error().Do(2).Result();
@@ -146,7 +162,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenError_ErrorOfDoWithExpressionSupported()
+        public static void WhenError_ErrorOfDoWithExpressionSupported()
         {
             var error = new Exception("error");
             var valueOrError = WithError(error);
@@ -155,7 +171,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenError_ErrorWhereDoWithExpressionSupported()
+        public static void WhenError_ErrorWhereDoWithExpressionSupported()
         {
             var valueOrError = WithError(new Exception("error"));
             var result = valueOrError.Match<int>().Value().Where(x => x == "error").Do(0).Value().Do(2)
