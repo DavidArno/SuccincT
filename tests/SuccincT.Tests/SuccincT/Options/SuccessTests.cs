@@ -7,19 +7,19 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.Options
 {
     [TestFixture]
-    public class SuccessTests
+    public static class SuccessTests
     {
         [Test]
-        public void CreatingSuccessValue_ResultsInNoFailure()
+        public static void CreatingSuccessValue_ResultsInNoFailure()
         {
             var success = new Success<int>();
             IsTrue(success);
             IsFalse(success.IsFailure);
-            Throws<InvalidOperationException>(() => _ = success.Failure);
+            _ = Throws<InvalidOperationException>(() => _ = success.Failure);
         }
 
         [Test]
-        public void CreatingFailureValue_ResultsInFailure()
+        public static void CreatingFailureValue_ResultsInFailure()
         {
             var failure = Success.CreateFailure(1);
             IsFalse(failure);
@@ -28,11 +28,11 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenCreatingErrorValue_ErrorMustNotBeNull() =>
+        public static void WhenCreatingErrorValue_ErrorMustNotBeNull() =>
             Throws<ArgumentNullException>(() => Success.CreateFailure<string>(null));
 
         [Test]
-        public void TwoSuccesses_AreEqual()
+        public static void TwoSuccesses_AreEqual()
         {
             var success1 = new Success<int>();
             var success2 = new Success<int>();
@@ -42,7 +42,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TwoSuccessesWithDifferentTypes_AreNotEqual()
+        public static void TwoSuccessesWithDifferentTypes_AreNotEqual()
         {
             var success1 = new Success<int>();
             var success2 = new Success<string>();
@@ -52,7 +52,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void SuccessesAndFailure_AreNotEqual()
+        public static void SuccessesAndFailure_AreNotEqual()
         {
             var success = new Success<int>();
             var failure = Success.CreateFailure(1);
@@ -62,7 +62,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TwoFailuresWithSameError_AreEqual()
+        public static void TwoFailuresWithSameError_AreEqual()
         {
             var failure1 = Success.CreateFailure(1);
             var failure2 = Success.CreateFailure(1);
@@ -72,7 +72,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TwoFailuresWithDifferentErrors_AreNotEqual()
+        public static void TwoFailuresWithDifferentErrors_AreNotEqual()
         {
             var failure1 = Success.CreateFailure(1);
             var failure2 = Success.CreateFailure(2);
@@ -82,7 +82,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void TwoFailuresWithDifferentTypes_AreNotEqual()
+        public static void TwoFailuresWithDifferentTypes_AreNotEqual()
         {
             var failure1 = Success.CreateFailure(1);
             var failure2 = Success.CreateFailure("1");
@@ -92,13 +92,13 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void AFailure_CanBeDirectlyCreatedFromTheFailureValue()
+        public static void AFailure_CanBeDirectlyCreatedFromTheFailureValue()
         {
             Success<int> failure = 1;
             AreEqual(1, failure.Failure);
         }
         [Test]
-        public void WhenFailure_DecomposeReturnsFalseAndError()
+        public static void WhenFailure_DecomposeReturnsFalseAndError()
         {
             var failure = Success.CreateFailure(1);
             var (isSuccess, error) = failure;
@@ -107,7 +107,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSuccess_DecomposeReturnsTrueAndDefault()
+        public static void WhenSuccess_DecomposeReturnsTrueAndDefault()
         {
             var success = new Success<int>();
             var (isSuccess, error) = success;
@@ -116,15 +116,21 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSuccessAndElseIsDefinedAndNoSuccessMatch_ElseResultIsReturned()
+        public static void WhenSuccessAndElseIsDefinedAndNoSuccessMatch_ElseResultIsReturned()
         {
             var success = new Success<int>();
             var result = success.Match<int>().Error().Do(x => 1).Else(o => 0).Result();
+            var result2 = success switch
+            {
+                (false, var e) => e,
+                (true, _) => 1
+            };
             AreEqual(0, result);
+            AreEqual(1, result2);
         }
 
         [Test]
-        public void WhenSuccessAndElseIsDefinedAndNoSuccessMatch_ElseExpressionIsReturned()
+        public static void WhenSuccessAndElseIsDefinedAndNoSuccessMatch_ElseExpressionIsReturned()
         {
             var success = new Success<int>();
             var result = success.Match<int>().Error().Do(x => 1).Else(0).Result();
@@ -132,16 +138,27 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndNoErrorMatch_ElseIsExecuted()
+        public static void WhenFailureAndElseIsDefinedAndNoErrorMatch_ElseIsExecuted()
         {
             var success = Success.CreateFailure(2);
             var result = 0;
+            var result2 = 0;
             success.Match().Success().Do(() => result = 1).Else(f => result = f.Failure).Exec();
+            switch (success)
+            {
+                case (true, _):
+                    result2 = 1;
+                    break;
+                case (false, var e):
+                    result2 = e;
+                    break;
+            }
             AreEqual(2, result);
+            AreEqual(2, result2);
         }
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseIsExecuted()
+        public static void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseIsExecuted()
         {
             var success = Success.CreateFailure(2);
             var result = 0;
@@ -155,7 +172,7 @@ namespace SuccincTTests.SuccincT.Options
 
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndNoErrorMatch_ElseResultIsReturned()
+        public static void WhenFailureAndElseIsDefinedAndNoErrorMatch_ElseResultIsReturned()
         {
             var success = Success.CreateFailure(1);
             var result = success.Match<int>().Success().Do(() => 0).Else(o => o.Failure).Result();
@@ -163,7 +180,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseResultIsReturned()
+        public static void WhenFailureAndElseIsDefinedAndErrorDoesntMatch_ElseResultIsReturned()
         {
             var success = Success.CreateFailure(2);
             var result = success.Match<int>()
@@ -175,35 +192,35 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSuccessAndNoMatchDefined_ExceptionThrown()
+        public static void WhenSuccessAndNoMatchDefined_ExceptionThrown()
         {
             var success = new Success<int>();
-            Throws<NoMatchException>(() => _ = success.Match<int>().Error().Do(x => 1).Result());
+            _ = Throws<NoMatchException>(() => _ = success.Match<int>().Error().Do(x => 1).Result());
         }
 
         [Test]
-        public void WhenFailureAndNoMatchDefined_ExceptionThrown()
+        public static void WhenFailureAndNoMatchDefined_ExceptionThrown()
         {
             var success = Success.CreateFailure(1);
-            Throws<NoMatchException>(() => _ = success.Match<int>().Success().Do(() => 0).Result());
+            _ = Throws<NoMatchException>(() => _ = success.Match<int>().Success().Do(() => 0).Result());
         }
 
         [Test]
-        public void WhenSuccessAndNoMatchDefinedForExec_ExceptionThrown()
+        public static void WhenSuccessAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var success = new Success<int>();
-            Throws<NoMatchException>(() => success.Match().Error().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => success.Match().Error().Do(x => { }).Exec());
         }
 
         [Test]
-        public void WhenFailureAndNoMatchDefinedForExec_ExceptionThrown()
+        public static void WhenFailureAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var success = Success.CreateFailure(1);
-            Throws<NoMatchException>(() => success.Match().Success().Do(() => { }).Exec());
+            _ = Throws<NoMatchException>(() => success.Match().Success().Do(() => { }).Exec());
         }
 
         [Test]
-        public void WhenFailure_ErrorDoMatchSupported()
+        public static void WhenFailure_ErrorDoMatchSupported()
         {
             var success = Success.CreateFailure(1);
             var result = success.Match<int>().Error().Do(1).Success().Do(2).Result();
@@ -211,7 +228,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailure_ErrorOfDoSupported()
+        public static void WhenFailure_ErrorOfDoSupported()
         {
             var success = Success.CreateFailure(1);
             var result = success.Match<int>().Error().Of(1).Do(1).Error().Do(2).Success().Do(3).Result();
@@ -219,7 +236,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenFailure_ErrorWhereDoSupported()
+        public static void WhenFailure_ErrorWhereDoSupported()
         {
             var success = Success.CreateFailure(1);
             var result = success.Match<int>().Error().Where(x => x < 2).Do(0).Error().Do(2).Success().Do(3).Result();
@@ -227,7 +244,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSuccess_NoneDoSupported()
+        public static void WhenSuccess_NoneDoSupported()
         {
             var success = new Success<int>();
             var result = success.Match<int>().Error().Do(1).Success().Do(2).Result();
@@ -235,7 +252,7 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenSuccessAndElseIsDefinedAndSuccessMatch_SuccessIsExecuted()
+        public static void WhenSuccessAndElseIsDefinedAndSuccessMatch_SuccessIsExecuted()
         {
             var success = new Success<int>();
             var result = 0;
@@ -244,14 +261,14 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void SuccessHashCode_Is1()
+        public static void SuccessHashCode_Is1()
         {
             var success = new Success<float>();
             AreEqual(1, success.GetHashCode());
         }
 
         [Test]
-        public void FailureHashCode_IsSameAsValueHashCode()
+        public static void FailureHashCode_IsSameAsValueHashCode()
         {
             var success = Success.CreateFailure("this is a failure");
             AreEqual("this is a failure".GetHashCode(), success.GetHashCode());
