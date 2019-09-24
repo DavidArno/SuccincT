@@ -12,6 +12,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>SuccincT.JSON.png</PackageIcon>
     <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SuccincT\SuccincT.csproj" />
-    <None Include="..\..\SuccincT.JSON.png" Pack="true" PackagePath="\"/>
+    <None Include="..\..\SuccincT.JSON.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,5 @@
-﻿using System;
-using System.Reflection;
-using SuccincT.Options;
+﻿using SuccincT.Options;
+using System;
 
 #pragma warning disable CS3021 // CLSCompliant attribute not needed for dotnetcore version
 namespace SuccincT.Parsers

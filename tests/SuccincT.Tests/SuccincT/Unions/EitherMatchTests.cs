@@ -2,6 +2,7 @@ using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
+using static SuccincT.Unions.EitherState;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -12,7 +13,7 @@ namespace SuccincTTests.SuccincT.Unions
         public static void EitherWithTLeftAndNoLeftMatchWithExec_ThrowsException()
         {
             var either = new Either<int, string>(2);
-            Throws<NoMatchException>(() => either.Match().Right().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => either.Match().Right().Do(x => { }).Exec());
         }
 
         [Test]
@@ -61,14 +62,14 @@ namespace SuccincTTests.SuccincT.Unions
         public static void EitherWithTRightAndNoRightMatch_ThrowsException()
         {
             var either = new Either<int, string>("la la");
-            Throws<NoMatchException>(() => either.Match<bool>().Left().Do(x => false).Result());
+            _ = Throws<NoMatchException>(() => either.Match<bool>().Left().Do(x => false).Result());
         }
 
         [Test]
         public static void EitherWithTRightAndNoRightMatchWithExec_ThrowsException()
         {
             var either = new Either<int, string>("la la");
-            Throws<NoMatchException>(() => either.Match().Left().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => either.Match().Left().Do(x => { }).Exec());
         }
 
         [Test]
@@ -212,7 +213,8 @@ namespace SuccincTTests.SuccincT.Unions
             var either = new Either<int, string>("x");
             var result = 0;
 
-            either.Match().Right().Of("y").Or("x").Do(x => result = 1)
+            either.Match()
+                  .Right().Of("y").Or("x").Do(x => result = 1)
                   .Right().Do(x => result = 3)
                   .Left().Do(x => result = 4).Exec();
 
@@ -224,12 +226,20 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var either = new Either<int, string>(2);
             var result = either.Match<int>()
-                               .Left().Of(1).Or(0).Do(x => 1)
-                               .Right().Do(x => 4)
-                               .Left().Of(3).Or(2).Do(x => 2)
-                               .Left().Do(x => 3).Result();
+                               .Left().Of(1).Or(0).Do(x => x)
+                               .Right().Do(x => 10)
+                               .Left().Of(3).Or(2).Do(x => x * 2)
+                               .Left().Do(x => x * 3).Result();
 
-            AreEqual(2, result);
+            var result2 = either switch {
+                (Left, var x, _) when x == 0 || x == 1 => x,
+                (Right, _, _) => 10,
+                (Left, var x, _) when x == 2 || x == 3 => x * 2,
+                (_, var x, _) => x * 3
+            };
+
+            AreEqual(4, result);
+            AreEqual(4, result2);
         }
 
         [Test]
@@ -237,7 +247,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var either = new Either<int, string>(2);
             var result = 0;
-            either.Match().Left().Of(1).Or(0).Do(x => result = 1)
+            either.Match()
+                  .Left().Of(1).Or(0).Do(x => result = 1)
                   .Right().Do(x => result = 4)
                   .Left().Of(3).Or(2).Do(x => result = 2)
                   .Left().Do(x => result = 3).Exec();
@@ -253,9 +264,17 @@ namespace SuccincTTests.SuccincT.Unions
                                .Right().Of("a").Or("b").Do(x => 1)
                                .Left().Do(x => 2)
                                .Right().Of("c").Or("d").Do(x => 3)
-                               .Left().Do(x => 4).Result();
+                               .Right().Do(x => 4).Result();
+
+            var result2 = either switch {
+                (Right, _, var x) when x == "a" || x == "b" => 1,
+                (Left, _, _) => 2,
+                (Right, _, var x) when x == "c" || x == "d" => 3,
+                (_, _, var x) => 4
+            };
 
             AreEqual(3, result);
+            AreEqual(3, result2);
         }
 
         [Test]
@@ -263,10 +282,11 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var either = new Either<int, string>("c");
             var result = 0;
-            either.Match().Right().Of("a").Or("b").Do(x => result = 1)
+            either.Match()
+                  .Right().Of("a").Or("b").Do(x => result = 1)
                   .Left().Do(x => result = 2)
                   .Right().Of("c").Or("d").Do(x => result = 3)
-                  .Left().Do(x => result = 4).Exec();
+                  .Right().Do(x => result = 4).Exec();
 
             AreEqual(3, result);
         }

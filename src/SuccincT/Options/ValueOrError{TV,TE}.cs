@@ -1,6 +1,5 @@
-﻿using System;
-using SuccincT.Functional;
-using System.Runtime.InteropServices.ComTypes;
+﻿using SuccincT.Functional;
+using System;
 using static SuccincT.Utilities.NRTSupport;
 
 namespace SuccincT.Options

@@ -21,7 +21,7 @@ namespace SuccincTTests.SuccincT.Functional
         public static void WithWithNullUpdateParameters_ShouldFail()
         {
             var car = new Car();
-            Throws<ArgumentNullException>(() => car.With<Car, Car>(null));
+            _ = Throws<ArgumentNullException>(() => car.With<Car, Car>(null));
         }
 
         [Test]

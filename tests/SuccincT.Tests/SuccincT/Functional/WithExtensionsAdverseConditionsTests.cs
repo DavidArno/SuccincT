@@ -22,7 +22,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithConstructorAndNoGetters(1);
             
-            Throws<CopyException>(() => x.With(new { }));
+            _ = Throws<CopyException>(() => x.With(new { }));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithConstructorAndNoGetters(1);
             
-            Throws<CopyException>(() => x.With(new { x = "2" }));
+            _ = Throws<CopyException>(() => x.With(new { x = "2" }));
         }
 
         [Test]
@@ -56,7 +56,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithConstructorAndNoGetters(1);
             
-            Throws<CopyException>(() => x.With(new { y = 1 }));
+            _ = Throws<CopyException>(() => x.With(new { y = 1 }));
         }
 
         [Test]
@@ -91,7 +91,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithConstructorAndNoMatchingGetter(1);
 
-            Throws<CopyException>(() => x.With(new { b = 2 }));
+            _ = Throws<CopyException>(() => x.With(new { b = 2 }));
         }
 
         [Test]

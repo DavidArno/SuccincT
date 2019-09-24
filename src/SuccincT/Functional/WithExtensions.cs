@@ -258,9 +258,9 @@ namespace SuccincT.Functional
         private static object[] MapUpdateValuesToConstructorParameters<T, TProps>(
             T @object,
             TProps propertiesToUpdate,
-            List<ParameterInfo> constructorParameters,
-            List<PropertyInfo> updateProperties,
-            List<PropertyInfo> sourceReadProperties) where T : notnull where TProps : class
+            IEnumerable<ParameterInfo> constructorParameters,
+            IReadOnlyCollection<PropertyInfo> updateProperties,
+            IEnumerable<PropertyInfo> sourceReadProperties) where T : notnull where TProps : class
         {
             return constructorParameters
                   .Select(p => {
