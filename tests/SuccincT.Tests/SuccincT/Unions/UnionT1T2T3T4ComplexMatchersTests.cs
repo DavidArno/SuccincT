@@ -1,6 +1,8 @@
 using NUnit.Framework;
+using SuccincT.Parsers;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
+using static SuccincT.Unions.Variant;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -171,6 +173,64 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Do(6)
                               .Case1().Do(x => 5).Result();
             AreEqual(3, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors, Animals>(2);
+            var result = union switch {
+                (Case1, 2, _, _, _) => 1,
+                (Case1, var x, _, _, _) => x,
+                (_, _, _, _, _) => 3
+            };
+
+            AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors, Animals>("2");
+            var result = union switch {
+                (Case1, 2, _, _, _) => 1,
+                (Case1, var x, _, _, _) => x,
+                (Case2, _, var x, _, _) when x == "2" => x.TryParseInt().Value,
+                (_, _, _, _, _) => 3
+            };
+
+            AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT3_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors, Animals>(Colors.Yellow);
+            var result = union switch
+            {
+                (Case1, _, _, _, _) => 1,
+                (Case2, _, _, _, _) => 2,
+                (Case3, _, _, Colors.Yellow, _) => 3,
+                _ => 4
+            };
+
+            AreEqual(3, result);
+        }
+
+        [Test]
+        public void UnionWithT4_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors, Animals>(Animals.Dog);
+            var result = union switch
+            {
+                (Case1, _, _, _, _) => 1,
+                (Case2, _, _, _, _) => 2,
+                (Case3, _, _, _, _) => 3,
+                (Case4, _, _, _, Animals.Dog) => 4,
+                (_, _, _, _, _) => 5
+            };
+
+            AreEqual(4, result);
         }
     }
 }

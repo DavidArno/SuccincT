@@ -62,6 +62,9 @@ namespace SuccincT.Unions
         public IUnionActionPatternMatcher<T1, T2, T3> Match() 
             => new UnionFuncPatternMatcher<T1, T2, T3, Unit>(this);
 
+        public void Deconstruct(out Variant variant, out T1 case1, out T2 case2, out T3 case3)
+            => (variant, case1, case2, case3) = (Case, _value1, _value2, _value3);
+
         public override bool Equals(object obj) => obj is Union<T1, T2, T3> union && UnionsEqual(union);
 
         public override int GetHashCode() 

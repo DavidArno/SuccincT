@@ -54,6 +54,9 @@ namespace SuccincT.Unions
 
         public IUnionActionPatternMatcher<T1, T2> Match() => new UnionPatternMatcher<T1, T2, Unit>(this);
 
+        public void Deconstruct(out Variant variant, out T1 case1, out T2 case2)
+            => (variant, case1, case2) = (Case, _value1, _value2);
+
         public override bool Equals(object obj) => obj is Union<T1, T2> union && UnionsEqual(union);
 
         public override int GetHashCode() =>
@@ -64,8 +67,7 @@ namespace SuccincT.Unions
                 _ => 0
             };
 
-        public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b)
-            => a is {} aObj && aObj.Equals(b);
+        public static bool operator ==(Union<T1, T2> a, Union<T1, T2> b) => a is {} aObj && aObj.Equals(b);
 
         public static bool operator !=(Union<T1, T2> a, Union<T1, T2> b) => !(a == b);
 
@@ -75,7 +77,7 @@ namespace SuccincT.Unions
                 : throw new InvalidCastException("Cannot cast null to a Union<T1,T2>.");
 
         public static implicit operator Union<T1, T2>(T2 value)
-            => value is { }
+            => value is {}
                 ? new Union<T1, T2>(value)
                 : throw new InvalidCastException("Cannot cast null to a Union<T1,T2>.");
 

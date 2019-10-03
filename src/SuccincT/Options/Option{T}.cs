@@ -25,6 +25,7 @@ namespace SuccincT.Options
         public static Option<T> Some(T value) => value is {} valid
             ? new Option<T>(valid)
             : throw new ArgumentNullException(
+                nameof(value),
                 "null cannot be used with Option<T>.Some() as null is equivalent to None.\n" +
                 "Please use Option<T>.None() or new Option<T>(null) instead.");
 

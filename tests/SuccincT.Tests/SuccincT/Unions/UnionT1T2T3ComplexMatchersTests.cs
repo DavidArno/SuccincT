@@ -1,6 +1,8 @@
 using NUnit.Framework;
+using SuccincT.Parsers;
 using SuccincT.Unions;
 using static NUnit.Framework.Assert;
+using static SuccincT.Unions.Variant;
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -118,6 +120,50 @@ namespace SuccincTTests.SuccincT.Unions
                               .Case3().Of(Colors.Green).Or(Colors.Red).Do(x => 3)
                               .Case2().Do(x => 4)
                               .Case1().Do(x => 5).Result();
+            AreEqual(3, result);
+        }
+
+        [Test]
+        public void UnionWithT1_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors>(2);
+            var result = union switch
+            {
+                (Case1, 2, _, _) => 1,
+                (Case1, var x, _, _) => x,
+                (_, _, _, _) => 3
+            };
+
+            AreEqual(1, result);
+        }
+
+        [Test]
+        public void UnionWithT2_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors>("2");
+            var result = union switch
+            {
+                (Case1, 2, _, _) => 1,
+                (Case1, var x, _, _) => x,
+                (Case2, _, var x, _) when x == "2" => x.TryParseInt().Value,
+                (_, _, _, _) => 3
+            };
+
+            AreEqual(2, result);
+        }
+
+        [Test]
+        public void UnionWithT3_CanBeUsedWithCS8PatternMatching()
+        {
+            var union = new Union<int, string, Colors>(Colors.Yellow);
+            var result = union switch
+            {
+                (Case1, _, _, _) => 1,
+                (Case2, _, _, _) => 2,
+                (Case3, _, _, Colors.Yellow) => 3,
+                (_, _, _, _) => 4
+            };
+
             AreEqual(3, result);
         }
     }
