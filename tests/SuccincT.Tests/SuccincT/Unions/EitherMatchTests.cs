@@ -13,7 +13,7 @@ namespace SuccincTTests.SuccincT.Unions
         public static void EitherWithTLeftAndNoLeftMatchWithExec_ThrowsException()
         {
             var either = new Either<int, string>(2);
-            _ = Throws<NoMatchException>(() => either.Match().Right().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => either.Match().Right().Do(x => {}).Exec());
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace SuccincTTests.SuccincT.Unions
         public static void EitherWithTRightAndNoRightMatchWithExec_ThrowsException()
         {
             var either = new Either<int, string>("la la");
-            _ = Throws<NoMatchException>(() => either.Match().Left().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => either.Match().Left().Do(x => {}).Exec());
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace SuccincTTests.SuccincT.Unions
                 (Right, _, var x) when x == "a" || x == "b" => 1,
                 (Left, _, _) => 2,
                 (Right, _, var x) when x == "c" || x == "d" => 3,
-                (_, _, var x) => 4
+                (_, _, _) => 4
             };
 
             AreEqual(3, result);

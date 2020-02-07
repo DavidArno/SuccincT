@@ -48,7 +48,7 @@ namespace SuccincT.Options
             {
                 null => Option<T>.None(),
                 IList<T> list when list.Count > 0 => Option<T>.Some(list[list.Count - 1]),
-                var c => GetLast(collection)
+                var c => GetLast(c)
             };
 
             static Option<T> GetLast(IEnumerable<T> collection)
@@ -86,7 +86,7 @@ namespace SuccincT.Options
             {
                 null => Option<T>.None(),
                 IList<T> list when list.Count == 1 => Option<T>.Some(list[list.Count - 1]),
-                var c => GetSingle(collection)
+                var c => GetSingle(c)
             };
 
             static Option<T> GetSingle(IEnumerable<T> collection)

@@ -4,7 +4,7 @@ using SuccincT.Functional;
 using SuccincT.Options;
 using SuccincT.PatternMatchers;
 using static SuccincT.Unions.Variant;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -91,10 +91,10 @@ namespace SuccincT.Unions.PatternMatchers
         private MatchFunctionSelector<T, T, TResult> Selector<T>()
             => typeof(T) switch
             {
-                var _ when TypesAreSame<T, T1>() => (_case1Selector as MatchFunctionSelector<T, T, TResult>)!,
-                var _ when TypesAreSame<T, T2>() => (_case2Selector as MatchFunctionSelector<T, T, TResult>)!,
-                var _ when TypesAreSame<T, T3>() => (_case3Selector as MatchFunctionSelector<T, T, TResult>)!,
-                _ => (_case4Selector as MatchFunctionSelector<T, T, TResult>)!
+                _ when TypesAreSame<T, T1>() => _case1Selector.As<MatchFunctionSelector<T, T, TResult>>(),
+                _ when TypesAreSame<T, T2>() => _case2Selector.As<MatchFunctionSelector<T, T, TResult>>(),
+                _ when TypesAreSame<T, T3>() => _case3Selector.As<MatchFunctionSelector<T, T, TResult>>(),
+                _ => _case4Selector.As<MatchFunctionSelector<T, T, TResult>>()
             };
 
         private TResult DetermineResultUsingDefaultIfRequired(IUnion<T1, T2, T3, T4> union)

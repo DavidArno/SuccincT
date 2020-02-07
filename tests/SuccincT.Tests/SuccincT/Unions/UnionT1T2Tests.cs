@@ -110,7 +110,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT1AndNoCase1MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string>(2);
-            Throws<NoMatchException>(() => union.Match().Case2().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => union.Match().Case2().Do(x => {}).Exec());
         }
 
         [Test]
@@ -158,7 +158,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT2AndNoCase2MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string>("la la");
-            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => {}).Exec());
         }
 
         [Test]

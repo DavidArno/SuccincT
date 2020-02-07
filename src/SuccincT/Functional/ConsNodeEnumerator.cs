@@ -60,7 +60,7 @@ namespace SuccincT.Functional
 
         object? IEnumerator.Current => Current;
 
-        public void Dispose() { }
+        public void Dispose() {}
 
         internal ConsNode<T> Node { get; private set; }
     }

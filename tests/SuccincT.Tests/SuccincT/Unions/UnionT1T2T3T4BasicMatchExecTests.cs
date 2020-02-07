@@ -139,9 +139,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>(2);
             Throws<NoMatchException>(() => union.Match()
-                                                .Case2().Do(_ => { })
-                                                .Case3().Do(_ => { })
-                                                .Case4().Do(_ => { })
+                                                .Case2().Do(_ => {})
+                                                .Case3().Do(_ => {})
+                                                .Case4().Do(_ => {})
                                                 .Exec());
         }
 
@@ -150,9 +150,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>("la la");
             Throws<NoMatchException>(() => union.Match()
-                                                .Case1().Do(_ => { })
-                                                .Case3().Do(_ => { })
-                                                .Case4().Do(_ => { })
+                                                .Case1().Do(_ => {})
+                                                .Case3().Do(_ => {})
+                                                .Case4().Do(_ => {})
                                                 .Exec());
         }
 
@@ -161,9 +161,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
             Throws<NoMatchException>(() => union.Match()
-                                                .Case1().Do(_ => { })
-                                                .Case2().Do(_ => { })
-                                                .Case4().Do(_ => { })
+                                                .Case1().Do(_ => {})
+                                                .Case2().Do(_ => {})
+                                                .Case4().Do(_ => {})
                                                 .Exec());
         }
 
@@ -172,9 +172,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Cat);
             Throws<NoMatchException>(() => union.Match()
-                                                .Case1().Do(_ => { })
-                                                .Case2().Do(_ => { })
-                                                .Case3().Do(_ => { })
+                                                .Case1().Do(_ => {})
+                                                .Case2().Do(_ => {})
+                                                .Case3().Do(_ => {})
                                                 .Exec());
         }
     }

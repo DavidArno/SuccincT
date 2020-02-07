@@ -1,7 +1,7 @@
 ﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 using System;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Unions
 {
@@ -82,17 +82,17 @@ namespace SuccincT.Unions
         public static bool operator !=(Union<T1, T2, T3> a, Union<T1, T2, T3> b) => !(a == b);
 
         public static implicit operator Union<T1, T2, T3>(T1 value)
-            => value is { }
+            => value is {}
                 ? new Union<T1, T2, T3>(value)
                 : throw new InvalidCastException("Cannot cast null to a Union<T1,T2, T3>.");
 
         public static implicit operator Union<T1, T2, T3>(T2 value)
-            => value is { }
+            => value is {}
                 ? new Union<T1, T2, T3>(value)
                 : throw new InvalidCastException("Cannot cast null to a Union<T1,T2, T3>.");
 
         public static implicit operator Union<T1, T2, T3>(T3 value)
-            => value is { }
+            => value is {}
                 ? new Union<T1, T2, T3>(value)
                 : throw new InvalidCastException("Cannot cast null to a Union<T1,T2, T3>.");
 

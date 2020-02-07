@@ -23,7 +23,7 @@ namespace SuccincTTests.ExampleTests
             }
         }
 
-        private class UnRegistered { }
+        private class UnRegistered {}
 
         private static int CustomerDiscount(Customer customer) =>
             customer.Match().To<int>()

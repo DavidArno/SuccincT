@@ -5,6 +5,7 @@
     /// </summary>
     public readonly struct None
     {
+        // ReSharper disable once InconsistentNaming
         public static None none { get; } = default;
 
         public override string ToString() => "!none!";

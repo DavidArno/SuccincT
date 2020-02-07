@@ -23,7 +23,7 @@ namespace SuccincT.Examples
         public Union<Node, Tip> Right { get; }
     }
 
-    public class Tip { }
+    public class Tip {}
 
     public static class TreeUsingUnions
     {

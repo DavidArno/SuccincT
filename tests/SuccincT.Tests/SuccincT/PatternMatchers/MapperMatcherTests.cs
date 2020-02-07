@@ -7,10 +7,10 @@ using System.Linq;
 namespace SuccincTTests.SuccincT.PatternMatchers
 {
     [TestFixture]
-    public class MapperMatcherTests
+    public static class MapperMatcherTests
     {
         [Test]
-        public void EmptyList_ResultsInOneElementEnumerationWhenEmptyClauseUsed()
+        public static void EmptyList_ResultsInOneElementEnumerationWhenEmptyClauseUsed()
         {
             var list = new List<int>();
             var result = list.Match().MapTo<(int, int)>()
@@ -24,16 +24,16 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void EmptyListWithNoEmptyClause_ThrowsCorrectException()
+        public static void EmptyListWithNoEmptyClause_ThrowsCorrectException()
         {
             var list = new List<int>();
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<(int, int)>()
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<(int, int)>()
                                                       .Single().Do((0, 0))
                                                       .Result());
         }
 
         [Test]
-        public void SingleList_ResultsInOneElementEnumerationWhenValueSingleClauseUsed()
+        public static void SingleList_ResultsInOneElementEnumerationWhenValueSingleClauseUsed()
         {
             var list = new List<int> { 1 };
             var result = list.Match().MapTo<(int, int)>()
@@ -47,7 +47,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void SingleList_ResultsInOneElementEnumerationWhenFuncSingleClauseUsed()
+        public static void SingleList_ResultsInOneElementEnumerationWhenFuncSingleClauseUsed()
         {
             var list = new List<int> { 1 };
             var result = list.Match().MapTo<(int, int)>()
@@ -61,7 +61,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void SingleListWithMultipleValueSingleClauses_UsesTheCorrectSingleClause()
+        public static void SingleListWithMultipleValueSingleClauses_UsesTheCorrectSingleClause()
         {
             var list = new List<int> { 1 };
             var result = list.Match().MapTo<int>()
@@ -77,7 +77,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void SingleListWithMultipleFuncSingleClauses_UsesTheCorrectSingleClause()
+        public static void SingleListWithMultipleFuncSingleClauses_UsesTheCorrectSingleClause()
         {
             var list = new List<int> { 1 };
             var result = list.Match().MapTo<(int, int)>()
@@ -92,25 +92,25 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void SingleListWithNoMatchingSingleClause_ThrowsCorrectException()
+        public static void SingleListWithNoMatchingSingleClause_ThrowsCorrectException()
         {
             var list = new List<int> { 1 };
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
-                                                      .Single().Where(x => x == 0).Do(x => x)
-                                                      .Result());
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
+                                                          .Single().Where(x => x == 0).Do(x => x)
+                                                          .Result());
         }
 
         [Test]
-        public void MultipleListWithNoMatchingSingleClause_ThrowsCorrectException()
+        public static void MultipleListWithNoMatchingSingleClause_ThrowsCorrectException()
         {
-            var list = new List<int> { 1, 2, 3 };
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
-                                                      .Single().Where(x => x == 0).Do(x => x)
-                                                      .Result());
+            var list = new List<int> {1, 2, 3};
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
+                                                          .Single().Where(x => x == 0).Do(x => x)
+                                                          .Result());
         }
 
         [Test]
-        public void MultipleList_WithSimpleReturnValuesLogicReturnsSameList()
+        public static void MultipleList_WithSimpleReturnValuesLogicReturnsSameList()
         {
             var list = new List<int> { 1, 2, 3 };
             var result = list.Match().MapTo<int>()
@@ -126,7 +126,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void MultipleList_WithCalculatedReturnValuesLogicReturnsCorrectMap()
+        public static void MultipleList_WithCalculatedReturnValuesLogicReturnsCorrectMap()
         {
             var list = new List<int> { 1, 2, 3 };
             var result = list.Match().MapTo<(int x, int y)>()
@@ -142,7 +142,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void MultipleList_CorrectlyMapsToNewCollectionUsingWhereClause()
+        public static void MultipleList_CorrectlyMapsToNewCollectionUsingWhereClause()
         {
             var list = new List<int> { 1, 1, 2, 3, 3, 3, 1, 2, 2, 2, 2 };
             var result = list.Match().MapTo<(int value, int count)>()
@@ -165,28 +165,28 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         }
 
         [Test]
-        public void MultipleListWithNoSingleClause_ThrowsCorrectException()
+        public static void MultipleListWithNoSingleClause_ThrowsCorrectException()
         {
             var list = new List<int> { 1, 2, 3 };
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
                                                       .RecursiveCons().Do((x, _, soFar) => soFar.Cons(x))
                                                       .Result());
         }
 
         [Test]
-        public void MultipleListWithNoConsClause_ThrowsCorrectException()
+        public static void MultipleListWithNoConsClause_ThrowsCorrectException()
         {
             var list = new List<int> { 1, 2, 3 };
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
                                                       .Single().Do(x => x)
                                                       .Result());
         }
 
         [Test]
-        public void MultipleListWithNoMatchingConsClause_ThrowsCorrectException()
+        public static void MultipleListWithNoMatchingConsClause_ThrowsCorrectException()
         {
             var list = new List<int> { 1, 2, 3 };
-            Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
+            _ = Assert.Throws<NoMatchException>(() => list.Match().MapTo<int>()
                                                       .Single().Do(x => x)
                                                       .RecursiveCons().Where((x, y) => false).Do((x, y, z) => null)
                                                       .Result());

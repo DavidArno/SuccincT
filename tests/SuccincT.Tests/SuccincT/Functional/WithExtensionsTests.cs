@@ -29,7 +29,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var car = new Car();
 
-            var newCar = car.TryWith(new { }).Value;
+            var newCar = car.TryWith(new {}).Value;
 
             AreNotSame(car, newCar);
             AreEqual(car.Constructor, newCar.Constructor);
@@ -42,7 +42,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var car = new Car();
 
-            var newCar = car.With(new { });
+            var newCar = car.With(new {});
 
             AreNotSame(car, newCar);
             AreEqual(car.Constructor, newCar.Constructor);

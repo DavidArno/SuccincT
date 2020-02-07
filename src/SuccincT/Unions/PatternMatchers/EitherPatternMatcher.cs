@@ -76,7 +76,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         IUnionActionPatternMatcherAfterElse IEitherActionPatternMatcher<TLeft, TRight>.IgnoreElse()
         {
-            _selector.RecordElseAction(Action((Either<TLeft, TRight> _) => { }));
+            _selector.RecordElseAction(Action((Either<TLeft, TRight> _) => {}));
             return this;
         }
 

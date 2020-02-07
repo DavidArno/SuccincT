@@ -248,9 +248,9 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string,Plants,Foods>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Match()
-                                                          .CaseOf<Foods>().Do(_ => { })
-                                                          .CaseOf<Plants>().Do(_ => { })
-                                                          .CaseOf<float>().Do(_ => { })
+                                                          .CaseOf<Foods>().Do(_ => {})
+                                                          .CaseOf<Plants>().Do(_ => {})
+                                                          .CaseOf<float>().Do(_ => {})
                                                           .Exec());
         }
     }

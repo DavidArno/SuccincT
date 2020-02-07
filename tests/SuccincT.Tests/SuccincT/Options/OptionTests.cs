@@ -43,7 +43,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var intValue = 0;
             var option = Option<int>.Some(1);
-            option.Match().Some().Do(x => intValue = x).None().Do(() => { }).Exec();
+            option.Match().Some().Do(x => intValue = x).None().Do(() => {}).Exec();
             AreEqual(1, intValue);
         }
 
@@ -52,7 +52,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var noneInvoked = false;
             var option = Option<int>.None();
-            option.Match().Some().Do(x => { }).None().Do(() => noneInvoked = true).Exec();
+            option.Match().Some().Do(x => {}).None().Do(() => noneInvoked = true).Exec();
             IsTrue(noneInvoked);
         }
 
@@ -128,14 +128,14 @@ namespace SuccincTTests.SuccincT.Options
         public static void WhenOptionIsNoneAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.None();
-            _ = Throws<NoMatchException>(() => option.Match().Some().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => option.Match().Some().Do(x => {}).Exec());
         }
 
         [Test]
         public static void WhenOptionIsSomeValueAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var option = Option<int>.Some(1);
-            _ = Throws<NoMatchException>(() => option.Match().None().Do(() => { }).Exec());
+            _ = Throws<NoMatchException>(() => option.Match().None().Do(() => {}).Exec());
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace SuccincTTests.SuccincT.Options
             
             var result2 = option switch {
                 (Some, var x) when x < 2 => 0,
-                (Some, var x) => 2,
+                (Some, _) => 2,
                 _ => 3
             };
             

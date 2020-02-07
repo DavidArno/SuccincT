@@ -1,6 +1,6 @@
 ﻿using SuccincT.Functional;
 using System;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Options
 {

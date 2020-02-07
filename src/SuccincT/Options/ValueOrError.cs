@@ -1,6 +1,6 @@
 ﻿using SuccincT.Functional;
 using System;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Options
 {
@@ -78,13 +78,8 @@ namespace SuccincT.Options
 
         public override int GetHashCode() => HasValue ? GetItemHashCode(_value) : GetItemHashCode(_error);
 
-        public static bool operator ==(ValueOrError a, ValueOrError b)
-        {
-            var aObj = (object)a;
-            var bObj = (object)b;
-            return aObj == null && bObj == null || aObj != null && a.Equals(b);
-        }
+        public static bool operator ==(ValueOrError a, ValueOrError b) => a.Equals(b);
 
-        public static bool operator !=(ValueOrError a, ValueOrError b) => !(a == b);
+        public static bool operator !=(ValueOrError a, ValueOrError b) => !a.Equals(b);
     }
 }

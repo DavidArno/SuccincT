@@ -117,8 +117,8 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var union = new Union<int, string>(2);
             Throws<InvalidCaseOfTypeException>(() => union.Match()
-                                                          .CaseOf<int>().Do(_ => { })
-                                                          .CaseOf<float>().Do(_ => { })
+                                                          .CaseOf<int>().Do(_ => {})
+                                                          .CaseOf<float>().Do(_ => {})
                                                           .Exec());
         }
     }

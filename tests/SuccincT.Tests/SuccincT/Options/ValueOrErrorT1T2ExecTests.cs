@@ -34,7 +34,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = WithValue("x");
             var value = string.Empty;
-            valueOrError.Match().Value().Do(s => value = s).Error().Do(_ => { }).Exec();
+            valueOrError.Match().Value().Do(s => value = s).Error().Do(_ => {}).Exec();
             AreEqual("x", value);
         }
 
@@ -43,7 +43,7 @@ namespace SuccincTTests.SuccincT.Options
         {
             var valueOrError = WithError(new Exception("x"));
             var errorValue = string.Empty;
-            valueOrError.Match().Value().Do(_ => { }).Error().Do(e => errorValue = e.Message).Exec();
+            valueOrError.Match().Value().Do(_ => {}).Error().Do(e => errorValue = e.Message).Exec();
             AreEqual("x", errorValue);
         }
 
@@ -69,14 +69,14 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenValueIsSetAndNoValueMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = WithValue("1");
-            Throws<NoMatchException>(() => valueOrError.Match().Error().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => valueOrError.Match().Error().Do(x => {}).Exec());
         }
 
         [Test]
         public void WhenErrorIsSetAndNoErrorMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = WithError(new Exception("x"));
-            Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => {}).Exec());
         }
 
         private static ValueOrError<string, Exception> WithValue(string s)

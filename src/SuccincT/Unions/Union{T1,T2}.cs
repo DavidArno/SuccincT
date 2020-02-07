@@ -1,7 +1,7 @@
 ﻿using SuccincT.Functional;
 using SuccincT.Unions.PatternMatchers;
 using System;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Unions
 {

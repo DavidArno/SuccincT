@@ -46,21 +46,21 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT1AndNoCase1MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(2);
-            Throws<NoMatchException>(() => union.Match().Case2().Do(x => { }).Case3().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => union.Match().Case2().Do(x => {}).Case3().Do(x => {}).Exec());
         }
 
         [Test]
         public void UnionWithT2AndNoCase2MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>("la la");
-            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Case3().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => {}).Case3().Do(x => {}).Exec());
         }
 
         [Test]
         public void UnionWithT3AndNoCase3MatchWithExec_ThrowsException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            Throws<NoMatchException>(() => union.Match().Case1().Do(x => { }).Case2().Do(x => { }).Exec());
+            Throws<NoMatchException>(() => union.Match().Case1().Do(x => {}).Case2().Do(x => {}).Exec());
         }
 
         [Test]

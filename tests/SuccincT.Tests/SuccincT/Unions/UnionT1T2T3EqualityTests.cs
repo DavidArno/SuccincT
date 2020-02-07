@@ -170,21 +170,21 @@ namespace SuccincTTests.SuccincT.Unions
         }
 
         [Test]
-        public static void voidUnionCanBeCorrectlyCreatedFromT1Type()
+        public static void VoidUnionCanBeCorrectlyCreatedFromT1Type()
         {
             Union<int, string, Colors> union = 1;
             AreEqual(1, union.Case1);
         }
 
         [Test]
-        public static void voidUnionCanBeCorrectlyCreatedFromT2Type()
+        public static void VoidUnionCanBeCorrectlyCreatedFromT2Type()
         {
             Union<int, string, Colors> union = "string";
             AreEqual("string", union.Case2);
         }
 
         [Test]
-        public static void voidUnionCanBeCorrectlyCreatedFromT3Type()
+        public static void VoidUnionCanBeCorrectlyCreatedFromT3Type()
         {
             Union<int, string, Colors> union = Colors.Blue;
             AreEqual(Colors.Blue, union.Case3);

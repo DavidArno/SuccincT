@@ -12,7 +12,7 @@ namespace SuccincTTests.SuccincT.Functional
         public static void TryWithOfTypeWithConstructorAndNoGetters_FailsCleanly()
         {
             var x = new TypeWithConstructorAndNoGetters(1);
-            var y = x.TryWith(new { });
+            var y = x.TryWith(new {});
 
             IsFalse(y.HasValue);
         }
@@ -22,7 +22,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var x = new TypeWithConstructorAndNoGetters(1);
             
-            _ = Throws<CopyException>(() => x.With(new { }));
+            _ = Throws<CopyException>(() => x.With(new {}));
         }
 
         [Test]
@@ -153,14 +153,14 @@ namespace SuccincTTests.SuccincT.Functional
         private class TypeWithConstructorAndNoGetters
         {
             // ReSharper disable once UnusedParameter.Local
-            public TypeWithConstructorAndNoGetters(int x) { }
+            public TypeWithConstructorAndNoGetters(int x) {}
         }
 
         [SuppressMessage("ReSharper", "UnusedMember.Local")]
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithConstructorAndNoMatchingGetter
         {
-            public TypeWithConstructorAndNoMatchingGetter(int a, int c) { }
+            public TypeWithConstructorAndNoMatchingGetter(int a, int c) {}
             public TypeWithConstructorAndNoMatchingGetter(int a) => B = a;
             public int B { get; }
         }

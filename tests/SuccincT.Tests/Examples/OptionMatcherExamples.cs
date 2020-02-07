@@ -8,14 +8,14 @@ namespace SuccincTTests.Examples
         public static void PrintOption(Option<int> data) => 
             data.Match()
                 .Some().Do(WriteLine)
-                .None().Do(() => { })
+                .None().Do(() => {})
                 .Exec();
 
         public static void OptionMatcher(Option<int> data) => 
             data.Match()
                 .Some().Of(1).Or(2).Or(3).Do(WriteLine)
                 .Some().Do(i => WriteLine("{0} isn't 1, 2 or 3!", i))
-                .None().Do(() => { })
+                .None().Do(() => {})
                 .Exec();
 
         public static string NumberNamer(Option<int> data)

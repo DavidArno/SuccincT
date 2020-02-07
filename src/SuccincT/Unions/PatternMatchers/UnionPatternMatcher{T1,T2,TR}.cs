@@ -1,7 +1,7 @@
 ﻿using System;
 using SuccincT.Functional;
 using static SuccincT.Functional.TypedLambdas;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -85,7 +85,7 @@ namespace SuccincT.Unions.PatternMatchers
 
         IUnionActionPatternMatcherAfterElse IUnionActionPatternMatcher<T1, T2>.IgnoreElse()
         {
-            _selector.RecordElseAction(Action((Union<T1, T2> _) => { }));
+            _selector.RecordElseAction(Action((Union<T1, T2> _) => {}));
             return this;
         }
 

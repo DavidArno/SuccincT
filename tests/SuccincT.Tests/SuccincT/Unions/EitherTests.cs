@@ -1,6 +1,6 @@
-﻿using System;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Unions;
+using System;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Unions
@@ -16,7 +16,7 @@ namespace SuccincTTests.SuccincT.Unions
             IsTrue(left.IsLeft);
             IsTrue(left.TryLeft.HasValue);
             AreEqual(1, left.TryLeft.Value);
-            Throws<InvalidOperationException>(() => _ = left.Right);
+            _ = Throws<InvalidOperationException>(() => _ = left.Right);
             IsFalse(left.TryRight.HasValue);
         }
 
@@ -28,7 +28,7 @@ namespace SuccincTTests.SuccincT.Unions
             IsFalse(right.IsLeft);
             IsTrue(right.TryRight.HasValue);
             AreEqual("2", right.TryRight.Value);
-            Throws<InvalidOperationException>(() => _ = right.Left);
+            _ = Throws<InvalidOperationException>(() => _ = right.Left);
             IsFalse(right.TryLeft.HasValue);
         }
 
@@ -104,6 +104,20 @@ namespace SuccincTTests.SuccincT.Unions
         {
             var either = new Either<int, string>(null);
             AreEqual(either.GetHashCode(), 0);
+        }
+
+        [Test]
+        public static void NullRightEither_GivesNoneForTryRight()
+        {
+            var either = new Either<int, string>(null);
+            IsFalse(either.TryRight.HasValue);
+        }
+
+        [Test]
+        public static void NullLeftEither_GivesNoneForTryLeft()
+        {
+            var either = new Either<string, int>(null);
+            IsFalse(either.TryLeft.HasValue);
         }
     }
 }

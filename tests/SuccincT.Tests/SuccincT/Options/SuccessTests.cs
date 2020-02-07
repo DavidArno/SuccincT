@@ -142,8 +142,10 @@ namespace SuccincTTests.SuccincT.Options
         {
             var success = Success.CreateFailure(2);
             var result = 0;
-            var result2 = 0;
+            int result2;
+
             success.Match().Success().Do(() => result = 1).Else(f => result = f.Failure).Exec();
+            
             switch (success)
             {
                 case (true, _):
@@ -153,6 +155,7 @@ namespace SuccincTTests.SuccincT.Options
                     result2 = e;
                     break;
             }
+            
             AreEqual(2, result);
             AreEqual(2, result2);
         }
@@ -209,14 +212,14 @@ namespace SuccincTTests.SuccincT.Options
         public static void WhenSuccessAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var success = new Success<int>();
-            _ = Throws<NoMatchException>(() => success.Match().Error().Do(x => { }).Exec());
+            _ = Throws<NoMatchException>(() => success.Match().Error().Do(x => {}).Exec());
         }
 
         [Test]
         public static void WhenFailureAndNoMatchDefinedForExec_ExceptionThrown()
         {
             var success = Success.CreateFailure(1);
-            _ = Throws<NoMatchException>(() => success.Match().Success().Do(() => { }).Exec());
+            _ = Throws<NoMatchException>(() => success.Match().Success().Do(() => {}).Exec());
         }
 
         [Test]

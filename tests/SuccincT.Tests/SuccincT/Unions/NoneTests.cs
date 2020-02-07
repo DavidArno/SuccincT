@@ -1,8 +1,8 @@
 ﻿using NUnit.Framework;
 using SuccincT.Unions;
-using System.Diagnostics.CodeAnalysis;
 using static NUnit.Framework.Assert;
 using static SuccincT.Unions.None;
+// ReSharper disable SuspiciousTypeConversion.Global
 
 namespace SuccincTTests.SuccincT.Unions
 {
@@ -10,14 +10,14 @@ namespace SuccincTTests.SuccincT.Unions
     public static class NoneTests
     {
         [Test]
-        public static void NoneToString_GivesMeanfulResult()
+        public static void NoneToString_GivesMeaningfulResult()
         {
             var value = none;
             AreEqual("!none!", value.ToString());
         }
 
         [Test]
-        public static void NonesEquality_NoneEqualsNoneOnly()
+        public static void NoneEquality_NoneEqualsNoneOnly()
         {
             var value1 = none;
             var value2 = new None();

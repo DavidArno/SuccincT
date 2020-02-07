@@ -3,7 +3,7 @@ using SuccincT.Options;
 using SuccincT.PatternMatchers;
 using System;
 using System.Collections.Generic;
-using static SuccincT.Utilities.NRTSupport;
+using static SuccincT.Utilities.NrtSupport;
 
 namespace SuccincT.Unions.PatternMatchers
 {
@@ -61,8 +61,8 @@ namespace SuccincT.Unions.PatternMatchers
 
         private MatchFunctionSelector<T, T, TResult> Selector<T>()
             => typeof(T) switch {
-                var t when t == typeof(TLeft) => (_leftSelector as MatchFunctionSelector<T, T, TResult>)!,
-                _ => (_rightSelector as MatchFunctionSelector<T, T, TResult>)!
+                var t when t == typeof(TLeft) => _leftSelector.As<MatchFunctionSelector<T, T, TResult>>(),
+                _ => _rightSelector.As<MatchFunctionSelector<T, T, TResult>>()
             };
 
         private TResult DetermineResultUsingDefaultIfRequired(Either<TLeft, TRight> either)
