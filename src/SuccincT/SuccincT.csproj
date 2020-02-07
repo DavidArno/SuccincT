@@ -26,7 +26,7 @@
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReleaseNotes>V3.2.0 fixes a bug in Maybe&lt;T&gt; (can now be implicitly created from a value) and adds a IsValueOf&lt;T&gt; to the union types.</PackageReleaseNotes>
-    <LangVersion>preview</LangVersion>
+    <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
