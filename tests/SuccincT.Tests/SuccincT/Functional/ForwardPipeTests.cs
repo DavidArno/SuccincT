@@ -27,7 +27,7 @@ namespace SuccincTTests.SuccincT.Functional
             var expected = ToString(Square(512)).Reverse();
             var rev = Lambda<string>(StringReverseExtension.Reverse);
 
-            var actual = 512.Into(Square).ToString().Into(rev);
+            var actual = 512.Into(Square).Into(ToString).Into(rev);
 
             Assert.AreEqual(expected, actual);
         }

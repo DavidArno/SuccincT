@@ -9,6 +9,10 @@
         public static T? AsNullable<T>(this Option<T> option) where T : struct
             => option.HasValue ? (T?)option.Value : null;
 
-        public static Option<T> TryCast<T>(this object? value) where T : class => (value as T).ToOption();
+        public static T? AsNullableRef<T>(this Option<T> option) where T : class
+            => option.HasValue ? option.Value : null;
+
+        public static Option<T> TryCast<T>(this object? value) where T : class
+            => value is T validValue ? validValue : Option<T>.None();
     }
 }

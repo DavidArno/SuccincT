@@ -12,6 +12,28 @@ namespace SuccincTTests.SuccincT.JSON
     public static class UnionOf3ConverterTests
     {
         [Test]
+        public static void WhenProvidedWithNoCase_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new UnionOf3Converter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Union<int, List<int>, string>>("{k:1, value:2}", settings);
+            });
+        }
+
+        [Test]
+        public static void WhenProvidedWithNoValue_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new UnionOf3Converter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Union<int, List<int>, string>>("{case:\"Case1\", k:2}", settings);
+            });
+        }
+
+        [Test]
         public static void ConvertingUnionToJsonAndBack_PreservesUnionState()
         {
             var settings = new JsonSerializerSettings();

@@ -12,17 +12,23 @@ namespace SuccincT.JSON
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
-                                        object existingValue,
+                                        object? existingValue,
                                         JsonSerializer serializer)
         {
             var type = objectType.GenericTypeArguments[0];
 
             var jsonObject = JObject.Load(reader);
-            var isFailure = jsonObject["isFailure"].ToObject<bool>(serializer);
+            var rawIsFailure = 
+                jsonObject["isFailure"] ?? throw new JsonException("No 'isFailure' found for \"Success\" value."); 
+            
+            var isFailure = rawIsFailure.ToObject<bool>(serializer);
 
             if (isFailure)
             {
-                var failure = jsonObject["failure"].ToObject(type, serializer);
+                var rawFailure = 
+                    jsonObject["failure"] ?? throw new JsonException("No 'failure' found for \"Success\" value."); 
+
+                var failure = rawFailure.ToObject(type, serializer);
                 var rawMethod = typeof(Success).GetMethod("CreateFailure");
                 var typedMethod = rawMethod.MakeGenericMethod(type);
                 return typedMethod.Invoke(null, new[] { failure });
@@ -33,9 +39,9 @@ namespace SuccincT.JSON
             return Activator.CreateInstance(successType);
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var successType = value.GetType();
+            var successType = value!.GetType();
             var isFailureProperty = successType.GetProperty("IsFailure");
             var isFailure = (bool)isFailureProperty.GetValue(value, null);
 

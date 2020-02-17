@@ -11,6 +11,28 @@ namespace SuccincTTests.SuccincT.JSON
     public class OptionConverterTests
     {
         [Test]
+        public void WhenProvidedWithNoHasValue_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new OptionConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Option<int>>("{k:1, value:2}", settings);
+            });
+        }
+
+        [Test]
+        public void WhenProvidedWithNoValue_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new OptionConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Option<int>>("{hasValue:true, k:2}", settings);
+            });
+        }
+
+        [Test]
         public void ConvertingSomeToJsonAndBack_PreservesOptionState()
         {
             var settings = new JsonSerializerSettings();

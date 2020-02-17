@@ -16,8 +16,8 @@ namespace SuccincT.Functional
             var cachedTypeInfo = GetCachedTypeInfo(typeof(T));
 
             var (state, value) = cachedTypeInfo.CachedPublicConstructors
-                                                  .OrderByDescending(cc => cc.Parameters.Count)
-                                                  .TryFirst();
+                                               .OrderByDescending(cc => cc.Parameters.Count)
+                                               .TryFirst();
 
             if (state == Option.None) return Option<T>.None();
 
@@ -32,10 +32,10 @@ namespace SuccincT.Functional
             var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues);
             var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
-            var propertiesToOverwrite = sourceReadProperties
-                                       .Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
-                                       .Where(x => x.HasValue)
-                                       .Select(x => x.Value);
+            var propertiesToOverwrite = 
+                sourceReadProperties.Select(p => destWriteProperties.TryFirst(x => p.Name == x.Name))
+                                    .Where(x => x.HasValue)
+                                    .Select(x => x.Value);
 
             foreach (var propertyToOverwrite in propertiesToOverwrite)
             {

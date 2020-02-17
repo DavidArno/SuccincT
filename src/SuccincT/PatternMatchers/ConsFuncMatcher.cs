@@ -72,13 +72,8 @@ namespace SuccincT.PatternMatchers
 
             for (var i = list.Count - (singleTestsSupplied ? 2 : 1); i >= 0; i--)
             {
-                foreach (var testDo in _recursiveConsTests)
-                {
-                    if (testDo.testFunc(list[i]))
-                    {
-                        result = testDo.doFunc(list[i], result);
-                    }
-                }
+                result = _recursiveConsTests.Where(testDo => testDo.testFunc(list[i]))
+                                            .Aggregate(result, (current, testDo) => testDo.doFunc(list[i], current));
             }
 
             return result;

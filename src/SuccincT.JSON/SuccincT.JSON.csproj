@@ -5,18 +5,19 @@
     <PackageId>SuccincT.JSON</PackageId>
     <Product>SuccincT.JSON</Product>
     <Authors>David Arno</Authors>
-    <Copyright>Copyright © David Arno, 2017</Copyright>
+    <Copyright>Copyright © David Arno, 2020</Copyright>
     <Description>SuccincT.JSON adds JSON serialization support to Succinc&lt;T&gt;, a .NET library that adds a number of functional features to C#.</Description>
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageIcon>SuccincT.JSON.png</PackageIcon>
-    <PackageReleaseNotes>V3.0.1 adds direct support for .NET Framework 4.5+, to prevent this package pulling in multiple dependencies needed for netstandard libraries to work with the .NET framework.</PackageReleaseNotes>
+    <PackageReleaseNotes>V4.0.0 adds support for the new struct-based types in SuccincT v4 and enables the NRT feature for C# 8.</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>

@@ -24,10 +24,11 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void EmptyList_ThrowsExceptionWhenNoEmptyClauseSupplied()
         {
             var list = new List<int>();
-            Throws<NoMatchException>(() => list.Match().To<int>()
-                                               .Single().Do(0)
-                                               .Cons().Do(1)
-                                               .Result());
+            _ = Throws<NoMatchException>(
+                () => list.Match().To<int>()
+                          .Single().Do(0)
+                          .Cons().Do(1)
+                          .Result());
         }
 
         [Test]
@@ -89,17 +90,18 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void SingleItemList_ThrowsExceptionWhenNoSingleClauseSupplied()
         {
             var list = new List<int> { 1 };
-            Throws<NoMatchException>(() => list.Match().To<int>()
-                                               .Empty().Do(0)
-                                               .Cons().Do(1)
-                                               .Result());
+            _ = Throws<NoMatchException>(
+                () => list.Match().To<int>()
+                          .Empty().Do(0)
+                          .Cons().Do(1)
+                          .Result());
         }
 
         [Test]
         public void SingleItemList_ThrowsExceptionWhenNoSingleClauseMatches()
         {
             var list = new List<int> { 1 };
-            Throws<NoMatchException>(() => list.Match().To<int>()
+            _ = Throws<NoMatchException>(() => list.Match().To<int>()
                                                .Single().Where(x => x == 0).Do(0)
                                                .Result());
         }
@@ -153,7 +155,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void MultiItemList_ThrowsExceptionWhenNoConsClauseSupplied()
         {
             var list = new List<int> { 1, 2, 3 };
-            Throws<NoMatchException>(() => list.Match().To<int>()
+            _ = Throws<NoMatchException>(() => list.Match().To<int>()
                                                .Empty().Do(0)
                                                .Single().Do(1)
                                                .Result());
@@ -163,7 +165,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void MultiItemList_ThrowsExceptionWhenNoConsClauseMatches()
         {
             var list = new List<int> { 1, 2, 3 };
-            Throws<NoMatchException>(() => list.Match().To<int>()
+            _ = Throws<NoMatchException>(() => list.Match().To<int>()
                                                .Cons().Where((x, y) => x == 0).Do(0)
                                                .Result());
         }
@@ -211,14 +213,20 @@ namespace SuccincTTests.SuccincT.PatternMatchers
                              .RecursiveCons().Where(x => x == "x").Do((item, soFar) => soFar + "c")
                              .Result();
             AreEqual("zbc", result);
+
+            static IEnumerable<string> StringEnumeration()
+            {
+                yield return "x";
+                yield return "y";
+                yield return "z";
+            }
         }
 
         [Test]
-        public void MultiItemList_CanBeRecursivelyMatchedUsingWhere()
+        public void MultiItemList_CanBeRecursivelyMatchedUsingWhereAndValueDoDropsSoFarList()
         {
             var list = new List<string> { "a", "b", "c" };
             var result = list.Match().To<string>()
-                             .Single().Do(x => x)
                              .RecursiveCons().Where(x => x == "a").Do((item, soFar) => soFar + "z")
                              .RecursiveCons().Where(x => x == "b").Do("i")
                              .RecursiveCons().Where(x => x == "c").Do((item, soFar) => soFar + "x")
@@ -243,16 +251,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void EmptyEnumeration_ThrowsWhenRecursivelyMatched()
         {
             var list = new List<int>();
-            Throws<NoMatchException>(() => list.Match().To<int>()
-                                               .RecursiveCons().Do((x, y) => 0)
-                                               .Result());
-        }
-
-        private static IEnumerable<string> StringEnumeration()
-        {
-            yield return "x";
-            yield return "y";
-            yield return "z";
+            _ = Throws<NoMatchException>(() => list.Match().To<int>().RecursiveCons().Do((x, y) => 0).Result());
         }
 
         private static IList<string> StringList() => new List<string> {"a", "b", "c", "d"};

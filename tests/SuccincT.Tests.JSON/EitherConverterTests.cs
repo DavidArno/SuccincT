@@ -12,6 +12,28 @@ namespace SuccincTTests.SuccincT.JSON
     public class EitherConverterTests
     {
         [Test]
+        public void WhenProvidedWithNoIsLeft_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new EitherConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Either<List<int>, string>>("{k:1, value:2}", settings);
+            });
+        }
+
+        [Test]
+        public void WhenProvidedWithNoValue_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new EitherConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Either<List<int>, string>>("{isLeft:1, k:2}", settings);
+            });
+        }
+
+        [Test]
         public void ConvertingLeftEitherToJsonAndBack_PreservesEitherState()
         {
             var settings = new JsonSerializerSettings();

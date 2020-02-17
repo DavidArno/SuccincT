@@ -235,7 +235,7 @@ namespace SuccincTTests.SuccincT.Unions
                 (Left, var x, _) when x == 0 || x == 1 => x,
                 (Right, _, _) => 10,
                 (Left, var x, _) when x == 2 || x == 3 => x * 2,
-                (_, var x, _) => x * 3
+                var (_, x, _) => x * 3
             };
 
             AreEqual(4, result);

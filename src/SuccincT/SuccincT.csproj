@@ -5,7 +5,7 @@
     <PackageId>SuccincT</PackageId>
     <Product>SuccincT</Product>
     <Authors>David Arno</Authors>
-  	<Copyright>Copyright © David Arno, 2018</Copyright>
+  	<Copyright>Copyright © David Arno, 2020</Copyright>
     <Description>Succinc&lt;T&gt; is a .NET library that adds a number of functional features to C#:
 * Discriminated unions,
 * Pattern matching,
@@ -25,7 +25,7 @@
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageReleaseNotes>V3.2.0 fixes a bug in Maybe&lt;T&gt; (can now be implicitly created from a value) and adds a IsValueOf&lt;T&gt; to the union types.</PackageReleaseNotes>
+    <PackageReleaseNotes>V4.0.0 introduces a number of breaking changes so please read the wiki before upgrading. Maybe&lt;T&gt; has been removed and Option, Success, Either and the union types are all now structs. Added withers, new generic value/error type and C# 8 pattern matching support. Alsp enables the NRT feature for C# 8.</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
   </PropertyGroup>

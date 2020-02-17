@@ -15,7 +15,6 @@ namespace SuccincT.Functional
         public CachedTypeInfo(Type type)
         {
             var typeInfo = type.GetTypeInfo();
-
             var cachedConstructors =
                 typeInfo.DeclaredConstructors.Select(c => new CachedConstructorInfo(c)).ToList();
 

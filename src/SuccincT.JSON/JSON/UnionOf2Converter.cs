@@ -14,7 +14,7 @@ namespace SuccincT.JSON
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
-                                        object existingValue,
+                                        object? existingValue,
                                         JsonSerializer serializer)
         {
             var type1 = objectType.GenericTypeArguments[0];
@@ -23,9 +23,12 @@ namespace SuccincT.JSON
             var unionType = rawUnionType.MakeGenericType(type1, type2);
 
             var jsonObject = JObject.Load(reader);
-            var variant = jsonObject["case"].ToObject<Variant>(serializer);
-            var valueJson = jsonObject["value"];
-            var value = variant.Match().To<object>()
+            var rawVariant = jsonObject["case"] ?? throw new JsonException("No 'case' found for \"Union/2\" value.");
+            var variant = rawVariant.ToObject<Variant>(serializer);
+
+            var valueJson = jsonObject["value"] ?? throw new JsonException("No 'value' found for \"Union/2\" value.");
+
+            var value = variant.Match().To<object?>()
                                .With(Case1).Do(_ => valueJson.ToObject(type1, serializer))
                                .With(Case2).Do(_ => valueJson.ToObject(type2, serializer))
                                .Result();
@@ -33,9 +36,9 @@ namespace SuccincT.JSON
             return Activator.CreateInstance(unionType, value);
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var unionType = value.GetType();
+            var unionType = value!.GetType();
             var caseProperty = unionType.GetProperty("Case");
             var variant = (Variant)caseProperty.GetValue(value, null);
             var variantValue = variant.Match().To<object>()

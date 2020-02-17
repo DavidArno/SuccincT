@@ -6,7 +6,7 @@ using static SuccincT.Unions.None;
 namespace SuccincT.Options
 {
     /// <summary>
-    /// Provides an optional value of type T. Modelled on F# options. Either contains a T value, or None.
+    /// Provides an optional value of type T. Modeled on F# options. Either contains a T value, or None.
     /// </summary>
     public readonly struct Option<T>
     {
@@ -33,8 +33,7 @@ namespace SuccincT.Options
         /// Provides a fluent matcher that ultimately (upon Result() being called) returns a TResult value
         /// by invoking the function associated with the match.
         /// </summary>
-        public IOptionFuncMatcher<T, TResult> Match<TResult>()
-            => new OptionMatcher<T, TResult>(CreateUnion(), this);
+        public IOptionFuncMatcher<T, TResult> Match<TResult>() => new OptionMatcher<T, TResult>(CreateUnion(), this);
 
         /// <summary>
         /// Provides a fluent matcher that ultimately (upon Exec() being called) invokes the Action
@@ -50,16 +49,14 @@ namespace SuccincT.Options
         /// <summary>
         /// The value held (if created by Some()). Will throw an InvalidOperationException if created via None().
         /// </summary>
-        public T Value => HasValue
-            ? _value
-            : throw new InvalidOperationException("Option contains no value.");
+        public T Value => HasValue ? _value : throw new InvalidOperationException("Option contains no value.");
 
         public T ValueOrDefault => HasValue ? _value : default;
 
         public override bool Equals(object obj)
             => obj is Option<T> option ? EqualsOption(option) : obj is null && !HasValue;
 
-        internal bool EqualsOption(Option<T> other)
+        private bool EqualsOption(Option<T> other)
             => HasValue && other.HasValue && Value is {} value && value.Equals(other.Value) ||
                !(HasValue || other.HasValue);
 
@@ -71,8 +68,8 @@ namespace SuccincT.Options
 
         public static implicit operator Option<T>(T value) => new Option<T>(value);
 
-        public void Deconstruct(out Option state, out T value) => 
-            (state, value) = (HasValue ? Option.Some : Option.None, _value);
+        public void Deconstruct(out Option state, out T value) 
+            => (state, value) = (HasValue ? Option.Some : Option.None, _value);
 
         private Union<T, None> CreateUnion() => HasValue ? new Union<T, None>(_value) : new Union<T, None>(none);
     }

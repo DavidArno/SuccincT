@@ -12,7 +12,7 @@ namespace SuccincT.JSON
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
-                                        object existingValue,
+                                        object? existingValue,
                                         JsonSerializer serializer)
         {
             var type = objectType.GenericTypeArguments[0];
@@ -20,19 +20,24 @@ namespace SuccincT.JSON
             var optionType = rawOptionType.MakeGenericType(type);
 
             var jsonObject = JObject.Load(reader);
-            var hasValue = jsonObject["hasValue"].ToObject<bool>(serializer);
+            var rawHasValue = 
+                jsonObject["hasValue"] ?? throw new JsonException("No 'hasValue' found for \"Option\" value.");
+
+            var hasValue = rawHasValue.ToObject<bool>(serializer);
 
             var typedMethod = optionType.GetMethod(hasValue ? "Some" : "None");
 
             if (!hasValue) return typedMethod.Invoke(null, null);
 
-            var value = jsonObject["value"].ToObject(type, serializer);
+            var rawValue = jsonObject["value"] ?? throw new JsonException("No 'value' found for \"Option\" value.");
+            var value = rawValue.ToObject(type, serializer);
+
             return typedMethod.Invoke(null, new[] {value});
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var optionType = value.GetType();
+            var optionType = value!.GetType();
             var hasValueProperty = optionType.GetProperty("HasValue");
             var hasValue = (bool)hasValueProperty.GetValue(value, null);
 

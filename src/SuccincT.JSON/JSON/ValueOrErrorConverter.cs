@@ -12,7 +12,7 @@ namespace SuccincT.JSON
 
         public override object ReadJson(JsonReader reader,
                                         Type objectType,
-                                        object existingValue,
+                                        object? existingValue,
                                         JsonSerializer serializer)
         {
             var jsonObject = JObject.Load(reader);
@@ -21,21 +21,21 @@ namespace SuccincT.JSON
 
             if (possibleValue.HasValue)
             {
-                return ValueOrError.WithValue(possibleValue.Value.ToObject<string>());
+                return ValueOrError.WithValue(possibleValue.Value.ToObject<string>()!);
             }
 
             if (possibleError.HasValue)
             {
-                return ValueOrError.WithError(possibleError.Value.ToObject<string>());
+                return ValueOrError.WithError(possibleError.Value.ToObject<string>()!);
             }
 
             throw new JsonSerializationException(
                 "Cannot deserialize a ValueOrError that contains neither a value or an error");
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
-            var valueOrError = (ValueOrError)value;
+            var valueOrError = (ValueOrError)value!;
 
             writer.WriteStartObject();
 

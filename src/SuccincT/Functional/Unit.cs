@@ -6,7 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 // copied parts are copyright (c) 2016 247Entertainment.
 //
 
-// ReSharper disable UnusedParameter.Global - required to suppress complains on == and != (params needed, but not used)
+// ReSharper disable UnusedParameter.Global - required to suppress complaints on == and != (params needed, but not used)
 // ReSharper disable InconsistentNaming - "unit" feels better than "Value", especially when static imports are used.
 
 namespace SuccincT.Functional

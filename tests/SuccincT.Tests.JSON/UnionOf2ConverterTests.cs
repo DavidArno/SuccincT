@@ -9,10 +9,32 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.JSON
 {
     [TestFixture]
-    public class UnionOf2ConverterTests
+    public static class UnionOf2ConverterTests
     {
         [Test]
-        public void ConvertingUnionToJsonAndBack_PreservesUnionState()
+        public static void WhenProvidedWithNoCase_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new UnionOf2Converter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Union<List<int>, string> > ("{k:1, value:2}", settings);
+            });
+        }
+
+        [Test]
+        public static void WhenProvidedWithNoValue_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new UnionOf2Converter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Union<List<int>, string>>("{case:\"Case1\", k:2}", settings);
+            });
+        }
+
+        [Test]
+        public static void ConvertingUnionToJsonAndBack_PreservesUnionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new UnionOf2Converter());
@@ -27,7 +49,7 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingListOfUnionsToJsonAndBack_PreservesUnionState()
+        public static void ConvertingListOfUnionsToJsonAndBack_PreservesUnionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new UnionOf2Converter());

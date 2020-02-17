@@ -8,10 +8,10 @@ using static NUnit.Framework.Assert;
 namespace SuccincTTests.SuccincT.JSON
 {
     [TestFixture]
-    public class ValueOrErrorConverterTests
+    public static class ValueOrErrorConverterTests
     {
         [Test]
-        public void ConvertingValueToJsonAndBack_PreservesOptionState()
+        public static void ConvertingValueToJsonAndBack_PreservesOptionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ValueOrErrorConverter());
@@ -24,7 +24,7 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingErrorToJsonAndBack_PreservesOptionState()
+        public static void ConvertingErrorToJsonAndBack_PreservesOptionState()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ValueOrErrorConverter());
@@ -37,11 +37,11 @@ namespace SuccincTTests.SuccincT.JSON
         }
 
         [Test]
-        public void ConvertingInvalidJsonToValueOrError_FailsCleanlyIfSuccinctConverterUsed()
+        public static void ConvertingInvalidJsonToValueOrError_FailsCleanlyIfSuccinctConverterUsed()
         {
             var settings = new JsonSerializerSettings();
             settings.Converters.Add(new ValueOrErrorConverter());
-            Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{}", settings));
+            _ = Throws<JsonSerializationException>(() => DeserializeObject<ValueOrError>("{}", settings));
         }
     }
 }

@@ -160,12 +160,18 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
-        public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSomeWay()
+        public void WhenThereIsAValue_SomeCreatesTheSameOptionAsRegularOptionSome()
         {
             var actual = 1.Some();
             var expected = Option<int>.Some(1);
 
             AreEqual(expected, actual);
+        }
+
+        [Test]
+        public void NullCanBeConvertedToOptionUsingSome()
+        {
+            _ = Throws<ArgumentNullException>(() => ((string)null).Some());
         }
     }
 }

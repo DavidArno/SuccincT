@@ -11,6 +11,28 @@ namespace SuccincTTests.SuccincT.JSON
     public class SuccessConverterTests
     {
         [Test]
+        public void WhenProvidedWithNoIsFailure_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new SuccessConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Success<int>>("{k:1, failure:2}", settings);
+            });
+        }
+
+        [Test]
+        public void WhenProvidedWithNoFailure_DeserializeFailsWithJsonException()
+        {
+            var settings = new JsonSerializerSettings();
+            settings.Converters.Add(new SuccessConverter());
+
+            _ = Throws<JsonException>(() => {
+                _ = DeserializeObject<Success<int>>("{isFailure:true, k:2}", settings);
+            });
+        }
+
+        [Test]
         public void ConvertingFailureToJsonAndBack_PreservesSuccessState()
         {
             var settings = new JsonSerializerSettings();

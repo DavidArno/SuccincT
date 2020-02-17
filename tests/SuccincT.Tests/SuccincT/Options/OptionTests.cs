@@ -239,5 +239,18 @@ namespace SuccincTTests.SuccincT.Options
         {
             _ = Throws<ArgumentNullException>(() => _ = Option<string>.Some(null));
         }
+
+        [Test]
+        public static void OldStyleDeconstruct_CanBeSimulated()
+        {
+            Option<int> option = 3;
+
+            var (hasValue, value) = option is (Some, var v) ? (true, v) : (false, default);
+
+            Multiple(() => {
+                IsTrue(hasValue);
+                AreEqual(3, value);
+            });
+        }
     }
 }

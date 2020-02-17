@@ -14,7 +14,6 @@ namespace SuccincTTests.SuccincT.Options
         {
             var obj = "10";
             var opt = obj.ToOption();
-            Assert.IsNotNull(opt);
             Assert.IsTrue(opt.HasValue);
             Assert.AreEqual("10", opt.Value);
         }
@@ -23,7 +22,6 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenObjectIsNull_ToOptionReturnsNone()
         {
             var opt = ((object)null).ToOption();
-            Assert.IsNotNull(opt);
             Assert.IsFalse(opt.HasValue);
         }
 
@@ -32,7 +30,6 @@ namespace SuccincTTests.SuccincT.Options
         {
             int? obj = 15;
             var option = obj.ToOption();
-            Assert.IsNotNull(option);
             Assert.IsTrue(option.HasValue);
             Assert.AreEqual(15, option.Value);
         }
@@ -41,7 +38,6 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenNullableStructHasNoValue_ToOptionReturnsNone()
         {
             var option = ((int?) null).ToOption();
-            Assert.IsNotNull(option);
             Assert.IsFalse(option.HasValue);
         }
 
@@ -55,10 +51,26 @@ namespace SuccincTTests.SuccincT.Options
         }
 
         [Test]
+        public void WhenClassOptionHasValue_AsNullableReturnsThatValue()
+        {
+            var opt = Option<string>.Some("123");
+            var val = opt.AsNullableRef();
+            Assert.AreEqual("123", val);
+        }
+
+        [Test]
         public void WhenOptionHasNoValue_AsNullableReturnsNull()
         {
             var opt = Option<bool>.None();
             var val = opt.AsNullable();
+            Assert.IsNull(val);
+        }
+
+        [Test]
+        public void WhenClassOptionHasNoValue_AsNullableReturnsNull()
+        {
+            var opt = Option<string>.None();
+            var val = opt.AsNullableRef();
             Assert.IsNull(val);
         }
 
