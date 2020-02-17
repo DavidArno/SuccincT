@@ -21,7 +21,7 @@
     <AssemblyName>SuccincT</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageIcon>SuccincT.png</PackageIcon>
+    <PackageIconFile>SuccincT.png</PackageIconFile>
     <PackageTags>Partial application Discriminated unions Options Maybe Pattern matching cons functional</PackageTags>
     <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
     <RepositoryType>git</RepositoryType>

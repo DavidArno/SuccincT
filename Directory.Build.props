@@ -5,10 +5,14 @@
         <TreatWarningsAsErrors>True</TreatWarningsAsErrors>
         <RepositoryUrl>https://github.com/DavidArno/SuccincT</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <PackageLicense>https://raw.githubusercontent.com/DavidArno/SuccincT/master/LICENSE.txt</PackageLicense>
+        <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
         <PackageProject>https://github.com/DavidArno/SuccincT</PackageProject>
         <PackageOutputPath>$(SolutionDir)artifacts\</PackageOutputPath>
         <IncludeSymbols>True</IncludeSymbols>
         <IncludeSource>True</IncludeSource>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None  Include="..\..\LICENSE.txt" Pack="true" PackagePath=""/>
+    </ItemGroup>
 </Project>

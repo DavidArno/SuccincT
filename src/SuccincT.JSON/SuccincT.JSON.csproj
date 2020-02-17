@@ -10,7 +10,7 @@
     <AssemblyName>SuccincT.JSON</AssemblyName>
     <RootNamespace>SuccincT</RootNamespace>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageIcon>SuccincT.JSON.png</PackageIcon>
+    <PackageIconFile>SuccincT.JSON.png</PackageIconFile>
     <PackageReleaseNotes>V4.0.0 adds support for the new struct-based types in SuccincT v4 and enables the NRT feature for C# 8.</PackageReleaseNotes>
     <LangVersion>8</LangVersion>
     <Nullable>enable</Nullable>
