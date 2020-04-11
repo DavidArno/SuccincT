@@ -1,0 +1,8 @@
+title: Succinc<T>
+description: Discriminated unions, pattern matching and functional composition for C#
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-tactile
+
+gems:
+  - jekyll-mentions
