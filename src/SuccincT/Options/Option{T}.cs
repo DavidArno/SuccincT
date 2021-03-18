@@ -51,7 +51,7 @@ namespace SuccincT.Options
         /// </summary>
         public T Value => HasValue ? _value : throw new InvalidOperationException("Option contains no value.");
 
-        public T ValueOrDefault => HasValue ? _value : default;
+        public T ValueOrDefault => HasValue ? _value : default!;
 
         public override bool Equals(object obj)
             => obj is Option<T> option ? EqualsOption(option) : obj is null && !HasValue;

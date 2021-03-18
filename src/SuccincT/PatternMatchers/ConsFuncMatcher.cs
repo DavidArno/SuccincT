@@ -73,10 +73,10 @@ namespace SuccincT.PatternMatchers
             for (var i = list.Count - (singleTestsSupplied ? 2 : 1); i >= 0; i--)
             {
                 result = _recursiveConsTests.Where(testDo => testDo.testFunc(list[i]))
-                                            .Aggregate(result, (current, testDo) => testDo.doFunc(list[i], current));
+                                            .Aggregate(result!, (current, testDo) => testDo.doFunc(list[i], current));
             }
 
-            return result;
+            return result!;
         }
 
         private TResult CalculateSimpleResult((Option<T> head, ConsEnumerable<T>? tail) simpleMatchData) =>

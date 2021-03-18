@@ -25,4 +25,10 @@
     <None Include="..\..\SuccincT.JSON.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography">
+      <HintPath>D:\SVN\LCDev\branches\T2\LCSystem\Business\WebApps\References\Microsoft.Practices.EnterpriseLibrary.Caching.Cryptography.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>
