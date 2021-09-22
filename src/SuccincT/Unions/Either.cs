@@ -48,7 +48,7 @@ namespace SuccincT.Unions
         public void Deconstruct(out EitherState state, out TLeft leftValue, out TRight rightValue)
             => (state, leftValue, rightValue) = (IsLeft ? EitherState.Left : EitherState.Right, _left, _right);
 
-        public override bool Equals(object obj) => obj is Either<TLeft, TRight> either && EithersEqual(this, either);
+        public override bool Equals(object? obj) => obj is Either<TLeft, TRight> either && EithersEqual(this, either);
 
         public override int GetHashCode()
             => IsLeft ? _left is {} left ? left.GetHashCode() : 0 : _right is {} right ? right.GetHashCode() : 0;

@@ -71,7 +71,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase2ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            Throws<InvalidCaseException>(() => _ = union.Case2);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case2);
         }
 
         [Test]
@@ -94,56 +94,56 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase3ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            Throws<InvalidCaseException>(() => _ = union.Case3);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case3);
         }
 
         [Test]
         public void AccessingCase4ForUnionWithT1_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            Throws<InvalidCaseException>(() => _ = union.Case4);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case4);
         }
 
         [Test]
         public void AccessingCase1ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            Throws<InvalidCaseException>(() => _ = union.Case1);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case1);
         }
 
         [Test]
         public void AccessingCase3ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            Throws<InvalidCaseException>(() => _ = union.Case3);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case3);
         }
 
         [Test]
         public void AccessingCase4ForUnionWithT2_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>("Test");
-            Throws<InvalidCaseException>(() => _ = union.Case4);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case4);
         }
 
         [Test]
         public void AccessingCase1ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Red);
-            Throws<InvalidCaseException>(() => _ = union.Case1);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case1);
         }
 
         [Test]
         public void AccessingCase2ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors>(Colors.Blue);
-            Throws<InvalidCaseException>(() => _ = union.Case2);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case2);
         }
 
         [Test]
         public void AccessingCase4ForUnionWithT3_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
-            Throws<InvalidCaseException>(() => _ = union.Case4);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case4);
         }
 
         [Test]
@@ -166,21 +166,21 @@ namespace SuccincTTests.SuccincT.Unions
         public void AccessingCase1ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
-            Throws<InvalidCaseException>(() => _ = union.Case1);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case1);
         }
 
         [Test]
         public void AccessingCase2ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Cow);
-            Throws<InvalidCaseException>(() => _ = union.Case2);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case2);
         }
 
         [Test]
         public void AccessingCase3ForUnionWithT4_CausesException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Dog);
-            Throws<InvalidCaseException>(() => _ = union.Case3);
+            _ = Throws<InvalidCaseException>(() => _ = union.Case3);
         }
     }
 }

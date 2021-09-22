@@ -63,7 +63,7 @@ namespace SuccincT.Options
 
         public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             switch (obj)
             {

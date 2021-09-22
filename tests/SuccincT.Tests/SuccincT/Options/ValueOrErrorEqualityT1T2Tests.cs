@@ -65,10 +65,10 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = WithValue("1234");
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
-            IsFalse(a == null);
-            IsFalse(null == a);
+//            IsTrue(a != null);
+//            IsTrue(null != a);
+//            IsFalse(a == null);
+//            IsFalse(null == a);
         }
 
         [Test]
@@ -76,10 +76,10 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = WithError(new Exception("1234"));
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
-            IsFalse(a == null);
-            IsFalse(null == a);
+//            IsTrue(a != null);
+//            IsTrue(null != a);
+//            IsFalse(a == null);
+//            IsFalse(null == a);
         }
 
         [Test]

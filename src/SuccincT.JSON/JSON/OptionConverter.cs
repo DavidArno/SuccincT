@@ -27,19 +27,19 @@ namespace SuccincT.JSON
 
             var typedMethod = optionType.GetMethod(hasValue ? "Some" : "None");
 
-            if (!hasValue) return typedMethod.Invoke(null, null);
+            if (!hasValue) return typedMethod?.Invoke(null, null)!;
 
             var rawValue = jsonObject["value"] ?? throw new JsonException("No 'value' found for \"Option\" value.");
             var value = rawValue.ToObject(type, serializer);
 
-            return typedMethod.Invoke(null, new[] {value});
+            return typedMethod?.Invoke(null, new[] {value})!;
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var optionType = value!.GetType();
             var hasValueProperty = optionType.GetProperty("HasValue");
-            var hasValue = (bool)hasValueProperty.GetValue(value, null);
+            var hasValue = (bool)hasValueProperty?.GetValue(value, null)!;
 
             writer.WriteStartObject();
             writer.WritePropertyName("hasValue");
@@ -49,7 +49,7 @@ namespace SuccincT.JSON
             {
                 writer.WritePropertyName("value");
                 var valueProperty = optionType.GetProperty("Value");
-                var optionValue = valueProperty.GetValue(value, null);
+                var optionValue = valueProperty?.GetValue(value, null);
                 serializer.Serialize(writer, optionValue);
             }
 

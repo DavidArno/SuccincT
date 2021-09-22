@@ -121,7 +121,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1T2T3WithInvalidTypeCaseOf_ThrowsException()
         {
             var union = new Union<int, string, Plants, Foods>(2);
-            Throws<InvalidCaseOfTypeException>(() => union.Match<int>()
+            _ = Throws<InvalidCaseOfTypeException>(() => union.Match<int>()
                                                           .CaseOf<Foods>().Do(1)
                                                           .CaseOf<float>().Do(2)
                                                           .Result());
@@ -247,7 +247,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionT1T2WithInvalidExecTypeCaseOf_ThrowsException()
         {
             var union = new Union<int, string,Plants,Foods>(2);
-            Throws<InvalidCaseOfTypeException>(() => union.Match()
+            _ = Throws<InvalidCaseOfTypeException>(() => union.Match()
                                                           .CaseOf<Foods>().Do(_ => {})
                                                           .CaseOf<Plants>().Do(_ => {})
                                                           .CaseOf<float>().Do(_ => {})

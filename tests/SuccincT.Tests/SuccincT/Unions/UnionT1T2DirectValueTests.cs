@@ -44,7 +44,7 @@ namespace SuccincTTests.SuccincT.Unions
         public static void UnionT1T2WithInvalidTypeValue_ThrowsException()
         {
             var union = new Union<int, string>(2);
-            Throws<InvalidCaseOfTypeException>(() => union.CaseOf<float>());
+            _ = Throws<InvalidCaseOfTypeException>(() => union.CaseOf<float>());
         }
 
         [Test]
@@ -53,8 +53,8 @@ namespace SuccincTTests.SuccincT.Unions
             var union1 = new Union<int, string>(2);
             var union2 = new Union<int, string>("2");
 
-            Throws<InvalidCaseException>(() => union1.CaseOf<string>());
-            Throws<InvalidCaseException>(() => union2.CaseOf<int>());
+            _ = Throws<InvalidCaseException>(() => union1.CaseOf<string>());
+            _ = Throws<InvalidCaseException>(() => union2.CaseOf<int>());
         }
 
         [Test]

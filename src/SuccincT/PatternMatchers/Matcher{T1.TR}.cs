@@ -123,7 +123,7 @@ namespace SuccincT.PatternMatchers
         IFuncMatcher<T1, TResult> IFuncWithHandler<IFuncMatcher<T1, TResult>, T1, TResult>.Do(
             Func<T1, TResult> action)
         {
-            var values = _withValues;
+            var values = _withValues!;
             RecordFunction(x => values.Any(y => EqualityComparer<T1>.Default.Equals(x, y)), action);
             return this;
         }
@@ -153,7 +153,7 @@ namespace SuccincT.PatternMatchers
         {
             if (!_functionSelector.DetermineResult(_item).HasValue)
             {
-                _elseFunction!(_item);
+                _ = _elseFunction!(_item);
             }
         }
 

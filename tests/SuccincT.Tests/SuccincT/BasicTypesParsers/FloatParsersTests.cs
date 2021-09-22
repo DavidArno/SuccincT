@@ -76,7 +76,7 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         [Test]
         public void InvalidDoubleString_ResultsInNone()
         {
-            var result = "8.0E400".TryParseDouble();
+            var result = "8.0EE40".TryParseDouble();
             IsFalse(result.HasValue);
         }
 

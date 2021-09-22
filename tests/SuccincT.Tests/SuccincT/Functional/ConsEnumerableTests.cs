@@ -152,7 +152,7 @@ namespace SuccincTTests.SuccincT.Functional
 
         [Test]
         public void SplittingEmptyEnumerationIntoTuple_ThrowsException() =>
-            Throws<InvalidOperationException>(() => { var (_, _) = new List<int>(); });
+            _ = Throws<InvalidOperationException>(() => { var (_, _) = new List<int>(); });
 
         [Test]
         public void SplittingEnumerationViaCons_AllowsAllowsOriginalEnumerationToBeEnumeratedCorrectly()

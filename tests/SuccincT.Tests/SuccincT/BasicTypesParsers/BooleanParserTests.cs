@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SuccincT.Parsers;
 using System;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.BasicTypesParsers
 {
@@ -14,35 +15,35 @@ namespace SuccincTTests.SuccincT.BasicTypesParsers
         public void ValidTrueBooleanString_ResultsInValue()
         {
             var result = "true".TryParseBoolean();
-            Assert.IsTrue(result.Value);
+            IsTrue(result.Value);
         }
 
         [Test]
         public void ValidFalseBooleanString_ResultsInValue()
         {
             var result = "false".TryParseBoolean();
-            Assert.IsFalse(result.Value);
+            IsFalse(result.Value);
         }
 
         [Test]
         public void ValidBooleanString_ResultsInHavingValue()
         {
             var result = "true".TryParseBoolean();
-            Assert.IsTrue(result.HasValue);
+            IsTrue(result.HasValue);
         }
 
         [Test]
         public void InvalidBooleanString_ResultsInNone()
         {
             var result = "maybe".TryParseBoolean();
-            Assert.IsFalse(result.HasValue);
+            IsFalse(result.HasValue);
         }
 
         [Test]
         public void InvalidBooleanString_ResultsInExceptionIfValueRead()
         {
             var result = "maybe".TryParseBoolean();
-            Assert.Throws<InvalidOperationException>(() => _ = result.Value);
+            _ = Throws<InvalidOperationException>(() => _ = result.Value);
         }
     }
 }

@@ -53,7 +53,7 @@ namespace SuccincT.Options
 
         public T ValueOrDefault => HasValue ? _value : default!;
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
             => obj is Option<T> option ? EqualsOption(option) : obj is null && !HasValue;
 
         private bool EqualsOption(Option<T> other)

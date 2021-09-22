@@ -25,7 +25,7 @@ namespace SuccincT.Options
 
         public ISuccessActionMatcher<T> Match() => new SuccessMatcher<T, Unit>(CreateUnion(), this);
 
-        public override bool Equals(object obj) =>
+        public override bool Equals(object? obj) =>
             obj is Success<T> other &&
             other.IsFailure == IsFailure &&
             (IsFailure && other.Failure!.Equals(_error) || !IsFailure);

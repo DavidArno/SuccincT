@@ -29,7 +29,7 @@ namespace SuccincT.Functional
 
             if (constructorParameterValues.Length != constructorParameters.Count) return Option<T>.None();
 
-            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues);
+            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues)!;
             var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
             var propertiesToOverwrite = 
@@ -72,7 +72,7 @@ namespace SuccincT.Functional
                     "non-writable properties to be set via that constructor.");
             }
 
-            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues);
+            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues)!;
             var destWriteProperties = cachedTypeInfo.Properties.Except(cachedTypeInfo.ReadOnlyProperties);
 
             var propertiesToOverwrite = sourceReadProperties
@@ -189,13 +189,12 @@ namespace SuccincT.Functional
         private static object[] GetConstructorParameterValuesForCopy<T>(
             T @object,
             IEnumerable<PropertyInfo> sourceReadProperties,
-            IEnumerable<ParameterInfo>
-            constructorParameters) where T : notnull
+            IEnumerable<ParameterInfo> constructorParameters) where T : notnull
         {
             return constructorParameters.Select(p => sourceReadProperties.TryFirst(x => AreLinked(x, p)))
                                         .Where(x => x.HasValue).Select(x => x.Value)
                                         .Select(sourceReadProperty => sourceReadProperty.GetValue(@object, null))
-                                        .ToArray();
+                                        .ToArray()!;
         }
 
         private static T CreateNewObjectApplyingUpdates<T, TProps>(
@@ -206,7 +205,7 @@ namespace SuccincT.Functional
             IEnumerable<(PropertyInfo Value, PropertyInfo PropToUpdate)> propsToSetFromUpdateData)
             where T : notnull where TProps : class
         {
-            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues);
+            var newObject = Activator.CreateInstance(typeof(T), constructorParameterValues)!;
 
             foreach (var propertyToOverwrite in propsToSetFromSourceObject)
             {
@@ -267,12 +266,12 @@ namespace SuccincT.Functional
                            return updateProperties
                                  .TryFirst(ptu => AreLinked(ptu, p))
                                  .Match<Option<object>>()
-                                 .Some().Do(ptu => Option<object>.Some(ptu.GetValue(propertiesToUpdate, null)))
+                                 .Some().Do(ptu => Option<object>.Some(ptu.GetValue(propertiesToUpdate, null)!))
                                  .None().Do(() => {
                                       return sourceReadProperties
                                             .TryFirst(sp => AreLinked(sp, p))
                                             .Match<Option<object>>()
-                                            .Some().Do(sp => Option<object>.Some(sp.GetValue(@object, null)))
+                                            .Some().Do(sp => Option<object>.Some(sp.GetValue(@object, null)!))
                                             .None().Do(Option<object>.None)
                                             .Result();
                                  }).Result();
@@ -297,7 +296,7 @@ namespace SuccincT.Functional
         }
 
         private static CachedTypeInfo GetCachedTypeInfo(Type type)
-            => CachedTypeInfoDetails.GetOrAddValue(type.FullName, () => new CachedTypeInfo(type));
+            => CachedTypeInfoDetails.GetOrAddValue(type.FullName!, () => new CachedTypeInfo(type));
 
         private static T GetOrAddValue<T>(this Dictionary<string, T> dictionary, string key, Func<T> createValue)
         {
@@ -322,7 +321,7 @@ namespace SuccincT.Functional
         private static bool AreLinked(ParameterInfo parameterInfo, PropertyInfo propertyInfo) =>
             string.Equals(parameterInfo.Name, propertyInfo.Name, StringComparison.CurrentCultureIgnoreCase);
 
-        private static void CopyPropertyValue<T>(T from, PropertyInfo property, T to) where T : class
+        private static void CopyPropertyValue<T>(T from, PropertyInfo property, T to) where T : notnull
             => property.SetValue(to, property.GetValue(from, null));
 
         private static void CopyPropertyValue<T1, T2>(T1 from,

@@ -61,8 +61,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithValue("1234");
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
+//            IsTrue(a != null);
+//            IsTrue(null != a);
         }
 
         [Test]
@@ -70,8 +70,8 @@ namespace SuccincTTests.SuccincT.Options
         {
             var a = ValueOrError.WithError("1234");
             IsFalse(a.Equals(null));
-            IsTrue(a != null);
-            IsTrue(null != a);
+//            IsTrue(a != null);
+//            IsTrue(null != a);
         }
     }
 }

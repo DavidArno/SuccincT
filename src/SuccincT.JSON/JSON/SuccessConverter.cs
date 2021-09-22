@@ -30,20 +30,20 @@ namespace SuccincT.JSON
 
                 var failure = rawFailure.ToObject(type, serializer);
                 var rawMethod = typeof(Success).GetMethod("CreateFailure");
-                var typedMethod = rawMethod.MakeGenericMethod(type);
-                return typedMethod.Invoke(null, new[] { failure });
+                var typedMethod = rawMethod?.MakeGenericMethod(type);
+                return typedMethod?.Invoke(null, new[] { failure })!;
             }
 
             var rawSuccessType = typeof(Success<>);
             var successType = rawSuccessType.MakeGenericType(type);
-            return Activator.CreateInstance(successType);
+            return Activator.CreateInstance(successType)!;
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var successType = value!.GetType();
             var isFailureProperty = successType.GetProperty("IsFailure");
-            var isFailure = (bool)isFailureProperty.GetValue(value, null);
+            var isFailure = (bool)isFailureProperty?.GetValue(value, null)!;
 
             writer.WriteStartObject();
             writer.WritePropertyName("isFailure");
@@ -53,7 +53,7 @@ namespace SuccincT.JSON
             {
                 writer.WritePropertyName("failure");
                 var failureProperty = successType.GetProperty("Failure");
-                var failure = failureProperty.GetValue(value, null);
+                var failure = failureProperty?.GetValue(value, null);
                 serializer.Serialize(writer, failure);
             }
 

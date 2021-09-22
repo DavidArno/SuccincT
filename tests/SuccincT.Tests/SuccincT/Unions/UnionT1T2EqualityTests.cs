@@ -66,10 +66,10 @@ namespace SuccincTTests.SuccincT.Unions
                     IsFalse(union1.Equals(null));
                     IsFalse(union2.Equals(null));
 
-                    Throws<InvalidCastException>(() => _ = union1 != null);
-                    Throws<InvalidCastException>(() => _ = null != union1);
-                    Throws<InvalidCastException>(() => _ = union2 != null);
-                    Throws<InvalidCastException>(() => _ = null != union2);
+                    _ = Throws<InvalidCastException>(() => _ = union1 != null);
+                    _ = Throws<InvalidCastException>(() => _ = null != union1);
+                    _ = Throws<InvalidCastException>(() => _ = union2 != null);
+                    _ = Throws<InvalidCastException>(() => _ = null != union2);
                 });
         }
 

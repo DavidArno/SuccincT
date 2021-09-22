@@ -29,7 +29,7 @@ namespace SuccincTTests.SuccincT.Options
 
         [Test]
         public static void WhenCreatingErrorValue_ErrorMustNotBeNull() =>
-            Throws<ArgumentNullException>(() => Success.CreateFailure<string>(null));
+            _ = Throws<ArgumentNullException>(() => Success.CreateFailure<string>(null));
 
         [Test]
         public static void TwoSuccesses_AreEqual()

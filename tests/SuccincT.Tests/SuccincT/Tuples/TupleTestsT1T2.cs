@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using static SuccincT.PatternMatchers.Any;
+using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Tuples
 {
@@ -13,7 +14,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(1, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -21,7 +22,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = (1, "a");
             var result = tuple.Match().To<bool>().With(2, "a").Or(1, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -29,7 +30,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(__, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -37,7 +38,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = (1, "a");
             var result = tuple.Match().To<bool>().With(1, __).Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -45,7 +46,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(any, any).Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -53,7 +54,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(2, "a").Or(__, "a").Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -61,7 +62,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(1, "b").Or(1, __).Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -69,14 +70,14 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(2, "b").Or(__, __).Do((x, y) => true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = Tuple.Create(1, "a");
-            Assert.Throws<NoMatchException>(
+            _ = Throws<NoMatchException>(
                 () => tuple.Match().To<int>().With(2, "a").Or(1, "b").Do((x, y) => x).Result());
         }
 
@@ -85,7 +86,7 @@ namespace SuccincTTests.SuccincT.Tuples
         {
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(2, "a").Do(true).Else(false).Result();
-            Assert.IsFalse(result);
+            IsFalse(result);
         }
 
         [Test]
@@ -94,7 +95,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().Where((x, y) => x == 1 && y == "a").Do(true)
                                                  .Else((x, y) => false).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -103,7 +104,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().Where((x, y) => x == 2).Do((x, y) => true)
                                                  .Else((x, y) => false).Result();
-            Assert.IsFalse(result);
+            IsFalse(result);
         }
 
         [Test]
@@ -112,7 +113,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().Where((x, y) => x == 2).Do((x, y) => true)
                                                  .Else(false).Result();
-            Assert.IsFalse(result);
+            IsFalse(result);
         }
 
         [Test]
@@ -121,7 +122,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(1, "b").Or(2, "a").Do((x, y) => false)
                                                  .Where((x, y) => x == 1).Do(true).Result();
-            Assert.IsTrue(result);
+            IsTrue(result);
         }
 
         [Test]
@@ -130,7 +131,7 @@ namespace SuccincTTests.SuccincT.Tuples
             var tuple = Tuple.Create(1, "a");
             var result = tuple.Match().To<bool>().With(1, "a").Or(1, "a").Do(false)
                                                  .Where((x, y) => x == 5).Do(true).Result();
-            Assert.IsFalse(result);
+            IsFalse(result);
         }
     }
 }

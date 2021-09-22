@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
-using ReversedString;
 using SuccincT.Functional;
 using static SuccincT.Functional.TypedLambdas;
 
@@ -59,5 +59,16 @@ namespace SuccincTTests.SuccincT.Functional
 
         private static int Square(int x) => x * x;
         private static string ToString(int x) => x.ToString();
+
+    }
+
+    internal static class StringReverseExtension
+    {
+        public static string Reverse(this string text)
+        {
+            var array = text.ToCharArray();
+            Array.Reverse(array);
+            return new string(array);
+        }
     }
 }

@@ -128,7 +128,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT1AndNoCase1Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(2);
-            Throws<NoMatchException>(() => union.Match<bool>()
+            _ = Throws<NoMatchException>(() => union.Match<bool>()
                                                 .Case2().Do(x => true)
                                                 .Case3().Do(x => true)
                                                 .Case4().Do(false)
@@ -139,7 +139,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT2AndNoCase2Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>("la la");
-            Throws<NoMatchException>(() => union.Match<bool>()
+            _ = Throws<NoMatchException>(() => union.Match<bool>()
                                                 .Case1().Do(x => false)
                                                 .Case3().Do(x => false)
                                                 .Case4().Do(false)
@@ -150,7 +150,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT3AndNoCase3Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(Colors.Red);
-            Throws<NoMatchException>(() => union.Match<bool>()
+            _ = Throws<NoMatchException>(() => union.Match<bool>()
                                                 .Case1().Do(x => false)
                                                 .Case2().Do(x => false)
                                                 .Case4().Do(false)
@@ -161,7 +161,7 @@ namespace SuccincTTests.SuccincT.Unions
         public void UnionWithT4AndNoCase4Match_ThrowsException()
         {
             var union = new Union<int, string, Colors, Animals>(Animals.Cat);
-            Throws<NoMatchException>(() => union.Match<bool>()
+            _ = Throws<NoMatchException>(() => union.Match<bool>()
                                                 .Case1().Do(false)
                                                 .Case2().Do(false)
                                                 .Case3().Do(false)

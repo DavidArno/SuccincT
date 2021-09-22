@@ -69,14 +69,14 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenValueIsSetAndNoValueMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = WithValue("1");
-            Throws<NoMatchException>(() => valueOrError.Match().Error().Do(x => {}).Exec());
+            _ = Throws<NoMatchException>(() => valueOrError.Match().Error().Do(x => {}).Exec());
         }
 
         [Test]
         public void WhenErrorIsSetAndNoErrorMatchDefinedForExec_ExceptionThrown()
         {
             var valueOrError = WithError(new Exception("x"));
-            Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => {}).Exec());
+            _ = Throws<NoMatchException>(() => valueOrError.Match().Value().Do(x => {}).Exec());
         }
 
         private static ValueOrError<string, Exception> WithValue(string s)

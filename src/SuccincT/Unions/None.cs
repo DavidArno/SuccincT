@@ -10,7 +10,7 @@
 
         public override string ToString() => "!none!";
 
-        public override bool Equals(object obj) => obj is None;
+        public override bool Equals(object? obj) => obj is None;
 
         public override int GetHashCode() => 0;
 

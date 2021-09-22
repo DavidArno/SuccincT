@@ -73,7 +73,7 @@ namespace SuccincT.Options
 
         public override string ToString() => HasValue ? $"Value of {_value}" : $"Error of {_error}";
 
-        public override bool Equals(object obj) => 
+        public override bool Equals(object? obj) => 
             obj is ValueOrError testObject && testObject._error == _error && testObject._value == _value;
 
         public override int GetHashCode() => HasValue ? GetItemHashCode(_value) : GetItemHashCode(_error);

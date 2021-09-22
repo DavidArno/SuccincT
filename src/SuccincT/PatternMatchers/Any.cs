@@ -6,7 +6,7 @@
 
         public override int GetHashCode() => 0;
 
-        public override bool Equals(object obj) => obj is Any;
+        public override bool Equals(object? obj) => obj is Any;
 
         public override string ToString() => "*";
 

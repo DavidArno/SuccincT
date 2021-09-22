@@ -47,8 +47,8 @@ namespace SuccincTTests.SuccincT.Unions
         public static void UnionWithT1_CaseOfT2OrT3Throws()
         {
             var union = new Union<int, string, Plants>(1);
-            Throws<InvalidCaseException>(() => union.CaseOf<string>());
-            Throws<InvalidCaseException>(() => union.CaseOf<Plants>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<string>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<Plants>());
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace SuccincTTests.SuccincT.Unions
         public static void UnionWithT2_CaseOfT1orT3Throws()
         {
             var union = new Union<int, string, Plants>("string");
-            Throws<InvalidCaseException>(() => union.CaseOf<int>());
-            Throws<InvalidCaseException>(() => union.CaseOf<Plants>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<int>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<Plants>());
         }
 
         [Test]
@@ -79,15 +79,15 @@ namespace SuccincTTests.SuccincT.Unions
         public static void UnionWithT3_CaseOfT1OrT2Throws()
         {
             var union = new Union<int, string, Plants>(Plants.Rose);
-            Throws<InvalidCaseException>(() => union.CaseOf<int>());
-            Throws<InvalidCaseException>(() => union.CaseOf<string>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<int>());
+            _ = Throws<InvalidCaseException>(() => union.CaseOf<string>());
         }
 
         [Test]
         public static void UnionT1T2T3WithInvalidTypeValue_ThrowsException()
         {
             var union = new Union<int, string, Plants>(2);
-            Throws<InvalidCaseOfTypeException>(() => union.CaseOf<float>());
+            _ = Throws<InvalidCaseOfTypeException>(() => union.CaseOf<float>());
         }
 
         [Test]

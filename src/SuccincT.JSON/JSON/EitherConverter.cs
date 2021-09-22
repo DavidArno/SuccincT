@@ -30,17 +30,17 @@ namespace SuccincT.JSON
                 ? valueJson.ToObject(type1, serializer)
                 : valueJson.ToObject(type2, serializer);
 
-            return Activator.CreateInstance(eitherType, value);
+            return Activator.CreateInstance(eitherType, value)!;
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var eitherType = value!.GetType();
             var leftProperty = eitherType.GetProperty("IsLeft");
-            var isLeft = (bool)leftProperty.GetValue(value, null);
+            var isLeft = (bool)leftProperty?.GetValue(value, null)!;
             var variantValue = isLeft 
-                ? eitherType.GetProperty("Left").GetValue(value, null)
-                : eitherType.GetProperty("Right").GetValue(value, null);
+                ? eitherType?.GetProperty("Left")?.GetValue(value, null)
+                : eitherType?.GetProperty("Right")?.GetValue(value, null);
 
             writer.WriteStartObject();
             writer.WritePropertyName("isLeft");

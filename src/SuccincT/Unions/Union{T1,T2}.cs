@@ -37,7 +37,7 @@ namespace SuccincT.Unions
                 _ => (false, default)
             };
 
-            value = valueTemp;
+            value = valueTemp!;
             return result;
         }
 
@@ -57,7 +57,7 @@ namespace SuccincT.Unions
         public void Deconstruct(out Variant variant, out T1 case1, out T2 case2)
             => (variant, case1, case2) = (Case, _value1, _value2);
 
-        public override bool Equals(object obj) => obj is Union<T1, T2> union && UnionsEqual(union);
+        public override bool Equals(object? obj) => obj is Union<T1, T2> union && UnionsEqual(union);
 
         public override int GetHashCode() =>
             Case switch

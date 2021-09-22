@@ -91,7 +91,7 @@ namespace SuccincTTests.SuccincT.Functional
         {
             var result = -1;
             var func = Lambda<int>(x => result = x * 2);
-            func(4);
+            _ = func(4);
             Assert.AreEqual(8, result);
         }
 

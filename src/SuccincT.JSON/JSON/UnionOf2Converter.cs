@@ -33,17 +33,17 @@ namespace SuccincT.JSON
                                .With(Case2).Do(_ => valueJson.ToObject(type2, serializer))
                                .Result();
 
-            return Activator.CreateInstance(unionType, value);
+            return Activator.CreateInstance(unionType, value)!;
         }
 
         public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var unionType = value!.GetType();
             var caseProperty = unionType.GetProperty("Case");
-            var variant = (Variant)caseProperty.GetValue(value, null);
+            var variant = (Variant)caseProperty?.GetValue(value, null)!;
             var variantValue = variant.Match().To<object>()
-                                      .With(Case1).Do(_ => unionType.GetProperty("Case1").GetValue(value, null))
-                                      .With(Case2).Do(_ => unionType.GetProperty("Case2").GetValue(value, null))
+                                      .With(Case1).Do(_ => unionType.GetProperty("Case1")?.GetValue(value, null)!)
+                                      .With(Case2).Do(_ => unionType.GetProperty("Case2")?.GetValue(value, null)!)
                                       .Result();
 
             writer.WriteStartObject();
