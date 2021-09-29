@@ -56,7 +56,7 @@ namespace SuccincTTests.SuccincT.Options
         public void LastOrNoneWithNullFunc_ThrowsExcpetion()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.Throws<ArgumentNullException>(() => collection.TryLast(null));
+            _ = Assert.Throws<ArgumentNullException>(() => collection.TryLast(null));
         }
 
         private static IEnumerable<int> IntCollection()

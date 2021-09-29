@@ -9,7 +9,9 @@ namespace SuccincTTests.ExampleTests
     [TestFixture]
     public class DiscountTestsV2
     {
-        public enum CustomerType { Unregistered, Simple, Valuable, MostValuable }        private class Customer
+        public enum CustomerType { Unregistered, Simple, Valuable, MostValuable }
+
+        private class Customer
         {
             public CustomerType CustomerType { get; }
             public int Years { get; }
@@ -22,7 +24,7 @@ namespace SuccincTTests.ExampleTests
         }
 
         private static readonly Dictionary<CustomerType, int> CustomerDiscountMap =
-            new Dictionary<CustomerType, int>
+            new()
             {
                 [Unregistered] = 0,
                 [Simple] = 1,
@@ -44,7 +46,10 @@ namespace SuccincTTests.ExampleTests
         private static decimal ApplyDiscount(decimal price, decimal discount) =>
             price - price * discount / 100.0m;
 
-        private static decimal ReducePriceBy((int type, int years) discount, decimal price) =>            ApplyDiscount(ApplyDiscount(price, discount.type), discount.years);        private static decimal CalculateDiscountPrice(Customer account, decimal price) =>
+        private static decimal ReducePriceBy((int type, int years) discount, decimal price) =>
+            ApplyDiscount(ApplyDiscount(price, discount.type), discount.years);
+
+        private static decimal CalculateDiscountPrice(Customer account, decimal price) =>
             ReducePriceBy(AccountDiscount(account), price);
 
         [Test]

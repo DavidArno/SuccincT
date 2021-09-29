@@ -65,13 +65,11 @@ namespace SuccincT.Options
 
         public override bool Equals(object? obj)
         {
-            switch (obj)
-            {
-                case ValueOrError<TValue, TError> other: return other.HasValue == HasValue && ValueOrErrorsEqual(other);
-                case null: return HasValue && _value == null || !HasValue && _error == null;
-            }
-
-            return false;
+            return obj switch {
+                ValueOrError<TValue, TError> other => other.HasValue == HasValue && ValueOrErrorsEqual(other),
+                null => HasValue && _value == null || !HasValue && _error == null,
+                _ => false,
+            };
         }
 
         private bool ValueOrErrorsEqual(in ValueOrError<TValue, TError> other)

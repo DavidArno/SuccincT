@@ -25,7 +25,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
 
         [Test]
         public void IntValue_ExceptionIfNoMatchWithExec() => 
-            Assert.Throws<NoMatchException>(() => 3.Match().With(2).Or(1).Do(x => {}).Exec());
+            _ = Assert.Throws<NoMatchException>(() => 3.Match().With(2).Or(1).Do(x => {}).Exec());
 
         [Test]
         public void IntValue_NoExceptionIfIgnoreElseUsedWithNoMatchWithExec() =>

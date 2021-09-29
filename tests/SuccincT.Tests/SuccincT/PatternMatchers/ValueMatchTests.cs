@@ -23,7 +23,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
 
         [Test]
         public void IntValue_ExceptionIfNoMatch() =>
-            Assert.Throws<NoMatchException>(() => 3.Match().To<int>().With(2).Or(1).Do(x => x).Result());
+            _ = Assert.Throws<NoMatchException>(() => 3.Match().To<int>().With(2).Or(1).Do(x => x).Result());
 
         [Test]
         public void IntValue_WhenNoMatchElseUsed()

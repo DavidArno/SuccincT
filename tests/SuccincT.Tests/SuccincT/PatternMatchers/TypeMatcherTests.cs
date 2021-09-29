@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using SuccincT.PatternMatchers;
 using SuccincT.PatternMatchers.GeneralMatcher;
+using System.Diagnostics.CodeAnalysis;
 
 namespace SuccincTTests.SuccincT.PatternMatchers
 {
@@ -128,7 +129,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void WhenNoTypeMatchesAndNoElseSpecified_NoMatchExceptionsIsThrown()
         {
             ITest test = new Test1();
-            Assert.Catch<NoMatchException>(() => test.TypeMatch().To<int>()
+            _ = Assert.Catch<NoMatchException>(() => test.TypeMatch().To<int>()
                                                      .CaseOf<Test3>().Do(t => t.F2())
                                                      .CaseOf<Test2>().Do(t => t.F2())
                                                      .Result());
@@ -210,7 +211,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         public void WhenNoWhereExpressionsAndNoElseSpecified_NoMatchExceptionsIsThrown()
         {
             ITest test = new Test1();
-            Assert.Catch<NoMatchException>(() => test.TypeMatch().To<int>()
+            _ = Assert.Catch<NoMatchException>(() => test.TypeMatch().To<int>()
                                                      .CaseOf<Test1>().Where(_ => false).Do(t => t.F1())
                                                      .Result());
         }
@@ -231,19 +232,19 @@ namespace SuccincTTests.SuccincT.PatternMatchers
 
         private class Test1 : ITest
         {
-            // ReSharper disable once MemberCanBeMadeStatic.Local
+            [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
             public int F1() => 1;
         }
 
         private class Test2 : ITest
         {
-            // ReSharper disable once MemberCanBeMadeStatic.Local
+            [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
             public int F2() => 2;
         }
 
         private class Test3 : ITest
         {
-            // ReSharper disable once MemberCanBeMadeStatic.Local
+            [SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "<Pending>")]
             public int F2() => 3;
         }
     }

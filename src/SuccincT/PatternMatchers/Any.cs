@@ -1,4 +1,6 @@
-﻿namespace SuccincT.PatternMatchers
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace SuccincT.PatternMatchers
 {
     public readonly struct Any
     {
@@ -10,8 +12,10 @@
 
         public override string ToString() => "*";
 
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
         public static bool operator ==(Any any1, Any any2) => true;
 
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
         public static bool operator !=(Any any1, Any any2) => false;
 
         // ReSharper disable once InconsistentNaming

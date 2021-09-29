@@ -1,6 +1,6 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using SuccincT.Functional;
+using System.Diagnostics.CodeAnalysis;
 using static NUnit.Framework.Assert;
 
 namespace SuccincTTests.SuccincT.Functional
@@ -152,25 +152,24 @@ namespace SuccincTTests.SuccincT.Functional
 
         private class TypeWithConstructorAndNoGetters
         {
-            // ReSharper disable once UnusedParameter.Local
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
             public TypeWithConstructorAndNoGetters(int x) {}
         }
 
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithConstructorAndNoMatchingGetter
         {
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) {}
             public TypeWithConstructorAndNoMatchingGetter(int a) => B = a;
             public int B { get; }
         }
 
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithMultipleConstructors
         {
             public TypeWithMultipleConstructors(int a) => (A, B) = (a, 1);
             public TypeWithMultipleConstructors(int a, int b) => (A, B) = (a, b);
+
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
             public TypeWithMultipleConstructors(int a, int c, int b) => (A, B) = (a, b);
             public int A { get; }
             public int B { get; }

@@ -35,7 +35,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void TupleNoMatch_ThrowsException()
         {
             var tuple = new TestClass { A = 1, B = "a" };
-            Assert.Throws<NoMatchException>(
+            _ = Assert.Throws<NoMatchException>(
                 () => tuple.Match().To<int>().With(2, "a").Or(1, "b").Do((x, y) => x).Result());
         }
 

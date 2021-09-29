@@ -68,7 +68,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void TupleNoMatchDespiteAnyInt_ThrowsException()
         {
             var tuple = new TestClass { A = 1, B = "a" };
-            Assert.Throws<NoMatchException>(
+            _ = Assert.Throws<NoMatchException>(
                 () => tuple.Match().To<int>().With(__, "b").Or(__, "c").Do((x, y) => x).Result());
         }
 
@@ -76,7 +76,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void TupleNoMatchDespiteAnyString_ThrowsException()
         {
             var tuple = new TestClass { A = 1, B = "a" };
-            Assert.Throws<NoMatchException>(
+            _ = Assert.Throws<NoMatchException>(
                 () => tuple.Match().To<int>().With(2, __).Or(3, __).Do((x, y) => x).Result());
         }
 

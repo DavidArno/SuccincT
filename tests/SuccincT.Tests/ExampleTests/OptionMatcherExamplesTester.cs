@@ -16,70 +16,60 @@ namespace SuccincTTests.ExampleTests
         [Test]
         public void PrintOptionPrintsValues()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
+            using var sw = new StringWriter();
+            SetOut(sw);
 
-                PrintOption(Option<int>.Some(-1));
-                PrintOption(Option<int>.Some(0));
-                PrintOption(Option<int>.Some(1));
-                PrintOption(Option<int>.Some(5));
-                PrintOption(Option<int>.Some(8));
+            PrintOption(Option<int>.Some(-1));
+            PrintOption(Option<int>.Some(0));
+            PrintOption(Option<int>.Some(1));
+            PrintOption(Option<int>.Some(5));
+            PrintOption(Option<int>.Some(8));
 
-                AreEqual(ExpectedBuilder(new[] { "-1", "0", "1", "5", "8" }), sw.ToString());
-            }
+            AreEqual(ExpectedBuilder(new[] { "-1", "0", "1", "5", "8" }), sw.ToString());
         }
 
         [Test]
         public void PrintOptionPrintsNothingForNone()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
-                PrintOption(Option<int>.None());
-                AreEqual("", sw.ToString());
-            }
+            using var sw = new StringWriter();
+            SetOut(sw);
+            PrintOption(Option<int>.None());
+            AreEqual("", sw.ToString());
         }
 
         [Test]
         public void OptionMatcherPrints1To3Correctly()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
+            using var sw = new StringWriter();
+            SetOut(sw);
 
-                OptionMatcher(Option<int>.Some(1));
-                OptionMatcher(Option<int>.Some(2));
-                OptionMatcher(Option<int>.Some(3));
+            OptionMatcher(Option<int>.Some(1));
+            OptionMatcher(Option<int>.Some(2));
+            OptionMatcher(Option<int>.Some(3));
 
-                AreEqual(ExpectedBuilder(new[] { "1", "2", "3" }), sw.ToString());
-            }
+            AreEqual(ExpectedBuilder(new[] { "1", "2", "3" }), sw.ToString());
         }
 
         [Test]
         public void OptionMatcherCorrectlyIdentifiesNumbersOutside1To3()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
+            using var sw = new StringWriter();
+            SetOut(sw);
 
-                OptionMatcher(Option<int>.Some(0));
-                OptionMatcher(Option<int>.Some(4));
+            OptionMatcher(Option<int>.Some(0));
+            OptionMatcher(Option<int>.Some(4));
 
-                AreEqual(ExpectedBuilder(new[] { "0 isn't 1, 2 or 3!", "4 isn't 1, 2 or 3!" }),
-                         sw.ToString());
-            }
+            AreEqual(ExpectedBuilder(new[] { "0 isn't 1, 2 or 3!", "4 isn't 1, 2 or 3!" }),
+                     sw.ToString());
         }
 
         [Test]
         public void OptionMatcherPrintsNothingForNone()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
-                OptionMatcher(Option<int>.None());
-                AreEqual("", sw.ToString());
-            }
+            using var sw = new StringWriter();
+            SetOut(sw);
+            OptionMatcher(Option<int>.None());
+            AreEqual("", sw.ToString());
         }
 
         [Test]

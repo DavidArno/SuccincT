@@ -7,7 +7,7 @@ namespace SuccincTTests.Examples
     {
         public static Option<int> IntParser(ValueOrError data) => 
             data.Match<Option<int>>()
-                .Value().Where(s => s.StartsWith("Int:")).Do(s => s.Substring(4).TryParseInt())
+                .Value().Where(s => s.StartsWith("Int:")).Do(s => s[4..].TryParseInt())
                 .Else(Option<int>.None())
                 .Result();
     }

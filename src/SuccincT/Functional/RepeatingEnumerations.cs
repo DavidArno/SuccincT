@@ -21,7 +21,6 @@ namespace SuccincT.Functional
             }
         }
 
-        [SuppressMessage("ReSharper", "IteratorNeverReturns")]
         public static IEnumerable<T> Cycle<T>(params T[] collection)
         {
             while (true)

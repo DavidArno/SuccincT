@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>net6</TargetFramework>
     <RootNamespace>SuccincTTests</RootNamespace>
-    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

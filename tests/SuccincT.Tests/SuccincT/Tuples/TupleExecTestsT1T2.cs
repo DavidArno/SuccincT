@@ -29,7 +29,7 @@ namespace SuccincTTests.SuccincT.Tuples
         public void Tuple_ExceptionIfNoMatchWithExec()
         {
             var tuple = Tuple.Create(1, "a");
-            Assert.Throws<NoMatchException>(() => tuple.Match().With(2, "a").Or(1, "b").Do((x, y) => {}).Exec());
+            _ = Assert.Throws<NoMatchException>(() => tuple.Match().With(2, "a").Or(1, "b").Do((x, y) => {}).Exec());
         }
 
         [Test]

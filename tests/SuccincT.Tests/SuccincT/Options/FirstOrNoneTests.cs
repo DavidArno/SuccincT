@@ -56,7 +56,7 @@ namespace SuccincTTests.SuccincT.Options
         public void TryFirstWithNullFunc_ThrowsException()
         {
             var collection = new List<int> { 1, 2, 3 };
-            Assert.Throws<ArgumentNullException>(() => collection.TryFirst(null));
+            _ = Assert.Throws<ArgumentNullException>(() => collection.TryFirst(null));
         }
 
         private static IEnumerable<int> IntCollection()

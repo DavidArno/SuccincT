@@ -59,7 +59,9 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionHasValue_LazyOrReturnsThatOptionAndDoesNotComputeAnotherOption()
         {
             var opt1 = Option<string>.Some("OK");
-            Option<string> Opt2() => throw new InvalidOperationException();
+
+            static Option<string> Opt2() => throw new InvalidOperationException();
+
             var res = opt1.Or(Opt2);
             IsTrue(res.HasValue);
             AreEqual("OK", res.Value);
@@ -69,7 +71,9 @@ namespace SuccincTTests.SuccincT.Options
         public void WhenOptionHasNoValue_LazyOrComputesAndReturnsAnotherOption()
         {
             var opt1 = Option<string>.None();
-            Option<string> Opt2() => Option<string>.Some("OK too");
+
+            static Option<string> Opt2() => Option<string>.Some("OK too");
+
             var res = opt1.Or(Opt2);
             IsTrue(res.HasValue);
             AreEqual("OK too", res.Value);

@@ -13,7 +13,7 @@ namespace SuccincTTests.SuccincT.PatternMatchers
         {
             var list = new [] {1, 2, 3, 4, 5};
 
-            int SumListContents(IEnumerable<int> collection) =>
+            static int SumListContents(IEnumerable<int> collection) =>
                 collection.Match().To<int>()
                             .Single().Do(x => x)
                             .Cons().Do((head, tail) => head + SumListContents(tail))

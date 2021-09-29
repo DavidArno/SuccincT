@@ -145,23 +145,18 @@ namespace SuccincTTests.SuccincT.Functional
 
         private class TypeWithConstructorAndNoGetters
         {
-            // ReSharper disable once UnusedParameter.Local
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
             public TypeWithConstructorAndNoGetters(int x) {}
         }
 
-        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
-        [SuppressMessage("ReSharper", "UnusedMember.Local")]
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         private class TypeWithConstructorAndNoMatchingGetter
         {
+            [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
             public TypeWithConstructorAndNoMatchingGetter(int a, int c) {}
             public TypeWithConstructorAndNoMatchingGetter(int a) => B = a;
             public int B { get; }
         }
 
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Local")]
-        [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
         private class TypeWithNoPublicConstructor
         {
             internal TypeWithNoPublicConstructor(int a) => A = a;

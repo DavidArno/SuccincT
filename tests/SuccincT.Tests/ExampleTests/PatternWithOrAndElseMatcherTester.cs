@@ -15,32 +15,28 @@ namespace SuccincTTests.ExampleTests
         [Test]
         public void Filter123CorrectlyMatches12And3()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
+            using var sw = new StringWriter();
+            SetOut(sw);
 
-                Filter123(1);
-                Filter123(2);
-                Filter123(3);
+            Filter123(1);
+            Filter123(2);
+            Filter123(3);
 
-                AreEqual(ExpectedBuilder(new[] { "Found 1, 2, or 3!", "Found 1, 2, or 3!", "Found 1, 2, or 3!" }),
-                         sw.ToString());
-            }
+            AreEqual(ExpectedBuilder(new[] { "Found 1, 2, or 3!", "Found 1, 2, or 3!", "Found 1, 2, or 3!" }),
+                     sw.ToString());
         }
 
         [Test]
         public void Filter123CorrectlyIgnores0And4()
         {
-            using (var sw = new StringWriter())
-            {
-                SetOut(sw);
+            using var sw = new StringWriter();
+            SetOut(sw);
 
-                Filter123(0);
-                Filter123(4);
+            Filter123(0);
+            Filter123(4);
 
-                AreEqual(ExpectedBuilder(new[] { "0", "4" }),
-                         sw.ToString());
-            }
+            AreEqual(ExpectedBuilder(new[] { "0", "4" }),
+                     sw.ToString());
         }
 
         private static string ExpectedBuilder(IEnumerable<string> parts) =>

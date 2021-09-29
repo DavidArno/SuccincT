@@ -1,4 +1,6 @@
-﻿namespace SuccincT.Unions
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace SuccincT.Unions
 {
     /// <summary>
     /// valueless struct that encapsulates the "none" literal used by various Succinct types.
@@ -14,8 +16,10 @@
 
         public override int GetHashCode() => 0;
 
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
         public static bool operator ==(None left, None right) => true;
 
+        [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "")]
         public static bool operator !=(None left, None right) => false;
     }
 }

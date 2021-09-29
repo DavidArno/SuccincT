@@ -61,7 +61,7 @@ namespace SuccincTTests.SuccincT.Functional
         }
 
         [Test]
-        public void FizzBuzzUsingCycle_GeneratesCorrectSequence()
+        public void FizzBuzzUsingTupleAndCycle_GeneratesCorrectSequence()
         {
             var fizzes = Cycle("", "", "Fizz");
             var buzzes = Cycle("", "", "", "", "Buzz");
